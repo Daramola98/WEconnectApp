@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WEconnect Application</title>
+    <title>Login WEconnect Application</title>
     <!-- Material Icon CDN -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS CDN -->
@@ -64,22 +64,6 @@
 
                         <ul class="side-nav" id="mobile-menu">
                             <li>
-                                <div class="userView">
-                                    <div class="background blue">
-                                        <img src="http://lorempixel.com/output/abstract-q-c-640-480-10.jpg" alt="Background Sidenav">
-                                    </div>
-                                    <a href="#!user">
-                                        <img class="circle" src="http://lorempixel.com/output/people-q-c-640-480-9.jpg" alt="User Image Sidenav">
-                                    </a>
-                                    <a href="#!name">
-                                        <span class="white-text name">John Doe</span>
-                                    </a>
-                                    <a href="#!email">
-                                        <span class="white-text email">jdandturk@gmail.com</span>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
                                 <a href="index.html">Home</a>
                             </li>
                             <li>
@@ -107,20 +91,20 @@
         <!-- Your content here -->
         <div class="container">
             <div class="row">
-                <div class="col s12 m6 offset-m4 l6 offset-l3">
+                <div class="col s12 m8 offset-m2 l6 offset-l3">
                     <div class="card">
-                        <div class="card-action blue lighten-1 white-text">
+                        <div class="card-action blue lighten-1 white-text center">
                             <h3>Login to WEconnect</h3>
                         </div>
                         <div class="card-content">
                             <form action="">
                                 <div class="form-field">
                                     <label for="username">Username</label>
-                                    <input type="text" id="username" class="validate">
+                                    <input type="text" id="username" class="validate" required>
                                 </div>
                                 <div class="form-field">
                                     <label for="passwd">Password</label>
-                                    <input type="password" id="passwd" class="validate">
+                                    <input type="password" id="passwd" class="validate" required> 
                                 </div>
                                 <div class="form-field">
                                     <input type="checkbox" id="remember">

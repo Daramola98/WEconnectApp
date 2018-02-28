@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WEconnect Application</title>
+    <title>Sign Up to WEconnect Application</title>
     <!-- Material Icon CDN -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS CDN -->
@@ -64,22 +64,6 @@
 
                         <ul class="side-nav" id="mobile-menu">
                             <li>
-                                <div class="userView">
-                                    <div class="background blue">
-                                        <img src="http://lorempixel.com/output/abstract-q-c-640-480-10.jpg" alt="Background Sidenav">
-                                    </div>
-                                    <a href="#!user">
-                                        <img class="circle" src="http://lorempixel.com/output/people-q-c-640-480-9.jpg" alt="User Image Sidenav">
-                                    </a>
-                                    <a href="#!name">
-                                        <span class="white-text name">John Doe</span>
-                                    </a>
-                                    <a href="#!email">
-                                        <span class="white-text email">jdandturk@gmail.com</span>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
                                 <a href="index.html">Home</a>
                             </li>
                             <li>
@@ -107,51 +91,51 @@
         <!-- Your content here -->
         <div class="container">
             <div class="row">
-                <div class="col s12 m6 offset-m4 l8 offset-l2">
+                <div class="col s12 m8 offset-m2 l8 offset-l2">
                     <div class="card">
-                        <div class="card-action blue lighten-1 white-text">
+                        <div class="card-action blue lighten-1 white-text center">
                             <h3>Sign Up to WEconnect</h3>
                         </div>
                         <div class="card-content">
                             <form action="">
                                 <div class="row">
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">account_circle</i>
                                         <label for="firstName">First Name</label>
                                         
-                                        <input type="text" id="firstName" class="validate">
+                                        <input type="text" id="firstName" class="validate" required>
                                     </div>
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">account_circle</i>
                                         <label for="lastName">Last Name</label>
                                         
-                                        <input type="text" id="lastName" class="validate">
+                                        <input type="text" id="lastName" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <label for="password">Password</label>
-                                        <input type="password" id="password">
+                                        <input type="password" id="password" required>
                                     </div>
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <label for="confirmPass">Confirm Password</label>
-                                        <input type="password" id="confirmPass" class="validate">
+                                        <input type="password" id="confirmPass" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12 m12 l12">
                                         <label for="user_mail">Email Address</label>
-                                        <input type="email" placeholder="johndoe@gmail.com" id="user_mail" class="validate">
+                                        <input type="email" placeholder="johndoe@gmail.com" id="user_mail" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">phone</i>
                                         <label for="telephone">Telephone Number</label>
                                         
-                                        <input type="number" id="telephone" class="validate">
+                                        <input type="number" id="telephone" class="validate" required>
                                     </div>
-                                    <div class="input-field col s12 m6 l6">
+                                    <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">phone</i>
                                         <label for="home_number">Home Number</label>
                                         
@@ -165,7 +149,7 @@
                                 </div>
                                 <br>
                                 <div class="row">
-                                    <div class="col s12 m6 l6 offset-l3">
+                                    <div class="col s12 m12 l6 offset-l3 center">
                                         <h6><a href="login.html">Already have an Account? Login here</a></h6>
                                     </div>
                                 </div>
