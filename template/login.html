@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEconnect Application</title>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Used as an example only to position the footer at the end of the page.
+    You can delete these styles or move it to your custom css file -->
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <div class="container">
+                        <a href="#" class="brand-logo">WEconnect</a>
+                        <a href="#" data-activates="mobile-menu" class="button-collapse">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    Sign In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">
+                                    Sign Up
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="side-nav" id="mobile-menu">
+                            <li>
+                                <div class="userView">
+                                    <div class="background blue">
+                                        <img src="http://lorempixel.com/output/abstract-q-c-640-480-10.jpg" alt="Background Sidenav">
+                                    </div>
+                                    <a href="#!user">
+                                        <img class="circle" src="http://lorempixel.com/output/people-q-c-640-480-9.jpg" alt="User Image Sidenav">
+                                    </a>
+                                    <a href="#!name">
+                                        <span class="white-text name">John Doe</span>
+                                    </a>
+                                    <a href="#!email">
+                                        <span class="white-text email">jdandturk@gmail.com</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">Sign Up</a>
+                            </li>
+                            <li>
+                                <a href="login.html">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Your content here -->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m6 offset-m4 l6 offset-l3">
+                    <div class="card">
+                        <div class="card-action blue lighten-1 white-text">
+                            <h3>Login to WEconnect</h3>
+                        </div>
+                        <div class="card-content">
+                            <form action="">
+                                <div class="form-field">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" class="validate">
+                                </div>
+                                <div class="form-field">
+                                    <label for="passwd">Password</label>
+                                    <input type="password" id="passwd" class="validate">
+                                </div>
+                                <div class="form-field">
+                                    <input type="checkbox" id="remember">
+                                    <label for="remember">Remember Me</label>
+                                </div>
+                                <br>
+                                <div class="form-field">
+                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">Login</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="page-footer blue">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 WEconnect
+                <a class="grey-text text-lighten-4 right" href="#!">Subscribe to Our Newsletters</a>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("document").ready(function () {
+            $(".button-collapse").sideNav();
+        });
+    </script>
+</body>
+
+</html>
