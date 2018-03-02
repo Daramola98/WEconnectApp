@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login WEconnect Application</title>
+    <title>Contact Us</title>
     <!-- Material Icon CDN -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS CDN -->
@@ -89,7 +89,57 @@
     </header>
     <main>
         <!-- Your content here -->
-        Still Constructing
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l8 offset-l2">
+                    <div class="card">
+                        <div class="card-action blue lighten-1 white-text center">
+                            <h3>Contact Us</h3>
+                        </div>
+                        <div class="card-content">
+                            <form action="">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="firstName">First Name</label>
+
+                                        <input type="text" id="firstName" class="validate" required>
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="lastName">Last Name</label>
+
+                                        <input type="text" id="lastName" class="validate" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">email</i>
+                                        <label for="user_mail">Email Address</label>
+                                        <input type="email" placeholder="johndoe@gmail.com" id="user_mail" class="validate" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">mode_edit</i>
+                                        <textarea class="materialize-textarea" id="contact-message" required> </textarea>
+                                        <label for="contact-message">Send Us A Message</label>
+                                    </div>
+                                </div>
+                                <div class="input-field">
+                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">SEND MESSAGE</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </main>
     <footer class="page-footer blue">
         <div class="footer-copyright">
@@ -107,6 +157,8 @@
     <script>
         $("document").ready(function () {
             $(".button-collapse").sideNav();
+            $('#contact-message').val();
+            $('#contact-message').trigger('autoresize');
         });
     </script>
 </body>

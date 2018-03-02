@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register Business</title>
+    <title>Sign Up to WEconnect Application</title>
     <!-- Material Icon CDN -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS CDN -->
@@ -39,7 +39,7 @@
                         </a>
                         <ul class="right hide-on-med-and-down">
                             <li>
-                                <a href="userProfile.html">Home</a>
+                                <a href="index.html">Home</a>
                             </li>
                             <li>
                                 <a href="about.html">About Us</a>
@@ -51,34 +51,20 @@
                                 <a href="how-it-works.html">How it Works</a>
                             </li>
                             <li>
-                                <a href="businessesListing.html">Business Listing</a>
+                                <a href="login.html">
+                                    Sign In
+                                </a>
                             </li>
                             <li>
-                                <a href="index.html">
-                                    Logout
+                                <a href="signUp.html">
+                                    Sign Up
                                 </a>
                             </li>
                         </ul>
 
                         <ul class="side-nav" id="mobile-menu">
                             <li>
-                                <div class="userView">
-                                    <div class="background blue">
-                                        <img src="http://lorempixel.com/output/abstract-q-c-640-480-10.jpg" alt="Background Sidenav">
-                                    </div>
-                                    <a href="#!user">
-                                        <img class="circle" src="http://lorempixel.com/output/people-q-c-640-480-9.jpg" alt="User Image Sidenav">
-                                    </a>
-                                    <a href="#!name">
-                                        <span class="white-text name">John Doe</span>
-                                    </a>
-                                    <a href="#!email">
-                                        <span class="white-text email">jdandturk@gmail.com</span>
-                                    </a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="userProfile.html">Home</a>
+                                <a href="index.html">Home</a>
                             </li>
                             <li>
                                 <a href="about.html">About Us</a>
@@ -90,10 +76,10 @@
                                 <a href="how-it-works.html">How it Works</a>
                             </li>
                             <li>
-                                <a href="businessesListing.html">Business Listing</a>
+                                <a href="signUp.html">Sign Up</a>
                             </li>
                             <li>
-                                <a href="index.html">Log Out</a>
+                                <a href="login.html">Login</a>
                             </li>
                         </ul>
                     </div>
@@ -108,78 +94,64 @@
                 <div class="col s12 m8 offset-m2 l8 offset-l2">
                     <div class="card">
                         <div class="card-action blue lighten-1 white-text center">
-                            <h3>Register a Business</h3>
+                            <h3>Sign Up to WEconnect</h3>
                         </div>
                         <div class="card-content">
                             <form action="">
                                 <div class="row">
-                                    <div class="input-field col s12 m12 l12">
-                                        <label for="businessName">Business Name</label>
-                                        <input type="text" id="businessName" class="validate" required>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="firstName">First Name</label>
+                                        
+                                        <input type="text" id="firstName" class="validate" required>
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="lastName">Last Name</label>
+                                        
+                                        <input type="text" id="lastName" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s12 m6 l6">
-                                        <select required>
-                                            <option value="" disabled selected>Choose your option</option>
-                                            <option value="abia">Abia</option>
-                                            <option value="adamawa">Adamawa</option>
-                                            <option value="lagos">Lagos</option>
-                                        </select>
-                                        <label>Location</label>
+                                    <div class="input-field col s12 m12 l6">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" required>
                                     </div>
-                                    <div class="input-field col s12 m6 l6">
-                                        <select required>
-                                            <option value="" disabled selected>Choose your option</option>
-                                            <option value="estate">Estate Management</option>
-                                            <option value="housing">Housing</option>
-                                            <option value="technology">Technology</option>
-                                        </select>
-                                        <label>Category</label>
+                                    <div class="input-field col s12 m12 l6">
+                                        <label for="confirmPass">Confirm Password</label>
+                                        <input type="password" id="confirmPass" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12 m12 l12">
-                                        <label for="user_mail">Contact Email Address</label>
+                                        <i class="material-icons prefix">email</i>
+                                        <label for="user_mail">Email Address</label>
                                         <input type="email" placeholder="johndoe@gmail.com" id="user_mail" class="validate" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="input-field col s12 m12 l12">
-                                        <label for="address">Business Address</label>
-                                        <input type="text" placeholder="Enter Business Address" id="address" class="validate" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">phone</i>
                                         <label for="telephone">Telephone Number</label>
+                                        
                                         <input type="number" id="telephone" class="validate" required>
                                     </div>
                                     <div class="input-field col s12 m12 l6">
                                         <i class="material-icons prefix">phone</i>
                                         <label for="home_number">Home Number</label>
-
+                                        
                                         <input type="number" id="home_number" class="validate">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="input-field col s12 m12 l12">
-                                        <i class="material-icons prefix">mode_edit</i>
-                                        <textarea class="materialize-textarea" id="business_description"> </textarea>
-                                        <label for="business_description">Business Description</label>
-                                    </div>
-                                </div>
+
                                 <br>
                                 <div class="input-field">
-                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">REGISTER BUSINESS</button>
+                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">CREATE ACCOUNT</button>
                                 </div>
                                 <br>
                                 <div class="row">
                                     <div class="col s12 m12 l6 offset-l3 center">
-                                        <h6>
-                                            <a href="userProfile.html">Go Back to Profile Page</a>
-                                        </h6>
+                                        <h6><a href="login.html">Already have an Account? Login here</a></h6>
                                     </div>
                                 </div>
                             </form>
@@ -208,10 +180,6 @@
     <script>
         $("document").ready(function () {
             $(".button-collapse").sideNav();
-            $('select').material_select();
-            $('#business_description').val();
-            $('#business_description').trigger('autoresize');
-
         });
     </script>
 </body>
