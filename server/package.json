@@ -1,0 +1,30 @@
+{
+  "name": "weconnect",
+  "version": "1.0.0",
+  "description": "**About WEconnect**\r WeConnect provides a platform that brings businesses and individuals together. This platform\r creates awareness for businesses and gives the users the ability to write reviews about the\r businesses they have interacted with.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daramola98/WEconnectApp.git"
+  },
+  "author": "Daramola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Daramola98/WEconnectApp/issues"
+  },
+  "homepage": "https://github.com/Daramola98/WEconnectApp#readme",
+  "devDependencies": {
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0"
+  }
+}
