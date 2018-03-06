@@ -1,8 +1,7 @@
 import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
-import businessesRoutes from '../routes/businesses';
-import authRoutes from '../routes/auth';
+import routes from '../routes/index';
 
 const app = express();
 
@@ -19,13 +18,12 @@ app.use((req, res, next) => {
   next();
 });
 
-const baseEndpoint = 'api/v1/weconnect';
-
 // ROUTES
-app.use(`${baseEndpoint}/businesses}`, authRoutes);
-app.use(`${baseEndpoint}/businesses}`, businessesRoutes);
+routes.businesses(app);
 
 // LISTEN TO ACTIVITY ON PORT
 const port = process.env.PORT || 5000;
 
 app.listen(port);
+
+export default app;

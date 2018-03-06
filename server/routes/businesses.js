@@ -1,9 +1,7 @@
-import express from 'express';
+import business from '../controllers/businesses';
 
-const router = express.Router();
+const baseEndpoint = '/api/v1/weconnect/businesses';
 
-router.get('/business', (req, res) => {
-  res.send('Hi i am a business');
-});
-
-export default router;
+export default (app) => {
+  app.post(`${baseEndpoint}/`, business.create);
+};
