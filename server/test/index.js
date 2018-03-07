@@ -115,3 +115,19 @@ describe('/api/v1/weconnect/ POST businesses/:businessId/reviews', () => {
   });
 });
 
+/*
+ * GET /api/v1/weconnect/businesses/:businessId/reviews route to get reviews of a business.
+ */
+describe('/api/v1/weconnect/ GET businesses/:businessId/reviews', () => {
+  it('it should get reviews of a business with the given id', (done) => {
+    chai.request(app)
+      .get(`${baseEndpoint}/businesses/1/reviews`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('array');
+        chai.expect(res.body[0]).to.have.property('userName').eql('daramola');
+        done();
+      });
+  });
+});
+

@@ -65,5 +65,14 @@ export default {
     } else {
       res.status(404).json({ message: 'Business not found' });
     }
+  },
+  // GET BUSINESS REVIEWS
+  getReview(req, res) {
+    const business = businessHelpers.findBusinessById(req.params.businessId);
+    if (business) {
+      res.status(200).json(business.reviews);
+    } else {
+      res.status(404).json({ message: 'Business not found' });
+    }
   }
 };
