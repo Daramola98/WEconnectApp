@@ -38,7 +38,21 @@ export default {
       Object.assign(business, req.body);
       res.status(200).json(business);
     } else {
-      res.status(404)
-    } 
+      res.status(404).json({ message: 'Business not found' });
+    }
+  },
+  // DELETE A BUSINESS
+  remove(req, res) {
+    const businessIndex = businessHelpers.findBusinessIndexById(req.params.businessId);
+    if (businessIndex === 0) {
+      businesses.splice(businessIndex, 1);
+      res.status(200).json({ message: 'Business has been deleted' });
+    }
+    if (businessIndex > 0) {
+      businesses.splice(businessIndex, 1);
+      res.status(200).json({ message: 'Business has been deleted' });
+    } else {
+      res.status(404).json({ message: 'Business not found' });
+    }
   }
 };
