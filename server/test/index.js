@@ -81,3 +81,19 @@ describe('/api/v1/weconnect/ PUT businesses/:businessId', () => {
   });
 });
 
+/*
+ * DELETE /api/v1/weconnect/businesses/:businessId route to remove a business.
+ */
+describe('/api/v1/weconnect/ DELETE businesses/:businessId', () => {
+  it('it should delete a business with the given id', (done) => {
+    chai.request(app)
+      .delete(`${baseEndpoint}/businesses/2`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('object');
+        chai.expect(res.body).to.have.property('message').eql('Business has been deleted');
+        done();
+      });
+  });
+});
+

@@ -7,4 +7,5 @@ export default (app) => {
   app.get(`${baseEndpoint}/`, business.list);
   app.get(`${baseEndpoint}/:businessId`, business.retrieve);
   app.put(`${baseEndpoint}/:businessId`, business.update);
+  app.delete(`${baseEndpoint}/:businessId`, business.remove);
 };
