@@ -8,4 +8,5 @@ export default (app) => {
   app.get(`${baseEndpoint}/:businessId`, business.retrieve);
   app.put(`${baseEndpoint}/:businessId`, business.update);
   app.delete(`${baseEndpoint}/:businessId`, business.remove);
+  app.post(`${baseEndpoint}/:businessId/reviews`, business.addReview);
 };
