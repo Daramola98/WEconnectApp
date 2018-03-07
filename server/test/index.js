@@ -32,4 +32,18 @@ describe('/api/v1/weconnect/ POST businesses', () => {
       });
   });
 });
+/*
+ * GET /api/v1/weconnect/businesses route to get businesses.
+ */
+describe('/api/v1/weconnect/ GET businesses', () => {
+  it('it should return list of all businesses', (done) => {
+    chai.request(app)
+      .get(`${baseEndpoint}/businesses`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('array');
+        done();
+      });
+  });
+});
 
