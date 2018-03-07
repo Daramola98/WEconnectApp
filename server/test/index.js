@@ -32,6 +32,7 @@ describe('/api/v1/weconnect/ POST businesses', () => {
       });
   });
 });
+
 /*
  * GET /api/v1/weconnect/businesses route to get businesses.
  */
@@ -42,6 +43,22 @@ describe('/api/v1/weconnect/ GET businesses', () => {
       .end((err, res) => {
         chai.expect(res.status).to.equal(200);
         chai.expect(res.body).to.be.a('array');
+        done();
+      });
+  });
+});
+
+/*
+ * GET /api/v1/weconnect/businesses/:businessId route to get a business.
+ */
+describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
+  it('it should get a business by the given id', (done) => {
+    chai.request(app)
+      .get(`${baseEndpoint}/businesses/2`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('object');
+        chai.expect(res.body).to.have.property('location').eql('Lagos');
         done();
       });
   });

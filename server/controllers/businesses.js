@@ -1,4 +1,5 @@
 import businesses from '../models/businesses';
+import businessHelpers from '../helpers/businessHelpers';
 
 export default {
   // REGISTER A BUSINESS
@@ -20,5 +21,14 @@ export default {
   // LIST ALL BUSINESSES
   list(req, res) {
     res.status(200).json(businesses);
+  },
+  // RETRIEVE A BUSINESS
+  retrieve(req, res) {
+    const business = businessHelpers.findBusinessById(req.params.businessId);
+    if (business) {
+      res.status(200).json(business);
+    } else {
+      res.status(404).json({ message: 'Business not found' });
+    }
   }
 };
