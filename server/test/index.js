@@ -13,7 +13,7 @@ describe('/api/v1/weconnect/ POST businesses', () => {
   it('it should add a business to the businesses array', (done) => {
     const business = {
       id: businesses[businesses.length - 1].id + 1,
-      name: 'Ajiboye Julius',
+      name: 'House rentals',
       category: 'Housing',
       email: 'ajiboye_j@yahoo.com',
       number: { home: '07011041032', office: '08011031456' },
@@ -25,7 +25,7 @@ describe('/api/v1/weconnect/ POST businesses', () => {
       .post(`${baseEndpoint}/businesses`)
       .send(business)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
+        chai.expect(res.status).to.equal(201);
         chai.expect(res.body).to.be.a('object');
         chai.expect(res.body.message).to.be.eql('Business has been registered successfully');
         done();
@@ -59,6 +59,23 @@ describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
         chai.expect(res.status).to.equal(200);
         chai.expect(res.body).to.be.a('object');
         chai.expect(res.body).to.have.property('location').eql('Lagos');
+        done();
+      });
+  });
+});
+
+/*
+ * PUT /api/v1/weconnect/businesses/:businessId route to get a business.
+ */
+describe('/api/v1/weconnect/ PUT businesses/:businessId', () => {
+  it('it should update a business with the given id', (done) => {
+    chai.request(app)
+      .put(`${baseEndpoint}/businesses/2`)
+      .send({ name: 'Oil and Gas' })
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('object');
+        chai.expect(res.body).to.have.property('name').eql('Oil and Gas');
         done();
       });
   });
