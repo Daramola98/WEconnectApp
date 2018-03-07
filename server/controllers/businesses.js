@@ -16,5 +16,9 @@ export default {
     };
     businesses.push(business);
     res.status(200).json({ message: 'Business has been registered successfully', business });
+  },
+  // LIST ALL BUSINESSES
+  list(req, res) {
+    res.status(200).json(businesses);
   }
 };
