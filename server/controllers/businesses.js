@@ -14,6 +14,7 @@ export default {
       businessAddress: req.body.businessAddress,
       owner: req.params.username,
       businessDescription: req.body.businessDescription,
+      reviews: []
     };
     businesses.push(business);
     res.status(201).json({ message: 'Business has been registered successfully', business });
@@ -51,6 +52,16 @@ export default {
     if (businessIndex > 0) {
       businesses.splice(businessIndex, 1);
       res.status(200).json({ message: 'Business has been deleted' });
+    } else {
+      res.status(404).json({ message: 'Business not found' });
+    }
+  },
+  // ADD A BUSINESS REVIEW
+  addReview(req, res) {
+    const business = businessHelpers.findBusinessById(req.params.businessId);
+    if (business) {
+      business.reviews.push({ userName: req.body.username, review: [req.body.review] });
+      res.status(201).json({ message: 'Business Review Added' });
     } else {
       res.status(404).json({ message: 'Business not found' });
     }

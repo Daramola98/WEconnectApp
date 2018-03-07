@@ -9,7 +9,7 @@ const businesses = [
     businessAddress: '235, Ikorodu Road, Epic tower',
     owner: 'Ajiboye Daramola',
     businessDescription: 'Mobile Game for collaboration and competition',
-    reviews: ['Nice business', 'Poor Business room for improvement', 'good customer service']
+    reviews: [{ userName: 'daramola', review: ['Nice business'] }, { userName: 'damilola', review: ['Poor Business room for improvement'] }, { userName: 'damilare', review: ['good customer service'] }]
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const businesses = [
     businessAddress: '254, Ikorodu Road',
     owner: 'Ajiboye Damilola',
     businessDescription: 'Use your cars as taxi and get income on monthly basis',
-    reviews: ['Nice business', 'Poor Business room for improvement', 'good customer service']
+    reviews: [{ userName: 'daramola', review: ['Nice business'] }, { userName: 'damilola', review: ['Poor Business room for improvement'] }, { userName: 'damilare', review: ['good customer service'] }]
   },
   {
     id: 3,
@@ -33,7 +33,7 @@ const businesses = [
     businessAddress: '335, Ikorodu Road',
     owner: 'Ajiboye Damilare',
     businessDescription: 'We rent out cars for a period of time',
-    reviews: ['Nice business', 'Poor Business room for improvement', 'good customer service']
+    reviews: [{ userName: 'daramola', review: ['Nice business'] }, { userName: 'damilola', review: ['Poor Business room for improvement'] }, { userName: 'damilare', review: ['good customer service'] }]
   },
 ];
 
