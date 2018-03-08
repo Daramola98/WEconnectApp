@@ -50,6 +50,22 @@ describe('/api/v1/weconnect/ GET businesses', () => {
 });
 
 /*
+ * GET /api/v1/weconnect/businesses?location=<location> to get businesses with specified location.
+ */
+describe('/api/v1/weconnect/ GET businesses', () => {
+  it('it should return list of all businesses', (done) => {
+    chai.request(app)
+      .get(`${baseEndpoint}/businesses?location=abuja`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('array');
+        chai.expect(res.body[0]).to.have.property('location').eql('Abuja');
+        done();
+      });
+  });
+});
+
+/*
  * GET /api/v1/weconnect/businesses/:businessId route to get a business.
  */
 describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
