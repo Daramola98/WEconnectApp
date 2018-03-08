@@ -19,9 +19,21 @@ export default {
     businesses.push(business);
     res.status(201).json({ message: 'Business has been registered successfully', business });
   },
-  // LIST ALL BUSINESSES
+  // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
   list(req, res) {
-    res.status(200).json(businesses);
+    if (req.query.location) {
+      const location = req.query.location.toLowerCase();
+      const filterBusinesses = businesses
+        .filter(business => business.location.toLowerCase() === location);
+      if (filterBusinesses.length > 0) {
+        res.status(200).json(filterBusinesses);
+      } else {
+        res.status(404).json({ message: 'No businesses in the specified location' });
+      }
+    }
+    if (!req.query.location) {
+      res.status(200).json(businesses);
+    }
   },
   // RETRIEVE A BUSINESS
   retrieve(req, res) {
@@ -73,6 +85,16 @@ export default {
       res.status(200).json(business.reviews);
     } else {
       res.status(404).json({ message: 'Business not found' });
+    }
+  },
+  // GET BUSINESSES IN A SPECIFIED LOCATION
+  getBusinessByLocation(req, res) {
+    const { location } = req.query.location;
+    const filterBusinesses = businesses.filter(business => business.location !== location);
+    if (filterBusinesses) {
+      res.status(200).json(filterBusinesses);
+    } else {
+      res.status(404).json({ message: 'No businesses in the specified location' });
     }
   }
 };
