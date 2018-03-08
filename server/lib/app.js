@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 
 // ROUTES
 app.get('/', (req, res) => {
-  res.status(200).json({
+  const apiRootMessage = {
     message: 'Welcome to the WEconnect API, Available endpoints are shown below',
     endpoints: {
       registerBusiness: 'POST /api/v1/weconnect/businesses/',
@@ -31,7 +31,8 @@ app.get('/', (req, res) => {
       getBusinessReview: 'GET /api/v1/weconnect/businesses/:businessId/reviews',
       addBusinessReview: 'POST /api/v1/weconnect/businesses/:businessId/review'
     }
-  });
+  };
+  res.status(200).json(apiRootMessage);
 });
 routes.businesses(app);
 

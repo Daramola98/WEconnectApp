@@ -1,6 +1,9 @@
 import businesses from '../models/businesses';
 import businessHelpers from '../helpers/businessHelpers';
 
+const businessNotFoundMessage = { message: 'Business not found' };
+const businessDeletedMessage = { message: 'Business has been deleted' };
+
 export default {
   // REGISTER A BUSINESS
   create(req, res) {
@@ -17,28 +20,31 @@ export default {
       reviews: []
     };
     businesses.push(business);
-    res.status(201).json({ message: 'Business has been registered successfully', business });
+    const businessRegisterMessage = { message: 'Business has been registered successfully', business };
+    res.status(201).json(businessRegisterMessage);
   },
   // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
-  list(req, res) {
+  listBusinesses(req, res) {
     if (req.query.location) {
       const location = req.query.location.toLowerCase();
-      const filterBusinesses = businesses
+      const filterBusinessesByLocation = businesses
         .filter(business => business.location.toLowerCase() === location);
-      if (filterBusinesses.length > 0) {
-        res.status(200).json(filterBusinesses);
+      if (filterBusinessesByLocation.length > 0) {
+        res.status(200).json(filterBusinessesByLocation);
       } else {
-        res.status(404).json({ message: 'No businesses in the specified location' });
+        const businessLocationMessage = { message: 'No businesses in the specified location' };
+        res.status(404).json(businessLocationMessage);
       }
     }
     if (req.query.category) {
       const category = req.query.category.toLowerCase();
-      const filterBusinesses = businesses
+      const filterBusinessesByCategory = businesses
         .filter(business => business.category.toLowerCase() === category);
-      if (filterBusinesses.length > 0) {
-        res.status(200).json(filterBusinesses);
+      if (filterBusinessesByCategory.length > 0) {
+        res.status(200).json(filterBusinessesByCategory);
       } else {
-        res.status(404).json({ message: 'No businesses in the specified category' });
+        const businessCategoryMessage = { message: 'No businesses in the specified category' };
+        res.status(404).json(businessCategoryMessage);
       }
     }
     if (!req.query.location && !req.query.category) {
@@ -51,7 +57,7 @@ export default {
     if (business) {
       res.status(200).json(business);
     } else {
-      res.status(404).json({ message: 'Business not found' });
+      res.status(404).json(businessNotFoundMessage);
     }
   },
   // UPDATE A BUSINESS
@@ -61,7 +67,7 @@ export default {
       Object.assign(business, req.body);
       res.status(200).json(business);
     } else {
-      res.status(404).json({ message: 'Business not found' });
+      res.status(404).json(businessNotFoundMessage);
     }
   },
   // DELETE A BUSINESS
@@ -69,13 +75,13 @@ export default {
     const businessIndex = businessHelpers.findBusinessIndexById(req.params.businessId);
     if (businessIndex === 0) {
       businesses.splice(businessIndex, 1);
-      res.status(200).json({ message: 'Business has been deleted' });
+      res.status(200).json(businessDeletedMessage);
     }
     if (businessIndex > 0) {
       businesses.splice(businessIndex, 1);
-      res.status(200).json({ message: 'Business has been deleted' });
+      res.status(200).json(businessDeletedMessage);
     } else {
-      res.status(404).json({ message: 'Business not found' });
+      res.status(404).json(businessNotFoundMessage);
     }
   },
   // ADD A BUSINESS REVIEW
@@ -83,9 +89,10 @@ export default {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       business.reviews.push({ userName: req.body.username, review: [req.body.review] });
-      res.status(201).json({ message: 'Business Review Added' });
+      const businessReviewMessage = { message: 'Business Review Added' };
+      res.status(201).json(businessReviewMessage);
     } else {
-      res.status(404).json({ message: 'Business not found' });
+      res.status(404).json(businessNotFoundMessage);
     }
   },
   // GET BUSINESS REVIEWS
@@ -94,17 +101,7 @@ export default {
     if (business) {
       res.status(200).json(business.reviews);
     } else {
-      res.status(404).json({ message: 'Business not found' });
-    }
-  },
-  // GET BUSINESSES IN A SPECIFIED LOCATION
-  getBusinessByLocation(req, res) {
-    const { location } = req.query.location;
-    const filterBusinesses = businesses.filter(business => business.location !== location);
-    if (filterBusinesses) {
-      res.status(200).json(filterBusinesses);
-    } else {
-      res.status(404).json({ message: 'No businesses in the specified location' });
+      res.status(404).json(businessNotFoundMessage);
     }
   }
 };

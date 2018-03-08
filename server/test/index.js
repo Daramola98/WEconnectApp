@@ -7,6 +7,21 @@ chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/weconnect';
 
 /*
+ * GET / route to get api documentation.
+ */
+describe('/ GET ', () => {
+  it('it should return api documentation', (done) => {
+    chai.request(app)
+      .get('/')
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('object');
+        done();
+      });
+  });
+});
+
+/*
  * POST /api/v1/weconnect/businesses route to register a business.
  */
 describe('/api/v1/weconnect/ POST businesses', () => {

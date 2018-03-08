@@ -4,7 +4,7 @@ const baseEndpoint = '/api/v1/weconnect/businesses';
 
 export default (app) => {
   app.post(`${baseEndpoint}/`, business.create);
-  app.get(`${baseEndpoint}/`, business.list);
+  app.get(`${baseEndpoint}/`, business.listBusinesses);
 
   app.get(`${baseEndpoint}/:businessId`, business.retrieve);
   app.put(`${baseEndpoint}/:businessId`, business.update);
