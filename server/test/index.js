@@ -52,14 +52,30 @@ describe('/api/v1/weconnect/ GET businesses', () => {
 /*
  * GET /api/v1/weconnect/businesses?location=<location> to get businesses with specified location.
  */
-describe('/api/v1/weconnect/ GET businesses', () => {
-  it('it should return list of all businesses', (done) => {
+describe('/api/v1/weconnect/ GET businesses?location=<location>', () => {
+  it('it should return list of all businesses in the specified location', (done) => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses?location=abuja`)
       .end((err, res) => {
         chai.expect(res.status).to.equal(200);
         chai.expect(res.body).to.be.a('array');
         chai.expect(res.body[0]).to.have.property('location').eql('Abuja');
+        done();
+      });
+  });
+});
+
+/*
+ * GET /api/v1/weconnect/businesses?category=<category> to get businesses with specified category.
+ */
+describe('/api/v1/weconnect/ GET businesses?category=<category>', () => {
+  it('it should return list of all businesses in the specified category', (done) => {
+    chai.request(app)
+      .get(`${baseEndpoint}/businesses?category=housing`)
+      .end((err, res) => {
+        chai.expect(res.status).to.equal(200);
+        chai.expect(res.body).to.be.a('array');
+        chai.expect(res.body[0]).to.have.property('category').eql('Housing');
         done();
       });
   });

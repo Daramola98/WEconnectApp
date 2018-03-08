@@ -31,7 +31,17 @@ export default {
         res.status(404).json({ message: 'No businesses in the specified location' });
       }
     }
-    if (!req.query.location) {
+    if (req.query.category) {
+      const category = req.query.category.toLowerCase();
+      const filterBusinesses = businesses
+        .filter(business => business.category.toLowerCase() === category);
+      if (filterBusinesses.length > 0) {
+        res.status(200).json(filterBusinesses);
+      } else {
+        res.status(404).json({ message: 'No businesses in the specified category' });
+      }
+    }
+    if (!req.query.location && !req.query.category) {
       res.status(200).json(businesses);
     }
   },
