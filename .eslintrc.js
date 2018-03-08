@@ -1,7 +1,4 @@
 module.exports = {
-  "parserOptions": {
-    "ecmaVersion": 6
-  },
     "root": true,
   "extends": "airbnb-base",
   "env": {
