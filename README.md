@@ -1,5 +1,5 @@
 # WEconnectApplication
-[![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=master)](https://travis-ci.org/Daramola98/WEconnectApp)
+[![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=add-travis-ci)](https://travis-ci.org/Daramola98/WEconnectApp)
 
 **About WEconnect**
 WeConnect provides a platform that brings businesses and individuals together. This platform

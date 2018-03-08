@@ -4,10 +4,10 @@
   "description": "**About WEconnect**\r WeConnect provides a platform that brings businesses and individuals together. This platform\r creates awareness for businesses and gives the users the ability to write reviews about the\r businesses they have interacted with.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon lib/app.js --exec babel-node",
-    "build": "babel lib -d dist && babel test -d dist/test",
-    "serve": "node dist/app.js",
-    "test": "mocha --compilers js:babel-register --exit"
+    "start": "nodemon server/lib/app.js --exec babel-node",
+    "build": "babel server/lib -d dist && babel test -d dist/test",
+    "serve": "node server/dist/app.js",
+    "test": "mocha server/test --compilers js:babel-register --exit"
   },
   "repository": {
     "type": "git",
