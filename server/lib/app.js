@@ -19,6 +19,20 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to the WEconnect API, Available endpoints are shown below',
+    endpoints: {
+      registerBusiness: 'POST /api/v1/weconnect/businesses/',
+      getBusinesses: 'GET /api/v1/weconnect/businesses/',
+      getBusiness: 'GET /api/v1/weconnect/businesses/:businessId',
+      updateBusiness: 'PUT /api/v1/weconnect/businesses/:businessId',
+      deleteBusiness: 'DELETE /api/v1/weconnect/businesses/:businessId',
+      getBusinessReview: 'GET /api/v1/weconnect/businesses/:businessId/reviews',
+      addBusinessReview: 'POST /api/v1/weconnect/businesses/:businessId/review'
+    }
+  });
+});
 routes.businesses(app);
 
 // LISTEN TO ACTIVITY ON PORT
