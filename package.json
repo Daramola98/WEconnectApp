@@ -7,7 +7,7 @@
     "start": "nodemon server/lib/app.js --exec babel-node",
     "build": "babel server/lib -d dist && babel test -d dist/test",
     "serve": "node server/dist/app.js",
-    "test": "nyc mocha server/test --compilers js:babel-register --exit",
+    "test": "nyc --reporter=lcov  --reporter=text mocha server/test --compilers js:babel-register --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
