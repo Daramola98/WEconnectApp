@@ -1,7 +1,6 @@
 language: node_js
 node_js:
   - "7"
-install: travis_wait 9 mvn install
 cache:
   directories:
     - "node_modules"
