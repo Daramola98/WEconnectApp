@@ -2,7 +2,7 @@ ruby :
   enabled: false
 
 jshint:
-  enabled: false
+  config_file: .jshintrc
 
 eslint:
   enabled: true
