@@ -6,4 +6,4 @@ jshint:
 
 eslint:
   enabled: true
-  config_file: server/.eslintrc
+  config_file: .eslintrc
