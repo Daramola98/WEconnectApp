@@ -5,6 +5,7 @@ import businesses from '../models/businesses';
 
 chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/weconnect';
+const { expect } = chai;
 
 /*
  * GET / route to get api documentation.
@@ -14,8 +15,8 @@ describe('/ GET ', () => {
     chai.request(app)
       .get('/')
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('object');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('object');
         done();
       });
   });
@@ -41,9 +42,9 @@ describe('/api/v1/weconnect/ POST businesses', () => {
       .post(`${baseEndpoint}/businesses`)
       .send(business)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(201);
-        chai.expect(res.body).to.be.a('object');
-        chai.expect(res.body.message).to.be.eql('Business has been registered successfully');
+        expect(res.status).to.equal(201);
+        expect(res.body).to.be.a('object');
+        expect(res.body.message).to.be.eql('Business has been registered successfully');
         done();
       });
   });
@@ -57,8 +58,8 @@ describe('/api/v1/weconnect/ GET businesses', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('array');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('array');
         done();
       });
   });
@@ -72,9 +73,9 @@ describe('/api/v1/weconnect/ GET businesses?location=<location>', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses?location=abuja`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('array');
-        chai.expect(res.body[0]).to.have.property('location').eql('Abuja');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('array');
+        expect(res.body[0]).to.have.property('location').eql('Abuja');
         done();
       });
   });
@@ -88,9 +89,9 @@ describe('/api/v1/weconnect/ GET businesses?category=<category>', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses?category=housing`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('array');
-        chai.expect(res.body[0]).to.have.property('category').eql('Housing');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('array');
+        expect(res.body[0]).to.have.property('category').eql('Housing');
         done();
       });
   });
@@ -104,9 +105,9 @@ describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses/2`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('object');
-        chai.expect(res.body).to.have.property('location').eql('Lagos');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('location').eql('Lagos');
         done();
       });
   });
@@ -121,9 +122,9 @@ describe('/api/v1/weconnect/ PUT businesses/:businessId', () => {
       .put(`${baseEndpoint}/businesses/2`)
       .send({ name: 'Oil and Gas' })
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('object');
-        chai.expect(res.body).to.have.property('name').eql('Oil and Gas');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('name').eql('Oil and Gas');
         done();
       });
   });
@@ -137,9 +138,9 @@ describe('/api/v1/weconnect/ DELETE businesses/:businessId', () => {
     chai.request(app)
       .delete(`${baseEndpoint}/businesses/2`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('object');
-        chai.expect(res.body).to.have.property('message').eql('Business has been deleted');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('message').eql('Business has been deleted');
         done();
       });
   });
@@ -154,9 +155,9 @@ describe('/api/v1/weconnect/ POST businesses/:businessId/reviews', () => {
       .post(`${baseEndpoint}/businesses/3/reviews`)
       .send({ username: 'Julius', review: 'Nice' })
       .end((err, res) => {
-        chai.expect(res.status).to.equal(201);
-        chai.expect(res.body).to.be.a('object');
-        chai.expect(res.body).to.have.property('message').eql('Business Review Added');
+        expect(res.status).to.equal(201);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('message').eql('Business Review Added');
         done();
       });
   });
@@ -170,9 +171,9 @@ describe('/api/v1/weconnect/ GET businesses/:businessId/reviews', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses/1/reviews`)
       .end((err, res) => {
-        chai.expect(res.status).to.equal(200);
-        chai.expect(res.body).to.be.a('array');
-        chai.expect(res.body[0]).to.have.property('userName').eql('daramola');
+        expect(res.status).to.equal(200);
+        expect(res.body).to.be.a('array');
+        expect(res.body[0]).to.have.property('userName').eql('daramola');
         done();
       });
   });
