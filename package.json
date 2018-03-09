@@ -4,10 +4,12 @@
   "description": "**About WEconnect**\r WeConnect provides a platform that brings businesses and individuals together. This platform\r creates awareness for businesses and gives the users the ability to write reviews about the\r businesses they have interacted with.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon lib/app.js --exec babel-node",
-    "build": "babel lib -d dist && babel test -d dist/test",
-    "serve": "node dist/app.js",
-    "test": "mocha --compilers js:babel-register"
+    "start": "nodemon server/lib/app.js --exec babel-node",
+    "build": "babel server/lib -d dist && babel test -d dist/test",
+    "serve": "node server/dist/app.js",
+    "test": "nyc --reporter=lcov  --reporter=text mocha server/test --compilers js:babel-register --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
   },
   "repository": {
     "type": "git",
@@ -26,16 +28,21 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
+    "codeclimate-test-reporter": "^0.5.0",
+    "coveralls": "^3.0.0",
     "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "mocha": "^5.0.1"
+    "mocha": "^5.0.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^11.4.1"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "mocha": "^5.0.1",
     "chai-http": "^3.0.0",
-    "chai": "^4.1.2"
+    "chai": "^4.1.2",
+    "babel-register": "^6.26.0"
   }
 }
