@@ -1,0 +1,1 @@
+web: node server/lib/app.js --exec babel-node

@@ -17,6 +17,9 @@
   },
   "author": "Daramola",
   "license": "ISC",
+  "engines": {
+    "node": "8.10.0"
+  },
   "bugs": {
     "url": "https://github.com/Daramola98/WEconnectApp/issues"
   },
