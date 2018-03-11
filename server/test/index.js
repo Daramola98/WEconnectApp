@@ -102,8 +102,8 @@ describe('/api/v1/weconnect/ GET businesses?location=<location>', () => {
       .get(`${baseEndpoint}/businesses?location=abuja`)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('array');
-        expect(res.body[0]).to.have.property('location').eql('Abuja');
+        expect(res.body).to.be.a('object');
+        expect(res.body.filterBusinessesByLocation[0]).to.have.property('location').eql('Abuja');
         done();
       });
   });
@@ -135,8 +135,8 @@ describe('/api/v1/weconnect/ GET businesses?category=<category>', () => {
       .get(`${baseEndpoint}/businesses?category=gaming`)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('array');
-        expect(res.body[0]).to.have.property('category').eql('gaming');
+        expect(res.body).to.be.a('object');
+        expect(res.body.filterBusinessesByCategory[0]).to.have.property('category').eql('gaming');
         done();
       });
   });
@@ -169,7 +169,7 @@ describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
-        expect(res.body).to.have.property('location').eql('Lagos');
+        expect(res.body.business).to.have.property('location').eql('Lagos');
         done();
       });
   });
@@ -202,7 +202,7 @@ describe('/api/v1/weconnect/ PUT businesses/:businessId', () => {
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
-        expect(res.body).to.have.property('name').eql('Oil and Gas');
+        expect(res.body.business).to.have.property('name').eql('Oil and Gas');
         done();
       });
   });
@@ -302,8 +302,8 @@ describe('/api/v1/weconnect/ GET businesses/:businessId/reviews', () => {
       .get(`${baseEndpoint}/businesses/${businessId}/reviews`)
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body).to.be.a('array');
-        expect(res.body[0]).to.have.property('userName').eql('daramola');
+        expect(res.body).to.be.a('object');
+        expect(res.body.reviews[0]).to.have.property('userName').eql('daramola');
         done();
       });
   });

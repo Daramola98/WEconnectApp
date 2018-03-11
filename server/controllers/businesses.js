@@ -2,11 +2,12 @@ import businesses from '../models/businesses';
 import businessHelpers from '../helpers/businessHelpers';
 
 const businessNotFoundMessage = { message: 'Business not found' };
+const businessFoundMessage = 'Business found';
 const businessDeletedMessage = { message: 'Business has been deleted' };
 
 export default {
   // REGISTER A BUSINESS
-  create(req, res) {
+  createBusiness(req, res) {
     const business = {
       id: businesses[businesses.length - 1].id + 1,
       name: req.body.name,
@@ -30,7 +31,7 @@ export default {
       const filterBusinessesByLocation = businesses
         .filter(business => business.location.toLowerCase() === location);
       if (filterBusinessesByLocation.length > 0) {
-        res.status(200).json(filterBusinessesByLocation);
+        res.status(200).json({ businessFoundMessage, filterBusinessesByLocation });
       } else {
         const businessLocationMessage = { message: 'No businesses in the specified location' };
         res.status(404).json(businessLocationMessage);
@@ -41,7 +42,7 @@ export default {
       const filterBusinessesByCategory = businesses
         .filter(business => business.category.toLowerCase() === category);
       if (filterBusinessesByCategory.length > 0) {
-        res.status(200).json(filterBusinessesByCategory);
+        res.status(200).json({ businessFoundMessage, filterBusinessesByCategory });
       } else {
         const businessCategoryMessage = { message: 'No businesses in the specified category' };
         res.status(404).json(businessCategoryMessage);
@@ -52,26 +53,27 @@ export default {
     }
   },
   // RETRIEVE A BUSINESS
-  retrieve(req, res) {
+  retrieveBusiness(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
-      res.status(200).json(business);
+      res.status(200).json({ businessFoundMessage, business });
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
   },
   // UPDATE A BUSINESS
-  update(req, res) {
+  updateBusiness(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       Object.assign(business, req.body);
-      res.status(200).json(business);
+      const message = 'Business updated successfully';
+      res.status(200).json({ message, business });
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
   },
   // DELETE A BUSINESS
-  remove(req, res) {
+  removeBusiness(req, res) {
     const businessIndex = businessHelpers.findBusinessIndexById(req.params.businessId);
     if (businessIndex === 0) {
       businesses.splice(businessIndex, 1);
@@ -99,7 +101,8 @@ export default {
   getReview(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
-      res.status(200).json(business.reviews);
+      const reviewFoundMessage = 'Reviews have been found';
+      res.status(200).json({ reviewFoundMessage, reviews: business.reviews });
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
