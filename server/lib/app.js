@@ -42,7 +42,7 @@ app.all('*', (req, res) => {
   res.status(404).json({ message: 'Endpoint not Found' });
 });
 // LISTEN TO ACTIVITY ON PORT
-const port = process.env.PORT || 8080;
+const port = parseInt(process.env.PORT, 10) || 8080;
 app.listen(port);
 
 export default app;
