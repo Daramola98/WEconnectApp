@@ -825,7 +825,9 @@
           "message": {
             "type": "string",
             "example": "Business registered successfully"
-          },
+          }
+        },
+        "business": {
         "type": "object",
         "required": ["name", "id", "category", "location", "address", "email", "number", "businessDescription"],
         "properties": {
@@ -880,8 +882,8 @@
             "example": "3/10/2018, 10:40:17 PM"
           }
         }
-      },
-    
+      }
+    },
       "BusinessNotFound": {
         "type": "object",
         "properties": {
@@ -1006,12 +1008,11 @@
           "reviews": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Review"
+              "$ref": "#/definitions/BusinessReview"
             }
           }
         }
-      }
-    },
+      },
     "externalDocs": {
       "description": "",
       "url": ""
