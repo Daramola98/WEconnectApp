@@ -2,7 +2,9 @@ import express from 'express';
 import path from 'path';
 import validator from 'express-validator';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
 import routes from '../routes/index';
+import swaggerDocument from '../../swagger.json';
 
 const app = express();
 
@@ -11,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // CORS
 app.use((req, res, next) => {
