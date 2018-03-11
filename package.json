@@ -9,7 +9,8 @@
     "serve": "node server/dist/app.js",
     "test": "nyc --reporter=lcov  --reporter=text mocha server/test --compilers js:babel-register --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info"
+    "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
+    "check-coverage": "nyc check-coverage --lines 80 --per-file"
   },
   "repository": {
     "type": "git",

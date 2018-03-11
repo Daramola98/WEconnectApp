@@ -37,10 +37,12 @@ app.get('/', (req, res) => {
   res.status(200).json(apiRootMessage);
 });
 routes.businesses(app);
-
+// CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
+app.all('*', (req, res) => {
+  res.status(404).json({ message: 'Endpoint not Found' });
+});
 // LISTEN TO ACTIVITY ON PORT
 const port = process.env.PORT || 5000;
-
 app.listen(port);
 
 export default app;
