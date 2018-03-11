@@ -1,15 +1,16 @@
 import business from '../controllers/businesses';
+import validate from '../helpers/validationHelper';
 
 const baseEndpoint = '/api/v1/weconnect/businesses';
 
 export default (app) => {
-  app.post(`${baseEndpoint}/`, business.create);
-  app.get(`${baseEndpoint}/`, business.listBusinesses);
+  app.post(`${baseEndpoint}/`, validate.businessRegisterInputCheck, business.create);
+  app.get(`${baseEndpoint}/`, validate.businessQueryCheck, business.listBusinesses);
 
-  app.get(`${baseEndpoint}/:businessId`, business.retrieve);
-  app.put(`${baseEndpoint}/:businessId`, business.update);
-  app.delete(`${baseEndpoint}/:businessId`, business.remove);
+  app.get(`${baseEndpoint}/:businessId`, validate.businessIdCheck, business.retrieve);
+  app.put(`${baseEndpoint}/:businessId`, validate.businessIdCheck, validate.businessUpdateInputCheck, business.update);
+  app.delete(`${baseEndpoint}/:businessId`, validate.businessIdCheck, business.remove);
 
-  app.post(`${baseEndpoint}/:businessId/reviews`, business.addReview);
-  app.get(`${baseEndpoint}/:businessId/reviews`, business.getReview);
+  app.post(`${baseEndpoint}/:businessId/reviews`, validate.businessIdCheck, validate.businessReviewInputCheck, business.addReview);
+  app.get(`${baseEndpoint}/:businessId/reviews`, validate.businessIdCheck, business.getReview);
 };
