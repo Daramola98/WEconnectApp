@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import validator from 'express-validator';
 import bodyParser from 'body-parser';
 import routes from '../routes/index';
 
@@ -9,6 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(validator());
 
 // CORS
 app.use((req, res, next) => {
