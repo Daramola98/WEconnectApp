@@ -5,9 +5,21 @@ const businessNotFoundMessage = { message: 'Business not found' };
 const businessFoundMessage = 'Business found';
 const businessDeletedMessage = { message: 'Business has been deleted' };
 
-export default {
+/**
+ *
+ *@class Business
+ *@classdesc creates a Business controller Class
+ */
+export default class Business {
   // REGISTER A BUSINESS
-  createBusiness(req, res) {
+  /**
+   * Adds a new business to the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business created or error message
+   * @memberof Business
+   */
+  static createBusiness(req, res) {
     const business = {
       id: businesses[businesses.length - 1].id + 1,
       name: req.body.name,
@@ -23,9 +35,17 @@ export default {
     businesses.push(business);
     const businessRegisterMessage = { message: 'Business has been registered successfully', business };
     res.status(201).json(businessRegisterMessage);
-  },
+  }
+
   // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
-  listBusinesses(req, res) {
+  /** Gets all businesses in the database
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} list of businesses in the database
+   * @memberof Business
+   */
+  static listBusinesses(req, res) {
     if (req.query.location) {
       const location = req.query.location.toLowerCase();
       const filterBusinessesByLocation = businesses
@@ -51,18 +71,34 @@ export default {
     if (!req.query.location && !req.query.category) {
       res.status(200).json(businesses);
     }
-  },
+  }
+
   // RETRIEVE A BUSINESS
-  retrieveBusiness(req, res) {
+  /**
+   * Gets a Business from the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business found or error message
+   * @memberof Business
+   */
+  static retrieveBusiness(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       res.status(200).json({ businessFoundMessage, business });
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
-  },
+  }
+
   // UPDATE A BUSINESS
-  updateBusiness(req, res) {
+  /** Update the deatils of  an existing business
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business updated or error message
+   * @memberof Business class
+   */
+  static updateBusiness(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       Object.assign(business, req.body);
@@ -71,9 +107,17 @@ export default {
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
-  },
+  }
+
   // DELETE A BUSINESS
-  removeBusiness(req, res) {
+  /**
+   * Deletes a business from the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business deleted or error message
+   * @memberof Business
+   */
+  static removeBusiness(req, res) {
     const businessIndex = businessHelpers.findBusinessIndexById(req.params.businessId);
     if (businessIndex === 0) {
       businesses.splice(businessIndex, 1);
@@ -85,9 +129,17 @@ export default {
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
-  },
+  }
+
   // ADD A BUSINESS REVIEW
-  addReview(req, res) {
+  /**
+   * Add a business review to a buiness in the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business review created or error message
+   * @memberof Business
+   */
+  static addReview(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       business.reviews.push({ userName: req.body.username, review: [req.body.review] });
@@ -96,9 +148,17 @@ export default {
     } else {
       res.status(404).json(businessNotFoundMessage);
     }
-  },
+  }
+
   // GET BUSINESS REVIEWS
-  getReview(req, res) {
+  /**
+   * Retrieves reviews for a business
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the Review found or error message
+   * @memberof Business
+   */
+  static getReview(req, res) {
     const business = businessHelpers.findBusinessById(req.params.businessId);
     if (business) {
       const reviewFoundMessage = 'Reviews have been found';
@@ -107,4 +167,4 @@ export default {
       res.status(404).json(businessNotFoundMessage);
     }
   }
-};
+}

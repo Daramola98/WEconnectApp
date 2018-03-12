@@ -5,4 +5,4 @@ jshint:
   config_file: .jshintrc
 
 eslint:
-  enabled: false
+  enabled: true
