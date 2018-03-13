@@ -1,4 +1,4 @@
-import businesses from '../models/businesses';
+import businesses from '../dummymodel/businessesDummy';
 import businessHelpers from '../helpers/businessHelpers';
 
 const businessNotFoundMessage = { message: 'Business not found' };

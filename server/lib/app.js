@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
+import dotenv from 'dotenv';
 import validator from 'express-validator';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import routes from '../routes/index';
 import swaggerDocument from '../../swagger.json';
 
+dotenv.config();
 const app = express();
 
 // EXPRESS MIDDLEWARES
