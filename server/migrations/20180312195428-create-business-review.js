@@ -6,6 +6,10 @@ module.exports = {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
     },
+    ReviewerId: {
+      type: Sequelize.UUID,
+      allowNull: false
+    },
     review: {
       allowNull: false,
       type: Sequelize.TEXT,

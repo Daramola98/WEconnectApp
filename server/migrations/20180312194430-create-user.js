@@ -24,11 +24,11 @@ module.exports = {
       allowNull: false
     },
     telephoneNumber: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false
     },
     homeNumber: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true
     },
     createdAt: {
