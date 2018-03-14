@@ -12,10 +12,10 @@ export default {
         },
         errorMessage: 'Your Business name is required'
       },
-      businessDescription: {
+      description: {
         notEmpty: true,
         isLength: {
-          options: [{ min: 5 }, { max: 500 }],
+          options: [{ min: 5, max: 500 }],
           errorMessage: 'Business description should be more than 5 and not greater than 500'
         },
         errorMessage: 'Provide a desciption of your business not more than 500 characters'
@@ -24,14 +24,14 @@ export default {
         notEmpty: true,
         errorMessage: 'Business Location is required',
         isLength: {
-          options: [{ min: 3 }, { max: 100 }],
+          options: [{ min: 3, max: 100 }],
           errorMessage: 'Business location should be more than 5 and not greater than 100 characters'
         }
       },
       category: {
         notEmpty: true,
         isLength: {
-          options: [{ min: 4 }, { max: 50 }],
+          options: [{ min: 4, max: 50 }],
           errorMessage: 'Business Category should be more than 5 and not greater than 100 characters'
         },
         errorMessage: 'Business Category is required'
@@ -42,7 +42,7 @@ export default {
           errorMessage: 'Enter a valid Email Address'
         },
         isLength: {
-          options: [{ min: 4 }, { max: 50 }],
+          options: [{ min: 4, max: 50 }],
           errorMessage: 'Email should be more than 5 and not greater than 100 characters'
         },
         errorMessage: 'Email is required'
@@ -53,7 +53,7 @@ export default {
           errorMessage: 'Enter a valid Telephone Number'
         },
         isLength: {
-          options: [{ min: 11 }, { max: 11 }],
+          options: [{ min: 11, max: 11 }],
           errorMessage: 'Telephone Number should be more than 1 and not greater than 11 characters'
         },
         errorMessage: 'Telephone Number is required'
@@ -65,16 +65,16 @@ export default {
           errorMessage: 'Enter a valid Office Number'
         },
         isLength: {
-          options: [{ min: 11 }, { max: 11 }],
+          options: [{ min: 11, max: 11 }],
           errorMessage: 'Office should be more than 1 and not greater than 11 characters'
         },
         errorMessage: 'Office Number is required'
       },
-      businessAddress: {
+      address: {
         notEmpty: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3 }, { max: 50 }],
+          options: [{ min: 3, max: 50 }],
           errorMessage: 'Business Address should be more than 3 and not greater than 50 characters'
         },
         errorMessage: 'Business Address is required'
@@ -106,11 +106,11 @@ export default {
         },
         errorMessage: 'Your Business name is required'
       },
-      businessDescription: {
+      description: {
         notEmpty: false,
         optional: true,
         isLength: {
-          options: [{ min: 20 }, { max: 500 }],
+          options: [{ min: 20, max: 500 }],
           errorMessage: 'Business description should be more than 5 and not greater than 500'
         },
         errorMessage: 'Provide a desciption of your business not more than 500 characters'
@@ -120,7 +120,7 @@ export default {
         optional: true,
         errorMessage: 'Business Location is required',
         isLength: {
-          options: [{ min: 3 }, { max: 100 }],
+          options: [{ min: 3, max: 100 }],
           errorMessage: 'Business location should be more than 5 and not greater than 100 characters'
         }
       },
@@ -128,7 +128,7 @@ export default {
         notEmpty: false,
         optional: true,
         isLength: {
-          options: [{ min: 4 }, { max: 50 }],
+          options: [{ min: 4, max: 50 }],
           errorMessage: 'Business Category should be more than 5 and not greater than 50 characters'
         },
         errorMessage: 'Business Category is required'
@@ -140,7 +140,7 @@ export default {
           errorMessage: 'Enter a valid Email Address'
         },
         isLength: {
-          options: [{ min: 4 }, { max: 50 }],
+          options: [{ min: 4, max: 50 }],
           errorMessage: 'Email should be more than 3 and not greater than 50 characters'
         },
         errorMessage: 'Email is required'
@@ -152,7 +152,7 @@ export default {
           errorMessage: 'Enter a valid Telephone Number'
         },
         isLength: {
-          options: [{ min: 11 }, { max: 11 }],
+          options: [{ min: 11, max: 11 }],
           errorMessage: 'Telephone Number should be more than 1 and not greater than 11 characters'
         },
         errorMessage: 'Telephone Number is required'
@@ -164,17 +164,17 @@ export default {
           errorMessage: 'Enter a valid Office Number'
         },
         isLength: {
-          options: [{ min: 11 }, { max: 11 }],
+          options: [{ min: 11, max: 11 }],
           errorMessage: 'Office should be more than 1 and not greater than 11 characters'
         },
         errorMessage: 'Office Number is required'
       },
-      businessAddress: {
+      address: {
         notEmpty: true,
         optional: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3 }, { max: 50 }],
+          options: [{ min: 3, max: 50 }],
           errorMessage: 'Business Address should be more than 3 and not greater than 50 characters'
         },
         errorMessage: 'Business Address is required'
@@ -198,7 +198,7 @@ export default {
     req.checkParams({
       businessId: {
         isInt: true,
-        errorMessage: 'Your Business id should be a number'
+        errorMessage: 'Your Business id should be a uuid'
       }
     });
     const errors = req.validationErrors();
@@ -221,7 +221,7 @@ export default {
         optional: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3 }, { max: 100 }],
+          options: [{ min: 3, max: 100 }],
           errorMessage: 'Location should be more than 2 and not greater than 100 characters'
         },
         errorMessage: 'Business location should be a string'
@@ -252,21 +252,12 @@ export default {
   },
   businessReviewInputCheck(req, res, next) {
     req.checkBody({
-      username: {
-        notEmpty: true,
-        isInt: false,
-        isLength: {
-          options: [{ min: 3 }, { max: 100 }],
-          errorMessage: 'Username should be more than 2 and not greater than 100 characters'
-        },
-        errorMessage: 'Username is required',
-      },
       review: {
         notEmpty: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3 }, { max: 50 }],
-          errorMessage: 'Business Review should be more than 2 and not greater than 50 characters'
+          options: [{ min: 3, max: 500 }],
+          errorMessage: 'Business Review should be more than 2 and not greater than 500 characters'
         },
         errorMessage: 'Business review should be a string'
       }

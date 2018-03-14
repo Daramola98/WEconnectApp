@@ -1,16 +1,18 @@
+import express from 'express';
 import business from '../controllers/businesses';
 import validate from '../helpers/validationHelper';
+import authorize from '../helpers/check-auth';
 
-const baseEndpoint = '/api/v1/weconnect/businesses';
+const router = express.Router();
 
-export default (app) => {
-  app.post(`${baseEndpoint}/`, validate.businessRegisterInputCheck, business.createBusiness);
-  app.get(`${baseEndpoint}/`, validate.businessQueryCheck, business.listBusinesses);
+router.post('/', authorize.checkAuthentication, validate.businessRegisterInputCheck, business.createBusiness);
+router.get('/', validate.businessQueryCheck, business.listBusinesses);
 
-  app.get(`${baseEndpoint}/:businessId`, validate.businessIdCheck, business.retrieveBusiness);
-  app.put(`${baseEndpoint}/:businessId`, validate.businessIdCheck, validate.businessUpdateInputCheck, business.updateBusiness);
-  app.delete(`${baseEndpoint}/:businessId`, validate.businessIdCheck, business.removeBusiness);
+router.get('/:businessId', validate.businessIdCheck, business.retrieveBusiness);
+router.put('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, validate.businessUpdateInputCheck, business.updateBusiness);
+router.delete('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, business.removeBusiness);
 
-  app.post(`${baseEndpoint}/:businessId/reviews`, validate.businessIdCheck, validate.businessReviewInputCheck, business.addReview);
-  app.get(`${baseEndpoint}/:businessId/reviews`, validate.businessIdCheck, business.getReview);
-};
+router.post('/:businessId/reviews', authorize.checkAuthentication, validate.businessIdCheck, validate.businessReviewInputCheck, business.addReview);
+router.get('/:businessId/reviews', validate.businessIdCheck, business.getReview);
+
+export default router;

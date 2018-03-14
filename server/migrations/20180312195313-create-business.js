@@ -1,14 +1,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Businesses', {
     id: {
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.UUID,
-      defaultValue: Sequelize.UUIDV4,
-      allowNull: false
+      type: Sequelize.INTEGER,
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     location: {
       type: Sequelize.STRING,
@@ -40,7 +41,8 @@ module.exports = {
       allowNull: true,
     },
     UserId: {
-      type: Sequelize.UUID,
+      type: Sequelize.INTEGER,
+      allowNull: false,
       onDelete: 'CASCADE',
       references: {
         model: 'Users',
