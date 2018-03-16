@@ -10,8 +10,8 @@ module.exports = {
     dialect: 'postgres'
   },
   test: {
-    username: root,
-    password: null,
+    username: 'root',
+    password: 'root',
     database: 'weconnect-test',
     host: '127.0.0.1',
     port: 5432,
