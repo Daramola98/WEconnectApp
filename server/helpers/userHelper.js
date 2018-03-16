@@ -39,7 +39,7 @@ export default {
       });
   },
   userSignUpInputCheck(req, res, next) {
-    const userNameErrorMessage = 'Please provide a name with atleast 5 and not more than 50 characters .';
+    const userNameErrorMessage = 'Please provide a name with atleast 5 and not more than 50 characters';
     req.checkBody({
       firstname: {
         notEmpty: true,
