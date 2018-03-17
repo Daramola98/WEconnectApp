@@ -1,8 +1,10 @@
 // import businesses from '../models/businesses';
+import checkWhiteSpace from '../helpers/genericHelper';
 
 export default {
   businessRegisterInputCheck(req, res, next) {
     const businessNameErrorMessage = 'Please provide a business name with atleast 5 and not more than 50 characters .';
+    checkWhiteSpace(req);
     req.checkBody({
       name: {
         notEmpty: true,
@@ -15,7 +17,7 @@ export default {
       description: {
         notEmpty: true,
         isLength: {
-          options: [{ min: 5, max: 500 }],
+          options: [{ min: 20, max: 500 }],
           errorMessage: 'Business description should be more than 5 and not greater than 500'
         },
         errorMessage: 'Provide a desciption of your business not more than 500 characters'
@@ -58,7 +60,7 @@ export default {
         },
         errorMessage: 'Telephone Number is required'
       },
-      officeNumber: {
+      homeNumber: {
         notEmpty: false,
         optional: true,
         isInt: {
@@ -95,6 +97,7 @@ export default {
     }
   },
   businessUpdateInputCheck(req, res, next) {
+    checkWhiteSpace(req);
     const businessNameErrorMessage = 'Please provide a business name with atleast 5 characters and max 50 characters.';
     req.checkBody({
       name: {
@@ -111,7 +114,7 @@ export default {
         optional: true,
         isLength: {
           options: [{ min: 20, max: 500 }],
-          errorMessage: 'Business description should be more than 5 and not greater than 500'
+          errorMessage: 'Business description should be more than 20 and not greater than 500'
         },
         errorMessage: 'Provide a desciption of your business not more than 500 characters'
       },
@@ -157,17 +160,17 @@ export default {
         },
         errorMessage: 'Telephone Number is required'
       },
-      officeNumber: {
+      homeNumber: {
         notEmpty: false,
         optional: true,
         isInt: {
-          errorMessage: 'Enter a valid Office Number'
+          errorMessage: 'Enter a valid Home Number'
         },
         isLength: {
           options: [{ min: 11, max: 11 }],
-          errorMessage: 'Office should be more than 1 and not greater than 11 characters'
+          errorMessage: 'Home Number should be more than 1 and not greater than 11 characters'
         },
-        errorMessage: 'Office Number is required'
+        errorMessage: 'Home Number is required'
       },
       address: {
         notEmpty: true,
@@ -195,10 +198,11 @@ export default {
     }
   },
   businessIdCheck(req, res, next) {
+    checkWhiteSpace(req);
     req.checkParams({
       businessId: {
         isInt: true,
-        errorMessage: 'Your Business id should be a uuid'
+        errorMessage: 'Your Business id should be an integer'
       }
     });
     const errors = req.validationErrors();
@@ -216,13 +220,14 @@ export default {
     }
   },
   businessQueryCheck(req, res, next) {
+    checkWhiteSpace(req);
     req.checkQuery({
       location: {
         optional: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3, max: 100 }],
-          errorMessage: 'Location should be more than 2 and not greater than 100 characters'
+          options: [{ min: 1, max: 100 }],
+          errorMessage: 'Location should be more than 0 and not greater than 100 characters'
         },
         errorMessage: 'Business location should be a string'
       },
@@ -230,8 +235,8 @@ export default {
         optional: true,
         isInt: false,
         isLength: {
-          options: [{ min: 3 }, { max: 50 }],
-          errorMessage: 'Category should be more than 2 and not greater than 50 characters'
+          options: [{ min: 1 }, { max: 50 }],
+          errorMessage: 'Category should be more than 0 and not greater than 50 characters'
         },
         errorMessage: 'Business category should be a string'
       }
@@ -251,6 +256,7 @@ export default {
     }
   },
   businessReviewInputCheck(req, res, next) {
+    req.body.review = req.body.review.trim();
     req.checkBody({
       review: {
         notEmpty: true,

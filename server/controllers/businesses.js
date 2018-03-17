@@ -1,7 +1,9 @@
 import db from '../models/index';
+import businessHelper from '../helpers/businessHelpers';
 
 const { Business, BusinessReview } = db;
 
+// MESSAGES FOR ENDPOINTS
 const businessNotFoundMessage = { message: 'Business not found' };
 const businessNotFoundInLocationMessage = { message: 'No Businesses found in the specified location' };
 const businessNotFoundInCategoryMessage = { message: 'No Businesses found in the specified category' };
@@ -26,6 +28,7 @@ export default class BusinessController {
    * @memberof Business
    */
   static createBusiness(req, res) {
+    businessHelper.formatBusinessInput(req, res);
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
@@ -54,11 +57,12 @@ export default class BusinessController {
    */
   static listBusinesses(req, res) {
     if (req.query.location) {
+      const searchLocation = req.query.location.replace(/ /g, '');
       return Business
         .findAll({
           where: {
             location: {
-              ilike: req.query.location
+              ilike: `%${searchLocation}%`
             }
           }
         })
@@ -71,31 +75,44 @@ export default class BusinessController {
         .catch(err => res.status(500).json(err));
     }
     if (req.query.category) {
+      const searchCategory = req.query.category.replace(/ /g, '');
       return Business
         .findAll({
           where: {
             category: {
-              ilike: req.query.category
+              ilike: `%${searchCategory}%`
             }
           }
         })
-        .then(business => res.status(200).json({ businessFoundMessage, business }))
-        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
+        .then((business) => {
+          if (business.length > 0) {
+            return res.status(200).json({ businessFoundMessage, business });
+          }
+          return res.status(404).json(businessNotFoundInCategoryMessage);
+        })
+        .catch(err => res.status(500).json(err));
     }
     if (req.query.location && req.query.category) {
+      const searchCategory = req.query.category.replace(/ /g, '');
+      const searchLocation = req.query.location.replace(/ /g, '');
       return Business
         .findAll({
           where: {
             location: {
-              ilike: req.query.location
+              ilike: `%${searchLocation}%`
             },
             category: {
-              ilike: req.query.category
+              ilike: `%${searchCategory}%`
             }
           }
         })
-        .then(business => res.status(200).json({ businessFoundMessage, business }))
-        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
+        .then((business) => {
+          if (business.length > 0) {
+            return res.status(200).json({ businessFoundMessage, business });
+          }
+          return res.status(404).json(businessNotFoundMessage);
+        })
+        .catch(err => res.status(500).json(err));
     }
     if (!req.query.location && !req.query.category) {
       return Business
@@ -105,8 +122,13 @@ export default class BusinessController {
             as: 'reviews',
           }],
         })
-        .then(businesses => res.status(200).json(businesses))
-        .catch(err => res.status(400).json(err));
+        .then((businesses) => {
+          if (businesses.length > 0) {
+            return res.status(200).json(businesses);
+          }
+          return res.status(200).json({ message: 'Businesses have not been added yet Add our first business' });
+        })
+        .catch(err => res.status(500).json(err));
     }
   }
 
@@ -120,7 +142,7 @@ export default class BusinessController {
    */
   static retrieveBusiness(req, res) {
     return Business
-      .find({
+      .findOne({
         where: {
           id: req.params.businessId
         }
@@ -143,8 +165,9 @@ export default class BusinessController {
    * @memberof Business class
    */
   static updateBusiness(req, res) {
+    businessHelper.formatBusinessUpdateInput(req, res);
     return Business
-      .find({
+      .findOne({
         where: {
           id: req.params.businessId
         }
@@ -174,7 +197,7 @@ export default class BusinessController {
    */
   static removeBusiness(req, res) {
     return Business
-      .find({
+      .findOne({
         where: {
           id: req.params.businessId
         }
@@ -205,11 +228,11 @@ export default class BusinessController {
   static addReview(req, res) {
     const businessReviewDetails = {
       ReviewerId: req.userData.userId,
-      review: req.body.review,
+      review: req.body.review.replace(/ +/g, ' '),
       BusinessId: req.params.businessId
     };
     return Business
-      .find({
+      .findOne({
         where: {
           id: req.params.businessId
         }
@@ -235,18 +258,29 @@ export default class BusinessController {
    * @memberof Business
    */
   static getReview(req, res) {
-    return BusinessReview
-      .findAll({
+    return Business
+      .findOne({
         where: {
-          BusinessId: req.params.businessId
+          id: req.params.businessId
         }
       })
-      .then((reviews) => {
-        if (reviews.length > 0) {
-          return res.status(200).json({ reviewFoundMessage, reviews });
+      .then((business) => {
+        if (business) {
+          return BusinessReview
+            .findAll({
+              where: {
+                BusinessId: req.params.businessId
+              }
+            })
+            .then((reviews) => {
+              if (reviews.length > 0) {
+                return res.status(200).json({ reviewFoundMessage, reviews });
+              }
+              res.status(404).json({ message: 'Reviews have not been added for this Business' });
+            })
+            .catch(err => res.status(500).json(err));
         }
-        res.status(404).json({ message: 'Reviews have not been added for this Business' });
-      })
-      .catch(err => res.status(500).json(err));
+        res.status(404).json({ message: 'Business does not exist, Enter id for existing business' });
+      });
   }
 }
