@@ -11,7 +11,7 @@ dist: trusty
 services:
   - postgresql
 before_script:
-  - "psql -c 'create database weconnect-test;' -U postgres"
+  - "psql -c 'create database weconnect_test;' -U postgres"
   - npm run test-migrate
 after_success: 
   - npm run coverage
