@@ -11,7 +11,7 @@ module.exports = {
   },
   test: {
     username: 'postgres',
-    password: 'dara10',
+    password: '',
     database: 'weconnect-test',
     host: '127.0.0.1',
     port: 5432,
