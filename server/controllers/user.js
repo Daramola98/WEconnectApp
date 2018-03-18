@@ -55,7 +55,9 @@ export default class UserController {
      */
   static updateUserDetails(req, res) {
     userHelper.formatUserUpdateInput(req, res);
-    req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    if (req.body.password) {
+      req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+    }
     return User
       .findOne({
         where: {

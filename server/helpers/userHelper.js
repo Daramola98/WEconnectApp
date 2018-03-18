@@ -184,6 +184,7 @@ export default {
       password: {
         notEmpty: true,
         isInt: false,
+        optional: true,
         isLength: {
           options: [{ min: 6, max: 16 }],
           errorMessage: 'password should be more than 5 and not greater than 16 characters'
@@ -241,7 +242,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();

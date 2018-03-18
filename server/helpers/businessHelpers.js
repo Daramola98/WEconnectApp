@@ -13,24 +13,18 @@ export default {
       inputEmail = req.body.email.replace(/ /g, '');
       inputName = req.body.name.replace(/ +/g, ' ');
     }
-    if (req.body.email && !req.body.name) {
-      inputEmail = req.body.email.replace(/ /g, '');
-    }
-    if (req.body.name && !req.body.email) {
-      inputName = req.body.name.replace(/ +/g, ' ');
-    }
     return Business
       .findOne({
         where: {
           [Op.or]: [
             {
               email: {
-                ilike: `%${inputEmail}%`
+                ilike: inputEmail
               }
             },
             {
               name: {
-                ilike: `%${inputName}%`
+                ilike: inputName
               }
             }
           ]
@@ -72,6 +66,7 @@ export default {
       }
     }
   },
+
   checkIfBusinessWithIdExists(req, res, next) {
     Business
       .findOne({
@@ -86,13 +81,5 @@ export default {
         next();
       });
   },
-  checkForWhitespaces(req, res, next) {
-    req.body.name = req.body.name.trim();
-    req.body.category = req.body.category.trim();
-    req.body.location = req.body.location.trim();
-    req.body.address = req.body.address.trim();
-    req.body.description = req.body.description.trim();
-    next();
-  }
 };
 

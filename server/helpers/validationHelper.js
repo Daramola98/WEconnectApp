@@ -3,7 +3,7 @@ import checkWhiteSpace from '../helpers/genericHelper';
 
 export default {
   businessRegisterInputCheck(req, res, next) {
-    const businessNameErrorMessage = 'Please provide a business name with atleast 5 and not more than 50 characters .';
+    const businessNameErrorMessage = 'Please provide a business name with atleast 5 and not more than 50 characters';
     checkWhiteSpace(req);
     req.checkBody({
       name: {
@@ -18,16 +18,16 @@ export default {
         notEmpty: true,
         isLength: {
           options: [{ min: 20, max: 500 }],
-          errorMessage: 'Business description should be more than 5 and not greater than 500'
+          errorMessage: 'Business description should be more than 20 and not greater than 500'
         },
-        errorMessage: 'Provide a desciption of your business not more than 500 characters'
+        errorMessage: 'Provide a description of your business not more than 500 characters'
       },
       location: {
         notEmpty: true,
         errorMessage: 'Business Location is required',
         isLength: {
           options: [{ min: 3, max: 100 }],
-          errorMessage: 'Business location should be more than 5 and not greater than 100 characters'
+          errorMessage: 'Business location should be more than 3 and not greater than 100 characters'
         }
       },
       category: {
@@ -56,7 +56,7 @@ export default {
         },
         isLength: {
           options: [{ min: 11, max: 11 }],
-          errorMessage: 'Telephone Number should be more than 1 and not greater than 11 characters'
+          errorMessage: 'Telephone Number should be 11 characters'
         },
         errorMessage: 'Telephone Number is required'
       },
@@ -68,9 +68,9 @@ export default {
         },
         isLength: {
           options: [{ min: 11, max: 11 }],
-          errorMessage: 'Office should be more than 1 and not greater than 11 characters'
+          errorMessage: 'Home Number should be 11 characters'
         },
-        errorMessage: 'Office Number is required'
+        errorMessage: 'Home Number is required'
       },
       address: {
         notEmpty: true,
@@ -90,7 +90,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -98,7 +98,7 @@ export default {
   },
   businessUpdateInputCheck(req, res, next) {
     checkWhiteSpace(req);
-    const businessNameErrorMessage = 'Please provide a business name with atleast 5 characters and max 50 characters.';
+    const businessNameErrorMessage = 'Please provide a business name with atleast 5 characters and max 50 characters';
     req.checkBody({
       name: {
         notEmpty: false,
@@ -116,7 +116,7 @@ export default {
           options: [{ min: 20, max: 500 }],
           errorMessage: 'Business description should be more than 20 and not greater than 500'
         },
-        errorMessage: 'Provide a desciption of your business not more than 500 characters'
+        errorMessage: 'Provide a description of your business not more than 500 characters'
       },
       location: {
         notEmpty: false,
@@ -156,7 +156,7 @@ export default {
         },
         isLength: {
           options: [{ min: 11, max: 11 }],
-          errorMessage: 'Telephone Number should be more than 1 and not greater than 11 characters'
+          errorMessage: 'Telephone Number should be 11 characters'
         },
         errorMessage: 'Telephone Number is required'
       },
@@ -168,7 +168,7 @@ export default {
         },
         isLength: {
           options: [{ min: 11, max: 11 }],
-          errorMessage: 'Home Number should be more than 1 and not greater than 11 characters'
+          errorMessage: 'Home Number should be 11 characters'
         },
         errorMessage: 'Home Number is required'
       },
@@ -191,7 +191,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -213,7 +213,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -249,7 +249,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -265,7 +265,7 @@ export default {
           options: [{ min: 3, max: 500 }],
           errorMessage: 'Business Review should be more than 2 and not greater than 500 characters'
         },
-        errorMessage: 'Business review should be a string'
+        errorMessage: 'Business review is required'
       }
     });
     const errors = req.validationErrors();
@@ -276,7 +276,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();

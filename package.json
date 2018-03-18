@@ -9,7 +9,7 @@
     "build": "babel server/lib -d dist && babel test -d dist/test",
     "serve": "node server/dist/app.js",
     "test-migrate": "sequelize db:migrate:undo:all --test && sequelize db:migrate --env test",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test --compilers js:babel-register --require babel-polyfill --timeout 15000 --recursive --exit",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 15000 --recursive --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "check-coverage": "nyc check-coverage --lines 80 --per-file"

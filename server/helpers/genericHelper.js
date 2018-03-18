@@ -7,7 +7,11 @@
 */
 export default function checkForWhiteSpace(req) {
   const reqBody = Object.keys(req.body);
-  for (let i = 0; i < reqBody.length; i += 1) {
-    req.body[reqBody[i]] = req.body[reqBody[i]].trim();
+  if (reqBody && reqBody.length > 0) {
+    for (let i = 0; i < reqBody.length; i += 1) {
+      if (reqBody[i] !== 'UserId' && reqBody[i] !== 'password') {
+        req.body[reqBody[i]] = req.body[reqBody[i]].trim();
+      }
+    }
   }
 }
