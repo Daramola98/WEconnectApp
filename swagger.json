@@ -8,7 +8,7 @@
         "email": "daramolaajibigad@gmail.com"
       }
     },
-    "host": "localhost:8080",
+    "host": "weconnect-api.herokuapp.com",
     "basePath": "/api/v1/weconnect",
     "tags": [
       {
@@ -25,8 +25,8 @@
       }
     ],
     "schemes": [
-      "http",
-      "https"
+      "https",
+      "http"
     ],
     "paths": {
       "/auth/signup": {
