@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Your custom styles -->
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <!-- Used as an example only to position the footer at the end of the page.
+    You can delete these styles or move it to your custom css file -->
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <div class="">
+                        <a href="index.html" class="brand-logo">WEconnect</a>
+                        <a href="#" data-activates="mobile-menu" class="button-collapse">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    Sign In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">
+                                    Sign Up
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="side-nav" id="mobile-menu">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">Sign Up</a>
+                            </li>
+                            <li>
+                                <a href="login.html">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Your content here -->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l8 offset-l2">
+                    <div class="card">
+                        <div class="card-action blue lighten-1 white-text center">
+                            <h3>Contact Us</h3>
+                        </div>
+                        <div class="card-content">
+                            <form action="">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="firstName">First Name</label>
+
+                                        <input type="text" id="firstName" class="validate" required>
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="lastName">Last Name</label>
+
+                                        <input type="text" id="lastName" class="validate" required>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">email</i>
+                                        <label for="user_mail">Email Address</label>
+                                        <input type="email" placeholder="johndoe@gmail.com" id="user_mail" class="validate" required>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">mode_edit</i>
+                                        <textarea class="materialize-textarea" id="contact-message" required> </textarea>
+                                        <label for="contact-message">Send Us A Message</label>
+                                    </div>
+                                </div>
+                                <div class="input-field">
+                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">SEND MESSAGE</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="page-footer blue">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 WEconnect
+                <a class="grey-text text-lighten-4 right" href="#!">Subscribe to Our Newsletters</a>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("document").ready(function () {
+            $(".button-collapse").sideNav();
+            $('#contact-message').val();
+            $('#contact-message').trigger('autoresize');
+        });
+    </script>
+</body>
+
+</html>
