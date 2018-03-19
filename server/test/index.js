@@ -70,7 +70,7 @@ describe('/api/v1/weconnect/ POST businesses', () => {
       .post(`${baseEndpoint}/businesses`)
       .send(business)
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.be.eql('Business Category is required');
         done();
@@ -118,7 +118,7 @@ describe('/api/v1/weconnect/ GET businesses?location=<location>', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses?location=a`)
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.equal('Location should be more than 2 and not greater than 100 characters');
         done();
@@ -151,7 +151,7 @@ describe('/api/v1/weconnect/ GET businesses?category=<category>', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses?category=g`)
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.equal('Category should be more than 2 and not greater than 50 characters');
         done();
@@ -183,7 +183,7 @@ describe('/api/v1/weconnect/ GET businesses/:businessId', () => {
     chai.request(app)
       .get(`${baseEndpoint}/businesses/dara`)
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.equal('Your Business id should be a number');
         done();
@@ -217,7 +217,7 @@ describe('/api/v1/weconnect/ PUT businesses/:businessId', () => {
       .put(`${baseEndpoint}/businesses/1`)
       .send({ name: 'Oi', category: 'hi' })
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body).to.have.lengthOf(2);
         done();
@@ -249,7 +249,7 @@ describe('/api/v1/weconnect/ DELETE businesses/:businessId', () => {
     chai.request(app)
       .delete(`${baseEndpoint}/businesses/weconnect`)
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.equal('Your Business id should be a number');
         done();
@@ -284,7 +284,7 @@ describe('/api/v1/weconnect/ POST businesses/:businessId/reviews', () => {
       .post(`${baseEndpoint}/businesses/3/reviews`)
       .send({ username: 'Julius', review: 'hi' })
       .end((err, res) => {
-        expect(res.status).to.equal(409);
+        expect(res.status).to.equal(400);
         expect(res.body).to.be.a('array');
         expect(res.body[0].error).to.equal('Business Review should be more than 2 and not greater than 50 characters');
         done();

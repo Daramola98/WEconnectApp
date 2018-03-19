@@ -88,7 +88,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -188,7 +188,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -209,7 +209,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -244,7 +244,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
@@ -279,7 +279,7 @@ export default {
           error: error.msg
         });
       });
-      res.status(409)
+      res.status(400)
         .json(validationErrors);
     } else {
       return next();
