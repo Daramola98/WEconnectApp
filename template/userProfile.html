@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Your custom styles -->
+    <!--<link rel="stylesheet" href="css/style.css">-->
+    <!-- Used as an example only to position the footer at the end of the page.
+    You can delete these styles or move it to your custom css file -->
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div>
+            <!-- Dropdown Structure -->
+            <ul id='dropdown1' class='dropdown-content'>
+                <li>
+                    <a href="about.html">About Us</a>
+                </li>
+                <li>
+                    <a href="contact.html">Contact Us</a>
+                </li>
+                <li>
+                    <a href="how-it-works.html">How it Works</a>
+                </li>
+            </ul>
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <div class="">
+                        <a href="index.html" class="brand-logo">WEconnect</a>
+                        <a href="#" data-activates="mobile-menu" class="button-collapse">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="registerBusiness.html">Register Business</a>
+                            </li>
+                            <li>
+                                <a class='dropdown-button btn transparent' href='#' data-activates='dropdown1'>
+                                    <i class="material-icons right">arrow_drop_down</i>Company</a>
+                            </li>
+                            <li>
+                                <a href="businessesListing.html">Business Listing</a>
+                            </li>
+                            <li>
+                                <a href="index.html">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="side-nav" id="mobile-menu">
+                            <li>
+                                <div class="userView">
+                                    <div class="background blue">
+                                        <img src="http://lorempixel.com/output/abstract-q-c-640-480-10.jpg" alt="Background Sidenav">
+                                    </div>
+                                    <a href="#!user">
+                                        <img class="circle" src="http://lorempixel.com/output/people-q-c-640-480-9.jpg" alt="User Image Sidenav">
+                                    </a>
+                                    <a href="#!name">
+                                        <span class="white-text name">John Doe</span>
+                                    </a>
+                                    <a href="#!email">
+                                        <span class="white-text email">jdandturk@gmail.com</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="registerBusiness.html">Register Business</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="businessesListing.html">Business Listing</a>
+                            </li>
+                            <li>
+                                <a href="index.html">Log Out</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Your content here -->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l8 offset-l2">
+                    <div class="card">
+                        <div class="card-action blue lighten-1 white-text center">
+                            <h3>My Profile</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class=row>
+                                <h4 class="col s12 m12 l12 center">Personal Information</h4>
+                            </div>
+
+                            <ul class="collection">
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue lighten-1">account_circle</i>
+                                    <span class="title">
+                                        <h5>Full Name</h5>
+                                    </span>
+                                    <p>
+                                        Ajiboye Daramola
+                                    </p>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue lighten-1">email</i>
+                                    <span class="title">
+                                        <h5>Email</h5>
+                                    </span>
+                                    <p>
+                                        daramola.ajiboye@live.com
+                                    </p>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue lighten-1">phone</i>
+                                    <span class="title">
+                                        <h5>Telephone Number</h5>
+                                    </span>
+                                    <p>
+                                        07011031609
+                                    </p>
+                                </li>
+                                <li class="collection-item avatar">
+                                    <i class="material-icons circle blue lighten-1">business_center</i>
+                                    <span class="title">
+                                        <h5>My Businesses</h5>
+                                    </span>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col s12 m12 align-centre">
+                                    <ul class="collapsible popout" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header">
+                                                <i class="material-icons prefix">account_circle</i>
+                                                Clash of Clans
+                                            </div>
+
+                                            <div class="collapsible-body center">
+                                                <span>
+                                                    <a href="businessProfile.html" class="waves-effect waves-light btn">View Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn">Update Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="/delete/business" class="waves-effect waves-light btn">Delete Business Profile</a>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header">
+                                                <i class="material-icons">place</i>
+                                                Uber Driving
+                                            </div>
+                                            <div class="collapsible-body center">
+                                                <span>
+                                                    <a href="businessProfile.html" class="waves-effect waves-light btn">View Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn">Update Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="#" class="waves-effect waves-light btn">Delete Business Profile</a>
+                                                </span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header">
+                                                <i class="material-icons prefix">directions_car</i>
+                                                Car rentals
+                                            </div>
+                                            <div class="collapsible-body center">
+                                                <span>
+                                                    <a href="businessProfile.html" class="waves-effect waves-light btn">View Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn">Update Business Profile</a>
+                                                </span>
+                                                <br>
+                                                <br>
+                                                <span>
+                                                    <a href="#" class="waves-effect waves-light btn">Delete Business Profile</a>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="page-footer blue">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 WEconnect
+                <a class="grey-text text-lighten-4 right" href="#!">Subscribe to Our Newsletters</a>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("document").ready(function () {
+            $(".button-collapse").sideNav();
+            $('.collapsible').collapsible();
+            $('select').material_select();
+            $('#business_description').val();
+            $('#business_description').trigger('autoresize');
+
+        });
+    </script>
+</body>
+
+</html>

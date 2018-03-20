@@ -6,17 +6,12 @@ import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from '../routes/user';
 import businessRoutes from '../routes/businesses';
+import cors from 'cors';
+import routes from '../routes/index';
 import swaggerDocument from '../../swagger.json';
 
 dotenv.config();
 const app = express();
-
-// EXPRESS MIDDLEWARES
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(validator());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // CORS
 app.use((req, res, next) => {
@@ -25,6 +20,14 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
   next();
 });
+
+// EXPRESS MIDDLEWARES
+app.use(cors({ credentials: true, origin: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(validator());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ROUTES
 app.get('/', (req, res) => {
