@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import validator from 'express-validator';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
+import userRoutes from '../routes/user';
+import businessRoutes from '../routes/businesses';
 import cors from 'cors';
 import routes from '../routes/index';
 import swaggerDocument from '../../swagger.json';
@@ -43,7 +45,9 @@ app.get('/', (req, res) => {
   };
   res.status(200).json(apiRootMessage);
 });
-routes.businesses(app);
+app.use('/api/v1/weconnect/auth', userRoutes);
+app.use('/api/v1/weconnect/businesses', businessRoutes);
+
 // CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
 app.all('*', (req, res) => {
   res.status(404).json({ message: 'Endpoint not Found' });

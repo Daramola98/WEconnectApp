@@ -1,16 +1,22 @@
-import businesses from '../dummymodel/businessesDummy';
-import businessHelpers from '../helpers/businessHelpers';
+import db from '../models/index';
+
+const { Business, BusinessReview } = db;
 
 const businessNotFoundMessage = { message: 'Business not found' };
+const businessNotFoundInLocationMessage = { message: 'No Businesses found in the specified location' };
+const businessNotFoundInCategoryMessage = { message: 'No Businesses found in the specified category' };
 const businessFoundMessage = 'Business found';
+const businessesFoundMessage = 'Businesses found';
 const businessDeletedMessage = { message: 'Business has been deleted' };
+const businessReviewMessage = 'Business Review Added';
+const reviewFoundMessage = 'Reviews have been found';
 
 /**
  *
  *@class Business
  *@classdesc creates a Business controller Class
  */
-export default class Business {
+export default class BusinessController {
   // REGISTER A BUSINESS
   /**
    * Adds a new business to the database
@@ -20,21 +26,22 @@ export default class Business {
    * @memberof Business
    */
   static createBusiness(req, res) {
-    const business = {
-      id: businesses[businesses.length - 1].id + 1,
+    const businessDetails = {
       name: req.body.name,
       category: req.body.category,
       email: req.body.email,
-      number: { home: req.body.telephoneNumber, office: req.body.officeNumber },
+      telephoneNumber: req.body.telephoneNumber,
+      homeNumber: req.body.homeNumber,
       location: req.body.location,
-      businessAddress: req.body.businessAddress,
-      owner: req.params.username,
-      businessDescription: req.body.businessDescription,
-      reviews: []
+      address: req.body.address,
+      UserId: req.userData.userId,
+      description: req.body.description
     };
-    businesses.push(business);
-    const businessRegisterMessage = { message: 'Business has been registered successfully', business };
-    res.status(201).json(businessRegisterMessage);
+    const businessRegisterMessage = 'Business has been registered successfully';
+    return Business
+      .create(businessDetails)
+      .then(business => res.status(201).json({ message: businessRegisterMessage, business }))
+      .catch(err => res.status(400).json(err));
   }
 
   // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
@@ -43,33 +50,63 @@ export default class Business {
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @return {object} list of businesses in the database
-   * @memberof Business
+   * @memberof Business Controller
    */
   static listBusinesses(req, res) {
     if (req.query.location) {
-      const location = req.query.location.toLowerCase();
-      const filterBusinessesByLocation = businesses
-        .filter(business => business.location.toLowerCase() === location);
-      if (filterBusinessesByLocation.length > 0) {
-        res.status(200).json({ businessFoundMessage, filterBusinessesByLocation });
-      } else {
-        const businessLocationMessage = { message: 'No businesses in the specified location' };
-        res.status(404).json(businessLocationMessage);
-      }
+      return Business
+        .findAll({
+          where: {
+            location: {
+              ilike: req.query.location
+            }
+          }
+        })
+        .then((business) => {
+          if (business.length > 0) {
+            return res.status(200).json({ businessesFoundMessage, business });
+          }
+          res.status(404).json(businessNotFoundInLocationMessage);
+        })
+        .catch(err => res.status(500).json(err));
     }
     if (req.query.category) {
-      const category = req.query.category.toLowerCase();
-      const filterBusinessesByCategory = businesses
-        .filter(business => business.category.toLowerCase() === category);
-      if (filterBusinessesByCategory.length > 0) {
-        res.status(200).json({ businessFoundMessage, filterBusinessesByCategory });
-      } else {
-        const businessCategoryMessage = { message: 'No businesses in the specified category' };
-        res.status(404).json(businessCategoryMessage);
-      }
+      return Business
+        .findAll({
+          where: {
+            category: {
+              ilike: req.query.category
+            }
+          }
+        })
+        .then(business => res.status(200).json({ businessFoundMessage, business }))
+        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
+    }
+    if (req.query.location && req.query.category) {
+      return Business
+        .findAll({
+          where: {
+            location: {
+              ilike: req.query.location
+            },
+            category: {
+              ilike: req.query.category
+            }
+          }
+        })
+        .then(business => res.status(200).json({ businessFoundMessage, business }))
+        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
     }
     if (!req.query.location && !req.query.category) {
-      res.status(200).json(businesses);
+      return Business
+        .findAll({
+          include: [{
+            model: BusinessReview,
+            as: 'reviews',
+          }],
+        })
+        .then(businesses => res.status(200).json(businesses))
+        .catch(err => res.status(400).json(err));
     }
   }
 
@@ -82,12 +119,19 @@ export default class Business {
    * @memberof Business
    */
   static retrieveBusiness(req, res) {
-    const business = businessHelpers.findBusinessById(req.params.businessId);
-    if (business) {
-      res.status(200).json({ businessFoundMessage, business });
-    } else {
-      res.status(404).json(businessNotFoundMessage);
-    }
+    return Business
+      .find({
+        where: {
+          id: req.params.businessId
+        }
+      })
+      .then((business) => {
+        if (business) {
+          return res.status(200).json({ businessFoundMessage, business });
+        }
+        res.status(404).json(businessNotFoundMessage);
+      })
+      .catch(err => res.status(500).json(err));
   }
 
   // UPDATE A BUSINESS
@@ -99,14 +143,25 @@ export default class Business {
    * @memberof Business class
    */
   static updateBusiness(req, res) {
-    const business = businessHelpers.findBusinessById(req.params.businessId);
-    if (business) {
-      Object.assign(business, req.body);
-      const message = 'Business updated successfully';
-      res.status(200).json({ message, business });
-    } else {
-      res.status(404).json(businessNotFoundMessage);
-    }
+    return Business
+      .find({
+        where: {
+          id: req.params.businessId
+        }
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json(businessNotFoundMessage);
+        }
+        if (req.userData.userId === business.UserId) {
+          return business
+            .update(req.body, { fields: Object.keys(req.body) })
+            .then(updatedBusiness => res.status(200).json({ message: 'Business Updated successfully', updatedBusiness }))
+            .catch(err => res.status(500).json(err));
+        }
+        res.status(401).json({ message: 'You are not authorized to update this business' });
+      })
+      .catch(err => res.status(500).json(err));
   }
 
   // DELETE A BUSINESS
@@ -118,17 +173,25 @@ export default class Business {
    * @memberof Business
    */
   static removeBusiness(req, res) {
-    const businessIndex = businessHelpers.findBusinessIndexById(req.params.businessId);
-    if (businessIndex === 0) {
-      businesses.splice(businessIndex, 1);
-      res.status(200).json(businessDeletedMessage);
-    }
-    if (businessIndex > 0) {
-      businesses.splice(businessIndex, 1);
-      res.status(200).json(businessDeletedMessage);
-    } else {
-      res.status(404).json(businessNotFoundMessage);
-    }
+    return Business
+      .find({
+        where: {
+          id: req.params.businessId
+        }
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json(businessNotFoundMessage);
+        }
+        if (req.userData.userId === business.UserId) {
+          return business
+            .destroy()
+            .then(() => res.status(200).json(businessDeletedMessage))
+            .catch(err => res.status(500).json(err));
+        }
+        res.status(401).json({ message: 'You are not Authorized to delete this business' });
+      })
+      .catch(err => res.status(500).json(err));
   }
 
   // ADD A BUSINESS REVIEW
@@ -140,14 +203,27 @@ export default class Business {
    * @memberof Business
    */
   static addReview(req, res) {
-    const business = businessHelpers.findBusinessById(req.params.businessId);
-    if (business) {
-      business.reviews.push({ userName: req.body.username, review: [req.body.review] });
-      const businessReviewMessage = { message: 'Business Review Added' };
-      res.status(201).json(businessReviewMessage);
-    } else {
-      res.status(404).json(businessNotFoundMessage);
-    }
+    const businessReviewDetails = {
+      ReviewerId: req.userData.userId,
+      review: req.body.review,
+      BusinessId: req.params.businessId
+    };
+    return Business
+      .find({
+        where: {
+          id: req.params.businessId
+        }
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json(businessNotFoundMessage);
+        }
+        return BusinessReview
+          .create(businessReviewDetails)
+          .then(review => res.status(201).json({ businessReviewMessage, review }))
+          .catch(err => res.status(500).json(err));
+      })
+      .catch(err => res.status(500).json(err));
   }
 
   // GET BUSINESS REVIEWS
@@ -159,12 +235,18 @@ export default class Business {
    * @memberof Business
    */
   static getReview(req, res) {
-    const business = businessHelpers.findBusinessById(req.params.businessId);
-    if (business) {
-      const reviewFoundMessage = 'Reviews have been found';
-      res.status(200).json({ reviewFoundMessage, reviews: business.reviews });
-    } else {
-      res.status(404).json(businessNotFoundMessage);
-    }
+    return BusinessReview
+      .findAll({
+        where: {
+          BusinessId: req.params.businessId
+        }
+      })
+      .then((reviews) => {
+        if (reviews.length > 0) {
+          return res.status(200).json({ reviewFoundMessage, reviews });
+        }
+        res.status(404).json({ message: 'Reviews have not been added for this Business' });
+      })
+      .catch(err => res.status(500).json(err));
   }
 }

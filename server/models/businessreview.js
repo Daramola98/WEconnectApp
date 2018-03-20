@@ -1,23 +1,18 @@
 const businessReview = (sequelize, DataTypes) => {
   const BusinessReview = sequelize.define('BusinessReview', {
-    id: {
-      primaryKey: true,
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false
-    },
     ReviewerId: {
-      type: DataTypes.UUID,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     review: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: false,
+      unique: true
     }
   });
 
   BusinessReview.associate = (models) => {
-    BusinessReview.belongs(models.Business, {
+    BusinessReview.belongsTo(models.Business, {
       foreignKey: 'BusinessId',
       onDelete: 'CASCADE'
     });
