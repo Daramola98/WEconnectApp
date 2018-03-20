@@ -86,7 +86,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should not allow a user to register a business with an existing name to the businesses database', (done) => {
+    it('it should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
       Business.create(businessData.businessDetails);
       chai.request(app)
         .post(`${baseEndpoint}`)

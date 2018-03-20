@@ -11,6 +11,14 @@ module.exports = {
   },
   test: {
     username: 'postgres',
+    password: 'dara10',
+    database: 'weconnect-test',
+    host: '127.0.0.1',
+    port: 5432,
+    dialect: 'postgres'
+  },
+  travisTest: {
+    username: 'postgres',
     password: '',
     database: 'weconnect_test',
     host: '127.0.0.1',
