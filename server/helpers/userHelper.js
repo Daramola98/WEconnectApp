@@ -210,7 +210,6 @@ export default {
 
   userLoginInputCheck(req, res, next) {
     checkWhiteSpace(req);
-    const userNameErrorMessage = 'Please provide a name with atleast 5 and not more than 50 characters .';
     req.checkBody({
       email: {
         notEmpty: true,
@@ -249,14 +248,14 @@ export default {
     }
   },
 
-  formatUserInput(req, res) {
+  formatUserInput(req) {
     req.body.firstname = req.body.firstname.replace(/ /g, '');
     req.body.lastname = req.body.lastname.replace(/ /g, '');
     req.body.password = req.body.password.replace(/ /g, '');
     req.body.email = req.body.email.replace(/ /g, '');
   },
 
-  formatUserUpdateInput(req, res) {
+  formatUserUpdateInput(req) {
     const reqBody = Object.keys(req.body);
     for (let i = 0; i < reqBody.length; i += 1) {
       const field = reqBody[i];
