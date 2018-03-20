@@ -116,7 +116,6 @@ export default {
     }
   },
   userLoginInputCheck(req, res, next) {
-    const userNameErrorMessage = 'Please provide a name with atleast 5 and not more than 50 characters .';
     req.checkBody({
       email: {
         notEmpty: true,

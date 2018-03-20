@@ -80,7 +80,7 @@ export default class BusinessController {
           }
         })
         .then(business => res.status(200).json({ businessFoundMessage, business }))
-        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
+        .catch(() => res.status(404).json(businessNotFoundInCategoryMessage));
     }
     if (req.query.location && req.query.category) {
       return Business
@@ -95,7 +95,7 @@ export default class BusinessController {
           }
         })
         .then(business => res.status(200).json({ businessFoundMessage, business }))
-        .catch(err => res.status(404).json(businessNotFoundInCategoryMessage));
+        .catch(() => res.status(404).json(businessNotFoundInCategoryMessage));
     }
     if (!req.query.location && !req.query.category) {
       return Business
