@@ -8,6 +8,7 @@
     "start:dev": "nodemon server/lib/app.js --exec babel-node",
     "build": "babel server/lib -d dist && babel test -d dist/test",
     "serve": "node server/dist/app.js",
+    "db-migrate": "sequelize db:migrate",
     "test-migrate": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",

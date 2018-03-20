@@ -1,9 +1,5 @@
 # WEconnectApplication
-<<<<<<< HEAD
-[![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=chore-write-tests)](https://travis-ci.org/Daramola98/WEconnectApp) [![Coverage Status](https://coveralls.io/repos/github/Daramola98/WEconnectApp/badge.svg?branch=chore-write-tests)](https://coveralls.io/github/Daramola98/WEconnectApp?branch=chore-write-tests) [![Maintainability](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/maintainability)](https://codeclimate.com/github/Daramola98/WEconnectApp/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/test_coverage)](https://codeclimate.com/github/Daramola98/WEconnectApp/test_coverage)
-=======
 [![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=develop)](https://travis-ci.org/Daramola98/WEconnectApp) [![Coverage Status](https://coveralls.io/repos/github/Daramola98/WEconnectApp/badge.svg?branch=develop)](https://coveralls.io/github/Daramola98/WEconnectApp?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/maintainability)](https://codeclimate.com/github/Daramola98/WEconnectApp/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/test_coverage)](https://codeclimate.com/github/Daramola98/WEconnectApp/test_coverage)
->>>>>>> develop
 
 **About WEconnect**
 WeConnect provides a platform that brings businesses and individuals together. This platform
@@ -50,15 +46,36 @@ View the templates through this [link](https://daramola98.github.io/WEconnectApp
 Get the app running locally in the following way:
 ```
 # Fork/Clone the Repo
+change directory to the git repository by doing cd WEconnectApp
 
 # Install dependencies
 npm install
+
+# Setup Database Client
+Download POSTGRESQL database client
+Create a database
+
+# Setting up environmental variables
+Create a .env file in the root directory of the repo
+Add the following environmental variables:
+DB_USERNAME =  Your local database username
+DB_PASSWORD = Your database password
+DB_DATABASE_TEST = Name of the database you want to use for the tests
+DB_DATABASE_DEV = Name of the database you want to use for development
+JWT_KEY = Your JSON web token secret key 
+
+# Populate local database with necessary tables and columns
+In your command line type ***npm run db-migrate*** and hit enter
 
 # Run tests
 npm test
 
 # Run the application
 npm start
+
+# Use the application
+Download Postman to interact with the endpoints below
+
 ```
 The server would be live at `http://localhost:8080`,
 Swagger API documentation at `http://localhost:8080/api-docs/`
