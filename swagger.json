@@ -656,23 +656,23 @@
         "properties": {
           "firstname": {
             "type": "string",
-            "example": "Tobiloba"
+            "example": "Dammy"
           },
           "lastname": {
             "type": "string",
-            "example": "Emmanuel"
+            "example": "Samuel"
           },
           "email": {
             "type": "string",
-            "example": "tobiemm@yahoo.com"
+            "example": "pammword@yahoo.com"
           },
           "password": {
             "type": "string",
-            "example": "Tobiword"
+            "example": "pammord"
           },
           "confirmPassword": {
             "type": "string",
-            "example": "Tobiword"
+            "example": "pmordwassword"
           }
         }
       },
@@ -720,11 +720,11 @@
         "properties": {
           "email": {
             "type": "string",
-            "example": "tobiemm@yahoo.com"
+            "example": "miracle@yahoo.com"
           },
           "password": {
             "type": "string",
-            "example": "Tobiword"
+            "example": "pmodass"
           }
         }
       },

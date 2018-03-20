@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../lib/app';
-import businesses from '../models/businesses';
+import businesses from '../dummymodel/businessesDummy';
 
 chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/weconnect';

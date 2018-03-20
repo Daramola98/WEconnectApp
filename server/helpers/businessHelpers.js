@@ -1,4 +1,4 @@
-import businesses from '../models/businesses';
+import businesses from '../dummymodel/businessesDummy';
 
 export default {
   // FIND BUSINESS BY GIVEN ID IN BUSINESSES ARRAY
