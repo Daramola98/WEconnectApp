@@ -3,11 +3,10 @@ import path from 'path';
 import dotenv from 'dotenv';
 import validator from 'express-validator';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from '../routes/user';
 import businessRoutes from '../routes/businesses';
-import cors from 'cors';
-import routes from '../routes/index';
 import swaggerDocument from '../../swagger.json';
 
 dotenv.config();
