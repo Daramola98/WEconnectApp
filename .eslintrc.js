@@ -10,7 +10,7 @@ module.exports = {
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "new-cap": 0,
-    "no-unused-vars": 1,
+    "no-unused-vars": 0,
     "consistent-return": 0,
     "no-param-reassign": 0,
     "comma-dangle": 0,

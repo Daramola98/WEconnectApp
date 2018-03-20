@@ -8,7 +8,8 @@
     "start:dev": "nodemon server/lib/app.js --exec babel-node",
     "build": "babel server/lib -d dist && babel test -d dist/test",
     "serve": "node server/dist/app.js",
-    "test": "NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test --compilers js:babel-register --recursive --exit",
+    "test-migrate": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
+    "test": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "check-coverage": "nyc check-coverage --lines 80 --per-file"
@@ -28,6 +29,7 @@
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -51,6 +53,7 @@
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
     "cors": "^2.8.4",
+    "cross-env": "^5.1.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "express-validator": "^5.0.3",

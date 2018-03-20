@@ -18,11 +18,11 @@ const user = (sequelize, DataTypes) => {
       allowNull: false
     },
     telephoneNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     homeNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true
     }
   });

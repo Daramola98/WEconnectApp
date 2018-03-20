@@ -3,22 +3,34 @@ import db from '../models/index';
 const { Business, BusinessReview, User } = db;
 
 export default {
-  resetBusinessDatabase() {
-    return Business.truncate();
+  resetBusinessDatabase(done) {
+    return Business.truncate()
+      .then(() => done())
+      .catch(err => done(err));
   },
-  resetBusinessReviewDatabase() {
-    return BusinessReview.truncate();
+  resetBusinessReviewDatabase(done) {
+    return BusinessReview.truncate()
+      .then(() => done())
+      .catch(err => done(err));
   },
-  resetUserReviewDatabase() {
-    return BusinessReview.truncate();
+  resetUserDatabase(done) {
+    return User.truncate()
+      .then(() => done())
+      .catch(err => done(err));
   },
-  syncBusinessDatabase() {
-    return Business.sync({ force: true });
+  syncBusinessDatabase(done) {
+    return Business.sync({ force: true })
+      .then(() => done())
+      .catch(err => done(err));
   },
-  syncBusinessReviewDatabase() {
-    return BusinessReview.sync({ force: true });
+  syncBusinessReviewDatabase(done) {
+    return BusinessReview.sync({ force: true })
+      .then(() => done())
+      .catch(err => done(err));
   },
-  syncUserReviewDatabase() {
-    return BusinessReview.sync({ force: true });
+  syncUserDatabase(done) {
+    return User.sync({ force: true })
+      .then(() => done())
+      .catch(err => done(err));
   },
 };
