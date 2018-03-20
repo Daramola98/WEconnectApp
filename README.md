@@ -45,17 +45,17 @@ View the templates through this [link](https://daramola98.github.io/WEconnectApp
 ## Getting Started
 Get the app running locally in the following way:
 ```
-# Fork/Clone the Repo
+## Fork/Clone the Repo
 change directory to the git repository by doing cd WEconnectApp
 
-# Install dependencies
+## Install dependencies
 npm install
 
-# Setup Database Client
+## Setup Database Client
 Download POSTGRESQL database client
 Create a database
 
-# Setting up environmental variables
+## Setting up environmental variables
 Create a .env file in the root directory of the repo
 Add the following environmental variables:
 DB_USERNAME =  Your local database username
@@ -64,16 +64,16 @@ DB_DATABASE_TEST = Name of the database you want to use for the tests
 DB_DATABASE_DEV = Name of the database you want to use for development
 JWT_KEY = Your JSON web token secret key 
 
-# Populate local database with necessary tables and columns
-In your command line type ***npm run db-migrate*** and hit enter
+## Populate local database with necessary tables and columns
+In your command line type npm run db-migrate and hit enter
 
-# Run tests
+## Run tests
 npm test
 
-# Run the application
+## Run the application
 npm start
 
-# Use the application
+## Use the application
 Download Postman to interact with the endpoints below
 
 ```
