@@ -30,6 +30,14 @@ app.use((req, res, next) => {
 });
 */
 
+// EXPRESS MIDDLEWARES
+app.use(cors({ credentials: true, origin: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(validator());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // ROUTES
 app.get('/', (req, res) => {
   const apiRootMessage = {

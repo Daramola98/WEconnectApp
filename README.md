@@ -1,5 +1,9 @@
 # WEconnectApplication
+<<<<<<< HEAD
 [![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=chore-write-tests)](https://travis-ci.org/Daramola98/WEconnectApp) [![Coverage Status](https://coveralls.io/repos/github/Daramola98/WEconnectApp/badge.svg?branch=chore-write-tests)](https://coveralls.io/github/Daramola98/WEconnectApp?branch=chore-write-tests) [![Maintainability](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/maintainability)](https://codeclimate.com/github/Daramola98/WEconnectApp/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/test_coverage)](https://codeclimate.com/github/Daramola98/WEconnectApp/test_coverage)
+=======
+[![Build Status](https://travis-ci.org/Daramola98/WEconnectApp.svg?branch=develop)](https://travis-ci.org/Daramola98/WEconnectApp) [![Coverage Status](https://coveralls.io/repos/github/Daramola98/WEconnectApp/badge.svg?branch=develop)](https://coveralls.io/github/Daramola98/WEconnectApp?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/maintainability)](https://codeclimate.com/github/Daramola98/WEconnectApp/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/0d95425a0e5fa2106ac8/test_coverage)](https://codeclimate.com/github/Daramola98/WEconnectApp/test_coverage)
+>>>>>>> develop
 
 **About WEconnect**
 WeConnect provides a platform that brings businesses and individuals together. This platform
