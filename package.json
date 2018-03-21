@@ -10,7 +10,8 @@
     "serve": "node server/dist/app.js",
     "db-migrate": "sequelize db:migrate",
     "test-migrate": "sequelize db:migrate:undo:all --env travisTest && sequelize db:migrate --env travisTest",
-    "test": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
+    "test": "cross-env NODE_ENV=travisTest nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
+    "test:dev": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "check-coverage": "nyc check-coverage --lines 80 --per-file"
