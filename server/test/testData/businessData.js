@@ -29,7 +29,7 @@ const businessDetails2 = {
   category: 'gaming',
   description: 'Card Game for collaboration',
   address: '23,Adeba Ibeju Lekki Lagos',
-  telephoneNumber: '070664445523',
+  telephoneNumber: '07066444523',
   homeNumber: '08043553081',
   UserId: 1
 };

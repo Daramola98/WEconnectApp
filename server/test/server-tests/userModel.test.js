@@ -66,7 +66,7 @@ describe('User Model', () => {
         lastname: 'Ajiboye',
         email: 'damilareajiboye@live.com',
         password: bcrypt.hashSync('dammy100', 10),
-        telephoneNumber: '070664455527',
+        telephoneNumber: '07066445527',
         homeNumber: '08043553091',
       };
       const [user1, user2] = await Promise.all([

@@ -21,7 +21,7 @@ describe('Business Model', () => {
         category: 'gaming',
         description: 'Game for collaboration',
         address: '23,Adeba Ibeju Lekki Lagos',
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
         UserId: 1
       };
@@ -30,13 +30,13 @@ describe('Business Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
       };
       const createdUser = await User.create(userDetails);
       const createdBusiness = await Business.create(businessDetails);
       expect(createdBusiness.name).to.equal('Clash of clans');
-      expect(createdBusiness.telephoneNumber).to.equal('070664455523');
+      expect(createdBusiness.telephoneNumber).to.equal('07066445523');
       expect(createdBusiness.email).to.equal('damilolaajiboye@live.com');
       const foundBusiness = await Business.findOne();
       expect(foundBusiness.category).to.equal('gaming');
@@ -48,7 +48,7 @@ describe('Business Model', () => {
       const businessDetails = {
         name: 'Uber Driving',
         email: 'damilareajiboye@live.com',
-        telephoneNumber: '070664455527',
+        telephoneNumber: '07066445527',
         homeNumber: '08043553091',
         location: 'Abuja',
         category: 'transportation',
@@ -61,7 +61,7 @@ describe('Business Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
       };
       const createdUser = await User.create(userDetails);
@@ -70,7 +70,7 @@ describe('Business Model', () => {
         Business.create({
           name: 'Bus Driving',
           email: 'damilareajiboye@livea.com',
-          telephoneNumber: '070664455728',
+          telephoneNumber: '07066445728',
           homeNumber: '08043552091',
           location: 'Abuja',
           category: 'transportation',
@@ -91,7 +91,7 @@ describe('Business Model', () => {
       const businessDetails = {
         name: 'Uber Driving',
         email: 'damilareajiboye@live.com',
-        telephoneNumber: '070664455527',
+        telephoneNumber: '07066445527',
         homeNumber: '08043553091',
         location: 'Abuja',
         category: 'transportation',
@@ -104,7 +104,7 @@ describe('Business Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
       };
       const createdUser = await User.create(userDetails);
