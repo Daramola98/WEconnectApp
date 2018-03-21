@@ -1,17 +1,8 @@
 import db from '../models/index';
 import businessHelper from '../helpers/businessHelpers';
+import businessMessages from '../messages/businessEndpoint';
 
-const { Business, BusinessReview } = db;
-
-// MESSAGES FOR ENDPOINTS
-const businessNotFoundMessage = { message: 'Business not found' };
-const businessNotFoundInLocationMessage = { message: 'No Businesses found in the specified location' };
-const businessNotFoundInCategoryMessage = { message: 'No Businesses found in the specified category' };
-const businessFoundMessage = 'Business found';
-const businessesFoundMessage = 'Businesses found';
-const businessDeletedMessage = { message: 'Business has been deleted' };
-const businessReviewMessage = 'Business Review Added';
-const reviewFoundMessage = 'Reviews have been found';
+const { Business, BusinessReview, reviewresponse } = db;
 
 /**
  *
@@ -40,11 +31,17 @@ export default class BusinessController {
       UserId: req.userData.userId,
       description: req.body.description
     };
-    const businessRegisterMessage = 'Business has been registered successfully';
     return Business
       .create(businessDetails)
-      .then(business => res.status(201).json({ message: businessRegisterMessage, business }))
-      .catch(err => res.status(400).json(err));
+      .then(business => res.status(201)
+        .json({ message: businessMessages.businessRegisterMessage, business }))
+      .catch((err) => {
+        const validationErrors = [];
+        for (let i = 0; i < err.errors.length; i += 1) {
+          validationErrors.push(err.errors[i].message);
+        }
+        return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+      });
   }
 
   // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
@@ -56,63 +53,14 @@ export default class BusinessController {
    * @memberof Business Controller
    */
   static listBusinesses(req, res) {
-    if (req.query.location) {
-      const searchLocation = req.query.location.replace(/ /g, '');
-      return Business
-        .findAll({
-          where: {
-            location: {
-              ilike: `%${searchLocation}%`
-            }
-          }
-        })
-        .then((business) => {
-          if (business.length > 0) {
-            return res.status(200).json({ businessesFoundMessage, business });
-          }
-          res.status(404).json(businessNotFoundInLocationMessage);
-        })
-        .catch(err => res.status(500).json(err));
-    }
-    if (req.query.category) {
-      const searchCategory = req.query.category.replace(/ /g, '');
-      return Business
-        .findAll({
-          where: {
-            category: {
-              ilike: `%${searchCategory}%`
-            }
-          }
-        })
-        .then((business) => {
-          if (business.length > 0) {
-            return res.status(200).json({ businessFoundMessage, business });
-          }
-          return res.status(404).json(businessNotFoundInCategoryMessage);
-        })
-        .catch(err => res.status(500).json(err));
-    }
     if (req.query.location && req.query.category) {
-      const searchCategory = req.query.category.replace(/ /g, '');
-      const searchLocation = req.query.location.replace(/ /g, '');
-      return Business
-        .findAll({
-          where: {
-            location: {
-              ilike: `%${searchLocation}%`
-            },
-            category: {
-              ilike: `%${searchCategory}%`
-            }
-          }
-        })
-        .then((business) => {
-          if (business.length > 0) {
-            return res.status(200).json({ businessFoundMessage, business });
-          }
-          return res.status(404).json(businessNotFoundMessage);
-        })
-        .catch(err => res.status(500).json(err));
+      businessHelper.findBusinessByLocationAndCategory(req, res);
+    }
+    if (req.query.location && !req.query.category) {
+      businessHelper.findBusinessByLocation(req, res);
+    }
+    if (req.query.category && !req.query.location) {
+      businessHelper.findBusinessByCategory(req, res);
     }
     if (!req.query.location && !req.query.category) {
       return Business
@@ -149,9 +97,9 @@ export default class BusinessController {
       })
       .then((business) => {
         if (business) {
-          return res.status(200).json({ businessFoundMessage, business });
+          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
         }
-        res.status(404).json(businessNotFoundMessage);
+        res.status(404).json(businessMessages.businessNotFoundMessage);
       })
       .catch(err => res.status(500).json(err));
   }
@@ -174,13 +122,19 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessNotFoundMessage);
+          return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
         if (req.userData.userId === business.UserId) {
           return business
             .update(req.body, { fields: Object.keys(req.body) })
             .then(updatedBusiness => res.status(200).json({ message: 'Business Updated successfully', updatedBusiness }))
-            .catch(err => res.status(500).json(err));
+            .catch((err) => {
+              const validationErrors = [];
+              for (let i = 0; i < err.errors.length; i += 1) {
+                validationErrors.push(err.errors[i].message);
+              }
+              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            });
         }
         res.status(401).json({ message: 'You are not authorized to update this business' });
       })
@@ -204,12 +158,12 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessNotFoundMessage);
+          return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
         if (req.userData.userId === business.UserId) {
           return business
             .destroy()
-            .then(() => res.status(200).json(businessDeletedMessage))
+            .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
             .catch(err => res.status(500).json(err));
         }
         res.status(401).json({ message: 'You are not Authorized to delete this business' });
@@ -239,12 +193,58 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessNotFoundMessage);
+          return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
         return BusinessReview
           .create(businessReviewDetails)
-          .then(review => res.status(201).json({ businessReviewMessage, review }))
-          .catch(err => res.status(500).json(err));
+          .then(review => res.status(201)
+            .json({ message: businessMessages.businessReviewMessage, review }))
+          .catch((err) => {
+            const validationErrors = [];
+            for (let i = 0; i < err.errors.length; i += 1) {
+              validationErrors.push(err.errors[i].message);
+            }
+            return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          });
+      })
+      .catch(err => res.status(500).json(err));
+  }
+
+  // ADD A BUSINESS REVIEW RESPONSE
+  /**
+   * Add a business review response to a buinessreview in the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the review response created or error message
+   * @memberof Business
+   */
+  static addReviewResponse(req, res) {
+    const businessReviewResponse = {
+      UserId: req.userData.userId,
+      message: req.body.message.replace(/ +/g, ' '),
+      ReviewId: req.params.reviewId
+    };
+    return BusinessReview
+      .findOne({
+        where: {
+          id: req.params.reviewId
+        }
+      })
+      .then((review) => {
+        if (!review) {
+          return res.status(404).json({ message: 'Review not found' });
+        }
+        return reviewresponse
+          .create(businessReviewResponse)
+          .then(response => res.status(201)
+            .json({ message: 'Response submitted', response }))
+          .catch((err) => {
+            const validationErrors = [];
+            for (let i = 0; i < err.errors.length; i += 1) {
+              validationErrors.push(err.errors[i].message);
+            }
+            res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          });
       })
       .catch(err => res.status(500).json(err));
   }
@@ -268,15 +268,20 @@ export default class BusinessController {
         if (business) {
           return BusinessReview
             .findAll({
+              include: [{
+                model: reviewresponse,
+                as: 'responses',
+              }],
               where: {
                 BusinessId: req.params.businessId
               }
             })
             .then((reviews) => {
               if (reviews.length > 0) {
-                return res.status(200).json({ reviewFoundMessage, reviews });
+                return res.status(200)
+                  .json({ message: businessMessages.reviewFoundMessage, reviews });
               }
-              res.status(404).json({ message: 'Reviews have not been added for this Business' });
+              return res.status(404).json({ message: 'Reviews have not been added for this Business' });
             })
             .catch(err => res.status(500).json(err));
         }

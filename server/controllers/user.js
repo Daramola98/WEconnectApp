@@ -40,7 +40,13 @@ export default class UserController {
         return User
           .create(userDetails)
           .then(user => res.status(201).json({ userCreatedMessage, user }))
-          .catch(err => res.status(400).json(err));
+          .catch((err) => {
+            const validationErrors = [];
+            for (let i = 0; i < err.errors.length; i += 1) {
+              validationErrors.push(err.errors[i].message);
+            }
+            res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          });
       }
     });
   }
@@ -67,7 +73,13 @@ export default class UserController {
       .then(user => user
         .update(req.body, { fields: Object.keys(req.body) })
         .then(updatedUser => res.status(200).json({ message: 'User Updated successfully', updatedUser }))
-        .catch(err => res.status(500).json(err)))
+        .catch((err) => {
+          const validationErrors = [];
+          for (let i = 0; i < err.errors.length; i += 1) {
+            validationErrors.push(err.errors[i].message);
+          }
+          res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+        }))
       .catch(err => res.status(500).json(err));
   }
 

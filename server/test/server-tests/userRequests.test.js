@@ -49,10 +49,10 @@ describe(`${baseEndpoint}`, () => {
         .send(userDetails)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Please provide a name with atleast 5 and not more than 50 characters');
-          expect(res.body[1].error).to.equal('lastname should be more than 5 and not greater than 500');
-          expect(res.body[2].error).to.equal('Enter a valid Email Address');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Please provide a name with atleast 5 and not more than 50 characters');
+          expect(res.body.validationErrors[1]).to.equal('lastname should be more than 5 and not greater than 50');
+          expect(res.body.validationErrors[2]).to.equal('Enter a valid Email Address');
           done();
         });
     });
@@ -188,21 +188,6 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('catches invalid login input', (done) => {
-      const userDetails = {
-        email: 'damilolaajiboye@livea.com',
-        password: 'a'
-      };
-      chai.request(app)
-        .post(`${baseEndpoint}/login`)
-        .send(userDetails)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body[0].error).to.equal('password should be more than 5 and not greater than 16 characters');
-          done();
-        });
-    });
-
     it('catches wrong password', (done) => {
       const userDetails = {
         email: 'damilolaajiboye@live.com',
@@ -263,7 +248,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', `Bearer ${authToken1}`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0].error).to.equal('Enter a valid Email Address');
+          expect(res.body.validationErrors[0]).to.equal('Enter a valid Email Address');
           done();
         });
     });

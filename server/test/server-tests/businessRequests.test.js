@@ -70,7 +70,12 @@ describe(`${baseEndpoint}`, () => {
         name: 'Cl',
         category: 'gaming',
         email: 'daraajibigad@gmail.com',
-        telephoneNumber: '0706645552'
+        telephoneNumber: '0706645552',
+        address: '',
+        homeNumber: '08011031456',
+        location: 'Enugu',
+        description: 'Rent houses here for affordable prices',
+        UserId: 1
       };
 
       chai.request(app)
@@ -79,9 +84,9 @@ describe(`${baseEndpoint}`, () => {
         .send(businessDetails3)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
-          expect(res.body[1].error).to.equal('Provide a description of your business not more than 500 characters');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
+          expect(res.body.validationErrors[1]).to.equal('Business Address is required');
           done();
         });
     });
@@ -154,13 +159,23 @@ describe(`${baseEndpoint}`, () => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
-        .send({})
+        .send({
+          name: '',
+          email: '',
+          location: '',
+          category: '',
+          description: '',
+          address: '',
+          telephoneNumber: '',
+          homeNumber: '',
+          UserId: 1
+        })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Your Business name is required');
-          expect(res.body[1].error).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
-          expect(res.body[2].error).to.equal('Provide a description of your business not more than 500 characters');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
+          expect(res.body.validationErrors[1]).to.equal('Your Business name is required');
+          expect(res.body.validationErrors[2]).to.equal('Business Location is required');
           done();
         });
     });
@@ -178,7 +193,7 @@ describe(`${baseEndpoint}`, () => {
         category: 'gaming',
         description: 'Game for collaboration',
         address: '23,Adeba Ibeju Lekki Lagos',
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
         UserId: 1
       };
@@ -194,7 +209,7 @@ describe(`${baseEndpoint}`, () => {
           expect(res.body).to.be.a('array');
           expect(res.body[0].name).to.equal('Clash of clans');
           expect(res.body[0]).to.have.property('id');
-          expect(res.body[0].telephoneNumber).to.equal('070664455523');
+          expect(res.body[0].telephoneNumber).to.equal('07066445523');
           expect(res.body[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
@@ -287,6 +302,17 @@ describe(`${baseEndpoint}`, () => {
           done();
         });
     });
+
+    it('it should return message if no business in the specified category and location when a category and location query is passed', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}?location=lagos&category=housing `)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('Business not found');
+          done();
+        });
+    });
   });
 
   /*
@@ -303,11 +329,11 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}/1`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.businessFoundMessage).to.equal('Business found');
+          expect(res.body.message).to.equal('Business found');
           expect(res.body.business.name).to.equal('Clash Royale');
           expect(res.body.business).to.have.property('id');
           expect(res.body.business.id).to.equal(1);
-          expect(res.body.business.telephoneNumber).to.equal('070664445523');
+          expect(res.body.business.telephoneNumber).to.equal('07066444523');
           expect(res.body.business.email).to.equal('damilolaajiboye@yahoo.com');
           done();
         });
@@ -400,7 +426,7 @@ describe(`${baseEndpoint}`, () => {
         .send(businessDetails)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0].error).to.equal('Please provide a business name with atleast 5 characters and max 50 characters');
+          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
           done();
         });
     });
@@ -491,7 +517,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body.businessReviewMessage).to.equal('Business Review Added');
+          expect(res.body.message).to.equal('Business Review Added');
           expect(res.body.review.review).to.equal('Business is so great would like to invest');
           done();
         });
@@ -518,8 +544,8 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Business Review should be more than 2 and not greater than 500 characters');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
           done();
         });
     });
@@ -531,9 +557,9 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[1].error).to.equal('Business Review should be more than 2 and not greater than 500 characters');
-          expect(res.body[0].error).to.equal('Business review is required');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Business review is required');
+          expect(res.body.validationErrors[1]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
           done();
         });
     });
@@ -569,8 +595,9 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}/1/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.reviewFoundMessage).to.equal('Reviews have been found');
+          expect(res.body.message).to.equal('Reviews have been found');
           expect(res.body.reviews[0].review).to.equal('Business is so great would like to invest');
+          expect(res.body.reviews[0]).to.have.property('responses');
           done();
         });
     });
@@ -586,12 +613,24 @@ describe(`${baseEndpoint}`, () => {
     });
 
     it('it should return a message if no reviews have been added for that business', (done) => {
-      BusinessReview.truncate();
+      BusinessReview.destroy({ where: { id: 1 } });
       chai.request(app)
         .get(`${baseEndpoint}/1/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Reviews have not been added for this Business');
+          done();
+        });
+    });
+
+    it('it should add responses to a review with the particular id', (done) => {
+      chai.request(app)
+        .post(`${baseEndpoint}/1/reviews/1`)
+        .send({ message: 'Nice!!!!' })
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body.message).to.equal('Response submitted');
           done();
         });
     });

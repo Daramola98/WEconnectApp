@@ -109,25 +109,19 @@
             }
           ],
           "responses": {
-            "202": {
+            "200": {
               "description": "Login user",
               "schema": {
                 "$ref": "#/definitions/login"
               }
             },
             "401": {
-              "description": "Password is incorrect",
+              "description": "Authentication failed",
               "schema": {
                 "$ref": "#/definitions/wrongPassword"
               }
             },
-            "404": {
-              "description": "Username does not exist",
-              "schema": {
-                "$ref": "#/definitions/UserNotFound"
-              }
-            },
-            "406": {
+            "400": {
               "description": "Invalid Input",
               "schema": {
                 "$ref": "#/definitions/invalidInput"
@@ -154,10 +148,10 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
-              "required": false,
+              "required": true,
               "type": "string"
             },
             {
@@ -180,7 +174,7 @@
                 }
               }
             },
-            "409": {
+            "400": {
               "description": "Invalid Input"
             }
           } 
@@ -197,7 +191,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -217,7 +211,7 @@
             "404": {
               "description": "Business not found"
             },
-            "409": {
+            "400": {
               "description": "Invalid BusinessId"
             }
           }
@@ -236,7 +230,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -264,7 +258,7 @@
                 "$ref": "#/definitions/BusinessNotFound"
               }
             },
-            "409": {
+            "400": {
               "description": "Invalid BusinessId"
             }
           }
@@ -285,10 +279,10 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
-              "required": false,
+              "required": true,
               "type": "string"
             },
             {
@@ -321,6 +315,12 @@
               "schema": {
                 "$ref": "#/definitions/BusinessNotFound"
               }
+            },
+            "400": {
+              "description": "Invalid Input",
+              "schema": {
+                "$ref": "#/definitions/invalidInput"
+              }
             }
           }
         },
@@ -336,10 +336,10 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
-              "required": false,
+              "required": true,
               "type": "string"
             },
             {
@@ -364,7 +364,7 @@
                 "$ref": "#/definitions/BusinessNotFound"
               }
             },
-            "409": {
+            "400": {
               "description": "Invalid BusinessId"
             }
           }
@@ -383,7 +383,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -407,7 +407,7 @@
             "404": {
               "description": "Business Not Found"
             },
-            "409": {
+            "400": {
               "description": "Invalid location"
             }
           }
@@ -426,7 +426,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -450,7 +450,7 @@
             "404": {
               "description": "Business Not Found"
             },
-            "409": {
+            "400": {
               "description": "Invalid category"
             }
           }
@@ -469,7 +469,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -500,7 +500,7 @@
             "404": {
               "description": "Business Not Found"
             },
-            "409": {
+            "400": {
               "description": "Invalid location or category"
             }
           }
@@ -523,10 +523,10 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
-              "required": false,
+              "required": true,
               "type": "string"
             },
             {
@@ -551,7 +551,7 @@
                 "$ref": "#/definitions/BusinessNotFound"
               }
             },
-            "409": {
+            "400": {
               "description": "Invalid Input",
               "schema": {
                 "$ref": "#/definitions/invalidInput"
@@ -571,7 +571,7 @@
           ],
           "parameters": [
             {
-              "name": "x-access-token",
+              "name": "authorization",
               "in": "header",
               "description": "Token Authentication",
               "required": false,
@@ -599,7 +599,7 @@
                 "$ref": "#/definitions/BusinessNotFound"
               }
             },
-            "409": {
+            "400": {
               "description": "Invalid Input"
             }
           }
@@ -650,8 +650,7 @@
           "firstname",
           "lastname",
           "email",
-          "password",
-          "confirmPassword"
+          "password"
         ],
         "properties": {
           "firstname": {
@@ -669,10 +668,6 @@
           "password": {
             "type": "string",
             "example": "pammord"
-          },
-          "confirmPassword": {
-            "type": "string",
-            "example": "pmordwassword"
           }
         }
       },
@@ -733,7 +728,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Welcome Tobiloba Emmanuel"
+            "example": "Authentication successful"
           }
         }
       },
@@ -742,16 +737,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Wrong password"
-          }
-        }
-      },
-      "UserNotFound": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Email not found"
+            "example": "Authentication failed"
           }
         }
       },

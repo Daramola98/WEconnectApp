@@ -21,7 +21,7 @@ describe('BusinessReview Model', () => {
         category: 'gaming',
         description: 'Game for collaboration',
         address: '23,Adeba Ibeju Lekki Lagos',
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
         UserId: 1
       };
@@ -30,7 +30,7 @@ describe('BusinessReview Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
       };
       const reviewDetails = {
@@ -42,7 +42,7 @@ describe('BusinessReview Model', () => {
       const createdBusiness = await Business.create(businessDetails);
       const addReview = await BusinessReview.create(reviewDetails);
       expect(addReview.review).to.equal('Nice Business');
-      expect(createdBusiness.telephoneNumber).to.equal('070664455523');
+      expect(createdBusiness.telephoneNumber).to.equal('07066445523');
       expect(createdBusiness.email).to.equal('damilolaajiboye@live.com');
       const foundReview = await BusinessReview.findOne();
       expect(foundReview.ReviewerId).to.equal(1);
@@ -54,7 +54,7 @@ describe('BusinessReview Model', () => {
       const businessDetails = {
         name: 'Uber Driving',
         email: 'damilareajiboye@live.com',
-        telephoneNumber: '070664455527',
+        telephoneNumber: '07066445527',
         homeNumber: '08043553091',
         location: 'Abuja',
         category: 'transportation',
@@ -67,7 +67,7 @@ describe('BusinessReview Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445523',
         homeNumber: '08043553081',
       };
       const reviewDetails = {
@@ -81,7 +81,7 @@ describe('BusinessReview Model', () => {
         Business.create({
           name: 'Bus Driving',
           email: 'damilareajiboye@livea.com',
-          telephoneNumber: '070664455728',
+          telephoneNumber: '07066445728',
           homeNumber: '08043552091',
           location: 'Abuja',
           category: 'transportation',
@@ -103,7 +103,7 @@ describe('BusinessReview Model', () => {
       const businessDetails = {
         name: 'Uber Driving',
         email: 'damilareajiboye@live.com',
-        telephoneNumber: '070664455527',
+        telephoneNumber: '07066445527',
         homeNumber: '08043553091',
         location: 'Abuja',
         category: 'transportation',
@@ -116,7 +116,7 @@ describe('BusinessReview Model', () => {
         lastname: 'Ajiboye',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '070664455523',
+        telephoneNumber: '07066445553',
         homeNumber: '08043553081',
       };
       const reviewDetails = {
