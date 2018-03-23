@@ -11,20 +11,7 @@
     <!-- Materialize CSS CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <!-- Your custom styles -->
-    <!--<link rel="stylesheet" href="css/style.css">-->
-    <!-- Used as an example only to position the footer at the end of the page.
-    You can delete these styles or move it to your custom css file -->
-    <style>
-        body {
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        main {
-            flex: 1 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" href="styles/index.css">
 </head>
 
 <body>
@@ -38,9 +25,6 @@
                             <i class="material-icons">menu</i>
                         </a>
                         <ul class="right hide-on-med-and-down">
-                            <li>
-                                <a href="index.html">Home</a>
-                            </li>
                             <li>
                                 <a href="about.html">About Us</a>
                             </li>
@@ -63,9 +47,6 @@
                         </ul>
 
                         <ul class="side-nav" id="mobile-menu">
-                            <li>
-                                <a href="index.html">Home</a>
-                            </li>
                             <li>
                                 <a href="about.html">About Us</a>
                             </li>
@@ -107,10 +88,10 @@
     <main>
         <!-- Your content here -->
         <div class="container">
-            <div class="row">
+            <div class="row hide-on-med-and-down">
                 <div class="col s12 m4 l4">
                     <!-- Your content here -->
-                    <div class="card blue-grey darken-1">
+                    <div class="card home-card blue-grey darken-1">
                         <div class="card-content white-text">
                             <span class="card-title">GETTING STARTED</span>
                             <p>
@@ -126,7 +107,7 @@
                 </div>
                 <div class="col s12 m4 l4">
                     <!-- Your content here -->
-                    <div class="card blue-grey darken-1">
+                    <div class="card home-card blue-grey darken-1">
                         <div class="card-content white-text">
                             <span class="card-title">ABOUT WECONNECT</span>
                             <p>
@@ -142,7 +123,7 @@
                 </div>
                 <div class="col s12 m4 l4">
                     <!-- Your content here -->
-                    <div class="card blue-grey darken-1">
+                    <div class="card home-card blue-grey darken-1">
                         <div class="card-content white-text">
                             <span class="card-title">CONTACT US</span>
                             <p>
@@ -154,6 +135,56 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="hide-on-large-only">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <!-- Your content here -->
+                        <div class="card blue-grey darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">GETTING STARTED</span>
+                                <p>
+                                    To get started sign up to start creating and interacting with businesses or if you already have
+                                    an account login to create and find businesses
+                                </p>
+                            </div>
+                            <div class="card-action">
+                                <a href="signUp.html">Sign Up</a>
+                                <a href="login.html">Login</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m12">
+                        <!-- Your content here -->
+                        <div class="card blue-grey darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">ABOUT WECONNECT</span>
+                                <p>
+                                    WeConnect provides a platform that brings businesses and individuals together. This platform
+                                    creates awareness for businesses and gives the users the ability to write reviews about the
+                                    businesses they have interacted with.
+                                </p>
+                            </div>
+                            <div class="card-action">
+                                <a href="about.html">About WEconnect</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s12 m12">
+                        <!-- Your content here -->
+                        <div class="card blue-grey darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title">CONTACT US</span>
+                                <p>
+                                    Enquires or Suggestions? Contact Us by filling the form in the contact us form in the link below
+                                </p>
+                            </div>
+                            <div class="card-action">
+                                <a href="contact.html">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>     
             </div>
         </div>
     </main>
