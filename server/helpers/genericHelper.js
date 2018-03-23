@@ -2,7 +2,7 @@
 /**
  * Removes white space in the request body
  * @param {object} req - The request object
- * @return {object} Success message with the business deleted or error message
+ * @return {null} removes whitespaces
  * @memberof Business
 */
 export default function checkForWhiteSpace(req) {
