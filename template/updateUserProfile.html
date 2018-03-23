@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up to WEconnect Application</title>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Your custom styles -->
+    <link rel="stylesheet" href="styles/index.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <div class="">
+                        <a href="index.html" class="brand-logo">WEconnect</a>
+                        <a href="#" data-activates="mobile-menu" class="button-collapse">
+                            <i class="material-icons">menu</i>
+                        </a>
+                        <ul class="right hide-on-med-and-down">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    Sign In
+                                </a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">
+                                    Sign Up
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="side-nav" id="mobile-menu">
+                            <li>
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="about.html">About Us</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact Us</a>
+                            </li>
+                            <li>
+                                <a href="how-it-works.html">How it Works</a>
+                            </li>
+                            <li>
+                                <a href="signUp.html">Sign Up</a>
+                            </li>
+                            <li>
+                                <a href="login.html">Login</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Your content here -->
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m8 offset-m2 l8 offset-l2">
+                    <div class="card">
+                        <div class="card-action blue lighten-1 white-text center">
+                            <h3>Edit Profile</h3>
+                        </div>
+                        <div class="card-content">
+                            <form action="userProfile.html">
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="firstName">First Name</label>
+
+                                        <input type="text" id="firstName">
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">account_circle</i>
+                                        <label for="lastName">Last Name</label>
+
+                                        <input type="text" id="lastName">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">lock</i>
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password">
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">lock</i>
+                                        <label for="confirmPass">Confirm Password</label>
+                                        <input type="password" id="confirmPass">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l12">
+                                        <i class="material-icons prefix">email</i>
+                                        <label for="user_mail">Email Address</label>
+                                        <input type="email" placeholder="johndoe@gmail.com" id="user_mail">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">phone</i>
+                                        <label for="telephone">Telephone Number</label>
+
+                                        <input type="number" id="telephone">
+                                    </div>
+                                    <div class="input-field col s12 m12 l6">
+                                        <i class="material-icons prefix">phone</i>
+                                        <label for="home_number">Home Number</label>
+
+                                        <input type="number" id="home_number">
+                                    </div>
+                                </div>
+
+                                <br>
+                                <div class="input-field">
+                                    <button type="submit" class="btn-large waves-effect waves-dark blue lighten-1" style="width:100%;">EDIT PROFILE</button>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col s12 m12 l6 offset-l3 center">
+                                        <h6>
+                                            <a href="userProfile.html">Go back to profile page</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <footer class="page-footer blue">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 WEconnect
+                <a class="grey-text text-lighten-4 right" href="#!">Subscribe to Our Newsletters</a>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("document").ready(function () {
+            $(".button-collapse").sideNav();
+        });
+    </script>
+</body>
+
+</html>
