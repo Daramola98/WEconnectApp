@@ -139,7 +139,7 @@ export default class BusinessController {
               return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
             });
         }
-        res.status(401).json({ message: 'You are not authorized to update this business' });
+        res.status(403).json({ message: 'You are not allowed to update this business' });
       })
       .catch(err => res.status(500).json(err));
   }
@@ -169,7 +169,7 @@ export default class BusinessController {
             .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
             .catch(err => res.status(500).json(err));
         }
-        res.status(401).json({ message: 'You are not Authorized to delete this business' });
+        res.status(403).json({ message: 'You are not allowed to delete this business' });
       })
       .catch(err => res.status(500).json(err));
   }
