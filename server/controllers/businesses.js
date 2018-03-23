@@ -37,10 +37,13 @@ export default class BusinessController {
         .json({ message: businessMessages.businessRegisterMessage, business }))
       .catch((err) => {
         const validationErrors = [];
-        for (let i = 0; i < err.errors.length; i += 1) {
-          validationErrors.push(err.errors[i].message);
+        if (err.errors) {
+          for (let i = 0; i < err.errors.length; i += 1) {
+            validationErrors.push(err.errors[i].message);
+          }
+          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
         }
-        return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+        return res.status(500).json(err);
       });
   }
 

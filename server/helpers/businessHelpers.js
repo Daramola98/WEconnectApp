@@ -51,9 +51,9 @@ export default {
   formatBusinessInput(req) {
     req.body.name = req.body.name.replace(/ +/g, ' ');
     req.body.category = req.body.category.replace(/ +/g, ' ');
-    req.body.location = req.body.location.replace(/ +/g, '');
-    req.body.address = req.body.address.replace(/ +/g, '');
-    req.body.description = req.body.description.replace(/ +/g, '');
+    req.body.location = req.body.location.replace(/ +/g, ' ');
+    req.body.address = req.body.address.replace(/ +/g, ' ');
+    req.body.description = req.body.description.replace(/ +/g, ' ');
   },
   formatBusinessUpdateInput(req) {
     const reqBody = Object.keys(req.body);
