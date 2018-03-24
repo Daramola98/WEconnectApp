@@ -4,6 +4,14 @@ import checkWhiteSpace from '../helpers/genericHelper';
 const { User } = db;
 
 export default {
+  /**
+   * Filter businesses in the database by the provided location
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof userHelper
+   */
   userEmailValidation(req, res, next) {
     checkWhiteSpace(req);
     return User
@@ -20,7 +28,14 @@ export default {
         }
       });
   },
-
+  /**
+   * Checks if a user with the same firstname or lastname already exists
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof userHelper
+   */
   userNameValidation(req, res, next) {
     checkWhiteSpace(req);
     return User
@@ -43,6 +58,12 @@ export default {
       });
   },
 
+  /**
+   * Formats user input before sending to the database
+   * @param {object} req - The request object
+   * @return {null} formats the user input
+   * @memberof userHelper
+   */
   formatUserInput(req) {
     req.body.firstname = req.body.firstname.replace(/ /g, '');
     req.body.lastname = req.body.lastname.replace(/ /g, '');
@@ -50,6 +71,12 @@ export default {
     req.body.email = req.body.email.replace(/ /g, '');
   },
 
+  /**
+   * Formats user input before sending to the database
+   * @param {object} req - The request object
+   * @return {object} res - The response to the client
+   * @memberof userHelper
+   */
   formatUserUpdateInput(req) {
     const reqBody = Object.keys(req.body);
     for (let i = 0; i < reqBody.length; i += 1) {

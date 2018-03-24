@@ -7,6 +7,14 @@ const { Op } = Sequelize;
 
 export default {
   // VALIDATE IF BUSINESS WITH SAME NAME OR EMAIL EXIST IN DATABASE
+  /**
+   * Checks if a business with same name or email exists in the database before accepting it
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - The response object
+   * @return {object} next to move to the next middleware
+   * @memberof BusinessHelper
+   */
   businessValidation(req, res, next) {
     let inputEmail, inputName;
     if (req.body.email && req.body.name) {
@@ -31,7 +39,6 @@ export default {
         }
       })
       .then((business) => {
-        // console.log(business);
         if (!business) {
           return next();
         }
@@ -48,6 +55,13 @@ export default {
       })
       .catch(err => res.status(500).json(err));
   },
+
+  /**
+   * Formats user input before sending it to the database
+   * @param {object} req - The request object
+   * @return {null} does not return anything
+   * @memberof BusinessHelper
+   */
   formatBusinessInput(req) {
     req.body.name = req.body.name.replace(/ +/g, ' ');
     req.body.category = req.body.category.replace(/ +/g, ' ');
@@ -55,6 +69,13 @@ export default {
     req.body.address = req.body.address.replace(/ +/g, ' ');
     req.body.description = req.body.description.replace(/ +/g, ' ');
   },
+
+  /**
+   * Formats user input before sending it to the database
+   * @param {object} req - The request object
+   * @return {null} does not return anything
+   * @memberof BusinessHelper
+   */
   formatBusinessUpdateInput(req) {
     const reqBody = Object.keys(req.body);
     for (let i = 0; i < reqBody.length; i += 1) {
@@ -67,6 +88,14 @@ export default {
     }
   },
 
+  /**
+   * check if business with id exists in the database
+   * @param {object} req - The request object
+   * @param {object} res - The request object
+   * @param {object} next - The request object
+   * @return {object} next to move to the next middleware
+   * @memberof BusinessHelper
+   */
   checkIfBusinessWithIdExists(req, res, next) {
     Business
       .findOne({
@@ -82,6 +111,13 @@ export default {
       });
   },
 
+  /**
+   * Filter businesses in the database by the provided category
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
   findBusinessByCategory(req, res) {
     const searchCategory = req.query.category.replace(/ /g, '');
     return Business
@@ -104,6 +140,13 @@ export default {
       .catch(err => res.status(500).json(err));
   },
 
+  /**
+   * Filter businesses in the database by the provided location
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
   findBusinessByLocation(req, res) {
     const searchLocation = req.query.location.replace(/ /g, '');
     return Business
@@ -124,6 +167,13 @@ export default {
       .catch(err => res.status(500).json(err));
   },
 
+  /**
+   * Filter businesses in the database by the provided location and category
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
   findBusinessByLocationAndCategory(req, res) {
     const searchCategory = req.query.category.replace(/ /g, '');
     const searchLocation = req.query.location.replace(/ /g, '');

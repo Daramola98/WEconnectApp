@@ -4,6 +4,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default {
+  /**
+   * Checks for Authentication before processing protected routes
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - The callback to move to the next middleware
+   * @return {object} res - The response to the client
+   * @memberof Authentication
+   */
   checkAuthentication(req, res, next) {
     try {
       const token = req.headers.authorization.split(' ')[1];

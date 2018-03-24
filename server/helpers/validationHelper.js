@@ -2,6 +2,14 @@
 import checkWhiteSpace from '../helpers/genericHelper';
 
 export default {
+  /**
+   * Checks if business id is valid i.e an integer
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof validationHelper
+   */
   businessIdCheck(req, res, next) {
     checkWhiteSpace(req);
     req.checkParams({
@@ -24,6 +32,15 @@ export default {
       return next();
     }
   },
+
+  /**
+   * Checks if business Query is valid i.e a string
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof validationHelper
+   */
   businessQueryCheck(req, res, next) {
     checkWhiteSpace(req);
     req.checkQuery({
