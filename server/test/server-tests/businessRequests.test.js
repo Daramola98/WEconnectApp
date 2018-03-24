@@ -215,6 +215,38 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
+    it('it should get all businesses registered by a user', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body.business[0].name).to.equal('Clash of clans');
+          expect(res.body.business[0]).to.have.property('id');
+          expect(res.body.business[0].telephoneNumber).to.equal('07066445523');
+          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
+    });
+
+    it('it should return a message if user has not registered a business', (done) => {
+      chai.request(app)
+        .delete(`${baseEndpoint}/1`)
+        .set('authorization', authToken)
+        .end((err, res) => err);
+
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          done();
+        });
+    });
+
     it('it should get all business in the specified location when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos`)
