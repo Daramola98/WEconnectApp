@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import db from '../models/index';
 import userHelper from '../helpers/userHelper';
+import serverErrorMessage from '../messages/serverMessage';
 
 const { User } = db;
 dotenv.config();
@@ -42,10 +43,13 @@ export default class UserController {
           .then(user => res.status(201).json({ userCreatedMessage, user }))
           .catch((err) => {
             const validationErrors = [];
-            for (let i = 0; i < err.errors.length; i += 1) {
-              validationErrors.push(err.errors[i].message);
+            if (err.errors.length > 0) {
+              for (let i = 0; i < err.errors.length; i += 1) {
+                validationErrors.push(err.errors[i].message);
+              }
+              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
             }
-            res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            return res.status(500).json(serverErrorMessage.message);
           });
       }
     });
@@ -75,12 +79,15 @@ export default class UserController {
         .then(updatedUser => res.status(200).json({ message: 'User Updated successfully', updatedUser }))
         .catch((err) => {
           const validationErrors = [];
-          for (let i = 0; i < err.errors.length; i += 1) {
-            validationErrors.push(err.errors[i].message);
+          if (err.errors.length > 0) {
+            for (let i = 0; i < err.errors.length; i += 1) {
+              validationErrors.push(err.errors[i].message);
+            }
+            return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
           }
-          res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          return res.status(500).json(serverErrorMessage.message);
         }))
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   // LOGIN USER
@@ -134,6 +141,6 @@ export default class UserController {
           res.status(401).json({ message: 'Authentication failed' });
         });
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(400).json(serverErrorMessage.message));
   }
 }
