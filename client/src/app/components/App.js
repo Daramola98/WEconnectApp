@@ -1,5 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Header from './Container/Header';
+import Home from './Home/Home';
+import HomeSlider from './Home/HomeImageSlider';
+import style from '../../styles/index.css';
 
 /**
  *
@@ -15,7 +18,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Hello!!!</h1>
+        <div>
+        <Header/>
+        </div>
+        <HomeSlider/>
+        <Home/>
         </div>
     );
   }
