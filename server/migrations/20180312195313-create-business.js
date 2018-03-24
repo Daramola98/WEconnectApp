@@ -33,7 +33,7 @@ module.exports = {
       allowNull: false,
     },
     homeNumber: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: true,
     },
     description: {

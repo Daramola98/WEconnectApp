@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import db from '../models/index';
 import businessMessages from '../messages/businessEndpoint';
+import serverErrorMessage from '../messages/serverMessage';
 
 const { Business } = db;
 const { Op } = Sequelize;
@@ -53,7 +54,7 @@ export default {
         }
         next();
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   },
 
   /**
@@ -83,7 +84,7 @@ export default {
       if (field === 'name') {
         req.body.name = req.body.name.replace(/ +/g, ' ');
       } else {
-        req.body[reqBody[i]] = req.body[field].replace(/ /g, '');
+        req.body[reqBody[i]] = req.body[field].replace(/ +/g, ' ');
       }
     }
   },
@@ -137,7 +138,7 @@ export default {
           return res.status(404).json(businessMessages.businessNotFoundInCategoryMessage);
         }
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   },
 
   /**
@@ -164,7 +165,7 @@ export default {
         }
         res.status(404).json(businessMessages.businessNotFoundInLocationMessage);
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   },
 
   /**
@@ -195,7 +196,7 @@ export default {
         }
         return res.status(404).json(businessMessages.businessNotFoundMessage);
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 };
 
