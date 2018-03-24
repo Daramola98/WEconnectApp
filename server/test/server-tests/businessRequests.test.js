@@ -11,6 +11,7 @@ const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/weconnect/businesses';
 let authToken;
+let authToken2;
 
 describe(`${baseEndpoint}`, () => {
   beforeEach((done) => {
@@ -230,23 +231,37 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
+    /*
     it('it should return a message if user has not registered a business', (done) => {
-      chai.request(app)
-        .delete(`${baseEndpoint}/1`)
-        .set('authorization', authToken)
-        .end((err, res) => err);
+      User.create({
+        firstname: 'Clinton',
+        lastname: 'Fidelis',
+        email: 'clintfidel@gmail.com',
+        password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
+        telephoneNumber: '08023112094',
+        homeNumber: '08022235912'
+      })
+        .then((user) => {
+          chai.request(app)
+            .post('/api/v1/weconnect/auth/login')
+            .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
+            .end((err, res) => {
+              authToken2 = `Bearer ${res.body.token}`;
+            });
+        });
 
       chai.request(app)
         .get(`${baseEndpoint}/user`)
-        .set('authorization', authToken)
+        .set('authorization', authToken2)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          expect(res.body.message).to.equal('You are yet to add
+          a business add your first business!');
           done();
         });
     });
-
+*/
     it('it should get all business in the specified location when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos`)
@@ -668,4 +683,3 @@ describe(`${baseEndpoint}`, () => {
     });
   });
 });
-

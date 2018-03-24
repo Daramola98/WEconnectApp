@@ -127,7 +127,7 @@ export default class BusinessController {
         if (business.length > 0) {
           return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
         }
-        res.status(404).json({ message: 'You are yet to add a business add your first business!' });
+        return res.status(404).json({ message: 'You are yet to add a business add your first business!' });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
