@@ -363,6 +363,42 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
+ * GET /api/v1/weconnect/businesses route to get all businesses.
+ */
+  describe(`${baseEndpoint} GET a user's businesses`, () => {
+    beforeEach((done) => {
+      User.create({
+        firstname: 'Clinton',
+        lastname: 'Fidelis',
+        email: 'clintfidel@gmail.com',
+        password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
+        telephoneNumber: '08023112094',
+        homeNumber: '08022235912'
+      })
+        .then((user) => {
+          chai.request(app)
+            .post('/api/v1/weconnect/auth/login')
+            .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
+            .end((err, res) => {
+              authToken2 = `Bearer ${res.body.token}`;
+              done();
+            });
+        });
+    });
+
+    it('it should return a message if user has not registered a business', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken2)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          done();
+        });
+    });
+  });
+  /*
  * GET /api/v1/weconnect/businesses/:buisnessId route to retrieve a business with id.
  */
   describe(`${baseEndpoint}/:businessId GET business`, () => {
@@ -678,6 +714,18 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Response submitted');
+          done();
+        });
+    });
+
+    it('it should add responses to a review with the particular id', (done) => {
+      chai.request(app)
+        .post(`${baseEndpoint}/1/reviews/1`)
+        .send({ message: 'B' })
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.validationErrors[0]).to.equal('Response should be more than 2 and not greater than 500 characters');
           done();
         });
     });
