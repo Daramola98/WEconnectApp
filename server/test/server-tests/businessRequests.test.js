@@ -11,6 +11,7 @@ const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/weconnect/businesses';
 let authToken;
+let authToken2;
 
 describe(`${baseEndpoint}`, () => {
   beforeEach((done) => {
@@ -215,6 +216,52 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
+    it('it should get all businesses registered by a user', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body.business[0].name).to.equal('Clash of clans');
+          expect(res.body.business[0]).to.have.property('id');
+          expect(res.body.business[0].telephoneNumber).to.equal('07066445523');
+          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
+    });
+
+    /*
+    it('it should return a message if user has not registered a business', (done) => {
+      User.create({
+        firstname: 'Clinton',
+        lastname: 'Fidelis',
+        email: 'clintfidel@gmail.com',
+        password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
+        telephoneNumber: '08023112094',
+        homeNumber: '08022235912'
+      })
+        .then((user) => {
+          chai.request(app)
+            .post('/api/v1/weconnect/auth/login')
+            .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
+            .end((err, res) => {
+              authToken2 = `Bearer ${res.body.token}`;
+            });
+        });
+
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken2)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('You are yet to add
+          a business add your first business!');
+          done();
+        });
+    });
+*/
     it('it should get all business in the specified location when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos`)
@@ -315,6 +362,42 @@ describe(`${baseEndpoint}`, () => {
     });
   });
 
+  /*
+ * GET /api/v1/weconnect/businesses route to get all businesses.
+ */
+  describe(`${baseEndpoint} GET a user's businesses`, () => {
+    beforeEach((done) => {
+      User.create({
+        firstname: 'Clinton',
+        lastname: 'Fidelis',
+        email: 'clintfidel@gmail.com',
+        password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
+        telephoneNumber: '08023112094',
+        homeNumber: '08022235912'
+      })
+        .then((user) => {
+          chai.request(app)
+            .post('/api/v1/weconnect/auth/login')
+            .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
+            .end((err, res) => {
+              authToken2 = `Bearer ${res.body.token}`;
+              done();
+            });
+        });
+    });
+
+    it('it should return a message if user has not registered a business', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}/user`)
+        .set('authorization', authToken2)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          done();
+        });
+    });
+  });
   /*
  * GET /api/v1/weconnect/businesses/:buisnessId route to retrieve a business with id.
  */
@@ -634,6 +717,17 @@ describe(`${baseEndpoint}`, () => {
           done();
         });
     });
+
+    it('it should add responses to a review with the particular id', (done) => {
+      chai.request(app)
+        .post(`${baseEndpoint}/1/reviews/1`)
+        .send({ message: 'B' })
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.validationErrors[0]).to.equal('Response should be more than 2 and not greater than 500 characters');
+          done();
+        });
+    });
   });
 });
-

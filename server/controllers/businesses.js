@@ -1,6 +1,7 @@
 import db from '../models/index';
 import businessHelper from '../helpers/businessHelpers';
 import businessMessages from '../messages/businessEndpoint';
+import serverErrorMessage from '../messages/serverMessage';
 
 const { Business, BusinessReview, reviewresponse } = db;
 
@@ -37,13 +38,13 @@ export default class BusinessController {
         .json({ message: businessMessages.businessRegisterMessage, business }))
       .catch((err) => {
         const validationErrors = [];
-        if (err.errors) {
+        if (err.errors.length > 0) {
           for (let i = 0; i < err.errors.length; i += 1) {
             validationErrors.push(err.errors[i].message);
           }
           return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
         }
-        return res.status(500).json(err);
+        return res.status(500).json(serverErrorMessage.message);
       });
   }
 
@@ -79,7 +80,7 @@ export default class BusinessController {
           }
           return res.status(200).json({ message: 'Businesses have not been added yet Add our first business' });
         })
-        .catch(err => res.status(500).json(err));
+        .catch(err => res.status(500).json(serverErrorMessage.message));
     }
   }
 
@@ -104,7 +105,31 @@ export default class BusinessController {
         }
         res.status(404).json(businessMessages.businessNotFoundMessage);
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
+  }
+
+  // RETRIEVE ALL BUSINESSES FOR A PARTICULAR USER
+  /**
+   * Gets a Business register by the user from the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business found or error message
+   * @memberof Business
+   */
+  static retrieveUserBusinesses(req, res) {
+    return Business
+      .findAll({
+        where: {
+          UserId: req.userData.userId
+        }
+      })
+      .then((business) => {
+        if (business.length > 0) {
+          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
+        }
+        return res.status(404).json({ message: 'You are yet to add a business add your first business!' });
+      })
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   // UPDATE A BUSINESS
@@ -141,7 +166,16 @@ export default class BusinessController {
         }
         res.status(403).json({ message: 'You are not allowed to update this business' });
       })
-      .catch(err => res.status(500).json(err));
+      .catch((err) => {
+        const validationErrors = [];
+        if (err.errors.length > 0) {
+          for (let i = 0; i < err.errors.length; i += 1) {
+            validationErrors.push(err.errors[i].message);
+          }
+          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+        }
+        return res.status(500).json(serverErrorMessage.message);
+      });
   }
 
   // DELETE A BUSINESS
@@ -167,11 +201,11 @@ export default class BusinessController {
           return business
             .destroy()
             .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
-            .catch(err => res.status(500).json(err));
+            .catch(err => res.status(500).json(serverErrorMessage.message));
         }
-        res.status(403).json({ message: 'You are not allowed to delete this business' });
+        res.status(403).json({ message: 'You are not Allowed to delete this business' });
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   // ADD A BUSINESS REVIEW
@@ -204,13 +238,16 @@ export default class BusinessController {
             .json({ message: businessMessages.businessReviewMessage, review }))
           .catch((err) => {
             const validationErrors = [];
-            for (let i = 0; i < err.errors.length; i += 1) {
-              validationErrors.push(err.errors[i].message);
+            if (err.errors.length > 0) {
+              for (let i = 0; i < err.errors.length; i += 1) {
+                validationErrors.push(err.errors[i].message);
+              }
+              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
             }
-            return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            return res.status(500).json(serverErrorMessage.message);
           });
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   // ADD A BUSINESS REVIEW RESPONSE
@@ -243,13 +280,16 @@ export default class BusinessController {
             .json({ message: 'Response submitted', response }))
           .catch((err) => {
             const validationErrors = [];
-            for (let i = 0; i < err.errors.length; i += 1) {
-              validationErrors.push(err.errors[i].message);
+            if (err.errors.length > 0) {
+              for (let i = 0; i < err.errors.length; i += 1) {
+                validationErrors.push(err.errors[i].message);
+              }
+              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
             }
-            res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            return res.status(500).json(serverErrorMessage.message);
           });
       })
-      .catch(err => res.status(500).json(err));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   // GET BUSINESS REVIEWS
@@ -286,7 +326,7 @@ export default class BusinessController {
               }
               return res.status(404).json({ message: 'Reviews have not been added for this Business' });
             })
-            .catch(err => res.status(500).json(err));
+            .catch(err => res.status(500).json(serverErrorMessage.message));
         }
         res.status(404).json({ message: 'Business does not exist, Enter id for existing business' });
       });

@@ -84,67 +84,82 @@ Swagger API documentation at `http://localhost:8080/api-docs/`
 <table>
   <tr>
       <th>HTTP REQUEST VERB</th>
-      <th>End Point</th>
-      <th>Action</th>
+      <th>API ENDPOINT/PATH</th>
+      <th>ACTION</th>
   </tr>
   <tr>
       <td>POST</td>
-      <td>/api/v1/auth/signup</td>
+      <td>/api/v1/weconnect/auth/signUp</td>
       <td>Register a user</td>
   </tr>
   <tr>
       <td>POST</td>
-      <td>/api/v1/auth/signin</td>
+      <td>/api/v1/weconnect/auth/login</td>
       <td>Login user</td>
   </tr>
   <tr>
+      <td>PUT</td>
+      <td>/api/v1/weconnect/auth/updateProfile</td>
+      <td>Update user profile details</td>
+  </tr>
+  <tr>
       <td>POST</td>
-      <td>/api/v1/businesses</td>
+      <td>/api/v1/weconnect/businesses</td>
       <td>Register a business</td>
   </tr>
   <tr>
       <td>PUT</td>
-      <td>/api/v1/businesses/:businessId</td>
-      <td>Update a business profile</td>
+      <td>/api/v1/weconnect/businesses/:businessId</td>
+      <td>Update a business profile with the specified id</td>
   </tr>
   <tr>
       <td>DELETE</td>
-      <td>/api/v1/businesses/:businessId</td>
-      <td>Delete a business</td>
+      <td>/api/v1/weconnect/businesses/:businessId</td>
+      <td>Delete a business with the specified id</td>
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/v1/businesses/:businessId</td>
-      <td>Get a business</td>
+      <td>/api/v1/weconnect/businesses/:businessId</td>
+      <td>Get a business with the specified id</td>
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/v1/businesses/</td>
+      <td>/api/v1/weconnect/businesses/user</td>
+      <td>Get all businesses registered by a user</td>
+  </tr>
+  <tr>
+      <td>GET</td>
+      <td>/api/v1/weconnect/businesses</td>
       <td>Get all businesses</td>
   </tr>
   <tr>
       <td>POST</td>
-      <td>/api/v1/businesses/:businessId/reviews</td>
+      <td>/api/v1/weconnect/businesses/:businessId/reviews</td>
       <td>Add a review to a business</td>
   </tr>
   <tr>
+      <td>POST</td>
+      <td>/api/v1/weconnect/businesses/:businessId/reviews/:reviewId</td>
+      <td>Add a reply to a review</td>
+  </tr>
+  <tr>
       <td>GET</td>
-      <td>/api/v1/businesses/:businessId/reviews</td>
+      <td>/api/v1/weconnect/businesses/:businessId/reviews</td>
       <td>Get all reviews for a business</td>
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/v1/businesses?location=location</td>
+      <td>/api/v1/weconnect/businesses?location=location</td>
       <td>Get businesses with a location</td>
   </tr>
   </tr>
       <td>GET</td>
-      <td>/api/v1/businesses?category=category</td>
+      <td>/api/v1/weconnect/businesses?category=category</td>
       <td>Get businesses with a category</td>
   </tr>
   <tr>
       <td>GET</td>
-      <td>/api/v1/businesses?category=category&location=location</td>
+      <td>/api/v1/weconnect/businesses?category=category&location=location</td>
       <td>Get businesses with a category and location</td>
   </tr>
 </table>

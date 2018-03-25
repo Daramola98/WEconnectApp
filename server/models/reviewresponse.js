@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         len: {
           args: [3, 500],
-          msg: 'Business Review should be more than 2 and not greater than 500 characters'
+          msg: 'Response should be more than 2 and not greater than 500 characters'
         }
       }
     },

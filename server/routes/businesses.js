@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.post('/', authorize.checkAuthentication, businessValidate.businessValidation, business.createBusiness);
 router.get('/', validate.businessQueryCheck, business.listBusinesses);
+router.get('/user', authorize.checkAuthentication, business.retrieveUserBusinesses);
 
 router.get('/:businessId', validate.businessIdCheck, business.retrieveBusiness);
 router.put('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, businessValidate.checkIfBusinessWithIdExists, businessValidate.businessValidation, business.updateBusiness);
