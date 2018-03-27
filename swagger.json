@@ -1070,7 +1070,7 @@
           }
         }
       },
-      "addReviewResponse": {
+      "addReviewRes": {
         "type": "object",
         "properties": {
           "message": {
