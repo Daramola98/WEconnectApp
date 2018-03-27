@@ -252,7 +252,7 @@
             "200": {
               "description": "Businesses found",
               "schema": {
-                "type": "array",
+                "type": "object",
                 "items":{
                   "$ref": "#/definitions/Business"
                 }
