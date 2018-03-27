@@ -41,6 +41,8 @@ View the templates through this [link](https://daramola98.github.io/WEconnectApp
 * Materialize CSS
 * Express
 * NodeJS
+* Postgresql
+* Heroku
 
 ## Getting Started
 Get the app running locally in the following way:
@@ -169,3 +171,5 @@ View hosted endpoints on Heroku through this [link](https://weconnect-api.heroku
 
 ## API documentation on Heroku
 View swagger API documentation of endpoints on Heroku through this [link](https://weconnect-api.herokuapp.com/api-docs/)
+
+Design Inspired by Pelumi longe
