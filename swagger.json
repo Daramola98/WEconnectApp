@@ -38,7 +38,6 @@
           "description": "This endpoint uses a post request to register a new user",
           "operationId": "signup",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -139,11 +138,9 @@
           "description": "Add business to database.",
           "operationId": "createBusiness",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "parameters": [
@@ -271,7 +268,6 @@
           "description": "Updates business profile",
           "operationId": "updateBusiness",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -515,7 +511,6 @@
           "description": "Submits a review record for a business.",
           "operationId": "addReview",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -626,13 +621,16 @@
             "type": "string",
             "password": "iamapassword"
           },
-          "userId": {
+          "id": {
             "type": "integer",
             "uniqueItems": true,
             "example": 1
           },
-          "businesses": {
-            "type": "array"
+          "telephoneNumber": {
+            "type": "string"
+          },
+          "homeNumber": {
+            "type": "string"
           },
           "createdAt": {
             "type": "string",
@@ -650,7 +648,8 @@
           "firstname",
           "lastname",
           "email",
-          "password"
+          "password",
+          "telephoneNumber"
         ],
         "properties": {
           "firstname": {
@@ -668,6 +667,14 @@
           "password": {
             "type": "string",
             "example": "pammord"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "example": "08023112091"
+          },
+          "homeNumber": {
+            "type":"string",
+            "example":"08023112071"
           }
         }
       },
@@ -695,14 +702,14 @@
       },
       "invalidInput": {
         "type": "array",
-        "example": [{"error": "errormessage"}]
+        "example": {"valdiationErrors": ["errormessage"]}
       },
       "existingEmail": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "example": "This email already has an account"
+            "example": "This email already exists"
           }
         }
       },
@@ -743,7 +750,7 @@
       },
       "Business": {
         "type": "object",
-        "required": ["name", "id", "category", "location", "address", "email", "number", "businessDescription", "reviews"],
+        "required": ["name", "category", "location", "address", "email", "telephoneNumber", "description"],
         "properties": {
           "id": {
             "type": "integer",
@@ -766,20 +773,17 @@
             "type": "string",
             "example": "daramolaajibigad@gmail.com"
           },
-          "number": {
-            "type": "object",
-            "properties": {
-              "home": {
-                "type": "integer",
-                "example": "07011021507"
+          "telephoneNumber": {
+            "type": "string",
+            "example": "07011021507"
               },
-              "office": {
-                "type": "integer",
-                "example": "07011091807"
+          "office": {
+            "type": "string",
+            "example": "07011091807"
               }
             }
           },
-          "businessDescription": {
+          "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
           },
@@ -795,7 +799,6 @@
             "type": "string",
             "example": "3/10/2018, 10:40:17 PM"
           }
-        }
       },
       "registerBusiness": {
         "type": "object",
@@ -807,7 +810,7 @@
         },
         "business": {
         "type": "object",
-        "required": ["name", "id", "category", "location", "address", "email", "number", "businessDescription"],
+        "required": ["name", "category", "location", "address", "email", "telephoneNumber", "description"],
         "properties": {
           "id": {
             "type": "integer",
@@ -830,20 +833,17 @@
             "type": "string",
             "example": "daramolaajibigad@gmail.com"
           },
-          "number": {
-            "type": "object",
-            "properties": {
-              "home": {
-                "type": "integer",
-                "example": "07011021507"
-              },
-              "office": {
-                "type": "integer",
-                "example": "07011091807"
+          "telephoneNumber": {
+            "type": "integer",
+            "example": "07011021507"
+            },
+            "homeNumber": {
+              "type": "integer",
+              "example": "07011091807"
               }
             }
           },
-          "businessDescription": {
+          "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
           },
@@ -859,8 +859,6 @@
             "type": "string",
             "example": "3/10/2018, 10:40:17 PM"
           }
-        }
-      }
     },
       "BusinessNotFound": {
         "type": "object",
@@ -926,12 +924,21 @@
           }
         }
       },
+      "reviewresponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Response Submitted"
+          }
+        }
+      },
       "BusinessReview": {
         "type": "array",
         "items": {
-          "username": {
-            "type": "string",
-            "example": "Ajiboye Daramola"
+          "ReviewerId": {
+            "type": "integer",
+            "example": 1
           },
           "reviewId": {
             "type": "integer",
@@ -940,6 +947,10 @@
           "businessId":{
             "type": "integer",
             "example": 1
+          },
+          "responses":{
+            "type": "array",
+            "example": [{"id": 1 ,"message":"Thank You"}]
           },
           "createdAt": {
             "type": "string",
@@ -963,7 +974,7 @@
           }
         }
       },
-      "addReviewRes": {
+      "addReviewResponse": {
         "type": "object",
         "properties": {
           "message": {
@@ -996,4 +1007,3 @@
       "url": ""
     }
   }
-}
