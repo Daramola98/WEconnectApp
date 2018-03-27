@@ -6,53 +6,76 @@ import React from 'react';
  *@classdesc creates a React component- BusinessListing
  */
 export default class BusinessListing extends React.Component {
+    static defaultProps = {
+      categories: [
+        'Gaming', 'Technology', 'Housing', 'Transport', 'Power & Energy', 'Food',
+        'Consulting Services', 'Construction', 'Educational Services', 'Government', 'Religion'
+      ],
+      locations: [
+        'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
+        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
+        'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
+        'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
+      ]
+    }
+
   /**
-       * Creates a React Component
-       * @return {jsx} Success message with the business created or error message
-       * @memberof React Component
-       */
-  render() {
-    return (
-      <div class="container">
-            <div class="row">
-                <div class="col s12 offset-m2 m8 offset-l2 l8">
-                    <form>
-                        <div class="input-field">
-                            <span class="col s8 l8">
-                                <i class="material-icons prefix">search</i>
-                                <input type="text" id="search"/>
-                                <label for="search">Search For Businesses</label>
+    * Creates a React Component
+    * @return {jsx} Success message with the business created or error message
+    * @memberof React Component
+    */
+    handleSearchSubmit() {
+
+    }
+
+  /**
+    * Creates a React Component
+    * @return {jsx} Success message with the business created or error message
+    * @memberof React Component
+    */
+    render() {
+      const categoryOptions = this.props.categories.map(category =>
+        <option key={category} value={category}>{category}</option>);
+
+      const locationOptions = this.props.locations.map(location =>
+        <option key={location} value={location}>{location}</option>);
+      return (
+        <div className="container">
+            <div className="row">
+                <div className="col s12 offset-m2 m8 offset-l2 l8">
+                    <form onSubmit={this.handleSearchSubmit.bind(this)}>
+                        <div className="input-field">
+                            <span className="col s8 l8">
+                                <i className="material-icons prefix">search</i>
+                                <input type="text" ref="search"/>
+                                <label htmlFor="search">Search For Businesses</label>
                             </span>
-                            <span class="col s4 l4">
-                                <button class="waves-effect waves-light btn blue lighten-1">Search</button>
+                            <span className="col s4 l4">
+                                <button className="waves-effect waves-light btn blue lighten-1">Search</button>
                             </span>
                         </div>
-                        <div class="row">
-                            <div class="input-field col l5">
-                                <i class="material-icons prefix">search</i>
-                                <select class="">
-                                    <option value="" disabled selected>Choose Location</option>
-                                    <option value="lagos">Lagos</option>
-                                    <option value="adamawa">Adamawa</option>
-                                    <option value="abuja">Abuja</option>
+                        <div className="row">
+                            <div className="input-field col l5">
+                                <i className="material-icons prefix">search</i>
+                                <select ref="location">
+                                    <option value="null" disabled>Choose Location</option>
+                                    {locationOptions}
                                 </select>
                                 <label>Filter By Location</label>
                             </div>
-                            <div class="input-field col l5">
-                                <i class="material-icons prefix">search</i>
-                                <select id="category">
-                                    <option value="" disabled selected>Choose Category</option>
-                                    <option value="gaming">Gaming</option>
-                                    <option value="technology">Technology</option>
-                                    <option value="housing">Housing</option>
+                            <div className="input-field col l5">
+                                <i className="material-icons prefix">search</i>
+                                <select ref="category">
+                                    <option value="null" disabled>Choose Category</option>
+                                    {categoryOptions}
                                 </select>
-                                <label for="">Filter By Category</label>
+                                <label htmlFor="category">Filter By Category</label>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <table class="bordered highlight centered responsive-table">
+            <table className="bordered highlight centered responsive-table">
                 <thead>
                     <tr>
                         <th>Business Name</th>
@@ -132,34 +155,34 @@ export default class BusinessListing extends React.Component {
                     </tr>
                 </tbody>
             </table>
-            <ul class="pagination">
-                <li class="disabled">
+            <ul className="pagination">
+                <li className="disabled">
                     <a href="#!">
-                        <i class="material-icons">chevron_left</i>
+                        <i className="material-icons">chevron_left</i>
                     </a>
                 </li>
-                <li class="active">
+                <li className="active">
                     <a href="#!">1</a>
                 </li>
-                <li class="waves-effect">
+                <li className="waves-effect">
                     <a href="#!">2</a>
                 </li>
-                <li class="waves-effect">
+                <li className="waves-effect">
                     <a href="#!">3</a>
                 </li>
-                <li class="waves-effect">
+                <li className="waves-effect">
                     <a href="#!">4</a>
                 </li>
-                <li class="waves-effect">
+                <li className="waves-effect">
                     <a href="#!">5</a>
                 </li>
-                <li class="waves-effect">
+                <li className="waves-effect">
                     <a href="#!">
-                        <i class="material-icons">chevron_right</i>
+                        <i className="material-icons">chevron_right</i>
                     </a>
                 </li>
             </ul>
         </div>
-    );
-  }
+      );
+    }
 }

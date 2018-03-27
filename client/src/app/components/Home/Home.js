@@ -1,18 +1,6 @@
 import React from 'react';
 
-/**
- *
- *@class Header
- *@classdesc creates a React component- Header
- */
-export default class Home extends React.Component {
-/**
-   * Creates a React Component
-   * @return {jsx} Success message with the business created or error message
-   * @memberof React Component
-   */
-  render() {
-    return (
+const Home = props => (
         <main>
         <div className="container">
             <div className="row hide-on-med-and-down">
@@ -115,6 +103,5 @@ export default class Home extends React.Component {
             </div>
         </div>
     </main>
-    );
-  }
-}
+);
+export default Home;

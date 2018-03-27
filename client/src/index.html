@@ -14,7 +14,10 @@
 </head>
 
 <body>
-    <div id="root"></div>
+    <main>
+        <div id="root"></div>
+    </main>
+    
     <footer class="page-footer blue">
         <div class="footer-copyright">
             <div class="container">
@@ -35,6 +38,14 @@
                 fullWidth: true
             });
             $('.slider').slider();
+            $('select').material_select();
+            $('#description').val();
+            $('#description').trigger('autoresize');
+            $('ul.tabs').tabs();
+            $('#review').val();
+            $('#review').trigger('autoresize');
+            $('#contact-message').val();
+            $('#contact-message').trigger('autoresize');
         });
     </script>
 </body>

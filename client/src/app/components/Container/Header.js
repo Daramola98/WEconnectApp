@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 /**
  *
  *@class Header
@@ -13,58 +13,59 @@ export default class Header extends React.Component {
    */
   render() {
     return (
+        <div>
         <header>
         <div>
             <nav className="blue">
                 <div className="nav-wrapper">
                     <div className="">
-                        <a href="index.html" className="brand-logo">WEconnect</a>
-                        <a href="#" data-activates="mobile-menu" className="button-collapse">
+                        <Link to="/home" className="brand-logo">WEconnect</Link>
+                        <Link to="#" data-activates="mobile-menu" className="button-collapse">
                             <i className="material-icons">menu</i>
-                        </a>
+                        </Link>
                         <ul className="right hide-on-med-and-down">
                             <li>
-                                <a href="index.html">Home</a>
+                                <Link to="/home">Home</Link>
                             </li>
                             <li>
-                                <a href="about.html">About Us</a>
+                                <Link to="/aboutUs">About Us</Link>
                             </li>
                             <li>
-                                <a href="contact.html">Contact Us</a>
+                                <Link to="/contactUs">Contact Us</Link>
                             </li>
                             <li>
-                                <a href="how-it-works.html">How it Works</a>
+                                <Link to="/howitworks">How it Works</Link>
                             </li>
                             <li>
-                                <a href="login.html">
+                                <Link to="/login">
                                     Sign In
-                                </a>
+                                </Link>
                             </li>
                             <li>
-                                <a href="signUp.html">
+                                <Link to="/signup">
                                     Sign Up
-                                </a>
+                                </Link>
                             </li>
                         </ul>
 
                         <ul className="side-nav" id="mobile-menu">
                             <li>
-                                <a href="index.html">Home</a>
+                                <Link to="/home">Home</Link>
                             </li>
                             <li>
-                                <a href="about.html">About Us</a>
+                                <Link to="/aboutUs">About Us</Link>
                             </li>
                             <li>
-                                <a href="contact.html">Contact Us</a>
+                                <Link to="/contactUs">Contact Us</Link>
                             </li>
                             <li>
-                                <a href="how-it-works.html">How it Works</a>
+                                <Link to="/howitworks">How it Works</Link>
                             </li>
                             <li>
-                                <a href="signUp.html">Sign Up</a>
+                                <Link to="/signup">Sign Up</Link>
                             </li>
                             <li>
-                                <a href="login.html">Login</a>
+                                <Link to="/login">Login</Link>
                             </li>
 
                         </ul>
@@ -73,6 +74,8 @@ export default class Header extends React.Component {
             </nav>
         </div>
     </header>
+        {this.props.children}
+    </div>
     );
   }
 }

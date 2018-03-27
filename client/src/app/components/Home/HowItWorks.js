@@ -1,18 +1,6 @@
 import React from 'react';
 
-/**
- *
- *@class HowItWorks
- *@classdesc creates a React component- HowItWorks
- */
-export default class HowItWorks extends React.Component {
-  /**
-       * Creates a React Component
-       * @return {jsx} jsx to render
-       * @memberof React Component
-       */
-  render() {
-    return (
+const HowItWorks = props => (
         <div className="container">
             <div className="center-align">
                 <h4>HOW WECONNECT WORKS</h4>
@@ -38,6 +26,7 @@ export default class HowItWorks extends React.Component {
                 </p>
             </div>
         </div>
-    );
-  }
-}
+);
+
+export default HowItWorks;
+

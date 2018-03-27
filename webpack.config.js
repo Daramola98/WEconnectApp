@@ -3,10 +3,17 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const DIST_DIR = path.resolve(__dirname, 'dist');
+const CLIENT_DIR = path.resolve(__dirname, 'client');
 const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = {
+  entry: [
+    './client/src/index.js'
+  ],
+  output: {
+    path: path.resolve(__dirname, 'client/dist'),
+    filename: '[name].js'
+  },
   module: {
     rules: [
       {
@@ -38,12 +45,20 @@ module.exports = {
             name: 'images/[hash]-[name].[ext]'
           }
         }]
+      },
+      /*
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
+      */
     ]
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './src/index.html',
+      template: './client/src/index.html',
       filename: './index.html',
     }),
     new MiniCssExtractPlugin({
@@ -52,7 +67,7 @@ module.exports = {
     })
   ],
   devServer: {
-    contentBase: DIST_DIR
+    contentBase: `${CLIENT_DIR}/dist`
   }
 };
 

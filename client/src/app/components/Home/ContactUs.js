@@ -1,18 +1,6 @@
 import React from 'react';
 
-/**
- *
- *@class ContactUs
- *@classdesc creates a React component- AboutUs
- */
-export default class ContactUs extends React.Component {
-  /**
-       * Creates a React Component
-       * @return {jsx} Success message with the business created or error message
-       * @memberof React Component
-       */
-  render() {
-    return (
+const ContactUs = props => (
       <div className="row">
                 <div className="col s12 m8 offset-m2 l8 offset-l2">
                     <div className="card">
@@ -24,13 +12,13 @@ export default class ContactUs extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l6">
                                         <i className="material-icons prefix">account_circle</i>
-                                        <label for="firstName">First Name</label>
+                                        <label htmlFor="firstName">First Name</label>
 
                                         <input type="text" id="firstName" className="validate" required/>
                                     </div>
                                     <div className="input-field col s12 m12 l6">
                                         <i className="material-icons prefix">account_circle</i>
-                                        <label for="lastName">Last Name</label>
+                                        <label htmlFor="lastName">Last Name</label>
 
                                         <input type="text" id="lastName" className="validate" required/>
                                     </div>
@@ -39,7 +27,7 @@ export default class ContactUs extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <i className="material-icons prefix">email</i>
-                                        <label for="user_mail">Email Address</label>
+                                        <label htmlFor="user_mail">Email Address</label>
                                         <input type="email" placeholder="johndoe@gmail.com" id="user_mail" className="validate" required/>
                                     </div>
                                 </div>
@@ -47,8 +35,9 @@ export default class ContactUs extends React.Component {
                                 <div className="row">
                                     <div className="input-field col s12 m12 l12">
                                         <i className="material-icons prefix">mode_edit</i>
-                                        <textarea className="materialize-textarea" id="contact-message" required> </textarea>
-                                        <label for="contact-message">Send Us A Message</label>
+                                        <textarea className="materialize-textarea" id="contact-message" required>
+                                        </textarea>
+                                        <label htmlFor="contact-message">Send Us A Message</label>
                                     </div>
                                 </div>
                                 <div className="input-field">
@@ -59,6 +48,6 @@ export default class ContactUs extends React.Component {
                     </div>
                 </div>
             </div>
-    );
-  }
-}
+);
+
+export default ContactUs;

@@ -1,8 +1,9 @@
 import React from 'react';
 import Header from './Container/Header';
 import Home from './Home/Home';
-import HomeSlider from './Home/HomeImageSlider';
-import style from '../../styles/index.css';
+import RegisterBusiness from './Business/RegisterBusiness';
+
+import HomeImageSlider from './Home/HomeImageSlider';
 
 /**
  *
@@ -17,13 +18,10 @@ class App extends React.Component {
    */
   render() {
     return (
-      <div>
-        <div>
-        <Header/>
-        </div>
-        <HomeSlider/>
-        <Home/>
-        </div>
+    <div>
+       <HomeImageSlider/>
+       <Home/>
+    </div>
     );
   }
 }
