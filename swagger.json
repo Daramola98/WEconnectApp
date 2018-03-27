@@ -252,7 +252,7 @@
             "200": {
               "description": "Businesses found",
               "schema": {
-                "type": "object",
+                "type": "array",
                 "items":{
                   "$ref": "#/definitions/Business"
                 }
@@ -869,8 +869,7 @@
           "homeNumber": {
             "type": "string",
             "example": "07011091807"
-              }
-            },
+              },
           "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
@@ -887,6 +886,7 @@
             "type": "string",
             "example": "3/10/2018, 10:40:17 PM"
           }
+        }
       },
       "registerBusiness": {
         "type": "object",
@@ -925,12 +925,10 @@
             "type": "integer",
             "example": "07011021507"
             },
-            "homeNumber": {
-              "type": "integer",
-              "example": "07011091807"
-              }
-            }
-          },
+          "homeNumber": {
+            "type": "integer",
+            "example": "07011091807"
+            },
           "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
@@ -947,7 +945,9 @@
             "type": "string",
             "example": "3/10/2018, 10:40:17 PM"
           }
-    },
+        }
+    }
+  },
       "BusinessNotFound": {
         "type": "object",
         "properties": {
@@ -1093,6 +1093,6 @@
     "externalDocs": {
       "description": "",
       "url": ""
-    }
+     }
+   }
   }
-}
