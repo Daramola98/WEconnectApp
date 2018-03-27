@@ -55,7 +55,7 @@
             }
           ],
           "responses": {
-            "200": {
+            "201": {
               "description": "User registered successfully",
               "schema": {
                 "$ref": "#/definitions/signupResponse"
@@ -252,7 +252,7 @@
             "200": {
               "description": "Businesses found",
               "schema": {
-                "type": "object",
+                "type": "array",
                 "items":{
                   "$ref": "#/definitions/Business"
                 }
@@ -849,11 +849,6 @@
         "type": "object",
         "required": ["name", "category", "location", "address", "email", "telephoneNumber", "description"],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format":"int64",
-            "example": 4
-          },
           "name": {
             "type": "string",
             "example": "Clash of clans"
@@ -874,7 +869,7 @@
             "type": "string",
             "example": "07011021507"
               },
-          "office": {
+          "homeNumber": {
             "type": "string",
             "example": "07011091807"
               }
