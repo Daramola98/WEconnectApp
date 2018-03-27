@@ -82,6 +82,59 @@
           }
         }
       },
+      "/auth/updateProfile": {
+        "put": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Updates a user",
+          "description": "This endpoint uses a put request to update a new user",
+          "operationId": "signup",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Update user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/userUpdate"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User updated successfully",
+              "schema": {
+                "$ref": "#/definitions/userUpdateresponse"
+              }
+            },
+            "400": {
+              "description": "Invalid email address",
+              "schema": {
+                "$ref": "#/definitions/wrongEmail"
+              }
+            },
+            "406": {
+              "description": "Invalid Input",
+              "schema": {
+                "$ref": "#/definitions/invalidInput"
+              }
+            },
+            "409": {
+              "description": "Email already Exists",
+              "schema": {
+                "$ref": "#/definitions/existingEmail"
+              }
+            }
+          }
+        }
+      },
       "/auth/login": {
         "post": {
           "tags": [
@@ -710,6 +763,50 @@
           "message": {
             "type": "string",
             "example": "This email already exists"
+          }
+        }
+      },
+      "userUpdate": {
+        "type": "object",
+        "required": [
+        ],
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "Dammy"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "Samuel"
+          },
+          "email": {
+            "type": "string",
+            "example": "pammword@yahoo.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "pammord"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "example": "08023112091"
+          },
+          "homeNumber": {
+            "type":"string",
+            "example":"08023112071"
+          }
+        }
+      },
+      "userUpdateresponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User updated successfully"
+          },
+          "user": {
+            "type": "object",
+            "$ref": "#/definitions/User"
           }
         }
       },
