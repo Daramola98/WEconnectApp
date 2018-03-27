@@ -105,6 +105,13 @@
               "schema": {
                 "$ref": "#/definitions/userUpdate"
               }
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "description": "Token Authentication",
+              "required": false,
+              "type": "string"
             }
           ],
           "responses": {
@@ -649,6 +656,76 @@
             }
           }
         }
+      },
+      "/businesses/{businessId}/reviews/{reviewId}": {
+        "post": {
+          "tags": [
+            "Responses"
+          ],
+          "summary": "Add a response to a review",
+          "description": "Submits a response to a review.",
+          "operationId": "addResponse",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "description": "Token Authentication",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "message to send as a response",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/reviewresponse"
+              }
+            },
+            {
+              "name": "businessId",
+              "in": "path",
+              "description": "business to add review to",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            },
+            {
+              "name": "reviewId",
+              "in": "path",
+              "description": "reviewId of review you want to respond to",
+              "required": true,
+              "type": "integer",
+              "format": "int64"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Review was added successfully",
+              "schema": {
+                "$ref": "#/definitions/reviewresponse"
+              }
+            },
+            "404": {
+              "description": "Business was not found",
+              "schema": {
+                "$ref": "#/definitions/BusinessNotFound"
+              }
+            },
+            "400": {
+              "description": "Invalid Input",
+              "schema": {
+                "$ref": "#/definitions/invalidInput"
+              }
+            }
+          }
+        }
       }
     },
     "definitions": {
@@ -1014,6 +1091,9 @@
       },
       "reviewresponse": {
         "type": "object",
+        "required":[
+          "message"
+        ],
         "properties": {
           "message": {
             "type": "string",
