@@ -781,8 +781,7 @@
             "type": "string",
             "example": "07011091807"
               }
-            }
-          },
+            },
           "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
@@ -1007,3 +1006,4 @@
       "url": ""
     }
   }
+}
