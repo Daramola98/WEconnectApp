@@ -1,7 +1,6 @@
 import React from 'react';
-import growingBusiness from '../../../images/growing-business.jpg';
-import business from '../../../images/business.jpeg';
-
+import growingBusiness from '../../../public/images/growing-business.jpg';
+import business from '../../../public/images/business.jpeg';
 
 const HomeImageSlider = props => (
         <div className="slider">

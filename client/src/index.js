@@ -13,7 +13,7 @@ import SignUp from './app/components/Auth/SignUp';
 import Login from './app/components/Auth/Login';
 import AboutUs from './app/components/Home/AboutUs';
 import HowItWorks from './app/components/Home/HowItWorks';
-import style from './styles/index.css';
+import style from '../public/styles/index.css';
 import ContactUs from './app/components/Home/ContactUs';
 
 

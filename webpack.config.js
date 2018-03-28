@@ -10,8 +10,10 @@ module.exports = {
   entry: [
     './client/src/index.js'
   ],
+  devtool: 'inline-source-map',
   output: {
-    path: path.resolve(__dirname, 'client/dist'),
+    path: path.join(__dirname, 'client/dist'),
+    publicPath: '/',
     filename: '[name].js'
   },
   module: {

@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 import dotenv from 'dotenv';
 import validator from 'express-validator';
 import cors from 'cors';
@@ -8,17 +10,22 @@ import swaggerUi from 'swagger-ui-express';
 import userRoutes from '../routes/user';
 import businessRoutes from '../routes/businesses';
 import swaggerDocument from '../../swagger.json';
+import config from '../../webpack.config';
 
 dotenv.config();
 const app = express();
-
+const compiler = webpack(config);
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}));
 // EXPRESS MIDDLEWARES
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 
 // CORS
 /*
@@ -29,7 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 */
-
+/*
 // EXPRESS MIDDLEWARES
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,7 +44,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+*/
 // ROUTES
 app.get('/', (req, res) => {
   const apiRootMessage = {
