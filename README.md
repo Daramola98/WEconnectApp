@@ -172,4 +172,4 @@ View hosted endpoints on Heroku through this [link](https://weconnect-api.heroku
 ## API documentation on Heroku
 View swagger API documentation on Heroku through this [link](https://weconnect-api.herokuapp.com/api-docs/)
 
-                                ##Design Inspired by Pelumi longe
+                                ## Design Inspired by Pelumi longe
