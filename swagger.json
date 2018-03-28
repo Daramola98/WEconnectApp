@@ -9,7 +9,7 @@
       }
     },
     "host": "weconnect-api.herokuapp.com",
-    "basePath": "/api/v1/weconnect",
+    "basePath": "/api/v1",
     "tags": [
       {
         "name": "User",

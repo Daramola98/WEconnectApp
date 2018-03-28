@@ -42,19 +42,19 @@ app.get('/', (req, res) => {
   const apiRootMessage = {
     message: 'Welcome to the WEconnect API, Available endpoints are shown below',
     endpoints: {
-      registerBusiness: 'POST /api/v1/weconnect/businesses/',
-      getBusinesses: 'GET /api/v1/weconnect/businesses/',
-      getBusiness: 'GET /api/v1/weconnect/businesses/:businessId',
-      updateBusiness: 'PUT /api/v1/weconnect/businesses/:businessId',
-      deleteBusiness: 'DELETE /api/v1/weconnect/businesses/:businessId',
-      getBusinessReview: 'GET /api/v1/weconnect/businesses/:businessId/reviews',
-      addBusinessReview: 'POST /api/v1/weconnect/businesses/:businessId/review'
+      registerBusiness: 'POST /api/v1/businesses/',
+      getBusinesses: 'GET /api/v1/businesses/',
+      getBusiness: 'GET /api/v1/businesses/:businessId',
+      updateBusiness: 'PUT /api/v1/businesses/:businessId',
+      deleteBusiness: 'DELETE /api/v1/businesses/:businessId',
+      getBusinessReview: 'GET /api/v1/businesses/:businessId/reviews',
+      addBusinessReview: 'POST /api/v1/businesses/:businessId/review'
     }
   };
   res.status(200).json(apiRootMessage);
 });
-app.use('/api/v1/weconnect/auth', userRoutes);
-app.use('/api/v1/weconnect/businesses', businessRoutes);
+app.use('/api/v1/auth', userRoutes);
+app.use('/api/v1/businesses', businessRoutes);
 
 // CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
 app.all('*', (req, res) => {
