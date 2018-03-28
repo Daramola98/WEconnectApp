@@ -14,17 +14,17 @@ businesses they have interacted with.
 
 ## Contents
 - [View live Template](#view-live-template)
-- [Features](#features)
-- [Technology Used](#technology-used)
-- [How to Use Locally](#getting-started)
+- [User Stories](#user-stories)
+- [Technologies Used](#technologies-used)
+- [How to Install on local machine](#getting-started)
 - [API Endpoints](#api-endpoints)
-- [Hosted Endpoints on Heroku](#hosted-endpoints-on-heroku)
-- [API documentation on Heroku](#api-documentation-on-heroku)
+- [Hosted API Endpoints on Heroku](#hosted-endpoints-on-heroku)
+- [Swagger API documentation on Heroku](#api-documentation-on-heroku)
 
 ## View live Template
-View the templates through this [link](https://daramola98.github.io/WEconnectApp/template)
+View the templates on github pages through this [link](https://daramola98.github.io/WEconnectApp/template)
 
-## Features
+## User Stories
 * Users can register on the application
 * Users can login to the application
 * Users can register a business
@@ -35,7 +35,7 @@ View the templates through this [link](https://daramola98.github.io/WEconnectApp
 * Users can add reviews to a business
 * Users can view all reviews for a business
 
-## Technology Used
+## Technologies Used
 * HTML
 * CSS
 * Materialize CSS
@@ -170,6 +170,6 @@ Swagger API documentation at `http://localhost:8080/api-docs/`
 View hosted endpoints on Heroku through this [link](https://weconnect-api.herokuapp.com/)
 
 ## API documentation on Heroku
-View swagger API documentation of endpoints on Heroku through this [link](https://weconnect-api.herokuapp.com/api-docs/)
+View swagger API documentation on Heroku through this [link](https://weconnect-api.herokuapp.com/api-docs/)
 
-Design Inspired by Pelumi longe
+                                ##Design Inspired by Pelumi longe
