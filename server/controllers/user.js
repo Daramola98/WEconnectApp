@@ -40,14 +40,22 @@ export default class UserController {
         };
         return User
           .create(userDetails)
-          .then(user => res.status(201).json({ userCreatedMessage, user }))
+          .then((user) => {
+            const registeredUserDetails = {
+              firstname: user.firstname,
+              lastname: user.lastname,
+              email: user.email,
+              telephoneNumber: user.telephoneNumber
+            };
+            res.status(201).json({ userCreatedMessage, registeredUserDetails });
+          })
           .catch((err) => {
             const validationErrors = [];
             if (err.errors.length > 0) {
               for (let i = 0; i < err.errors.length; i += 1) {
                 validationErrors.push(err.errors[i].message);
               }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
             }
             return res.status(500).json(serverErrorMessage.message);
           });
@@ -76,14 +84,22 @@ export default class UserController {
       })
       .then(user => user
         .update(req.body, { fields: Object.keys(req.body) })
-        .then(updatedUser => res.status(200).json({ message: 'User Updated successfully', updatedUser }))
+        .then((updatedUser) => {
+          const updatedUserDetails = {
+            firstname: updatedUser.firstname,
+            lastname: updatedUser.lastname,
+            email: updatedUser.email,
+            telephoneNumber: updatedUser.telephoneNumber
+          };
+          res.status(200).json({ message: 'User Updated successfully', updatedUserDetails });
+        })
         .catch((err) => {
           const validationErrors = [];
           if (err.errors.length > 0) {
             for (let i = 0; i < err.errors.length; i += 1) {
               validationErrors.push(err.errors[i].message);
             }
-            return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
           }
           return res.status(500).json(serverErrorMessage.message);
         }))

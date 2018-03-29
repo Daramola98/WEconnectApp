@@ -83,8 +83,8 @@ const business = (sequelize, DataTypes) => {
           msg: 'Enter a valid Telephone Number'
         },
         len: {
-          args: [11, 11],
-          msg: 'Telephone Number should be 11 characters'
+          args: [7, 11],
+          msg: 'Telephone Number should be 7 to 11 characters'
         },
       }
     },
@@ -96,11 +96,11 @@ const business = (sequelize, DataTypes) => {
           msg: 'Home Number is required'
         },
         isInt: {
-          msg: 'Enter a valid Office Number'
+          msg: 'Enter a valid Home Number'
         },
         len: {
           args: [11, 11],
-          msg: 'Home Number should be 11 characters'
+          msg: 'Home Number should be 7 to 11 characters'
         },
       }
     },

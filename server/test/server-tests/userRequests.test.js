@@ -10,7 +10,7 @@ const { User } = db;
 chai.use(chaiHttp);
 let authToken1;
 let userToken;
-const baseEndpoint = '/api/v1/weconnect/auth';
+const baseEndpoint = '/api/v1/auth';
 
 describe(`${baseEndpoint}`, () => {
   beforeEach((done) => {
@@ -27,10 +27,9 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.userCreatedMessage).to.equal('User created succesfully');
-          expect(res.body.user.lastname).to.equal('Ajiboye');
-          expect(res.body.user).to.have.property('id');
-          expect(res.body.user.telephoneNumber).to.equal('07066455523');
-          expect(res.body.user.email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.registeredUserDetails.lastname).to.equal('Ajiboye');
+          expect(res.body.registeredUserDetails.telephoneNumber).to.equal('07066455523');
+          expect(res.body.registeredUserDetails.email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
@@ -233,7 +232,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', `Bearer ${authToken1}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.updatedUser.email).to.equal('damilolaajiboye@yahoo.com');
+          expect(res.body.updatedUserDetails.email).to.equal('damilolaajiboye@yahoo.com');
           done();
         });
     });

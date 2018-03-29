@@ -10,7 +10,7 @@ const user = (sequelize, DataTypes) => {
           msg: 'Your firstname is required'
         },
         len: {
-          args: [5, 50],
+          args: [3, 50],
           msg: messages.userNameErrorMessage
         },
       }
@@ -23,7 +23,7 @@ const user = (sequelize, DataTypes) => {
           msg: 'Your lastname is required'
         },
         len: {
-          args: [4, 50],
+          args: [3, 50],
           msg: 'lastname should be more than 5 and not greater than 50'
         },
       }
@@ -69,8 +69,8 @@ const user = (sequelize, DataTypes) => {
           msg: 'Enter a valid Telephone Number'
         },
         isLength: {
-          options: [{ min: 11, max: 11 }],
-          msg: 'Telephone Number should be 11 characters'
+          options: [{ min: 7, max: 11 }],
+          msg: 'Telephone Number should be 7 to 11 characters'
         },
       }
     },
@@ -85,8 +85,8 @@ const user = (sequelize, DataTypes) => {
           msg: 'Enter a valid home Number'
         },
         len: {
-          args: [11, 11],
-          msg: 'Home number should be more 11 characters'
+          args: [7, 11],
+          msg: 'Home number should be 7 to 11 characters'
         },
       }
     }

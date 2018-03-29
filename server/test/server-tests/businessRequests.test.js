@@ -9,7 +9,7 @@ import businessData from '../testData/businessData';
 const { expect } = chai;
 const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
-const baseEndpoint = '/api/v1/weconnect/businesses';
+const baseEndpoint = '/api/v1/businesses';
 let authToken;
 let authToken2;
 
@@ -24,12 +24,12 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * POST /api/v1/weconnect/businesses route to register a business.
+ * POST /api/v1/businesses route to register a business.
  */
   describe(`${baseEndpoint} POST businesses`, () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/weconnect/auth/login')
+        .post('/api/v1/auth/login')
         .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
         .end((err, res) => {
           authToken = `Bearer ${res.body.token}`;
@@ -45,10 +45,9 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Business has been registered successfully');
-          expect(res.body.business.name).to.equal('House rentals');
-          expect(res.body.business).to.have.property('id');
-          expect(res.body.business.telephoneNumber).to.equal('07011041032');
-          expect(res.body.business.email).to.equal('ajiboye_j@yahoo.com');
+          expect(res.body.registeredBusiness.name).to.equal('House rentals');
+          expect(res.body.registeredBusiness.telephoneNumber).to.equal('07011041032');
+          expect(res.body.registeredBusiness.email).to.equal('ajiboye_j@yahoo.com');
           done();
         });
     });
@@ -183,7 +182,7 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
+ * GET /api/v1/businesses route to get all businesses.
  */
   describe(`${baseEndpoint} GET businesses`, () => {
     beforeEach((done) => {
@@ -243,7 +242,7 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((user) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
               authToken2 = `Bearer ${res.body.token}`;
@@ -363,7 +362,7 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
+ * GET /api/v1/businesses route to get all businesses.
  */
   describe(`${baseEndpoint} GET a user's businesses`, () => {
     beforeEach((done) => {
@@ -377,7 +376,7 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((user) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
               authToken2 = `Bearer ${res.body.token}`;
@@ -393,13 +392,13 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          expect(res.body.message).to.equal('No Businesses');
           done();
         });
     });
   });
   /*
- * GET /api/v1/weconnect/businesses/:buisnessId route to retrieve a business with id.
+ * GET /api/v1/businesses/:buisnessId route to retrieve a business with id.
  */
   describe(`${baseEndpoint}/:businessId GET business`, () => {
     beforeEach((done) => {
@@ -413,11 +412,9 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Business found');
-          expect(res.body.business.name).to.equal('Clash Royale');
-          expect(res.body.business).to.have.property('id');
-          expect(res.body.business.id).to.equal(1);
-          expect(res.body.business.telephoneNumber).to.equal('07066444523');
-          expect(res.body.business.email).to.equal('damilolaajiboye@yahoo.com');
+          expect(res.body.retrievedBusiness.name).to.equal('Clash Royale');
+          expect(res.body.retrievedBusiness.telephoneNumber).to.equal('07066444523');
+          expect(res.body.retrievedBusiness.email).to.equal('damilolaajiboye@yahoo.com');
           done();
         });
     });
@@ -445,7 +442,7 @@ describe(`${baseEndpoint}`, () => {
 
 
   /*
- * PUT /api/v1/weconnect/businesses/:businessId route to update a business with the specified Id.
+ * PUT /api/v1/businesses/:businessId route to update a business with the specified Id.
  */
   describe(`${baseEndpoint}/:businessId UPDATE business`, () => {
     beforeEach((done) => {
@@ -464,7 +461,7 @@ describe(`${baseEndpoint}`, () => {
         .create(businessDetails)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
               authToken = `Bearer ${res.body.token}`;
@@ -534,14 +531,14 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * DELETE /api/v1/weconnect/businesses route to delete a business.
+ * DELETE /api/v1/businesses route to delete a business.
  */
   describe(`${baseEndpoint}/:businessId DELETE business`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
               authToken = `Bearer ${res.body.token}`;
@@ -575,14 +572,14 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * POST /api/v1/weconnect/businesses/:businessId route to add a business review.
+ * POST /api/v1/businesses/:businessId route to add a business review.
  */
   describe(`${baseEndpoint}/:businessId/reviews POST business review`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
               authToken = `Bearer ${res.body.token}`;
@@ -628,7 +625,7 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.a('object');
-          expect(res.body.validationErrors[0]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
+          expect(res.body.validationErrors[0]).to.equal('Business Review should be more than 1 and not greater than 500 characters');
           done();
         });
     });
@@ -642,21 +639,21 @@ describe(`${baseEndpoint}`, () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.a('object');
           expect(res.body.validationErrors[0]).to.equal('Business review is required');
-          expect(res.body.validationErrors[1]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
+          expect(res.body.validationErrors[1]).to.equal('Business Review should be more than 1 and not greater than 500 characters');
           done();
         });
     });
   });
 
   /*
- * GET /api/v1/weconnect/businesses/:businessId route to get reviews for a business.
+ * GET /api/v1/businesses/:businessId route to get reviews for a business.
  */
   describe(`${baseEndpoint}/:businessId/reviews GET business review`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
               authToken = `Bearer ${res.body.token}`;
@@ -701,7 +698,7 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}/1/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('Reviews have not been added for this Business');
+          expect(res.body.message).to.equal('No review added');
           done();
         });
     });

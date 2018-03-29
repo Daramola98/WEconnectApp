@@ -9,7 +9,7 @@
       }
     },
     "host": "weconnect-api.herokuapp.com",
-    "basePath": "/api/v1/weconnect",
+    "basePath": "/api/v1",
     "tags": [
       {
         "name": "User",
@@ -951,10 +951,6 @@
             "type": "string",
             "example": "A mobile game for collaboration"
           },
-          "reviews": {
-            "type": "array",
-            "example": [1, 2, 3]
-          },
           "createdAt": {
             "type": "string",
             "example": "3/10/2018, 10:40:17 PM"
@@ -1013,14 +1009,6 @@
           "reviews": {
             "type": "array",
             "example": [{"review":"nice" }, {"review":"bad" }]
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
-          },
-          "updateAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
           }
         }
     }

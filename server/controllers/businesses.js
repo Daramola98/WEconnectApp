@@ -34,15 +34,27 @@ export default class BusinessController {
     };
     return Business
       .create(businessDetails)
-      .then(business => res.status(201)
-        .json({ message: businessMessages.businessRegisterMessage, business }))
+      .then((business) => {
+        const registeredBusiness = {
+          name: business.name,
+          category: business.category,
+          email: business.email,
+          telephoneNumber: business.telephoneNumber,
+          homeNumber: business.homeNumber,
+          location: business.location,
+          address: business.address,
+          description: business.description
+        };
+        res.status(201)
+          .json({ message: businessMessages.businessRegisterMessage, registeredBusiness });
+      })
       .catch((err) => {
         const validationErrors = [];
         if (err.errors.length > 0) {
           for (let i = 0; i < err.errors.length; i += 1) {
             validationErrors.push(err.errors[i].message);
           }
-          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
         }
         return res.status(500).json(serverErrorMessage.message);
       });
@@ -68,17 +80,12 @@ export default class BusinessController {
     }
     if (!req.query.location && !req.query.category) {
       return Business
-        .findAll({
-          include: [{
-            model: BusinessReview,
-            as: 'reviews',
-          }],
-        })
+        .findAll()
         .then((businesses) => {
           if (businesses.length > 0) {
             return res.status(200).json(businesses);
           }
-          return res.status(200).json({ message: 'Businesses have not been added yet Add our first business' });
+          return res.status(404).json({ message: 'No Businesses' });
         })
         .catch(err => res.status(500).json(serverErrorMessage.message));
     }
@@ -101,7 +108,18 @@ export default class BusinessController {
       })
       .then((business) => {
         if (business) {
-          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
+          const retrievedBusiness = {
+            name: business.name,
+            category: business.category,
+            email: business.email,
+            telephoneNumber: business.telephoneNumber,
+            homeNumber: business.homeNumber,
+            location: business.location,
+            address: business.address,
+            description: business.description
+          };
+          return res.status(200)
+            .json({ message: businessMessages.businessFoundMessage, retrievedBusiness });
         }
         res.status(404).json(businessMessages.businessNotFoundMessage);
       })
@@ -127,7 +145,7 @@ export default class BusinessController {
         if (business.length > 0) {
           return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
         }
-        return res.status(404).json({ message: 'You are yet to add a business add your first business!' });
+        return res.status(404).json({ message: 'No Businesses' });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
@@ -152,6 +170,7 @@ export default class BusinessController {
         if (!business) {
           return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
+        const businessName = business.name;
         if (req.userData.userId === business.UserId) {
           return business
             .update(req.body, { fields: Object.keys(req.body) })
@@ -161,7 +180,7 @@ export default class BusinessController {
               for (let i = 0; i < err.errors.length; i += 1) {
                 validationErrors.push(err.errors[i].message);
               }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
             });
         }
         res.status(403).json({ message: 'You are not allowed to update this business' });
@@ -172,7 +191,7 @@ export default class BusinessController {
           for (let i = 0; i < err.errors.length; i += 1) {
             validationErrors.push(err.errors[i].message);
           }
-          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
         }
         return res.status(500).json(serverErrorMessage.message);
       });
@@ -242,7 +261,7 @@ export default class BusinessController {
               for (let i = 0; i < err.errors.length; i += 1) {
                 validationErrors.push(err.errors[i].message);
               }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
             }
             return res.status(500).json(serverErrorMessage.message);
           });
@@ -284,7 +303,7 @@ export default class BusinessController {
               for (let i = 0; i < err.errors.length; i += 1) {
                 validationErrors.push(err.errors[i].message);
               }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
             }
             return res.status(500).json(serverErrorMessage.message);
           });
@@ -324,7 +343,7 @@ export default class BusinessController {
                 return res.status(200)
                   .json({ message: businessMessages.reviewFoundMessage, reviews });
               }
-              return res.status(404).json({ message: 'Reviews have not been added for this Business' });
+              return res.status(404).json({ message: 'No review added' });
             })
             .catch(err => res.status(500).json(serverErrorMessage.message));
         }
