@@ -1,21 +1,23 @@
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import db from '../models/index';
-import userHelper from '../helpers/userHelper';
+import { User } from '../models';
+import userValidation from '../middlewares/userValidation';
+import formatInput from '../helpers/handleInputFormat';
 import serverErrorMessage from '../messages/serverMessage';
+import validationHelper from '../helpers/validationHelper';
 
-const { User } = db;
+const { handleValidationErrors } = validationHelper;
+
 dotenv.config();
 const userCreatedMessage = 'User created succesfully';
 
 /**
  *
  *@class User
- *@classdesc creates a User controller Class
+ *@classdesc creates a Users Class
  */
-export default class UserController {
-  // REGISTER A USER
+export default class Users {
   /**
      * Adds a new user to the database
      * @param {object} req - The request object
@@ -24,13 +26,12 @@ export default class UserController {
      * @memberof UserController
      */
   static createUser(req, res) {
-    let userDetails;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         res.status(500).json({ error: err });
       } else {
-        userHelper.formatUserInput(req, res);
-        userDetails = {
+        formatInput(req);
+        const userDetails = {
           firstname: req.body.firstname,
           lastname: req.body.lastname,
           email: req.body.email,
@@ -42,20 +43,16 @@ export default class UserController {
           .create(userDetails)
           .then(user => res.status(201).json({ userCreatedMessage, user }))
           .catch((err) => {
-            const validationErrors = [];
-            if (err.errors.length > 0) {
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
             }
-            return res.status(500).json(serverErrorMessage.message);
           });
       }
     });
   }
 
-  // UPDATE USER PROFILE DETAILS
   /**
      * User Details Update
      * @param {object} req - The request object
@@ -64,7 +61,7 @@ export default class UserController {
      * @memberof User
      */
   static updateUserDetails(req, res) {
-    userHelper.formatUserUpdateInput(req, res);
+    formatInput(req);
     if (req.body.password) {
       req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     }
@@ -78,19 +75,15 @@ export default class UserController {
         .update(req.body, { fields: Object.keys(req.body) })
         .then(updatedUser => res.status(200).json({ message: 'User Updated successfully', updatedUser }))
         .catch((err) => {
-          const validationErrors = [];
-          if (err.errors.length > 0) {
-            for (let i = 0; i < err.errors.length; i += 1) {
-              validationErrors.push(err.errors[i].message);
-            }
-            return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+          if (err.errors) {
+            handleValidationErrors(err.errors, res);
+          } else {
+            return res.status(500).json(serverErrorMessage.message);
           }
-          return res.status(500).json(serverErrorMessage.message);
         }))
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // LOGIN USER
   /**
      * User login
      * @param {object} req - The request object
@@ -99,22 +92,24 @@ export default class UserController {
      * @memberof User
      */
   static loginUser(req, res) {
+    formatInput(req);
     if (req.headers.authorization) {
       try {
-        const token = req.headers.authorization.split(' ')[1];
+        const token = req.headers.authorization;
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         req.userData = decoded;
         if (req.userData !== null) {
-          return res.status(200).json({ message: 'You are already logged in' });
+          return res.status(200).json({ message: 'Logout existing user to login' });
         }
-      } catch (errror) {
-        return res.status(401).json({ message: 'Token is invalid or has expired, update token' });
+      } catch (error) {
+        return res.status(401)
+          .json({ message: 'Token is invalid or has expired, update token' });
       }
     }
     return User
       .find({
         where: {
-          email: req.body.email.replace(/ /g, '')
+          email: req.body.email
         }
       })
       .then((user) => {
@@ -135,12 +130,11 @@ export default class UserController {
                 expiresIn: '1hr'
               }
             );
-            req.headers.authorization = `Bearer ${token}`;
             return res.status(200).json({ message: 'Authentication Successful', token });
           }
           res.status(401).json({ message: 'Authentication failed' });
         });
       })
-      .catch(err => res.status(400).json(serverErrorMessage.message));
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 }

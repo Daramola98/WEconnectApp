@@ -9,7 +9,7 @@ import businessData from '../testData/businessData';
 const { expect } = chai;
 const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
-const baseEndpoint = '/api/v1/weconnect/businesses';
+const baseEndpoint = '/api/v1/businesses';
 let authToken;
 let authToken2;
 
@@ -24,20 +24,20 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * POST /api/v1/weconnect/businesses route to register a business.
+ * POST /api/v1/businesses route to register a business.
  */
   describe(`${baseEndpoint} POST businesses`, () => {
     beforeEach((done) => {
       chai.request(app)
-        .post('/api/v1/weconnect/auth/login')
+        .post('/api/v1/auth/login')
         .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
         .end((err, res) => {
-          authToken = `Bearer ${res.body.token}`;
+          authToken = res.body.token;
           done();
         });
     });
 
-    it('it should add a business to the businesses database', (done) => {
+    it('should add a business to the businesses database', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
@@ -53,7 +53,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch authentication failures before adding a business to the businesses database', (done) => {
+    it('should catch authentication failures before adding a business to the businesses database', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', 'invalidToken')
@@ -66,7 +66,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch validation errors before adding a business to the businesses database', (done) => {
+    it('should catch validation errors before adding a business to the businesses database', (done) => {
       const businessDetails3 = {
         name: 'Cl',
         category: 'gaming',
@@ -76,7 +76,7 @@ describe(`${baseEndpoint}`, () => {
         homeNumber: '08011031456',
         location: 'Enugu',
         description: 'Rent houses here for affordable prices',
-        UserId: 1
+        UserId: '1'
       };
 
       chai.request(app)
@@ -92,7 +92,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
+    it('should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
       Business.create(businessData.businessDetails);
       chai.request(app)
         .post(`${baseEndpoint}`)
@@ -106,7 +106,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should not allow a user to register a business with an existing email address to the businesses database', (done) => {
+    it('should not allow a user to register a business with an existing email address to the businesses database', (done) => {
       Business.create(businessData.businessDetails);
       const businessDetails = {
         name: 'House Mortgage',
@@ -131,7 +131,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should not allow a user to register a business with an existing name to the businesses database', (done) => {
+    it('should not allow a user to register a business with an existing name to the businesses database', (done) => {
       Business.create(businessData.businessDetails);
       const businessDetails = {
         name: 'House rentals',
@@ -156,7 +156,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should not allow a user to register a business without the required fields', (done) => {
+    it('should not allow a user to register a business without the required fields', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
@@ -183,7 +183,7 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
+ * GET /api/v1/businesses route to get all businesses.
  */
   describe(`${baseEndpoint} GET businesses`, () => {
     beforeEach((done) => {
@@ -202,7 +202,7 @@ describe(`${baseEndpoint}`, () => {
       done();
     });
 
-    it('it should get all business in the businesses table', (done) => {
+    it('should get all business in the businesses table', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}`)
         .end((err, res) => {
@@ -216,7 +216,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should get all businesses registered by a user', (done) => {
+    it('should get all businesses registered by a user', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/user`)
         .set('authorization', authToken)
@@ -232,7 +232,7 @@ describe(`${baseEndpoint}`, () => {
     });
 
     /*
-    it('it should return a message if user has not registered a business', (done) => {
+    it('should return a message if user has not registered a business', (done) => {
       User.create({
         firstname: 'Clinton',
         lastname: 'Fidelis',
@@ -243,10 +243,10 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((user) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
-              authToken2 = `Bearer ${res.body.token}`;
+              authToken2 = res.body.token;
             });
         });
 
@@ -262,7 +262,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 */
-    it('it should get all business in the specified location when a location query is passed', (done) => {
+    it('should get all business in the specified location when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos`)
         .end((err, res) => {
@@ -276,7 +276,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it returns a message when no business found in specified location', (done) => {
+    it('returns a message when no business found in specified location', (done) => {
       const location = 10;
       chai.request(app)
         .get(`${baseEndpoint}?location=${location}`)
@@ -288,7 +288,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it catches validation error for empty input when a location query is passed', (done) => {
+    it('catches validation error for empty input when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location= `)
         .end((err, res) => {
@@ -299,7 +299,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should get all business in the specified category when a category query is passed', (done) => {
+    it('should get all business in the specified category when a category query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?category=gaming `)
         .end((err, res) => {
@@ -313,7 +313,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it returns a message when no business found in specified category', (done) => {
+    it('returns a message when no business found in specified category', (done) => {
       const category = 10;
       chai.request(app)
         .get(`${baseEndpoint}?category=${category}`)
@@ -325,7 +325,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it catches validation error for empty input when a category query is passed', (done) => {
+    it('catches validation error for empty input when a category query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?category= `)
         .end((err, res) => {
@@ -336,7 +336,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should get all business in the specified category and location when a category and location query is passed', (done) => {
+    it('should get all business in the specified category and location when a category and location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos&category=gaming `)
         .end((err, res) => {
@@ -350,7 +350,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return message if no business in the specified category and location when a category and location query is passed', (done) => {
+    it('should return message if no business in the specified category and location when a category and location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos&category=housing `)
         .end((err, res) => {
@@ -363,7 +363,7 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
+ * GET /api/v1/businesses route to get all businesses.
  */
   describe(`${baseEndpoint} GET a user's businesses`, () => {
     beforeEach((done) => {
@@ -377,16 +377,16 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((user) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
-              authToken2 = `Bearer ${res.body.token}`;
+              authToken2 = res.body.token;
               done();
             });
         });
     });
 
-    it('it should return a message if user has not registered a business', (done) => {
+    it('should return a message if user has not registered a business', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/user`)
         .set('authorization', authToken2)
@@ -399,7 +399,7 @@ describe(`${baseEndpoint}`, () => {
     });
   });
   /*
- * GET /api/v1/weconnect/businesses/:buisnessId route to retrieve a business with id.
+ * GET /api/v1/businesses/:buisnessId route to retrieve a business with id.
  */
   describe(`${baseEndpoint}/:businessId GET business`, () => {
     beforeEach((done) => {
@@ -407,7 +407,7 @@ describe(`${baseEndpoint}`, () => {
       done();
     });
 
-    it('it should retrieve a business with the specified businessId', (done) => {
+    it('should retrieve a business with the specified businessId', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/1`)
         .end((err, res) => {
@@ -422,7 +422,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return a message if business with the specified businessId is not in database', (done) => {
+    it('should return a message if business with the specified businessId is not in database', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/2`)
         .end((err, res) => {
@@ -432,7 +432,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should validate the business id', (done) => {
+    it('should validate the business id', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/hi`)
         .end((err, res) => {
@@ -445,7 +445,7 @@ describe(`${baseEndpoint}`, () => {
 
 
   /*
- * PUT /api/v1/weconnect/businesses/:businessId route to update a business with the specified Id.
+ * PUT /api/v1/businesses/:businessId route to update a business with the specified Id.
  */
   describe(`${baseEndpoint}/:businessId UPDATE business`, () => {
     beforeEach((done) => {
@@ -464,17 +464,17 @@ describe(`${baseEndpoint}`, () => {
         .create(businessDetails)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
+              authToken = res.body.token;
               done();
             });
         })
         .catch(err => done(err));
     });
 
-    it('it should update a business with the specified id in the database', (done) => {
+    it('should update a business with the specified id in the database', (done) => {
       const businessDetails = {
         name: 'Solar rentals',
         category: 'Renewable energy',
@@ -496,7 +496,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch validation errors', (done) => {
+    it('should catch validation errors', (done) => {
       const businessDetails = {
         name: 'So',
         category: 'Renewable energy',
@@ -514,7 +514,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it return a message if business is not found', (done) => {
+    it('return a message if business is not found', (done) => {
       const businessDetails = {
         name: 'Solar rentals',
         category: 'Renewable energy',
@@ -534,24 +534,24 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * DELETE /api/v1/weconnect/businesses route to delete a business.
+ * DELETE /api/v1/businesses route to delete a business.
  */
   describe(`${baseEndpoint}/:businessId DELETE business`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
+              authToken = res.body.token;
               done();
             });
         })
         .catch(err => done(err));
     });
 
-    it('it should delete a business from the businesses database', (done) => {
+    it('should delete a business from the businesses database', (done) => {
       chai.request(app)
         .delete(`${baseEndpoint}/1`)
         .set('authorization', authToken)
@@ -562,7 +562,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return message if business with specified id is not found', (done) => {
+    it('should return message if business with specified id is not found', (done) => {
       chai.request(app)
         .delete(`${baseEndpoint}/2`)
         .set('authorization', authToken)
@@ -575,24 +575,24 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * POST /api/v1/weconnect/businesses/:businessId route to add a business review.
+ * POST /api/v1/businesses/:businessId route to add a business review.
  */
   describe(`${baseEndpoint}/:businessId/reviews POST business review`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
+              authToken = res.body.token;
               done();
             });
         })
         .catch(err => done(err));
     });
 
-    it('it should add a review to a business in the businesses database with the specified id', (done) => {
+    it('should add a review to a business in the businesses database with the specified id', (done) => {
       const review = { review: 'Business is so great would like to invest' };
       chai.request(app)
         .post(`${baseEndpoint}/1/reviews`)
@@ -606,7 +606,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return message if business with specified id is not found', (done) => {
+    it('should return message if business with specified id is not found', (done) => {
       const review = { review: 'Business is so great would like to invest like now' };
       chai.request(app)
         .post(`${baseEndpoint}/2/reviews`)
@@ -619,7 +619,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch validation errors', (done) => {
+    it('should catch validation errors', (done) => {
       const review = { review: 'B' };
       chai.request(app)
         .post(`${baseEndpoint}/1/reviews`)
@@ -633,7 +633,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch required fields validation errors', (done) => {
+    it('should catch required fields validation errors', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}/1/reviews`)
         .send({ review: '' })
@@ -649,17 +649,17 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses/:businessId route to get reviews for a business.
+ * GET /api/v1/businesses/:businessId route to get reviews for a business.
  */
   describe(`${baseEndpoint}/:businessId/reviews GET business review`, () => {
     beforeEach((done) => {
       Business.create(businessData.businessDetails1)
         .then((business) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
             .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
+              authToken = res.body.token;
             });
           const review = { review: 'Business is so great would like to invest' };
           chai.request(app)
@@ -673,7 +673,7 @@ describe(`${baseEndpoint}`, () => {
         .catch(err => done(err));
     });
 
-    it('it should get reviews for a business in the businesses database with the specified id', (done) => {
+    it('should get reviews for a business in the businesses database with the specified id', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/1/reviews`)
         .end((err, res) => {
@@ -685,7 +685,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return a message if business is not found in the database', (done) => {
+    it('should return a message if business is not found in the database', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/2/reviews`)
         .end((err, res) => {
@@ -695,7 +695,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return a message if no reviews have been added for that business', (done) => {
+    it('should return a message if no reviews have been added for that business', (done) => {
       BusinessReview.destroy({ where: { id: 1 } });
       chai.request(app)
         .get(`${baseEndpoint}/1/reviews`)
@@ -706,7 +706,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should add responses to a review with the particular id', (done) => {
+    it('should add responses to a review with the particular id', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}/1/reviews/1`)
         .send({ message: 'Nice!!!!' })
@@ -718,7 +718,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should add responses to a review with the particular id', (done) => {
+    it('should add responses to a review with the particular id', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}/1/reviews/1`)
         .send({ message: 'B' })

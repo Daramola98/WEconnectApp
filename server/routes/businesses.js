@@ -1,21 +1,26 @@
 import express from 'express';
-import business from '../controllers/businesses';
+import Businesses from '../controllers/Businesses';
 import validate from '../helpers/validationHelper';
 import authorize from '../helpers/check-auth';
 import businessValidate from '../helpers/businessHelpers';
+import checkRequiredFields from '../middlewares/checkRequiredFields';
+import requiredFields from '../helpers/requiredFields';
+
+const { businessRequiredFields } = requiredFields;
+
 
 const router = express.Router();
 
-router.post('/', authorize.checkAuthentication, businessValidate.businessValidation, business.createBusiness);
-router.get('/', validate.businessQueryCheck, business.listBusinesses);
-router.get('/user', authorize.checkAuthentication, business.retrieveUserBusinesses);
+router.post('/', authorize.checkAuthentication, checkRequiredFields(businessRequiredFields), businessValidate.businessValidation, Businesses.createBusiness);
+router.get('/', validate.businessQueryCheck, Businesses.listBusinesses);
+router.get('/user', authorize.checkAuthentication, Businesses.retrieveUserBusinesses);
 
-router.get('/:businessId', validate.businessIdCheck, business.retrieveBusiness);
-router.put('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, businessValidate.checkIfBusinessWithIdExists, businessValidate.businessValidation, business.updateBusiness);
-router.delete('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, business.removeBusiness);
+router.get('/:businessId', validate.businessIdCheck, Businesses.retrieveBusiness);
+router.put('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, businessValidate.checkIfBusinessWithIdExists, businessValidate.businessValidation, Businesses.updateBusiness);
+router.delete('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, Businesses.removeBusiness);
 
-router.post('/:businessId/reviews', authorize.checkAuthentication, validate.businessIdCheck, business.addReview);
-router.post('/:businessId/reviews/:reviewId', authorize.checkAuthentication, validate.businessIdCheck, business.addReviewResponse);
-router.get('/:businessId/reviews', validate.businessIdCheck, business.getReview);
+router.post('/:businessId/reviews', authorize.checkAuthentication, validate.businessIdCheck, Businesses.addReview);
+router.post('/:businessId/reviews/:reviewId', authorize.checkAuthentication, validate.businessIdCheck, Businesses.addReviewResponse);
+router.get('/:businessId/reviews', validate.businessIdCheck, Businesses.getReview);
 
 export default router;

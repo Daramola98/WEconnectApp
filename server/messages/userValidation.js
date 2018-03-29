@@ -1,4 +1,4 @@
-const userNameErrorMessage = 'Please provide a name with atleast 5 and not more than 50 characters';
+const userNameErrorMessage = 'Please provide a name with atleast 2 and not more than 50 characters';
 const userLastNameErrorMessage = 'lastname should be more than 5 and not greater than 500';
 const userEmailErrorMessage = 'Email should be more than 5 and not greater than 100 characters';
 const userTelephoneNumberErrorMessage = 'Telephone Number should be 11 characters';

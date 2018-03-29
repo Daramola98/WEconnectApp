@@ -39,7 +39,7 @@ export default {
    * @memberof userHelper
    */
   userNameValidation(req, res, next) {
-    checkWhiteSpace(req);
+    // checkWhiteSpace(req);
     return User
       .find({
         where: {

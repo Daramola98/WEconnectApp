@@ -1,7 +1,7 @@
 // import businesses from '../models/businesses';
 import checkWhiteSpace from '../helpers/genericHelper';
 
-export default {
+const validationHelper = {
   /**
    * Checks if business id is valid i.e an integer
    * @param {object} req - The request object
@@ -77,5 +77,16 @@ export default {
       return next();
     }
   },
+  handleValidationErrors(errors, res) {
+    const validationErrors = [];
+    if (!errors || errors.length < 1) {
+      return;
+    }
+    for (let i = 0; i < errors.length; i += 1) {
+      validationErrors.push(errors[i].message);
+    }
+    return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
+  }
 };
 
+export default validationHelper;

@@ -1,9 +1,10 @@
 import Sequelize from 'sequelize';
-import db from '../models/index';
-import businessMessages from '../messages/businessEndpoint';
+import { Business } from '../models';
+import businessMessages from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
+import handleInputFormat from './handleInputFormat';
 
-const { Business } = db;
+// const { Business } = db;
 const { Op } = Sequelize;
 
 export default {
@@ -18,9 +19,12 @@ export default {
    */
   businessValidation(req, res, next) {
     let inputEmail, inputName;
+
+    handleInputFormat(req);
+
     if (req.body.email && req.body.name) {
-      inputEmail = req.body.email.replace(/ /g, '');
-      inputName = req.body.name.replace(/ +/g, ' ');
+      inputEmail = req.body.email;
+      inputName = req.body.name;
     }
     return Business
       .findOne({
@@ -77,15 +81,11 @@ export default {
    * @return {null} does not return anything
    * @memberof BusinessHelper
    */
-  formatBusinessUpdateInput(req) {
+  formatInput(req) {
     const reqBody = Object.keys(req.body);
     for (let i = 0; i < reqBody.length; i += 1) {
       const field = reqBody[i];
-      if (field === 'name') {
-        req.body.name = req.body.name.replace(/ +/g, ' ');
-      } else {
-        req.body[reqBody[i]] = req.body[field].replace(/ +/g, ' ');
-      }
+      req.body[reqBody[i]] = req.body[field].replace(/ +/g, ' ').trim();
     }
   },
 

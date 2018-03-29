@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'response is required'
         },
         len: {
-          args: [3, 500],
-          msg: 'Response should be more than 2 and not greater than 500 characters'
+          args: [2, 500],
+          msg: 'Response should be more than 1 and not greater than 500 characters'
         }
       }
     },

@@ -1,16 +1,18 @@
-import db from '../models/index';
+import { Business, BusinessReview, reviewresponse } from '../models';
+import handleInputFormat from '../helpers/handleInputFormat';
 import businessHelper from '../helpers/businessHelpers';
-import businessMessages from '../messages/businessEndpoint';
+import businessMessages from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
+import validationHelper from '../helpers/validationHelper';
 
-const { Business, BusinessReview, reviewresponse } = db;
+const { handleValidationErrors } = validationHelper;
 
 /**
  *
  *@class Business
- *@classdesc creates a Business controller Class
+ *@classdesc creates a Business Class
  */
-export default class BusinessController {
+export default class Businesses {
   // REGISTER A BUSINESS
   /**
    * Adds a new business to the database
@@ -20,7 +22,7 @@ export default class BusinessController {
    * @memberof Business
    */
   static createBusiness(req, res) {
-    businessHelper.formatBusinessInput(req, res);
+    handleInputFormat(req);
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
@@ -35,16 +37,13 @@ export default class BusinessController {
     return Business
       .create(businessDetails)
       .then(business => res.status(201)
-        .json({ message: businessMessages.businessRegisterMessage, business }))
+        .json({ message: business.businessRegisterMessage, business }))
       .catch((err) => {
-        const validationErrors = [];
-        if (err.errors.length > 0) {
-          for (let i = 0; i < err.errors.length; i += 1) {
-            validationErrors.push(err.errors[i].message);
-          }
-          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+        if (err.errors) {
+          handleValidationErrors(err.errors, res);
+        } else {
+          return res.status(500).json(serverErrorMessage.message);
         }
-        return res.status(500).json(serverErrorMessage.message);
       });
   }
 
@@ -68,17 +67,12 @@ export default class BusinessController {
     }
     if (!req.query.location && !req.query.category) {
       return Business
-        .findAll({
-          include: [{
-            model: BusinessReview,
-            as: 'reviews',
-          }],
-        })
+        .findAll()
         .then((businesses) => {
           if (businesses.length > 0) {
             return res.status(200).json(businesses);
           }
-          return res.status(200).json({ message: 'Businesses have not been added yet Add our first business' });
+          return res.status(404).json({ message: 'No Businesses' });
         })
         .catch(err => res.status(500).json(serverErrorMessage.message));
     }
@@ -108,7 +102,6 @@ export default class BusinessController {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // RETRIEVE ALL BUSINESSES FOR A PARTICULAR USER
   /**
    * Gets a Business register by the user from the database
    * @param {object} req - The request object
@@ -125,14 +118,13 @@ export default class BusinessController {
       })
       .then((business) => {
         if (business.length > 0) {
-          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
+          return res.status(200).json(business);
         }
-        return res.status(404).json({ message: 'You are yet to add a business add your first business!' });
+        return res.status(404).json({ message: 'No Businesses' });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // UPDATE A BUSINESS
   /** Update the deatils of  an existing business
    * @static
    * @param {object} req - The request object
@@ -141,7 +133,7 @@ export default class BusinessController {
    * @memberof Business class
    */
   static updateBusiness(req, res) {
-    businessHelper.formatBusinessUpdateInput(req, res);
+    handleInputFormat(req);
     return Business
       .findOne({
         where: {
@@ -157,28 +149,18 @@ export default class BusinessController {
             .update(req.body, { fields: Object.keys(req.body) })
             .then(updatedBusiness => res.status(200).json({ message: 'Business Updated successfully', updatedBusiness }))
             .catch((err) => {
-              const validationErrors = [];
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
+              if (err.errors) {
+                handleValidationErrors(err.errors, res);
+              } else {
+                return res.status(500).json(serverErrorMessage.message);
               }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
             });
         }
         res.status(403).json({ message: 'You are not allowed to update this business' });
       })
-      .catch((err) => {
-        const validationErrors = [];
-        if (err.errors.length > 0) {
-          for (let i = 0; i < err.errors.length; i += 1) {
-            validationErrors.push(err.errors[i].message);
-          }
-          return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
-        }
-        return res.status(500).json(serverErrorMessage.message);
-      });
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // DELETE A BUSINESS
   /**
    * Deletes a business from the database
    * @param {object} req - The request object
@@ -217,9 +199,10 @@ export default class BusinessController {
    * @memberof Business
    */
   static addReview(req, res) {
+    handleInputFormat(req);
     const businessReviewDetails = {
       ReviewerId: req.userData.userId,
-      review: req.body.review.replace(/ +/g, ' '),
+      review: req.body.review,
       BusinessId: req.params.businessId
     };
     return Business
@@ -237,18 +220,16 @@ export default class BusinessController {
           .then(review => res.status(201)
             .json({ message: businessMessages.businessReviewMessage, review }))
           .catch((err) => {
-            const validationErrors = [];
-            if (err.errors.length > 0) {
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
             }
-            return res.status(500).json(serverErrorMessage.message);
           });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
+
 
   // ADD A BUSINESS REVIEW RESPONSE
   /**
@@ -259,9 +240,10 @@ export default class BusinessController {
    * @memberof Business
    */
   static addReviewResponse(req, res) {
+    handleInputFormat(req);
     const businessReviewResponse = {
       UserId: req.userData.userId,
-      message: req.body.message.replace(/ +/g, ' '),
+      message: req.body.message,
       ReviewId: req.params.reviewId
     };
     return BusinessReview
@@ -279,14 +261,11 @@ export default class BusinessController {
           .then(response => res.status(201)
             .json({ message: 'Response submitted', response }))
           .catch((err) => {
-            const validationErrors = [];
-            if (err.errors.length > 0) {
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'Please fix the following validation errors', validationErrors });
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
             }
-            return res.status(500).json(serverErrorMessage.message);
           });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));

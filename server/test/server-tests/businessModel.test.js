@@ -1,6 +1,6 @@
 import chai from 'chai';
 import bcrypt from 'bcrypt';
-import db from '../../models/index';
+import db from '../../models';
 
 const { expect } = chai;
 const { Business, User } = db;
