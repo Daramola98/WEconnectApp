@@ -1,26 +1,41 @@
 import express from 'express';
 import Businesses from '../controllers/Businesses';
-import validate from '../helpers/validationHelper';
-import authorize from '../helpers/check-auth';
-import businessValidate from '../helpers/businessHelpers';
-import checkRequiredFields from '../middlewares/checkRequiredFields';
-import requiredFields from '../helpers/requiredFields';
-
-const { businessRequiredFields } = requiredFields;
-
+import { businessIdCheck, businessQueryCheck } from '../middlewares/validationHelper';
+import isAuthorized from '../middlewares/isAuthorized';
+import modelValidator from '../helpers/modelValidator';
+import { businessValidation, businessExists, businessUpdateValidation } from '../validations/businessValidation';
+import reviewValidation from '../validations/reviewValidation';
+import reviewResponseValidation from '../validations/reviewResponseValidation';
 
 const router = express.Router();
 
-router.post('/', authorize.checkAuthentication, checkRequiredFields(businessRequiredFields), businessValidate.businessValidation, Businesses.createBusiness);
-router.get('/', validate.businessQueryCheck, Businesses.listBusinesses);
-router.get('/user', authorize.checkAuthentication, Businesses.retrieveUserBusinesses);
+router.post('/', isAuthorized, modelValidator(businessValidation), businessExists, Businesses.createBusiness);
 
-router.get('/:businessId', validate.businessIdCheck, Businesses.retrieveBusiness);
-router.put('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, businessValidate.checkIfBusinessWithIdExists, businessValidate.businessValidation, Businesses.updateBusiness);
-router.delete('/:businessId', authorize.checkAuthentication, validate.businessIdCheck, Businesses.removeBusiness);
+router.get('/', businessQueryCheck, Businesses.listBusinesses);
 
-router.post('/:businessId/reviews', authorize.checkAuthentication, validate.businessIdCheck, Businesses.addReview);
-router.post('/:businessId/reviews/:reviewId', authorize.checkAuthentication, validate.businessIdCheck, Businesses.addReviewResponse);
-router.get('/:businessId/reviews', validate.businessIdCheck, Businesses.getReview);
+router.get('/user', isAuthorized, Businesses.retrieveUserBusinesses);
+
+router.get('/:businessId', businessIdCheck, Businesses.retrieveBusiness);
+
+router.put(
+  '/:businessId',
+  isAuthorized,
+  businessIdCheck,
+  modelValidator(businessUpdateValidation),
+  businessExists, Businesses.updateBusiness
+);
+
+router.delete('/:businessId', isAuthorized, businessIdCheck, Businesses.removeBusiness);
+
+router.post('/:businessId/reviews', isAuthorized, businessIdCheck, modelValidator(reviewValidation), Businesses.addReview);
+
+router.post(
+  '/:businessId/reviews/:reviewId',
+  isAuthorized, businessIdCheck,
+  modelValidator(reviewResponseValidation),
+  Businesses.addReviewResponse
+);
+
+router.get('/:businessId/reviews', businessIdCheck, Businesses.getReview);
 
 export default router;

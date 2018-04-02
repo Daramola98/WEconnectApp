@@ -12,13 +12,13 @@ describe('Business Model', () => {
       .catch(err => Promise.reject(done(err)));
   });
 
-  describe('create and findOne', () => {
+  describe('create', () => {
     it('works', async () => {
       const businessDetails = {
         name: 'Clash of clans',
         email: 'damilolaajiboye@live.com',
         location: 'Lagos',
-        category: 'gaming',
+        category: 'Gaming',
         description: 'Game for collaboration',
         address: '23,Adeba Ibeju Lekki Lagos',
         telephoneNumber: '07066445523',

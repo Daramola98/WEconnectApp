@@ -12,11 +12,11 @@ const businessDetails = {
 
 const businessDetails1 = {
   name: 'Weather Control',
-  category: 'Weather',
+  category: 'Gaming',
   email: 'weather@yahoo.com',
   telephoneNumber: '07011041032',
   homeNumber: '08011031456',
-  location: 'London',
+  location: 'Lagos',
   address: '7,Adeba Road Lakowe Lagos',
   description: 'Rent houses here for affordable prices',
   UserId: 1
@@ -26,7 +26,7 @@ const businessDetails2 = {
   name: 'Clash Royale',
   email: 'damilolaajiboye@yahoo.com',
   location: 'Lagos',
-  category: 'gaming',
+  category: 'Gaming',
   description: 'Card Game for collaboration',
   address: '23,Adeba Ibeju Lekki Lagos',
   telephoneNumber: '07066444523',

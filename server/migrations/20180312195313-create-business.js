@@ -2,9 +2,9 @@ module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('Businesses', {
     id: {
       allowNull: false,
-      autoIncrement: true,
+      defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
-      type: Sequelize.INTEGER,
+      type: Sequelize.UUID,
     },
     name: {
       type: Sequelize.STRING,
@@ -12,11 +12,48 @@ module.exports = {
       unique: true
     },
     location: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM,
+      values: ['Abia',
+        'Adamawa',
+        'Akwa Ibom',
+        'Anambra',
+        'Bauchi',
+        'Bayelsa',
+        'Benue',
+        'Borno',
+        'Cross River',
+        'Delta',
+        'Ebonyi',
+        'Enugu',
+        'Edo',
+        'Ekiti',
+        'Gombe',
+        'Imo',
+        'Jigawa',
+        'Kaduna',
+        'Kano',
+        'Katsina',
+        'Kebbi',
+        'Kogi',
+        'Kwara',
+        'Lagos',
+        'Nasarawa',
+        'Niger',
+        'Ogun',
+        'Ondo',
+        'Osun',
+        'Oyo',
+        'Plateau',
+        'Rivers',
+        'Sokoto',
+        'Taraba',
+        'Yobe',
+        'Zamfara'],
       allowNull: false
     },
     category: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM,
+      values: ['Gaming', 'Technology', 'Housing', 'Transportation', 'Solar', 'Construction', 'Cooking'],
       allowNull: false
     },
     email: {
@@ -40,8 +77,8 @@ module.exports = {
       type: Sequelize.TEXT,
       allowNull: true,
     },
-    UserId: {
-      type: Sequelize.INTEGER,
+    userId: {
+      type: Sequelize.UUID,
       allowNull: false,
       onDelete: 'CASCADE',
       references: {

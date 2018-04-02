@@ -1,11 +1,8 @@
 import { Business, BusinessReview, reviewresponse } from '../models';
-import handleInputFormat from '../helpers/handleInputFormat';
-import businessHelper from '../helpers/businessHelpers';
+import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
+import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory } from '../helpers/businessHelpers';
 import businessMessages from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
-import validationHelper from '../helpers/validationHelper';
-
-const { handleValidationErrors } = validationHelper;
 
 /**
  *
@@ -13,7 +10,6 @@ const { handleValidationErrors } = validationHelper;
  *@classdesc creates a Business Class
  */
 export default class Businesses {
-  // REGISTER A BUSINESS
   /**
    * Adds a new business to the database
    * @param {object} req - The request object
@@ -22,7 +18,7 @@ export default class Businesses {
    * @memberof Business
    */
   static createBusiness(req, res) {
-    handleInputFormat(req);
+    handleInputFormat(req, res);
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
@@ -31,13 +27,26 @@ export default class Businesses {
       homeNumber: req.body.homeNumber,
       location: req.body.location,
       address: req.body.address,
-      UserId: req.userData.userId,
+      userId: req.userData.userId,
       description: req.body.description
     };
     return Business
       .create(businessDetails)
-      .then(business => res.status(201)
-        .json({ message: business.businessRegisterMessage, business }))
+      .then((business) => {
+        const createdbusinessDetails = {
+          name: business.name,
+          category: business.category,
+          email: business.email,
+          telephoneNumber: business.telephoneNumber,
+          homeNumber: business.homeNumber,
+          location: business.location,
+          address: business.address,
+          businessAddedBy: business.userId,
+          description: business.description
+        };
+        res.status(201)
+          .json({ message: businessMessages.businessRegisterMessage, createdbusinessDetails });
+      })
       .catch((err) => {
         if (err.errors) {
           handleValidationErrors(err.errors, res);
@@ -47,7 +56,6 @@ export default class Businesses {
       });
   }
 
-  // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
   /** Gets all businesses in the database
    * @static
    * @param {object} req - The request object
@@ -57,13 +65,13 @@ export default class Businesses {
    */
   static listBusinesses(req, res) {
     if (req.query.location && req.query.category) {
-      businessHelper.findBusinessByLocationAndCategory(req, res);
+      findBusinessByLocationAndCategory(req, res);
     }
     if (req.query.location && !req.query.category) {
-      businessHelper.findBusinessByLocation(req, res);
+      findBusinessByLocation(req, res);
     }
     if (req.query.category && !req.query.location) {
-      businessHelper.findBusinessByCategory(req, res);
+      findBusinessByCategory(req, res);
     }
     if (!req.query.location && !req.query.category) {
       return Business
@@ -78,7 +86,6 @@ export default class Businesses {
     }
   }
 
-  // RETRIEVE A BUSINESS
   /**
    * Gets a Business from the database
    * @param {object} req - The request object
@@ -113,7 +120,7 @@ export default class Businesses {
     return Business
       .findAll({
         where: {
-          UserId: req.userData.userId
+          userId: req.userData.userId
         }
       })
       .then((business) => {
@@ -133,7 +140,6 @@ export default class Businesses {
    * @memberof Business class
    */
   static updateBusiness(req, res) {
-    handleInputFormat(req);
     return Business
       .findOne({
         where: {
@@ -144,19 +150,36 @@ export default class Businesses {
         if (!business) {
           return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
-        if (req.userData.userId === business.UserId) {
-          return business
-            .update(req.body, { fields: Object.keys(req.body) })
-            .then(updatedBusiness => res.status(200).json({ message: 'Business Updated successfully', updatedBusiness }))
-            .catch((err) => {
-              if (err.errors) {
-                handleValidationErrors(err.errors, res);
-              } else {
-                return res.status(500).json(serverErrorMessage.message);
-              }
-            });
+
+        if (req.userData.userId !== business.userId) {
+          return res.status(403).json({ message: 'You are not allowed to update this business' });
         }
-        res.status(403).json({ message: 'You are not allowed to update this business' });
+
+        handleInputFormat(req);
+
+        return business
+          .update(req.body, { fields: Object.keys(req.body) })
+          .then((updatedBusiness) => {
+            const updatedBusinessDetails = {
+              name: updatedBusiness.name,
+              category: updatedBusiness.category,
+              email: updatedBusiness.email,
+              telephoneNumber: updatedBusiness.telephoneNumber,
+              homeNumber: updatedBusiness.homeNumber,
+              location: updatedBusiness.location,
+              address: updatedBusiness.address,
+              businessAddedBy: updatedBusiness.UserId,
+              description: updatedBusiness.description
+            };
+            res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
+          })
+          .catch((err) => {
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
+            }
+          });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
@@ -179,7 +202,7 @@ export default class Businesses {
         if (!business) {
           return res.status(404).json(businessMessages.businessNotFoundMessage);
         }
-        if (req.userData.userId === business.UserId) {
+        if (req.userData.userId === business.userId) {
           return business
             .destroy()
             .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
@@ -190,7 +213,7 @@ export default class Businesses {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // ADD A BUSINESS REVIEW
+
   /**
    * Add a business review to a buiness in the database
    * @param {object} req - The request object
@@ -201,9 +224,9 @@ export default class Businesses {
   static addReview(req, res) {
     handleInputFormat(req);
     const businessReviewDetails = {
-      ReviewerId: req.userData.userId,
+      reviewerId: req.userData.userId,
       review: req.body.review,
-      BusinessId: req.params.businessId
+      businessId: req.params.businessId
     };
     return Business
       .findOne({
@@ -217,8 +240,15 @@ export default class Businesses {
         }
         return BusinessReview
           .create(businessReviewDetails)
-          .then(review => res.status(201)
-            .json({ message: businessMessages.businessReviewMessage, review }))
+          .then((review) => {
+            const reviewDetails = {
+              review: review.review,
+              reviewerId: review.ReviewerId,
+              businessId: review.BusinessId
+            };
+            res.status(201)
+              .json({ message: businessMessages.businessReviewMessage, reviewDetails });
+          })
           .catch((err) => {
             if (err.errors) {
               handleValidationErrors(err.errors, res);
@@ -231,7 +261,6 @@ export default class Businesses {
   }
 
 
-  // ADD A BUSINESS REVIEW RESPONSE
   /**
    * Add a business review response to a buinessreview in the database
    * @param {object} req - The request object
@@ -242,9 +271,9 @@ export default class Businesses {
   static addReviewResponse(req, res) {
     handleInputFormat(req);
     const businessReviewResponse = {
-      UserId: req.userData.userId,
+      userId: req.userData.userId,
       message: req.body.message,
-      ReviewId: req.params.reviewId
+      reviewId: req.params.reviewId
     };
     return BusinessReview
       .findOne({
@@ -271,7 +300,6 @@ export default class Businesses {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // GET BUSINESS REVIEWS
   /**
    * Retrieves reviews for a business
    * @param {object} req - The request object
@@ -295,7 +323,7 @@ export default class Businesses {
                 as: 'responses',
               }],
               where: {
-                BusinessId: req.params.businessId
+                businessId: req.params.businessId
               }
             })
             .then((reviews) => {

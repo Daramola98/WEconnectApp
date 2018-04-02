@@ -1,17 +1,13 @@
 import express from 'express';
-import user from '../controllers/Users';
-import userValidation from '../middlewares/userValidation';
-import authorize from '../helpers/check-auth';
-import checkRequiredFields from '../middlewares/checkRequiredFields';
-import requiredFields from '../helpers/requiredFields';
+import Users from '../controllers/Users';
+import isAuthorized from '../middlewares/isAuthorized';
+import modelValidator from '../helpers/modelValidator';
+import { userValidation, userEmailValidation, userUpdateValidation } from '../validations/userValidation';
 
-const { userValidationRules } = requiredFields;
-const { userNameValidation } = userValidation;
-const { userEmailValidation } = userValidation;
 const router = express.Router();
 
-router.post('/signUp', checkRequiredFields(userValidationRules), userNameValidation, userEmailValidation, user.createUser);
-router.post('/login', user.loginUser);
-router.put('/updateProfile', authorize.checkAuthentication, user.updateUserDetails);
+router.post('/signUp', modelValidator(userValidation), userEmailValidation, Users.createUser);
+router.post('/login', Users.loginUser);
+router.put('/user', isAuthorized, modelValidator(userUpdateValidation), Users.updateUserDetails);
 
 export default router;

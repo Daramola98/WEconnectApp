@@ -17,7 +17,18 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(validator());
+app.use(validator({
+  customValidators: {
+    isString(value) {
+      const result = typeof value === 'string';
+      return isNaN(value) && result;
+    },
+    isEqualString(value) {
+      const result = typeof value === 'string';
+      return result;
+    }
+  }
+}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // CORS
