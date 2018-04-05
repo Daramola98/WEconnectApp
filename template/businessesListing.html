@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Materialize CSS CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"> -->
     <!-- Your custom styles -->
     <link rel="stylesheet" href="styles/index.css">
     <!-- Used as an example only to position the footer at the end of the page.
@@ -119,6 +121,7 @@
                                 <button class="waves-effect waves-light btn blue lighten-1">Search</button>
                             </span>
                         </div>
+                        <br/><br/>
                         <div class="row">
                             <div class="input-field col l5">
                                 <i class="material-icons prefix">search</i>
@@ -144,84 +147,45 @@
                     </form>
                 </div>
             </div>
-            <table class="bordered highlight centered responsive-table">
+            <table id="businessList" class="bordered highlight centered mdl-data-table center">
                 <thead>
                     <tr>
                         <th>Business Name</th>
-                        <th>Contact Email</th>
-                        <th>Business Category</th>
+                        <th>Category</th>
                         <th>Location</th>
-                        <th>Business Address</th>
-                        <th>Telephone Number</th>
-                        <th>Home Number</th>
-                        <th>Business Description</th>
-                        <th>Business Owner</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     <tr>
                         <td>
-                            <a href="businessProfile.html">Clash of Clans</a>
+                          Clash of Clans
                         </td>
+                        <td>GAMING</td>
+                        <td>LAGOS</td>
+                        <td><a href="businessProfile.html">View More..</a></td>
+                    </tr>
+                    <tr>
                         <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
+                            Uber Driving
                         </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
+                        <td>GAMING</td>
+                        <td>LAGOS</td>
                         <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
+                            <a href="businessProfile.html">View More..</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="businessProfile.html">Uber Driving</a>
+                            Car Rentals
                         </td>
+                        <td>GAMING</td>
+                        <td>LAGOS</td>
                         <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
-                        </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
-                        <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
+                          <a href="businessProfile.html">View More</a>
                         </td>
                     </tr>
                     <tr>
-                        <td>
-                            <a href="businessProfile.html">Car Rentals</a>
-                        </td>
-                        <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
-                        </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
-                        <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>xyz</td>
-                        <td>abc</td>
-                        <td>der</td>
-                        <td>fre</td>
-                        <td>hgjg</td>
-                        <td>iure</td>
-                        <td>sure</td>
-                        <td>dare</td>
-                        <td>goat</td>
-                    </tr>
                 </tbody>
             </table>
             <ul class="pagination">
@@ -270,8 +234,23 @@
         $("document").ready(function () {
             $(".button-collapse").sideNav();
             $('select').material_select();
+            $('li.active').addClass('blue');
         });
     </script>
+    <!-- <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#businessList').DataTable({
+                 columnDefs: [
+                    {
+                        targets: [0, 1, 2],
+                        className: 'mdl-data-table__cell--non-numeric'
+                    }
+                ]
+            });
+        } );
+    </script> -->
 </body>
 
 </html>

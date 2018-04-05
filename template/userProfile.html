@@ -108,11 +108,24 @@
                             <h3>My Profile</h3>
                         </div>
                         <div class="card-content">
+
                             <div class=row>
-                                <h4 class="col s12 m12 l12 center">Personal Information</h4>
+                                <ul id="businessProfile" class="tabs">
+                                    <li class="tab tabs-fixed-width col s3 m3 l5">
+                                        <a class="active" href="#personalInfo">
+                                            <span class="truncate center blue-text text-lighten-1">Information</span>
+                                        </a>
+                                    </li>
+                                    <li class="tab tabs-fixed-width col s3 m3 l5">
+                                        <a href="#businesses">
+                                            <span class="truncate center blue-text text-lighten-1">Businesses</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- <h4 class="col s12 m12 l12 center">Personal Information</h4> -->
                             </div>
 
-                            <ul class="collection">
+                            <ul id="personalInfo" class="collection">
                                 <li class="collection-item avatar">
                                     <i class="material-icons circle blue lighten-1">account_circle</i>
                                     <span class="title">
@@ -148,76 +161,119 @@
                                     <br>
                                     <div class="row">
                                         <div class="col s12 m12 align-centre">
-                                    <ul class="collapsible popout" data-collapsible="accordion">
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <i class="material-icons prefix">account_circle</i>
-                                                Clash of Clans
-                                            </div>
+                                            <ul class="collapsible popout" data-collapsible="accordion">
+                                                <li>
+                                                    <div class="collapsible-header">
+                                                        <i class="material-icons prefix">account_circle</i>
+                                                        Clash of Clans
+                                                    </div>
 
-                                            <div class="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="/delete/business" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <i class="material-icons">place</i>
-                                                Uber Driving
-                                            </div>
-                                            <div class="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="#" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <i class="material-icons prefix">directions_car</i>
-                                                Car rentals
-                                            </div>
-                                            <div class="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
-                                                </span>
-                                                <br>
-                                                <br>
-                                                <span>
-                                                    <a href="#" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    </div>
+                                                    <div class="collapsible-body center">
+                                                        <span>
+                                                            <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="/delete/business" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="collapsible-header">
+                                                        <i class="material-icons">place</i>
+                                                        Uber Driving
+                                                    </div>
+                                                    <div class="collapsible-body center">
+                                                        <span>
+                                                            <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="#" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="collapsible-header">
+                                                        <i class="material-icons prefix">directions_car</i>
+                                                        Car rentals
+                                                    </div>
+                                                    <div class="collapsible-body center">
+                                                        <span>
+                                                            <a href="businessProfile.html" class="waves-effect waves-light btn blue lighten-1">View Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="updateBusiness.html" class="waves-effect waves-light btn blue lighten-1">Update Business Profile</a>
+                                                        </span>
+                                                        <br>
+                                                        <br>
+                                                        <span>
+                                                            <a href="#" class="waves-effect waves-light btn blue lighten-1">Delete Business Profile</a>
+                                                        </span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
+                            <div id="businesses">
+                                <table class="bordered highlight centered center">
+                                    <thead>
+                                        <tr>
+                                            <th>Business Name</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Clash of Clans
+                                            </td>
+                                            <td><a href="businessProfile.html" class="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" class="">UPDATE</a></td>
+                                            <td>
+                                              <a href="" class="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Uber Driving
+                                            </td>
+                                            <td><a href="businessProfile.html" class="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" class="">UPDATE</a></td>
+                                            <td>
+                                              <a href="updateBusiness.html" class="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Car Rentals
+                                            </td>
+                                            <td><a href="businessProfile.html" class="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" class="">UPDATE</a></td>
+                                            <td>
+                                              <a href="updateBusiness.html" class="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>
@@ -247,7 +303,7 @@
             $('select').material_select();
             $('#business_description').val();
             $('#business_description').trigger('autoresize');
-
+            $('li.indicator').addClass('blue');
         });
     </script>
 </body>
