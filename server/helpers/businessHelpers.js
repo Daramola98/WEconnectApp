@@ -1,14 +1,20 @@
 import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
 import { Business } from '../models';
-import businessMessages from '../messages/businessMessages';
+import {
+  businessFoundMessage,
+  businessesFoundMessage,
+  businessNotFoundInLocationMessage,
+  businessNotFoundInCategoryMessage,
+  businessNotFoundMessage
+} from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
 import { handleInputFormat } from './genericHelper';
 import dbConfig from './../config/config';
 
 dotenv.config();
 
-const env = process.env.NODE_ENV;
+const env = process.env.NODE_ENV || 'development';
 const config = dbConfig[env];
 
 let sequelize;
@@ -37,10 +43,10 @@ export const findBusinessByCategory = (req, res) => {
     .then((business) => {
       if (business.length > 0) {
         return res.status(200)
-          .json({ message: businessMessages.businessFoundMessage, business });
+          .json({ message: businessFoundMessage, business });
       }
       if (business.length === 0) {
-        return res.status(404).json(businessMessages.businessNotFoundInCategoryMessage);
+        return res.status(404).json(businessNotFoundInCategoryMessage);
       }
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
@@ -65,9 +71,9 @@ export const findBusinessByLocation = (req, res) => {
     .then((business) => {
       if (business.length > 0) {
         return res.status(200)
-          .json({ message: businessMessages.businessesFoundMessage, business });
+          .json({ message: businessesFoundMessage, business });
       }
-      res.status(404).json(businessMessages.businessNotFoundInLocationMessage);
+      res.status(404).json(businessNotFoundInLocationMessage);
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };
@@ -87,9 +93,9 @@ export const findBusinessByLocationAndCategory = (req, res) => {
     .then((business) => {
       if (business.length > 0) {
         return res.status(200)
-          .json({ message: businessMessages.businessFoundMessage, business });
+          .json({ message: businessFoundMessage, business });
       }
-      return res.status(404).json(businessMessages.businessNotFoundMessage);
+      return res.status(404).json(businessNotFoundMessage);
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };
@@ -113,9 +119,9 @@ export const listBusinessByPages = (req, res) => {
     .then((business) => {
       if (business.length > 0) {
         return res.status(200)
-          .json({ message: businessMessages.businessFoundMessage, business });
+          .json({ message: businessFoundMessage, business });
       }
-      return res.status(404).json(businessMessages.businessNotFoundMessage);
+      return res.status(404).json(businessNotFoundMessage);
     })
     .catch(err => res.status(500).json(err));
 };

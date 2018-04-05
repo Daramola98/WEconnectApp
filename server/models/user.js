@@ -1,4 +1,4 @@
-import messages from '../messages/userValidation';
+import { userNameErrorMessage } from '../messages/userValidation';
 
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -20,7 +20,7 @@ const user = (sequelize, DataTypes) => {
         },
         len: {
           args: [3, 50],
-          msg: messages.userNameErrorMessage
+          msg: userNameErrorMessage
         },
       }
     },

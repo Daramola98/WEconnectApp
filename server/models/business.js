@@ -1,4 +1,4 @@
-import messages from '../messages/businessValidation';
+import { businessNameErrorMessage } from '../messages/businessValidation';
 
 const business = (sequelize, DataTypes) => {
   const Business = sequelize.define('Business', {
@@ -17,7 +17,7 @@ const business = (sequelize, DataTypes) => {
       validate: {
         len: {
           args: [5, 50],
-          msg: messages.businessNameErrorMessage
+          msg: businessNameErrorMessage
         },
         notEmpty: {
           msg: 'Your Business name is required'

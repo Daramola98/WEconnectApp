@@ -1,7 +1,16 @@
 import { Business, BusinessReview, reviewresponse } from '../models';
 import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
 import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, listBusinessByPages } from '../helpers/businessHelpers';
-import businessMessages from '../messages/businessMessages';
+import {
+  businessNotFoundMessage,
+  businessNotFoundInCategoryMessage,
+  businessNotFoundInLocationMessage,
+  businessFoundMessage,
+  businessRegisterMessage,
+  reviewFoundMessage,
+  businessDeletedMessage,
+  businessReviewMessage
+} from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
 
 /**
@@ -46,7 +55,7 @@ export default class Businesses {
           description: business.description
         };
         res.status(201)
-          .json({ message: businessMessages.businessRegisterMessage, createdBusinessDetails });
+          .json({ message: businessRegisterMessage, createdBusinessDetails });
       })
       .catch((err) => {
         if (err.errors) {
@@ -106,9 +115,9 @@ export default class Businesses {
       })
       .then((business) => {
         if (business) {
-          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
+          return res.status(200).json({ message: businessFoundMessage, business });
         }
-        res.status(404).json(businessMessages.businessNotFoundMessage);
+        res.status(404).json(businessNotFoundMessage);
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
@@ -152,7 +161,7 @@ export default class Businesses {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
 
         if (req.userData.userId !== business.userId) {
@@ -204,12 +213,12 @@ export default class Businesses {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
         if (req.userData.userId === business.userId) {
           return business
             .destroy()
-            .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
+            .then(() => res.status(200).json(businessDeletedMessage))
             .catch(err => res.status(500).json(serverErrorMessage.message));
         }
         res.status(403).json({ message: 'You are not Allowed to delete this business' });
@@ -240,7 +249,7 @@ export default class Businesses {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
         return BusinessReview
           .create(businessReviewDetails)
@@ -252,7 +261,7 @@ export default class Businesses {
               businessId: review.BusinessId
             };
             res.status(201)
-              .json({ message: businessMessages.businessReviewMessage, reviewDetails });
+              .json({ message: businessReviewMessage, reviewDetails });
           })
           .catch((err) => {
             if (err.errors) {
@@ -334,7 +343,7 @@ export default class Businesses {
             .then((reviews) => {
               if (reviews.length > 0) {
                 return res.status(200)
-                  .json({ message: businessMessages.reviewFoundMessage, reviews });
+                  .json({ message: reviewFoundMessage, reviews });
               }
               return res.status(404).json({ message: 'Reviews have not been added for this Business' });
             })
