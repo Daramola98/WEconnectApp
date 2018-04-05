@@ -26,6 +26,23 @@ export const userValidation = {
     notEmpty: true,
     errorMessage: 'Password is required',
   },
+  confirmPassword: {
+    trim: true,
+    isString: {
+      errorMessage: 'Confirm Password should be a valid string'
+    },
+    // custom: {
+    //   options: (value, { req }) => {
+    //     const result = value === req.body.password;
+    //     if (result === false) {
+    //       throw new Error('Passwords dont match');
+    //     }
+    //   }
+    // },
+    notEmpty: {
+      errorMessage: 'Confirm Password is required'
+    }
+  },
   email: {
     trim: true,
     notEmpty: {
@@ -59,6 +76,7 @@ export const userValidation = {
 
 export const userUpdateValidation = {
   firstname: {
+    optional: true,
     trim: true,
     notEmpty: true,
     isString: {
@@ -67,6 +85,7 @@ export const userUpdateValidation = {
     errorMessage: 'Firstname is required'
   },
   lastname: {
+    optional: true,
     trim: true,
     notEmpty: true,
     isString: {
@@ -75,6 +94,7 @@ export const userUpdateValidation = {
     errorMessage: 'Lastname name is required',
   },
   password: {
+    optional: true,
     trim: true,
     isString: {
       errorMessage: 'Password should be a valid string'
@@ -82,7 +102,26 @@ export const userUpdateValidation = {
     notEmpty: true,
     errorMessage: 'Password is required',
   },
+  confirmPassword: {
+    optional: true,
+    trim: true,
+    isString: {
+      errorMessage: 'Confirm Password should be a valid string'
+    },
+    // custom: {
+    //   options: (value, { req }) => {
+    //     const result = value === req.body.password;
+    //     if (result === false) {
+    //       throw new Error('Passwords dont match');
+    //     }
+    //   }
+    // },
+    notEmpty: {
+      errorMessage: 'Confirm Password is required'
+    }
+  },
   email: {
+    optional: true,
     trim: true,
     notEmpty: {
       errorMessage: 'Email is required',
@@ -95,6 +134,7 @@ export const userUpdateValidation = {
     },
   },
   telephoneNumber: {
+    optional: true,
     trim: true,
     notEmpty: true,
     isString: {

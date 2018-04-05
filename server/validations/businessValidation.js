@@ -22,6 +22,7 @@ export const businessValidation = {
   },
   location: {
     trim: true,
+    // toUpperCase: true,
     notEmpty: true,
     isString: {
       errorMessage: 'Business Location should be a valid string'
@@ -30,6 +31,7 @@ export const businessValidation = {
   },
   category: {
     trim: true,
+    // toUpperCase: true,
     notEmpty: true,
     isString: {
       errorMessage: 'Business Category should be a valid string'
@@ -67,7 +69,7 @@ export const businessValidation = {
     isString: {
       errorMessage: 'Business Address should be a valid string'
     },
-    errorMessage: 'Address is required'
+    errorMessage: 'Business Address is required'
   }
 };
 export const businessUpdateValidation = {
@@ -156,7 +158,7 @@ export const businessUpdateValidation = {
 export const businessExists = (req, res, next) => {
   handleInputFormat(req);
   if (req.body.name) {
-    return Business
+    Business
       .find({
         where: {
           name: {
@@ -166,31 +168,31 @@ export const businessExists = (req, res, next) => {
       })
       .then((business) => {
         if (business) {
-          res.status(409).json({ message: 'Business Name already exists' });
-        } else {
-          next();
+          return res.status(409).json({ message: 'Business Name already exists' });
+        }
+        if (!business && !req.body.email) {
+          return next();
+        }
+        if (!business && req.body.email) {
+          return Business
+            .find({
+              where: {
+                email: {
+                  ilike: req.body.email
+                }
+              }
+            })
+            .then((business1) => {
+              if (business1) {
+                return res.status(409).json({ message: 'Email already exists' });
+              }
+              return next();
+            })
+            .catch(err => res.status(500).json(serverErrorMessage.message));
         }
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
-  if (req.body.email) {
-    return Business
-      .find({
-        where: {
-          email: {
-            ilike: req.body.email
-          }
-        }
-      })
-      .then((business) => {
-        if (business) {
-          res.status(409).json({ message: 'Email already exists' });
-        } else {
-          next();
-        }
-      })
-      .catch(err => res.status(500).json(serverErrorMessage.message));
-  }
-  next();
+  // next();
 };
 

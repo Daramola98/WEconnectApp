@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 import userRoutes from '../routes/user';
 import businessRoutes from '../routes/businesses';
 import swaggerDocument from '../../swagger.json';
+import customValidations from '../validations/customValidations';
 
 dotenv.config();
 const app = express();
@@ -18,16 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator({
-  customValidators: {
-    isString(value) {
-      const result = typeof value === 'string';
-      return isNaN(value) && result;
-    },
-    isEqualString(value) {
-      const result = typeof value === 'string';
-      return result;
-    }
-  }
+  customValidators: customValidations
 }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 

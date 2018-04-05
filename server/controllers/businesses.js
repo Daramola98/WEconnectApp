@@ -1,6 +1,6 @@
 import { Business, BusinessReview, reviewresponse } from '../models';
 import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
-import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory } from '../helpers/businessHelpers';
+import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, listBusinessByPages } from '../helpers/businessHelpers';
 import businessMessages from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
 
@@ -18,7 +18,7 @@ export default class Businesses {
    * @memberof Business
    */
   static createBusiness(req, res) {
-    handleInputFormat(req, res);
+    handleInputFormat(req);
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
@@ -33,7 +33,8 @@ export default class Businesses {
     return Business
       .create(businessDetails)
       .then((business) => {
-        const createdbusinessDetails = {
+        const createdBusinessDetails = {
+          id: business.id,
           name: business.name,
           category: business.category,
           email: business.email,
@@ -45,13 +46,13 @@ export default class Businesses {
           description: business.description
         };
         res.status(201)
-          .json({ message: businessMessages.businessRegisterMessage, createdbusinessDetails });
+          .json({ message: businessMessages.businessRegisterMessage, createdBusinessDetails });
       })
       .catch((err) => {
         if (err.errors) {
           handleValidationErrors(err.errors, res);
         } else {
-          return res.status(500).json(serverErrorMessage.message);
+          return res.status(500).json(err);
         }
       });
   }
@@ -73,7 +74,10 @@ export default class Businesses {
     if (req.query.category && !req.query.location) {
       findBusinessByCategory(req, res);
     }
-    if (!req.query.location && !req.query.category) {
+    if (req.query.pageNumber && !req.query.location && !req.query.category) {
+      listBusinessByPages(req, res);
+    }
+    if (!req.query.location && !req.query.category && !req.query.pageNumber) {
       return Business
         .findAll()
         .then((businesses) => {
@@ -242,6 +246,7 @@ export default class Businesses {
           .create(businessReviewDetails)
           .then((review) => {
             const reviewDetails = {
+              id: review.id,
               review: review.review,
               reviewerId: review.ReviewerId,
               businessId: review.BusinessId

@@ -18,7 +18,7 @@ export const businessIdCheck = (req, res, next) => {
         errorMessage: 'Business Id is required'
       },
       isUUID: {
-        errorMessage: 'Business id should be a number'
+        errorMessage: 'Business id should be a uuid'
       }
     }
   });
