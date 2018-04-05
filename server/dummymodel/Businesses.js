@@ -83,6 +83,7 @@ export default class Businesses {
     if (req.query.category && !req.query.location) {
       findBusinessByCategory(req, res);
     }
+
     if (req.query.pageNumber && !req.query.location && !req.query.category) {
       listBusinessByPages(req, res);
     }
