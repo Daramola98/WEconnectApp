@@ -25,7 +25,7 @@ describe('Business Model', () => {
           })
           .catch(err => done(err));
       })
-      .catch(err => Promise.reject(done(err)));
+      .catch(err => done(err));
   });
 
   describe('create', () => {
@@ -46,7 +46,8 @@ describe('Business Model', () => {
           expect(business.name).to.equal('Clash of clans');
           expect(business.email).to.equal('damilolaajiboye@live.com');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
   });
 
@@ -76,8 +77,9 @@ describe('Business Model', () => {
       };
       Business.create(businessDetails)
         .then((business) => {
-          Business.create(businessDetails2);
-          done();
+          Business.create(businessDetails2)
+            .then(business2 => done())
+            .catch(err => done(err));
         })
         .catch(err => done(err));
     });
@@ -92,7 +94,8 @@ describe('Business Model', () => {
           expect(business).to.be.a('object');
           expect(business.name).to.equal('Uber Driving');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
 
     it('finds all businesses', (done) => {
@@ -101,7 +104,8 @@ describe('Business Model', () => {
           expect(business).to.be.a('array');
           expect(business[0].name).to.equal('Clash of clans');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
   });
 
@@ -132,7 +136,8 @@ describe('Business Model', () => {
             .then((updatedBusiness) => {
               expect(updatedBusiness.name).to.equal('Taxify Driving');
               done();
-            });
+            })
+            .catch(err => done(err));
         });
     });
   });

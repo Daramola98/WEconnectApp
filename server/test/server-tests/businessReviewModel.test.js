@@ -56,7 +56,8 @@ describe('BusinessReview Model', () => {
         .then((review) => {
           expect(review.review).to.equal('Nice Business');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
   });
 
@@ -74,8 +75,9 @@ describe('BusinessReview Model', () => {
       };
       BusinessReview.create(reviewDetails)
         .then((review) => {
-          BusinessReview.create(reviewDetails2);
-          done();
+          BusinessReview.create(reviewDetails2)
+            .then(review2 => done())
+            .catch(err => done(err));
         })
         .catch(err => done(err));
     });
@@ -90,7 +92,8 @@ describe('BusinessReview Model', () => {
           expect(review).to.be.a('object');
           expect(review.review).to.equal('Nice Business');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
 
     it('finds all business reviews', (done) => {
@@ -99,7 +102,8 @@ describe('BusinessReview Model', () => {
           expect(business).to.be.a('array');
           expect(business[1].review).to.equal('Bad Business');
           done();
-        });
+        })
+        .catch(err => done(err));
     });
   });
 
@@ -124,8 +128,10 @@ describe('BusinessReview Model', () => {
             .then((updatedReview) => {
               expect(updatedReview.review).to.equal('Awesome Business');
               done();
-            });
-        });
+            })
+            .catch(err => done(err));
+        })
+        .catch(err => done(err));
     });
   });
 
