@@ -16,7 +16,7 @@ export const userValidation = {
     isString: {
       errorMessage: 'Lastname should be a valid string'
     },
-    errorMessage: 'Lastname name is required',
+    errorMessage: 'Lastname is required',
   },
   password: {
     trim: true,
