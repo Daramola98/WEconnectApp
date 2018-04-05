@@ -1,63 +1,82 @@
-import chai from 'chai';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import bcrypt from 'bcrypt';
 import app from '../../lib/app';
-import db from '../../models/index';
-import userData from '../testData/userData';
-import businessData from '../testData/businessData';
+import db, { User, Business, BusinessReview } from '../../models/index';
+import { userDetails, userDetails1 } from '../testData/userData';
+import { businessDetails, businessDetails1, businessDetails2 } from '../testData/businessData';
 
-const { expect } = chai;
-const { User, Business, BusinessReview } = db;
+// const { expect } = chai;
+// const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
-const baseEndpoint = '/api/v1/weconnect/businesses';
+const baseEndpoint = '/api/v1/businesses';
 let authToken;
 let authToken2;
+let userId;
+let businessId;
+let businessId2;
 
 describe(`${baseEndpoint}`, () => {
   beforeEach((done) => {
-    db.sequelize.sync({ force: true }) // drops table and re-creates it
+    db.Business.sequelize.sync({ force: true }) // drops table and re-creates it
       .then(() => {
-        User.create(userData.userDetails)
-          .then(() => Promise.resolve(done()))
+        User.create({
+          firstname: 'Damilola',
+          lastname: 'Ajiboye',
+          email: 'damilolaajiboye@live.com',
+          password: bcrypt.hashSync('dammyro1000', 10),
+          telephoneNumber: '07066455523',
+          homeNumber: '08043553081',
+        })
+          .then((user) => {
+            userId = user.id;
+            chai.request(app)
+              .post('/api/v1/auth/login')
+              .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
+              .end((err, res) => {
+                authToken = res.body.token;
+                done();
+              });
+          })
           .catch(err => Promise.reject(done()));
-      });
+      })
+      .catch(err => Promise.reject(done()));
   });
-
   /*
- * POST /api/v1/weconnect/businesses route to register a business.
+ * POST /api/v1/businesses route to register a business.
  */
   describe(`${baseEndpoint} POST businesses`, () => {
-    beforeEach((done) => {
-      chai.request(app)
-        .post('/api/v1/weconnect/auth/login')
-        .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-        .end((err, res) => {
-          authToken = `Bearer ${res.body.token}`;
-          done();
-        });
-    });
+    // beforeEach((done) => {
+    //   chai.request(app)
+    //     .post('/api/v1/auth/login')
+    //     .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
+    //     .end((err, res) => {
+    //       authToken = res.body.token;
+    //       done();
+    //     });
+    // });
 
-    it('it should add a business to the businesses database', (done) => {
+    it('should add a business to the businesses database', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
-        .send(businessData.businessDetails)
+        .send(businessDetails)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Business has been registered successfully');
-          expect(res.body.business.name).to.equal('House rentals');
-          expect(res.body.business).to.have.property('id');
-          expect(res.body.business.telephoneNumber).to.equal('07011041032');
-          expect(res.body.business.email).to.equal('ajiboye_j@yahoo.com');
+          expect(res.body.createdBusinessDetails.name).to.equal('House rentals');
+          // expect(res.body.business).to.have.property('id');
+          expect(res.body.createdBusinessDetails.telephoneNumber).to.equal('07011041032');
+          expect(res.body.createdBusinessDetails.email).to.equal('ajiboye_j@yahoo.com');
           done();
         });
     });
 
-    it('it should catch authentication failures before adding a business to the businesses database', (done) => {
+    it('should catch authentication failures before adding a business to the businesses database', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', 'invalidToken')
-        .send(businessData.businessDetails)
+        .send(businessDetails)
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.body).to.be.a('object');
@@ -66,7 +85,7 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch validation errors before adding a business to the businesses database', (done) => {
+    it('should catch validation errors before adding a business to the businesses database', (done) => {
       const businessDetails3 = {
         name: 'Cl',
         category: 'gaming',
@@ -75,8 +94,7 @@ describe(`${baseEndpoint}`, () => {
         address: '',
         homeNumber: '08011031456',
         location: 'Enugu',
-        description: 'Rent houses here for affordable prices',
-        UserId: 1
+        description: 'Rent houses here for affordable prices'
       };
 
       chai.request(app)
@@ -85,30 +103,40 @@ describe(`${baseEndpoint}`, () => {
         .send(businessDetails3)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
-          expect(res.body.validationErrors[1]).to.equal('Business Address is required');
+          expect(res.body).to.be.a('array');
+          expect(res.body[0]).to.equal('Business Address is required');
+          // expect(res.body[1]).to.equal('Business Address is required');
           done();
         });
     });
 
-    it('it should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
-      Business.create(businessData.businessDetails);
+    it('should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
+      Business.create(businessDetails);
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
-        .send(businessData.businessDetails)
+        .send(businessDetails)
         .end((err, res) => {
           expect(res.status).to.equal(409);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('Business with same name and email address already exists');
+          expect(res.body.message).to.equal('Business Name already exists');
           done();
         });
     });
 
-    it('it should not allow a user to register a business with an existing email address to the businesses database', (done) => {
-      Business.create(businessData.businessDetails);
-      const businessDetails = {
+    it('should not allow a user to register a business with an existing email address to the businesses database', (done) => {
+      Business.create({
+        name: 'House rentals',
+        category: 'HOUSING',
+        email: 'ajiboye_j@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'ENUGU',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      });
+      const businessDetails4 = {
         name: 'House Mortgage',
         category: 'Housing',
         email: 'ajiboye_j@yahoo.com',
@@ -116,47 +144,21 @@ describe(`${baseEndpoint}`, () => {
         homeNumber: '08011031456',
         location: 'Enugu',
         address: '7,Adeba Road Lakowe Lagos',
-        description: 'Rent houses here for affordable prices',
-        UserId: 1
+        description: 'Rent houses here for affordable prices'
       };
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
-        .send(businessDetails)
+        .send(businessDetails4)
         .end((err, res) => {
           expect(res.status).to.equal(409);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('Business with same email address already exists');
+          expect(res.body.message).to.equal('Email already exists');
           done();
         });
     });
 
-    it('it should not allow a user to register a business with an existing name to the businesses database', (done) => {
-      Business.create(businessData.businessDetails);
-      const businessDetails = {
-        name: 'House rentals',
-        category: 'Housing',
-        email: 'maker@hotmail.com',
-        telephoneNumber: '07011041032',
-        homeNumber: '08011031456',
-        location: 'Enugu',
-        address: '7,Adeba Road Lakowe Lagos',
-        description: 'Rent houses here for affordable prices',
-        UserId: 1
-      };
-      chai.request(app)
-        .post(`${baseEndpoint}`)
-        .set('authorization', authToken)
-        .send(businessDetails)
-        .end((err, res) => {
-          expect(res.status).to.equal(409);
-          expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('Business with same name already exists');
-          done();
-        });
-    });
-
-    it('it should not allow a user to register a business without the required fields', (done) => {
+    it('should not allow a user to register a business without the required fields', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
@@ -168,41 +170,49 @@ describe(`${baseEndpoint}`, () => {
           description: '',
           address: '',
           telephoneNumber: '',
-          homeNumber: '',
-          UserId: 1
+          homeNumber: ''
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
-          expect(res.body.validationErrors[1]).to.equal('Your Business name is required');
-          expect(res.body.validationErrors[2]).to.equal('Business Location is required');
+          expect(res.body).to.be.a('array');
+          expect(res.body[0]).to.equal('Business name is required');
+          expect(res.body[1]).to.equal('Business Name should be a valid string');
+          expect(res.body[2]).to.equal('Business description is required');
           done();
         });
     });
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
+ * GET /api/v1/businesses route to get all businesses.
  */
   describe(`${baseEndpoint} GET businesses`, () => {
     beforeEach((done) => {
-      const businessDetails = {
+      const businessDetails5 = {
         name: 'Clash of clans',
         email: 'damilolaajiboye@live.com',
-        location: 'Lagos',
-        category: 'gaming',
+        location: 'LAGOS',
+        category: 'GAMING',
         description: 'Game for collaboration',
         address: '23,Adeba Ibeju Lekki Lagos',
         telephoneNumber: '07066445523',
-        homeNumber: '08043553081',
-        UserId: 1
+        homeNumber: '08043553081'
       };
-      Business.create(businessDetails);
-      done();
+      chai.request(app)
+        .post(`${baseEndpoint}`)
+        .send(businessDetails5)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          done();
+        });
+      // chai.request(app)
+      //   .post('/api/v1/auth/login')
+      //   .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
+      //   .end((err, res) => {
+      //     authToken = res.body.token;
+      //   });
     });
-
-    it('it should get all business in the businesses table', (done) => {
+    it('should get all business in the businesses table', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}`)
         .end((err, res) => {
@@ -216,141 +226,106 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should get all businesses registered by a user', (done) => {
+    it('should get all businesses registered by a user', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/user`)
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          expect(res.body.business[0].name).to.equal('Clash of clans');
-          expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].telephoneNumber).to.equal('07066445523');
-          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body).to.be.a('array');
+          expect(res.body[0].name).to.equal('Clash of clans');
+          expect(res.body[0]).to.have.property('id');
+          expect(res.body[0].telephoneNumber).to.equal('07066445523');
+          expect(res.body[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
 
-    /*
-    it('it should return a message if user has not registered a business', (done) => {
-      User.create({
-        firstname: 'Clinton',
-        lastname: 'Fidelis',
-        email: 'clintfidel@gmail.com',
-        password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
-        telephoneNumber: '08023112094',
-        homeNumber: '08022235912'
-      })
-        .then((user) => {
-          chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
-            .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
-            .end((err, res) => {
-              authToken2 = `Bearer ${res.body.token}`;
-            });
-        });
-
-      chai.request(app)
-        .get(`${baseEndpoint}/user`)
-        .set('authorization', authToken2)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('You are yet to add
-          a business add your first business!');
-          done();
-        });
-    });
-*/
-    it('it should get all business in the specified location when a location query is passed', (done) => {
+    it('should get all business in the specified location when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
           expect(res.body.business[0].name).to.equal('Clash of clans');
           expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('Lagos');
+          expect(res.body.business[0].location).to.equal('LAGOS');
           expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
 
-    it('it returns a message when no business found in specified location', (done) => {
+    it('returns a message when no business found in specified location', (done) => {
       const location = 10;
       chai.request(app)
         .get(`${baseEndpoint}?location=${location}`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
           expect(res.body.message).to.equal('No Businesses found in the specified location');
           done();
         });
     });
 
-    it('it catches validation error for empty input when a location query is passed', (done) => {
+    it('catches validation error for empty input when a location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location= `)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Location should be more than 0 and not greater than 100 characters');
+          expect(res.body.validationErrors[0]).to.equal('Location is required');
           done();
         });
     });
 
-    it('it should get all business in the specified category when a category query is passed', (done) => {
+    it('should get all business in the specified category when a category query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?category=gaming `)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
           expect(res.body.business[0].name).to.equal('Clash of clans');
           expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('Lagos');
+          expect(res.body.business[0].location).to.equal('LAGOS');
+          expect(res.body.business[0].category).to.equal('GAMING');
           expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
 
-    it('it returns a message when no business found in specified category', (done) => {
+    it('should get all business in the specified category and location when a category and location query is passed', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}?category=gaming&location=lagos`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body.business[0].name).to.equal('Clash of clans');
+          expect(res.body.business[0]).to.have.property('id');
+          expect(res.body.business[0].location).to.equal('LAGOS');
+          expect(res.body.business[0].category).to.equal('GAMING');
+          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
+    });
+    it('returns a message when no business found in specified category', (done) => {
       const category = 10;
       chai.request(app)
         .get(`${baseEndpoint}?category=${category}`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
           expect(res.body.message).to.equal('No Businesses found in the specified category');
           done();
         });
     });
 
-    it('it catches validation error for empty input when a category query is passed', (done) => {
+    it('catches validation error for empty input when a category query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?category= `)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].error).to.equal('Category should be more than 0 and not greater than 50 characters');
+          expect(res.body.validationErrors[0]).to.equal('Category is required');
           done();
         });
     });
 
-    it('it should get all business in the specified category and location when a category and location query is passed', (done) => {
-      chai.request(app)
-        .get(`${baseEndpoint}?location=lagos&category=gaming `)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('object');
-          expect(res.body.business[0].name).to.equal('Clash of clans');
-          expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('Lagos');
-          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
-          done();
-        });
-    });
 
-    it('it should return message if no business in the specified category and location when a category and location query is passed', (done) => {
+    it('should return message if no business in the specified category and location when a category and location query is passed', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}?location=lagos&category=housing `)
         .end((err, res) => {
@@ -363,8 +338,8 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * GET /api/v1/weconnect/businesses route to get all businesses.
- */
+   * GET /api/v1/businesses route to get all businesses.
+   */
   describe(`${baseEndpoint} GET a user's businesses`, () => {
     beforeEach((done) => {
       User.create({
@@ -377,54 +352,58 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((user) => {
           chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
+            .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
-              authToken2 = `Bearer ${res.body.token}`;
+              authToken2 = res.body.token;
               done();
             });
         });
     });
 
-    it('it should return a message if user has not registered a business', (done) => {
+    it('should return a message if user has not registered a business', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/user`)
         .set('authorization', authToken2)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.be.a('object');
-          expect(res.body.message).to.equal('You are yet to add a business add your first business!');
+          expect(res.body.message).to.equal('No Businesses');
           done();
         });
     });
   });
+
   /*
- * GET /api/v1/weconnect/businesses/:buisnessId route to retrieve a business with id.
- */
+   * GET /api/v1/businesses/:buisnessId route to retrieve a business with id.
+   */
   describe(`${baseEndpoint}/:businessId GET business`, () => {
     beforeEach((done) => {
-      Business.create(businessData.businessDetails2);
-      done();
+      Business.create(businessDetails2)
+        .then((business) => {
+          businessId = business.id;
+          done();
+        });
     });
 
-    it('it should retrieve a business with the specified businessId', (done) => {
+    it('should retrieve a business with the specified businessId', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}/1`)
+        .get(`${baseEndpoint}/${businessId}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Business found');
           expect(res.body.business.name).to.equal('Clash Royale');
           expect(res.body.business).to.have.property('id');
-          expect(res.body.business.id).to.equal(1);
+          expect(res.body.business.id).to.equal(businessId);
           expect(res.body.business.telephoneNumber).to.equal('07066444523');
           expect(res.body.business.email).to.equal('damilolaajiboye@yahoo.com');
           done();
         });
     });
 
-    it('it should return a message if business with the specified businessId is not in database', (done) => {
+    it('should return a message if business with the specified businessId is not in database', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}/2`)
+        .get(`${baseEndpoint}/faf79f92-fab6-4c45-9519-38f6564c3711`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Business not found');
@@ -432,128 +411,43 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should validate the business id', (done) => {
+    it('should validate the business id', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/hi`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0].error).to.equal('Your Business id should be an integer');
-          done();
-        });
-    });
-  });
-
-
-  /*
- * PUT /api/v1/weconnect/businesses/:businessId route to update a business with the specified Id.
- */
-  describe(`${baseEndpoint}/:businessId UPDATE business`, () => {
-    beforeEach((done) => {
-      const businessDetails = {
-        name: 'Solar Installation',
-        category: 'Energy',
-        email: 'peterfredrick@yahoo.com',
-        telephoneNumber: '07011041032',
-        homeNumber: '08011031456',
-        location: 'Bauchi',
-        address: '7,Adeba Road Lakowe Lagos',
-        description: 'Rent houses here for a nice and affotdable price',
-        UserId: 1
-      };
-      Business
-        .create(businessDetails)
-        .then((business) => {
-          chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
-            .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-            .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
-              done();
-            });
-        })
-        .catch(err => done(err));
-    });
-
-    it('it should update a business with the specified id in the database', (done) => {
-      const businessDetails = {
-        name: 'Solar rentals',
-        category: 'Renewable energy',
-        telephoneNumber: '08023112081',
-        location: 'Makurdi',
-      };
-      chai.request(app)
-        .put(`${baseEndpoint}/1`)
-        .set('authorization', authToken)
-        .send(businessDetails)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body.message).to.equal('Business Updated successfully');
-          expect(res.body.updatedBusiness.name).to.equal('Solar rentals');
-          expect(res.body.updatedBusiness).to.have.property('id');
-          expect(res.body.updatedBusiness.telephoneNumber).to.equal('08023112081');
-          expect(res.body.updatedBusiness.location).to.equal('Makurdi');
-          done();
-        });
-    });
-
-    it('it should catch validation errors', (done) => {
-      const businessDetails = {
-        name: 'So',
-        category: 'Renewable energy',
-        telephoneNumber: '08023112081',
-        location: 'Makurdi',
-      };
-      chai.request(app)
-        .put(`${baseEndpoint}/1`)
-        .set('authorization', authToken)
-        .send(businessDetails)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
-          done();
-        });
-    });
-
-    it('it return a message if business is not found', (done) => {
-      const businessDetails = {
-        name: 'Solar rentals',
-        category: 'Renewable energy',
-        telephoneNumber: '08023112081',
-        location: 'Makurdi',
-      };
-      chai.request(app)
-        .put(`${baseEndpoint}/100`)
-        .set('authorization', authToken)
-        .send(businessDetails)
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('Business with specified id not found');
+          expect(res.body.validationErrors[0]).to.equal('Business id should be a uuid');
           done();
         });
     });
   });
 
   /*
- * DELETE /api/v1/weconnect/businesses route to delete a business.
- */
+   * DELETE /api/v1/businesses route to delete a business.
+   */
   describe(`${baseEndpoint}/:businessId DELETE business`, () => {
     beforeEach((done) => {
-      Business.create(businessData.businessDetails1)
+      Business.create({
+        name: 'Weather Control',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
         .then((business) => {
-          chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
-            .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-            .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
-              done();
-            });
+          businessId = business.id;
+          done();
         })
         .catch(err => done(err));
     });
 
-    it('it should delete a business from the businesses database', (done) => {
+    it('should delete a business from the businesses database', (done) => {
       chai.request(app)
-        .delete(`${baseEndpoint}/1`)
+        .delete(`${baseEndpoint}/${businessId}`)
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -562,9 +456,9 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return message if business with specified id is not found', (done) => {
+    it('should return message if business with specified id is not found', (done) => {
       chai.request(app)
-        .delete(`${baseEndpoint}/2`)
+        .delete(`${baseEndpoint}/faf79f92-fab6-4c45-9519-38f6564c3711`)
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(404);
@@ -575,41 +469,46 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
- * POST /api/v1/weconnect/businesses/:businessId route to add a business review.
- */
+   * POST /api/v1/businesses/:businessId route to add a business review.
+   */
   describe(`${baseEndpoint}/:businessId/reviews POST business review`, () => {
     beforeEach((done) => {
-      Business.create(businessData.businessDetails1)
+      Business.create({
+        name: 'Weather Control',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
         .then((business) => {
-          chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
-            .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-            .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
-              done();
-            });
+          businessId = business.id;
+          done();
         })
         .catch(err => done(err));
     });
 
-    it('it should add a review to a business in the businesses database with the specified id', (done) => {
+    it('should add a review to a business in the businesses database with the specified id', (done) => {
       const review = { review: 'Business is so great would like to invest' };
       chai.request(app)
-        .post(`${baseEndpoint}/1/reviews`)
+        .post(`${baseEndpoint}/${businessId}/reviews`)
         .send(review)
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Business Review Added');
-          expect(res.body.review.review).to.equal('Business is so great would like to invest');
+          expect(res.body.reviewDetails.review).to.equal('Business is so great would like to invest');
           done();
         });
     });
 
-    it('it should return message if business with specified id is not found', (done) => {
+    it('should return message if business with specified id is not found', (done) => {
       const review = { review: 'Business is so great would like to invest like now' };
       chai.request(app)
-        .post(`${baseEndpoint}/2/reviews`)
+        .post(`${baseEndpoint}/faf79f92-fab6-4c45-9519-38f6564c3711/reviews`)
         .send(review)
         .set('authorization', authToken)
         .end((err, res) => {
@@ -619,63 +518,67 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should catch validation errors', (done) => {
+    it('should catch validation errors', (done) => {
       const review = { review: 'B' };
       chai.request(app)
-        .post(`${baseEndpoint}/1/reviews`)
+        .post(`${baseEndpoint}/${businessId}/reviews`)
         .send(review)
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.a('object');
-          expect(res.body.validationErrors[0]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
+          expect(res.body.validationErrors[0]).to.equal('Business Review should be more than 1 and not greater than 500 characters');
           done();
         });
     });
 
-    it('it should catch required fields validation errors', (done) => {
+    it('should catch required fields validation errors', (done) => {
       chai.request(app)
-        .post(`${baseEndpoint}/1/reviews`)
+        .post(`${baseEndpoint}/${businessId}/reviews`)
         .send({ review: '' })
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('object');
-          expect(res.body.validationErrors[0]).to.equal('Business review is required');
-          expect(res.body.validationErrors[1]).to.equal('Business Review should be more than 2 and not greater than 500 characters');
+          expect(res.body[0]).to.equal('Review is required');
           done();
         });
     });
   });
 
   /*
- * GET /api/v1/weconnect/businesses/:businessId route to get reviews for a business.
- */
+   * GET /api/v1/businesses/:businessId route to get reviews for a business.
+   */
   describe(`${baseEndpoint}/:businessId/reviews GET business review`, () => {
     beforeEach((done) => {
-      Business.create(businessData.businessDetails1)
+      Business.create({
+        name: 'Andela',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
         .then((business) => {
-          chai.request(app)
-            .post('/api/v1/weconnect/auth/login')
-            .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-            .end((err, res) => {
-              authToken = `Bearer ${res.body.token}`;
-            });
+          businessId = business.id;
           const review = { review: 'Business is so great would like to invest' };
           chai.request(app)
-            .post(`${baseEndpoint}/1/reviews`)
+            .post(`${baseEndpoint}/${businessId}/reviews`)
             .send(review)
             .set('authorization', authToken)
             .end((err, res) => {
+              businessId2 = res.body.reviewDetails.id;
               done();
             });
         })
         .catch(err => done(err));
     });
 
-    it('it should get reviews for a business in the businesses database with the specified id', (done) => {
+    it('should get reviews for a business in the businesses database with the specified id', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}/1/reviews`)
+        .get(`${baseEndpoint}/${businessId}/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Reviews have been found');
@@ -685,9 +588,9 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return a message if business is not found in the database', (done) => {
+    it('should return a message if business is not found in the database', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}/2/reviews`)
+        .get(`${baseEndpoint}/faf79f92-fab6-4c45-9519-38f6564c3711/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Business does not exist, Enter id for existing business');
@@ -695,21 +598,21 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should return a message if no reviews have been added for that business', (done) => {
-      BusinessReview.destroy({ where: { id: 1 } });
+    it('should return a message if no reviews have been added for that business', (done) => {
+      BusinessReview.destroy({ where: { id: businessId2 } });
       chai.request(app)
-        .get(`${baseEndpoint}/1/reviews`)
+        .get(`${baseEndpoint}/${businessId}/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('Reviews have not been added for this Business');
+          expect(res.body.message).to.equal('No review added');
           done();
         });
     });
 
-    it('it should add responses to a review with the particular id', (done) => {
+    it('should add responses to a review with the particular id', (done) => {
       chai.request(app)
-        .post(`${baseEndpoint}/1/reviews/1`)
-        .send({ message: 'Nice!!!!' })
+        .post(`${baseEndpoint}/${businessId}/reviews/${businessId2}`)
+        .send({ message: 'Nice Stuff' })
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -718,14 +621,70 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    it('it should add responses to a review with the particular id', (done) => {
+    it('catch validation errors while adding responses to a review with the particular id', (done) => {
       chai.request(app)
-        .post(`${baseEndpoint}/1/reviews/1`)
+        .post(`${baseEndpoint}/${businessId}/reviews/${businessId2}`)
         .send({ message: 'B' })
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Response should be more than 2 and not greater than 500 characters');
+          expect(res.body.validationErrors[0]).to.equal('Response should be more than 1 and not greater than 500 characters');
+          done();
+        });
+    });
+  });
+
+  /*
+   * PUT /api/v1/businesses/:businessId route to update a business.
+   */
+  describe(`${baseEndpoint}/:businessId UPDATE businesses`, () => {
+    beforeEach((done) => {
+      Business.create({
+        name: 'Andela',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
+        .then((business) => {
+          businessId = business.id;
+          done();
+          // const review = { review: 'Business is so great would like to invest' };
+          // chai.request(app)
+          //   .post(`${baseEndpoint}/${businessId}/reviews`)
+          //   .send(review)
+          //   .set('authorization', authToken)
+          //   .end((err, res) => {
+          //     businessId2 = res.body.reviewDetails.id;
+          //   });
+        })
+        .catch(err => done(err));
+    });
+
+    it('should update a business with the specified id', (done) => {
+      chai.request(app)
+        .put(`${baseEndpoint}/${businessId}`)
+        .send({ name: 'Swift' })
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.updatedBusinessDetails.name).to.equal('Swift');
+          done();
+        });
+    });
+
+    it('catches validation erros before updating a business', (done) => {
+      chai.request(app)
+        .put(`${baseEndpoint}/${businessId}`)
+        .send({ name: 'S' })
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.validationErrors[0]).to.equal('Please provide a business name with atleast 5 and not more than 50 characters');
           done();
         });
     });

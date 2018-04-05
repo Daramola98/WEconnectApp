@@ -1,12 +1,13 @@
 import express from 'express';
-import user from '../controllers/user';
-import userValidate from '../helpers/userHelper';
-import authorize from '../helpers/check-auth';
+import Users from '../controllers/Users';
+import isAuthorized from '../middlewares/isAuthorized';
+import modelValidator from '../helpers/modelValidator';
+import { userValidation, userEmailValidation, userUpdateValidation } from '../validations/userValidation';
 
 const router = express.Router();
 
-router.post('/signUp', userValidate.userNameValidation, userValidate.userEmailValidation, user.createUser);
-router.post('/login', user.loginUser);
-router.put('/updateProfile', authorize.checkAuthentication, user.updateUserDetails);
+router.post('/signUp', modelValidator(userValidation), userEmailValidation, Users.createUser);
+router.post('/login', Users.loginUser);
+router.put('/user', isAuthorized, modelValidator(userUpdateValidation), Users.updateUserDetails);
 
 export default router;

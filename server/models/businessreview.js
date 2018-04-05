@@ -1,20 +1,26 @@
 const businessReview = (sequelize, DataTypes) => {
   const BusinessReview = sequelize.define('BusinessReview', {
-    ReviewerId: {
-      type: DataTypes.INTEGER,
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    reviewerId: {
+      type: DataTypes.UUID,
       allowNull: false
     },
     review: {
       type: DataTypes.TEXT,
       allowNull: false,
-      unique: true,
+      unique: false,
       validate: {
         notEmpty: {
           msg: 'Business review is required'
         },
         len: {
-          args: [3, 500],
-          msg: 'Business Review should be more than 2 and not greater than 500 characters'
+          args: [2, 500],
+          msg: 'Business Review should be more than 1 and not greater than 500 characters'
         }
       }
     },
@@ -22,13 +28,13 @@ const businessReview = (sequelize, DataTypes) => {
 
   BusinessReview.associate = (models) => {
     BusinessReview.hasMany(models.reviewresponse, {
-      foreignKey: 'ReviewId',
+      foreignKey: 'reviewId',
       as: 'responses',
       onDelete: 'CASCADE'
     });
 
     BusinessReview.belongsTo(models.Business, {
-      foreignKey: 'BusinessId',
+      foreignKey: 'businessId',
       onDelete: 'CASCADE'
     });
   };

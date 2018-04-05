@@ -12,8 +12,8 @@ describe('User Model', () => {
       .catch(err => Promise.reject(done(err)));
   });
 
-  describe('create and findOne', () => {
-    it('works', async () => {
+  describe('create', () => {
+    it('creates a new user', (done) => {
       const userDetails = {
         firstname: 'Damilola',
         lastname: 'Ajiboye',
@@ -22,17 +22,18 @@ describe('User Model', () => {
         telephoneNumber: '070664455523',
         homeNumber: '08043553081',
       };
-      const createdUser = await User.create(userDetails);
-      expect(createdUser.lastname).to.equal('Ajiboye');
-      expect(createdUser.telephoneNumber).to.equal('070664455523');
-      expect(createdUser.email).to.equal('damilolaajiboye@live.com');
-      const foundUser = await User.findOne();
-      expect(foundUser.firstname).to.equal('Damilola');
+      User.create(userDetails)
+        .then((user) => {
+          expect(user.lastname).to.equal('Ajiboye');
+          expect(user.telephoneNumber).to.equal('070664455523');
+          expect(user.email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
     });
   });
 
-  describe('where', () => {
-    it('finds only rows for the given condition', async () => {
+  describe('finds users', () => {
+    beforeEach((done) => {
       const userDetails = {
         firstname: 'Damilare',
         lastname: 'Ajiboye',
@@ -41,26 +42,50 @@ describe('User Model', () => {
         telephoneNumber: '070664455527',
         homeNumber: '08043553091',
       };
-      const [user1, user2] = await Promise.all([
-        User.create(userDetails),
-        User.create({
-          firstname: 'Julius',
-          lastname: 'Ajiboye',
-          email: 'juliusajiboye@live.com',
-          password: bcrypt.hashSync('julius100', 10),
-          telephoneNumber: '070664455565',
-          homeNumber: '08043553087',
+      const userDetails2 = {
+        firstname: 'Julius',
+        lastname: 'Ajiboye',
+        email: 'juliusajiboye@live.com',
+        password: bcrypt.hashSync('julius100', 10),
+        telephoneNumber: '070664455565',
+        homeNumber: '08043553087',
+      };
+      User.create(userDetails)
+        .then((user) => {
+          User.create(userDetails2)
+            .then((user2) => {
+              done();
+            })
+            .catch(err => done(err));
         })
-      ]);
-      const userCount = await User.count();
-      expect(userCount).to.equal(2);
-      const users = await User.findAll({ where: { firstname: 'Julius' } });
-      expect(users.length).to.equal(1);
+        .catch(err => done(err));
+    });
+
+    it('finds one user', (done) => {
+      User.findOne({
+        where: {
+          firstname: 'Julius'
+        }
+      })
+        .then((user) => {
+          expect(user).to.be.a('object');
+          expect(user.lastname).to.equal('Ajiboye');
+          done();
+        });
+    });
+
+    it('finds all users', (done) => {
+      User.findAll()
+        .then((user) => {
+          expect(user).to.be.a('array');
+          expect(user[0].lastname).to.equal('Ajiboye');
+          done();
+        });
     });
   });
 
-  describe('update and delete', () => {
-    it('updates and deletes users', async () => {
+  describe('update users', () => {
+    beforeEach((done) => {
       const userDetails = {
         firstname: 'Damilare',
         lastname: 'Ajiboye',
@@ -69,26 +94,51 @@ describe('User Model', () => {
         telephoneNumber: '07066445527',
         homeNumber: '08043553091',
       };
-      const [user1, user2] = await Promise.all([
-        User.create(userDetails),
-        User.create({
-          firstname: 'Julius',
-          lastname: 'Ajiboye',
-          email: 'juliusajiboye@live.com',
-          password: bcrypt.hashSync('julius100', 10),
-          telephoneNumber: '070664455565',
-          homeNumber: '08043553087',
+      User.create(userDetails)
+        .then((user) => {
+          done();
         })
-      ]);
-      const users = await User.findOne({ where: { firstname: 'Julius' } });
-      const newLastname = { lastname: 'Taye' };
-      const updatedUser = await users.update(newLastname, { fields: Object.keys(newLastname) });
-      expect(updatedUser.lastname).to.equal('Taye');
-      const userToDelete = await User.findOne({ where: { firstname: 'Damilare' } });
-      expect(userToDelete.lastname).to.equal('Ajiboye');
-      const deleteUser = await userToDelete.destroy();
-      const deletedUser = await User.findAll({ where: { firstname: 'Damilare' } });
-      expect(deletedUser.length).to.equal(0);
+        .catch(err => done(err));
+    });
+
+    it('updates a user\'s details', (done) => {
+      User.findOne({ where: { firstname: 'Damilare' } })
+        .then((user) => {
+          user.update({ firstname: 'Damilola' })
+            .then((updatedUser) => {
+              expect(updatedUser.firstname).to.equal('Damilola');
+              done();
+            });
+        });
+    });
+  });
+
+  describe('deletes users', () => {
+    beforeEach((done) => {
+      const userDetails = {
+        firstname: 'Damilare',
+        lastname: 'Ajiboye',
+        email: 'damilareajiboye@live.com',
+        password: bcrypt.hashSync('dammy100', 10),
+        telephoneNumber: '07066445527',
+        homeNumber: '08043553091',
+      };
+      User.create(userDetails)
+        .then((user) => {
+          done();
+        })
+        .catch(err => done(err));
+    });
+
+    it('deletes a user', (done) => {
+      User.findOne({ where: { firstname: 'Damilare' } })
+        .then((user) => {
+          user.destroy()
+            .then((deletedUser) => {
+              expect(deletedUser.firstname).to.equal(undefined);
+              done();
+            });
+        });
     });
   });
 });

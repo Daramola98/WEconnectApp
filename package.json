@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production sequelize db:migrate --env production && babel-node server/lib/app.js",
-    "start:dev": "nodemon server/lib/app.js --exec babel-node",
+    "start:dev": "cross-env NODE_ENV=development nodemon server/lib/app.js --exec babel-node",
     "start:client": "webpack-dev-server --mode development --open --history-api-fallback",
     "build:client": "webpack --mode development",
     "build:clientProd": "webpack --mode production",

@@ -1,23 +1,71 @@
-import messages from '../messages/businessValidation';
+import { businessNameErrorMessage } from '../messages/businessValidation';
 
 const business = (sequelize, DataTypes) => {
   const Business = sequelize.define('Business', {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        msg: 'Business name exists'
+      },
       validate: {
         len: {
           args: [5, 50],
-          msg: messages.businessNameErrorMessage
+          msg: businessNameErrorMessage
         },
         notEmpty: {
           msg: 'Your Business name is required'
         },
+        // matches: {
+        //   args: /[^0-9a-bA-B\s]/gi,
+        //   msg: 'Business name should only contain alphabets or alphanumeric characters'
+        // }
       }
     },
     location: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ['ABIA',
+        'ADAMAWA',
+        'AKWA IBOM',
+        'ANAMBRA',
+        'BAUCHI',
+        'BAYELSA',
+        'BENUE',
+        'BORNO',
+        'CROSS RIVER',
+        'DELTA',
+        'EBONYI',
+        'ENUGU',
+        'EDO',
+        'EKITI',
+        'GOMBE',
+        'IMO',
+        'JIGAWA',
+        'KADUNA',
+        'KANO',
+        'KATSINA',
+        'KEBBI',
+        'KOGI',
+        'KWARA',
+        'LAGOS',
+        'NASARAWA',
+        'NIGER',
+        'OGUN',
+        'ONDO',
+        'OSUN',
+        'OYO',
+        'PLATEAU',
+        'RIVERS',
+        'SOKOTO',
+        'TARABA',
+        'YOBE',
+        'ZAMFARA'],
       allowNull: false,
       validate: {
         notEmpty: {
@@ -30,7 +78,8 @@ const business = (sequelize, DataTypes) => {
       }
     },
     category: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM,
+      values: ['GAMING', 'TECHNOLOGY', 'HOUSING', 'TRANSPORTATION', 'SOLAR', 'CONSTRUCTION', 'COOKING'],
       allowNull: false,
       validate: {
         notEmpty: {
@@ -83,8 +132,8 @@ const business = (sequelize, DataTypes) => {
           msg: 'Enter a valid Telephone Number'
         },
         len: {
-          args: [11, 11],
-          msg: 'Telephone Number should be 11 characters'
+          args: [7, 11],
+          msg: 'Telephone Number should be 7 to 11 characters'
         },
       }
     },
@@ -96,11 +145,11 @@ const business = (sequelize, DataTypes) => {
           msg: 'Home Number is required'
         },
         isInt: {
-          msg: 'Enter a valid Office Number'
+          msg: 'Enter a valid Home Number'
         },
         len: {
-          args: [11, 11],
-          msg: 'Home Number should be 11 characters'
+          args: [7, 11],
+          msg: 'Home Number should be 7 to 11 characters'
         },
       }
     },
@@ -121,12 +170,12 @@ const business = (sequelize, DataTypes) => {
 
   Business.associate = (models) => {
     Business.hasMany(models.BusinessReview, {
-      foreignKey: 'BusinessId',
+      foreignKey: 'businessId',
       as: 'reviews',
       onDelete: 'CASCADE'
     });
     Business.belongsTo(models.User, {
-      foreignKey: 'UserId',
+      foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
   };

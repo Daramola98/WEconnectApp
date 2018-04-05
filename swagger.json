@@ -9,11 +9,11 @@
       }
     },
     "host": "weconnect-api.herokuapp.com",
-    "basePath": "/api/v1/weconnect",
+    "basePath": "/api/v1",
     "tags": [
       {
         "name": "User",
-        "description": "Signup and Signin Users"
+        "description": "Signup and Login Users"
       },
       {
         "name": "Business",
@@ -22,6 +22,10 @@
       {
         "name": "Review",
         "description": "Adds and retrieves business reviews"
+      },
+      {
+        "name": "Review Response",
+        "description": "Adds responses business reviews"
       }
     ],
     "schemes": [
@@ -38,7 +42,6 @@
           "description": "This endpoint uses a post request to register a new user",
           "operationId": "signup",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -56,14 +59,74 @@
             }
           ],
           "responses": {
-            "200": {
+            "201": {
               "description": "User registered successfully",
               "schema": {
                 "$ref": "#/definitions/signupResponse"
               }
             },
             "400": {
-              "description": "Invalid email address",
+              "description": "Bad Request",
+              "schema": {
+                "$ref": "#/definitions/wrongEmail"
+              }
+            },
+            "406": {
+              "description": "Invalid Input",
+              "schema": {
+                "$ref": "#/definitions/invalidInput"
+              }
+            },
+            "409": {
+              "description": "Email already Exists",
+              "schema": {
+                "$ref": "#/definitions/existingEmail"
+              }
+            }
+          }
+        }
+      },
+      "/auth/user": {
+        "put": {
+          "tags": [
+            "User"
+          ],
+          "summary": "Updates a user",
+          "description": "This endpoint uses a put request to update a user",
+          "operationId": "updateUser",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Updated user object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/userUpdate"
+              }
+            },
+            {
+              "name": "authorization",
+              "in": "header",
+              "description": "Token Authentication",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User updated successfully",
+              "schema": {
+                "$ref": "#/definitions/userUpdateresponse"
+              }
+            },
+            "400": {
+              "description": "Bad Request",
               "schema": {
                 "$ref": "#/definitions/wrongEmail"
               }
@@ -139,11 +202,9 @@
           "description": "Add business to database.",
           "operationId": "createBusiness",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "parameters": [
@@ -175,7 +236,7 @@
               }
             },
             "400": {
-              "description": "Invalid Input"
+              "description": "Bad Request"
             }
           } 
         },
@@ -202,7 +263,7 @@
             "200": {
               "description": "Businesses found",
               "schema": {
-                "type": "object",
+                "type": "array",
                 "items":{
                   "$ref": "#/definitions/Business"
                 }
@@ -210,9 +271,6 @@
             },
             "404": {
               "description": "Business not found"
-            },
-            "400": {
-              "description": "Invalid BusinessId"
             }
           }
         }
@@ -241,13 +299,13 @@
               "in": "path",
               "description": "businessId of business to return",
               "required": true,
-              "type": "integer",
-              "format": "int64"
+              "type": "uuid",
+              "format": "v4"
             }
           ],
           "responses": {
             "200": {
-              "description": "Business was successfully found",
+              "description": "Business found",
               "schema": {
                 "$ref": "#/definitions/retrieveBusiness"
               }
@@ -271,7 +329,6 @@
           "description": "Updates business profile",
           "operationId": "updateBusiness",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -290,13 +347,13 @@
               "in": "path",
               "description": "BusinessId of business that would be updated",
               "required": true,
-              "type": "integer",
-              "format": "int64"
+              "type": "uuid",
+              "format": "v4"
             },
             {
               "in": "body",
               "name": "body",
-              "description": "business object that needs to be added to the database",
+              "description": "business object that has been updated",
               "required": true,
               "schema": {
                 "$ref": "#/definitions/Business"
@@ -347,13 +404,13 @@
               "in": "path",
               "description": "The businessId of the business that would be deleted",
               "required": true,
-              "type": "integer",
-              "format": "int64"
+              "type": "uuid",
+              "format": "v4"
             }
           ],
           "responses": {
             "200": {
-              "description": "Business was successfully deleted",
+              "description": "Business deleted",
               "schema": {
                 "$ref": "#/definitions/removeBusiness"
               }
@@ -512,10 +569,9 @@
             "Review"
           ],
           "summary": "Add a review for a business",
-          "description": "Submits a review record for a business.",
+          "description": "Submits a review for a business.",
           "operationId": "addReview",
           "consumes": [
-            "application/x-www-form-urlencoded",
             "application/json"
           ],
           "produces": [
@@ -534,8 +590,8 @@
               "in": "path",
               "description": "business to add review to",
               "required": true,
-              "type": "integer",
-              "format": "int64"
+              "type": "uuid",
+              "format": "v4"
             }
           ],
           "responses": {
@@ -582,8 +638,8 @@
               "in": "path",
               "description": "Business id of business to get reviews",
               "required": true,
-              "type": "integer",
-              "format": "int64"
+              "type": "uuid",
+              "format": "v4"
             }
           ],
           "responses": {
@@ -601,6 +657,76 @@
             },
             "400": {
               "description": "Invalid Input"
+            }
+          }
+        }
+      },
+      "/businesses/{businessId}/reviews/{reviewId}": {
+        "post": {
+          "tags": [
+            "Responses"
+          ],
+          "summary": "Add a response to a review",
+          "description": "Submits a response to a review.",
+          "operationId": "addResponse",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "authorization",
+              "in": "header",
+              "description": "Token Authentication",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "message to send as a response",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/reviewresponse"
+              }
+            },
+            {
+              "name": "businessId",
+              "in": "path",
+              "description": "business to add review to",
+              "required": true,
+              "type": "uuid",
+              "format": "v4"
+            },
+            {
+              "name": "reviewId",
+              "in": "path",
+              "description": "reviewId of review you want to respond to",
+              "required": true,
+              "type": "uuid",
+              "format": "v4"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Review was added successfully",
+              "schema": {
+                "$ref": "#/definitions/reviewresponse"
+              }
+            },
+            "404": {
+              "description": "Business was not found",
+              "schema": {
+                "$ref": "#/definitions/BusinessNotFound"
+              }
+            },
+            "400": {
+              "description": "Invalid Input",
+              "schema": {
+                "$ref": "#/definitions/invalidInput"
+              }
             }
           }
         }
@@ -626,21 +752,15 @@
             "type": "string",
             "password": "iamapassword"
           },
-          "userId": {
-            "type": "integer",
-            "uniqueItems": true,
-            "example": 1
+          "id": {
+            "type": "uuid",
+            "uniqueItems": true
           },
-          "businesses": {
-            "type": "array"
+          "telephoneNumber": {
+            "type": "string"
           },
-          "createdAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
-          },
-          "updateAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
+          "homeNumber": {
+            "type": "string"
           }
         }
       },
@@ -650,7 +770,8 @@
           "firstname",
           "lastname",
           "email",
-          "password"
+          "password",
+          "telephoneNumber"
         ],
         "properties": {
           "firstname": {
@@ -668,6 +789,14 @@
           "password": {
             "type": "string",
             "example": "pammord"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "example": "08023112091"
+          },
+          "homeNumber": {
+            "type":"string",
+            "example":"08023112071"
           }
         }
       },
@@ -695,14 +824,58 @@
       },
       "invalidInput": {
         "type": "array",
-        "example": [{"error": "errormessage"}]
+        "example": {"valdiationErrors": ["errormessage"]}
       },
       "existingEmail": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string",
-            "example": "This email already has an account"
+            "example": "Email already exists"
+          }
+        }
+      },
+      "userUpdate": {
+        "type": "object",
+        "required": [
+        ],
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "Dammy"
+          },
+          "lastname": {
+            "type": "string",
+            "example": "Samuel"
+          },
+          "email": {
+            "type": "string",
+            "example": "pammword@yahoo.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "pammord"
+          },
+          "telephoneNumber": {
+            "type": "string",
+            "example": "08023112091"
+          },
+          "homeNumber": {
+            "type":"string",
+            "example":"08023112071"
+          }
+        }
+      },
+      "userUpdateresponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "User updated successfully"
+          },
+          "user": {
+            "type": "object",
+            "$ref": "#/definitions/User"
           }
         }
       },
@@ -743,13 +916,8 @@
       },
       "Business": {
         "type": "object",
-        "required": ["name", "id", "category", "location", "address", "email", "number", "businessDescription", "reviews"],
+        "required": ["name", "category", "location", "address", "email", "telephoneNumber", "description"],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format":"int64",
-            "example": 4
-          },
           "name": {
             "type": "string",
             "example": "Clash of clans"
@@ -766,34 +934,21 @@
             "type": "string",
             "example": "daramolaajibigad@gmail.com"
           },
-          "number": {
-            "type": "object",
-            "properties": {
-              "home": {
-                "type": "integer",
-                "example": "07011021507"
+          "telephoneNumber": {
+            "type": "string",
+            "example": "07011021507"
               },
-              "office": {
-                "type": "integer",
-                "example": "07011091807"
-              }
-            }
-          },
-          "businessDescription": {
+          "homeNumber": {
+            "type": "string",
+            "example": "07011091807"
+              },
+          "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
           },
           "reviews": {
             "type": "array",
             "example": [1, 2, 3]
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
-          },
-          "updateAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
           }
         }
       },
@@ -807,12 +962,11 @@
         },
         "business": {
         "type": "object",
-        "required": ["name", "id", "category", "location", "address", "email", "number", "businessDescription"],
+        "required": ["name", "category", "location", "address", "email", "telephoneNumber", "description"],
         "properties": {
           "id": {
-            "type": "integer",
-            "format":"int64",
-            "example": 5
+            "type": "uuid",
+            "format":"v4"
           },
           "name": {
             "type": "string",
@@ -830,38 +984,25 @@
             "type": "string",
             "example": "daramolaajibigad@gmail.com"
           },
-          "number": {
-            "type": "object",
-            "properties": {
-              "home": {
-                "type": "integer",
-                "example": "07011021507"
-              },
-              "office": {
-                "type": "integer",
-                "example": "07011091807"
-              }
-            }
-          },
-          "businessDescription": {
+          "telephoneNumber": {
+            "type": "string",
+            "example": "07011021507"
+            },
+          "homeNumber": {
+            "type": "string",
+            "example": "07011091807"
+            },
+          "description": {
             "type": "string",
             "example": "A mobile game for collaboration"
           },
           "reviews": {
             "type": "array",
             "example": [{"review":"nice" }, {"review":"bad" }]
-          },
-          "createdAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
-          },
-          "updateAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
           }
         }
-      }
-    },
+    }
+  },
       "BusinessNotFound": {
         "type": "object",
         "properties": {
@@ -890,7 +1031,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Business successfully Updated"
+            "example": "Business Updated successfully "
           },
           "business": {
             "type": "object",
@@ -903,7 +1044,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Business has been deleted"
+            "example": "Business deleted"
           },
           "business": {
             "type": "object",
@@ -926,28 +1067,33 @@
           }
         }
       },
+      "reviewresponse": {
+        "type": "object",
+        "required":[
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Response Submitted"
+          }
+        }
+      },
       "BusinessReview": {
         "type": "array",
         "items": {
-          "username": {
-            "type": "string",
-            "example": "Ajiboye Daramola"
+          "ReviewerId": {
+            "type": "uuid"
           },
           "reviewId": {
-            "type": "integer",
-            "example": 1
+            "type": "uuid"
           },
           "businessId":{
-            "type": "integer",
-            "example": 1
+            "type": "uuid"
           },
-          "createdAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
-          },
-          "updateAt": {
-            "type": "string",
-            "example": "3/10/2018, 10:40:17 PM"
+          "responses":{
+            "type": "array",
+            "example": [{"id": 1 ,"message":"Thank You"}]
           }
         }
       },
@@ -968,7 +1114,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "Review was successfully added"
+            "example": "Review added"
           },
           "review": {
             "type": "object",
@@ -994,6 +1140,6 @@
     "externalDocs": {
       "description": "",
       "url": ""
-    }
+     }
+   }
   }
-}

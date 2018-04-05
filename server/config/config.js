@@ -15,7 +15,8 @@ module.exports = {
     database: 'weconnect-test',
     host: '127.0.0.1',
     port: 5432,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
   travisTest: {
     username: 'postgres',

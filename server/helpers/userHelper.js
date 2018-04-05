@@ -17,7 +17,9 @@ export default {
     return User
       .find({
         where: {
-          email: req.body.email.replace(/ /g, '')
+          email: {
+            ilike: req.body.email.replace(/ /g, '')
+          }
         }
       })
       .then((user) => {
