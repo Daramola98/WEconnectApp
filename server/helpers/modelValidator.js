@@ -10,7 +10,8 @@ function modelValidator(validationRules) {
     const errors = req.validationErrors();
     const validationErrors = [];
 
-    if (req.body.password !== req.body.confirmPassword && !errors) {
+    if (req.body.confirmPassword && req.body.password && req.body.password
+      !== req.body.confirmPassword && !errors) {
       validationErrors.push('Passwords dont match');
       res.status(400)
         .json(validationErrors);
