@@ -52,8 +52,11 @@ describe('User Model', () => {
       };
       User.create(userDetails)
         .then((user) => {
-          User.create(userDetails2);
-          done();
+          User.create(userDetails2)
+            .then((user2) => {
+              done();
+            })
+            .catch(err => done(err));
         })
         .catch(err => done(err));
     });

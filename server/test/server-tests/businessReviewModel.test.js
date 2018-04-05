@@ -42,7 +42,7 @@ describe('BusinessReview Model', () => {
           })
           .catch(err => done(err));
       })
-      .catch(err => Promise.reject(done(err)));
+      .catch(err => done(err));
   });
 
   describe('create', () => {
