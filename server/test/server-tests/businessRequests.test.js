@@ -604,7 +604,7 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}/${businessId}/reviews`)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('Reviews have not been added for this Business');
+          expect(res.body.message).to.equal('No review added');
           done();
         });
     });

@@ -346,7 +346,7 @@ export default class Businesses {
                 return res.status(200)
                   .json({ message: reviewFoundMessage, reviews });
               }
-              return res.status(404).json({ message: 'Reviews have not been added for this Business' });
+              return res.status(404).json({ message: 'No review added' });
             })
             .catch(err => res.status(500).json(serverErrorMessage.message));
         }
