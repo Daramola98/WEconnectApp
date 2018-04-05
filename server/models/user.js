@@ -1,7 +1,13 @@
-import messages from '../messages/userValidation';
+import { userNameErrorMessage } from '../messages/userValidation';
 
 const user = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
     firstname: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -9,9 +15,12 @@ const user = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Your firstname is required'
         },
+        isAlpha: {
+          msg: 'Firstname should only contain Alphabets'
+        },
         len: {
           args: [3, 50],
-          msg: messages.userNameErrorMessage
+          msg: userNameErrorMessage
         },
       }
     },
@@ -22,9 +31,12 @@ const user = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Your lastname is required'
         },
+        isAlpha: {
+          msg: 'Lastname should only contain Alphabets'
+        },
         len: {
           args: [3, 50],
-          msg: 'lastname should be more than 5 and not greater than 50'
+          msg: 'lastname should be more than 2 and not greater than 50'
         },
       }
     },
@@ -56,6 +68,10 @@ const user = (sequelize, DataTypes) => {
           options: [6, 16],
           msg: 'password should be more than 5 and not greater than 16 characters'
         },
+        // matches: {
+        //   args: /[^0-9a-bA-B\s]/gi,
+        //   msg: 'password should only contain alphabets or alphanumeric characters'
+        // }
       }
     },
     telephoneNumber: {
@@ -70,7 +86,7 @@ const user = (sequelize, DataTypes) => {
         },
         isLength: {
           options: [{ min: 7, max: 11 }],
-          msg: 'Telephone Number should be 7 to 11 characters'
+          msg: 'Telephone Number should be 11 characters'
         },
       }
     },
@@ -86,7 +102,7 @@ const user = (sequelize, DataTypes) => {
         },
         len: {
           args: [7, 11],
-          msg: 'Home number should be 7 to 11 characters'
+          msg: 'Home number should be more 11 characters'
         },
       }
     }
@@ -94,7 +110,7 @@ const user = (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     User.hasMany(models.Business, {
-      foreignKey: 'UserId',
+      foreignKey: 'userId',
       as: 'businesses'
     });
   };

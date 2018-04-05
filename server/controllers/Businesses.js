@@ -1,17 +1,24 @@
-import db from '../models/index';
-import businessHelper from '../helpers/businessHelpers';
-import businessMessages from '../messages/businessEndpoint';
+import { Business, BusinessReview, reviewresponse } from '../models';
+import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
+import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, listBusinessByPages } from '../helpers/businessHelpers';
+import {
+  businessNotFoundMessage,
+  businessNotFoundInCategoryMessage,
+  businessNotFoundInLocationMessage,
+  businessFoundMessage,
+  businessRegisterMessage,
+  reviewFoundMessage,
+  businessDeletedMessage,
+  businessReviewMessage
+} from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
-
-const { Business, BusinessReview, reviewresponse } = db;
 
 /**
  *
  *@class Business
- *@classdesc creates a Business controller Class
+ *@classdesc creates a Business Class
  */
-export default class BusinessController {
-  // REGISTER A BUSINESS
+export default class Businesses {
   /**
    * Adds a new business to the database
    * @param {object} req - The request object
@@ -20,7 +27,7 @@ export default class BusinessController {
    * @memberof Business
    */
   static createBusiness(req, res) {
-    businessHelper.formatBusinessInput(req, res);
+    handleInputFormat(req);
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
@@ -29,13 +36,14 @@ export default class BusinessController {
       homeNumber: req.body.homeNumber,
       location: req.body.location,
       address: req.body.address,
-      UserId: req.userData.userId,
+      userId: req.userData.userId,
       description: req.body.description
     };
     return Business
       .create(businessDetails)
       .then((business) => {
-        const registeredBusiness = {
+        const createdBusinessDetails = {
+          id: business.id,
           name: business.name,
           category: business.category,
           email: business.email,
@@ -43,24 +51,21 @@ export default class BusinessController {
           homeNumber: business.homeNumber,
           location: business.location,
           address: business.address,
+          businessAddedBy: business.userId,
           description: business.description
         };
         res.status(201)
-          .json({ message: businessMessages.businessRegisterMessage, registeredBusiness });
+          .json({ message: businessRegisterMessage, createdBusinessDetails });
       })
       .catch((err) => {
-        const validationErrors = [];
-        if (err.errors.length > 0) {
-          for (let i = 0; i < err.errors.length; i += 1) {
-            validationErrors.push(err.errors[i].message);
-          }
-          return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
+        if (err.errors) {
+          handleValidationErrors(err.errors, res);
+        } else {
+          return res.status(500).json(err);
         }
-        return res.status(500).json(serverErrorMessage.message);
       });
   }
 
-  // LIST ALL BUSINESSES, FILTER BUSINESSES IF LOCATION IS SPECIFIED
   /** Gets all businesses in the database
    * @static
    * @param {object} req - The request object
@@ -70,15 +75,19 @@ export default class BusinessController {
    */
   static listBusinesses(req, res) {
     if (req.query.location && req.query.category) {
-      businessHelper.findBusinessByLocationAndCategory(req, res);
+      findBusinessByLocationAndCategory(req, res);
     }
     if (req.query.location && !req.query.category) {
-      businessHelper.findBusinessByLocation(req, res);
+      findBusinessByLocation(req, res);
     }
     if (req.query.category && !req.query.location) {
-      businessHelper.findBusinessByCategory(req, res);
+      findBusinessByCategory(req, res);
     }
-    if (!req.query.location && !req.query.category) {
+
+    if (req.query.pageNumber && !req.query.location && !req.query.category) {
+      listBusinessByPages(req, res);
+    }
+    if (!req.query.location && !req.query.category && !req.query.pageNumber) {
       return Business
         .findAll()
         .then((businesses) => {
@@ -91,7 +100,6 @@ export default class BusinessController {
     }
   }
 
-  // RETRIEVE A BUSINESS
   /**
    * Gets a Business from the database
    * @param {object} req - The request object
@@ -108,25 +116,13 @@ export default class BusinessController {
       })
       .then((business) => {
         if (business) {
-          const retrievedBusiness = {
-            name: business.name,
-            category: business.category,
-            email: business.email,
-            telephoneNumber: business.telephoneNumber,
-            homeNumber: business.homeNumber,
-            location: business.location,
-            address: business.address,
-            description: business.description
-          };
-          return res.status(200)
-            .json({ message: businessMessages.businessFoundMessage, retrievedBusiness });
+          return res.status(200).json({ message: businessFoundMessage, business });
         }
-        res.status(404).json(businessMessages.businessNotFoundMessage);
+        res.status(404).json(businessNotFoundMessage);
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // RETRIEVE ALL BUSINESSES FOR A PARTICULAR USER
   /**
    * Gets a Business register by the user from the database
    * @param {object} req - The request object
@@ -138,19 +134,18 @@ export default class BusinessController {
     return Business
       .findAll({
         where: {
-          UserId: req.userData.userId
+          userId: req.userData.userId
         }
       })
       .then((business) => {
         if (business.length > 0) {
-          return res.status(200).json({ message: businessMessages.businessFoundMessage, business });
+          return res.status(200).json(business);
         }
         return res.status(404).json({ message: 'No Businesses' });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // UPDATE A BUSINESS
   /** Update the deatils of  an existing business
    * @static
    * @param {object} req - The request object
@@ -159,7 +154,6 @@ export default class BusinessController {
    * @memberof Business class
    */
   static updateBusiness(req, res) {
-    businessHelper.formatBusinessUpdateInput(req, res);
     return Business
       .findOne({
         where: {
@@ -168,36 +162,42 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
-        const businessName = business.name;
-        if (req.userData.userId === business.UserId) {
-          return business
-            .update(req.body, { fields: Object.keys(req.body) })
-            .then(updatedBusiness => res.status(200).json({ message: 'Business Updated successfully', updatedBusiness }))
-            .catch((err) => {
-              const validationErrors = [];
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
-            });
+
+        if (req.userData.userId !== business.userId) {
+          return res.status(403).json({ message: 'You are not allowed to update this business' });
         }
-        res.status(403).json({ message: 'You are not allowed to update this business' });
+
+        handleInputFormat(req);
+
+        return business
+          .update(req.body, { fields: Object.keys(req.body) })
+          .then((updatedBusiness) => {
+            const updatedBusinessDetails = {
+              name: updatedBusiness.name,
+              category: updatedBusiness.category,
+              email: updatedBusiness.email,
+              telephoneNumber: updatedBusiness.telephoneNumber,
+              homeNumber: updatedBusiness.homeNumber,
+              location: updatedBusiness.location,
+              address: updatedBusiness.address,
+              businessAddedBy: updatedBusiness.UserId,
+              description: updatedBusiness.description
+            };
+            res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
+          })
+          .catch((err) => {
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
+            }
+          });
       })
-      .catch((err) => {
-        const validationErrors = [];
-        if (err.errors.length > 0) {
-          for (let i = 0; i < err.errors.length; i += 1) {
-            validationErrors.push(err.errors[i].message);
-          }
-          return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
-        }
-        return res.status(500).json(serverErrorMessage.message);
-      });
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // DELETE A BUSINESS
   /**
    * Deletes a business from the database
    * @param {object} req - The request object
@@ -214,12 +214,12 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
-        if (req.userData.userId === business.UserId) {
+        if (req.userData.userId === business.userId) {
           return business
             .destroy()
-            .then(() => res.status(200).json(businessMessages.businessDeletedMessage))
+            .then(() => res.status(200).json(businessDeletedMessage))
             .catch(err => res.status(500).json(serverErrorMessage.message));
         }
         res.status(403).json({ message: 'You are not Allowed to delete this business' });
@@ -227,7 +227,7 @@ export default class BusinessController {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // ADD A BUSINESS REVIEW
+
   /**
    * Add a business review to a buiness in the database
    * @param {object} req - The request object
@@ -236,10 +236,11 @@ export default class BusinessController {
    * @memberof Business
    */
   static addReview(req, res) {
+    handleInputFormat(req);
     const businessReviewDetails = {
-      ReviewerId: req.userData.userId,
-      review: req.body.review.replace(/ +/g, ' '),
-      BusinessId: req.params.businessId
+      reviewerId: req.userData.userId,
+      review: req.body.review,
+      businessId: req.params.businessId
     };
     return Business
       .findOne({
@@ -249,27 +250,32 @@ export default class BusinessController {
       })
       .then((business) => {
         if (!business) {
-          return res.status(404).json(businessMessages.businessNotFoundMessage);
+          return res.status(404).json(businessNotFoundMessage);
         }
         return BusinessReview
           .create(businessReviewDetails)
-          .then(review => res.status(201)
-            .json({ message: businessMessages.businessReviewMessage, review }))
+          .then((review) => {
+            const reviewDetails = {
+              id: review.id,
+              review: review.review,
+              reviewerId: review.ReviewerId,
+              businessId: review.BusinessId
+            };
+            res.status(201)
+              .json({ message: businessReviewMessage, reviewDetails });
+          })
           .catch((err) => {
-            const validationErrors = [];
-            if (err.errors.length > 0) {
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
             }
-            return res.status(500).json(serverErrorMessage.message);
           });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // ADD A BUSINESS REVIEW RESPONSE
+
   /**
    * Add a business review response to a buinessreview in the database
    * @param {object} req - The request object
@@ -278,10 +284,11 @@ export default class BusinessController {
    * @memberof Business
    */
   static addReviewResponse(req, res) {
+    handleInputFormat(req);
     const businessReviewResponse = {
-      UserId: req.userData.userId,
-      message: req.body.message.replace(/ +/g, ' '),
-      ReviewId: req.params.reviewId
+      userId: req.userData.userId,
+      message: req.body.message,
+      reviewId: req.params.reviewId
     };
     return BusinessReview
       .findOne({
@@ -298,20 +305,16 @@ export default class BusinessController {
           .then(response => res.status(201)
             .json({ message: 'Response submitted', response }))
           .catch((err) => {
-            const validationErrors = [];
-            if (err.errors.length > 0) {
-              for (let i = 0; i < err.errors.length; i += 1) {
-                validationErrors.push(err.errors[i].message);
-              }
-              return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
+            if (err.errors) {
+              handleValidationErrors(err.errors, res);
+            } else {
+              return res.status(500).json(serverErrorMessage.message);
             }
-            return res.status(500).json(serverErrorMessage.message);
           });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  // GET BUSINESS REVIEWS
   /**
    * Retrieves reviews for a business
    * @param {object} req - The request object
@@ -335,13 +338,13 @@ export default class BusinessController {
                 as: 'responses',
               }],
               where: {
-                BusinessId: req.params.businessId
+                businessId: req.params.businessId
               }
             })
             .then((reviews) => {
               if (reviews.length > 0) {
                 return res.status(200)
-                  .json({ message: businessMessages.reviewFoundMessage, reviews });
+                  .json({ message: reviewFoundMessage, reviews });
               }
               return res.status(404).json({ message: 'No review added' });
             })

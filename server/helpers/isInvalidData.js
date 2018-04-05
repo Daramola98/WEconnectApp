@@ -5,14 +5,13 @@
  * @param {object} next - The next callback object
  * @return {null} does not return anything
  */
-function isInvalidData(req, res, next) {
+function isInvalidData(req, res) {
   const reqBodyKeys = Object.keys(req.body);
   for (let i = 0; i < reqBodyKeys.length; i += 1) {
     const key = reqBodyKeys[i];
     if (typeof req.body[key] !== 'string') {
       return res.status(400).json({ message: `${key} is of invalid datatype use strings` });
     }
-    return next();
   }
 }
 

@@ -1,7 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const reviewresponse = sequelize.define('reviewresponse', {
-    UserId: {
-      type: DataTypes.INTEGER,
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    userId: {
+      type: DataTypes.UUID,
       allowNull: false
     },
     message: {
@@ -12,15 +18,15 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'response is required'
         },
         len: {
-          args: [3, 500],
-          msg: 'Response should be more than 2 and not greater than 500 characters'
+          args: [2, 500],
+          msg: 'Response should be more than 1 and not greater than 500 characters'
         }
       }
     },
   });
   reviewresponse.associate = (models) => {
     reviewresponse.belongsTo(models.BusinessReview, {
-      foreignKey: 'ReviewId',
+      foreignKey: 'reviewId',
       onDelete: 'CASCADE'
     });
   };

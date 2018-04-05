@@ -4,138 +4,160 @@ import db from '../../models/index';
 
 const { expect } = chai;
 const { Business, User, BusinessReview } = db;
+let userId, businessId, reviewerId;
 
 describe('BusinessReview Model', () => {
   beforeEach((done) => {
     db.sequelize.sync({ force: true }) // drops table and re-creates it
-      .then(() => Promise.resolve(done()))
-      .catch(err => Promise.reject(done(err)));
+      .then(() => {
+        const userDetails = {
+          firstname: 'Damilola',
+          lastname: 'Ajiboye',
+          email: 'damilolaajiboye@live.com',
+          password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
+          telephoneNumber: '070664455523',
+          homeNumber: '08043553081',
+        };
+        User.create(userDetails)
+          .then((user) => {
+            userId = user.id;
+            reviewerId = user.id;
+            const businessDetails = {
+              name: 'Clash of clans',
+              email: 'damilolaajiboye@live.com',
+              location: 'LAGOS',
+              category: 'GAMING',
+              description: 'Game for collaboration',
+              address: '23,Adeba Ibeju Lekki LAGOS',
+              telephoneNumber: '07066445523',
+              homeNumber: '08043553081',
+              userId
+            };
+            Business.create(businessDetails)
+              .then((business) => {
+                businessId = business.id;
+                done();
+              })
+              .catch(err => done(err));
+          })
+          .catch(err => done(err));
+      })
+      .catch(err => done(err));
   });
 
-  describe('create and findOne', () => {
-    it('works', async () => {
-      const businessDetails = {
-        name: 'Clash of clans',
-        email: 'damilolaajiboye@live.com',
-        location: 'Lagos',
-        category: 'gaming',
-        description: 'Game for collaboration',
-        address: '23,Adeba Ibeju Lekki Lagos',
-        telephoneNumber: '07066445523',
-        homeNumber: '08043553081',
-        UserId: 1
-      };
-      const userDetails = {
-        firstname: 'Damilola',
-        lastname: 'Ajiboye',
-        email: 'damilolaajiboye@live.com',
-        password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '07066445523',
-        homeNumber: '08043553081',
-      };
+  describe('create', () => {
+    it('creates a new business review', (done) => {
       const reviewDetails = {
-        ReviewerId: 1,
-        BusinessId: 1,
+        reviewerId,
+        businessId,
         review: 'Nice Business'
       };
-      const createdUser = await User.create(userDetails);
-      const createdBusiness = await Business.create(businessDetails);
-      const addReview = await BusinessReview.create(reviewDetails);
-      expect(addReview.review).to.equal('Nice Business');
-      expect(createdBusiness.telephoneNumber).to.equal('07066445523');
-      expect(createdBusiness.email).to.equal('damilolaajiboye@live.com');
-      const foundReview = await BusinessReview.findOne();
-      expect(foundReview.ReviewerId).to.equal(1);
-    });
-  });
-
-  describe('where', () => {
-    it('finds only rows for the given condition', async () => {
-      const businessDetails = {
-        name: 'Uber Driving',
-        email: 'damilareajiboye@live.com',
-        telephoneNumber: '07066445527',
-        homeNumber: '08043553091',
-        location: 'Abuja',
-        category: 'transportation',
-        description: 'we rent cars for taxis',
-        UserId: 1,
-        address: '2 Jakande Lekki'
-      };
-      const userDetails = {
-        firstname: 'Damilola',
-        lastname: 'Ajiboye',
-        email: 'damilolaajiboye@live.com',
-        password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '07066445523',
-        homeNumber: '08043553081',
-      };
-      const reviewDetails = {
-        ReviewerId: 1,
-        BusinessId: 1,
-        review: 'Nice Business'
-      };
-      const createdUser = await User.create(userDetails);
-      const [business1, business2] = await Promise.all([
-        Business.create(businessDetails),
-        Business.create({
-          name: 'Bus Driving',
-          email: 'damilareajiboye@livea.com',
-          telephoneNumber: '07066445728',
-          homeNumber: '08043552091',
-          location: 'Abuja',
-          category: 'transportation',
-          description: 'we rent bus for taxis',
-          UserId: 1,
-          address: '12 Jakande Lekki'
+      BusinessReview.create(reviewDetails)
+        .then((review) => {
+          expect(review.review).to.equal('Nice Business');
+          done();
         })
-      ]);
-      const addReview = await BusinessReview.create(reviewDetails);
-      const businessCount = await Business.count();
-      expect(businessCount).to.equal(2);
-      const review = await BusinessReview.findAll({ where: { ReviewerId: 1 } });
-      expect(review.length).to.equal(1);
+        .catch(err => done(err));
     });
   });
 
-  describe('update and delete', () => {
-    it('updates and deletes businesss', async () => {
-      const businessDetails = {
-        name: 'Uber Driving',
-        email: 'damilareajiboye@live.com',
-        telephoneNumber: '07066445527',
-        homeNumber: '08043553091',
-        location: 'Abuja',
-        category: 'transportation',
-        description: 'we rent cars for taxis',
-        UserId: 1,
-        address: '2 Jakande Lekki'
-      };
-      const userDetails = {
-        firstname: 'Damilola',
-        lastname: 'Ajiboye',
-        email: 'damilolaajiboye@live.com',
-        password: bcrypt.hashSync('dammyro100', bcrypt.genSaltSync(10)),
-        telephoneNumber: '07066445553',
-        homeNumber: '08043553081',
-      };
+  describe('finds business reviews', () => {
+    beforeEach((done) => {
       const reviewDetails = {
-        ReviewerId: 1,
-        BusinessId: 1,
+        reviewerId,
+        businessId,
         review: 'Nice Business'
       };
-      const createdUser = await User.create(userDetails);
-      const business1 = await Business.create(businessDetails);
-      const addReview = await BusinessReview.create(reviewDetails);
-      const review = await BusinessReview.findOne({ where: { ReviewerId: 1 } });
-      const newReview = { review: 'Excellent Business' };
-      const updatedReview = await review.update(newReview, { fields: Object.keys(newReview) });
-      expect(updatedReview.review).to.equal('Excellent Business');
-      const reviewToDelete = await BusinessReview.findOne({ where: { ReviewerId: 1 } });
-      expect(reviewToDelete.review).to.equal('Excellent Business');
-      const deleteReview = await reviewToDelete.destroy();
-      const deletedReview = await BusinessReview.findAll({ where: { ReviewerId: 1 } });
-      expect(deletedReview.length).to.equal(0);
+      const reviewDetails2 = {
+        reviewerId,
+        businessId,
+        review: 'Bad Business'
+      };
+      BusinessReview.create(reviewDetails)
+        .then((review) => {
+          BusinessReview.create(reviewDetails2)
+            .then(review2 => done())
+            .catch(err => done(err));
+        })
+        .catch(err => done(err));
+    });
+
+    it('finds one business review', (done) => {
+      BusinessReview.findOne({
+        where: {
+          review: 'Nice Business'
+        }
+      })
+        .then((review) => {
+          expect(review).to.be.a('object');
+          expect(review.review).to.equal('Nice Business');
+          done();
+        })
+        .catch(err => done(err));
+    });
+
+    it('finds all business reviews', (done) => {
+      BusinessReview.findAll()
+        .then((business) => {
+          expect(business).to.be.a('array');
+          expect(business[1].review).to.equal('Bad Business');
+          done();
+        })
+        .catch(err => done(err));
+    });
+  });
+
+  describe('update business reviews', () => {
+    beforeEach((done) => {
+      const reviewDetails = {
+        reviewerId,
+        businessId,
+        review: 'Nice Business'
+      };
+      BusinessReview.create(reviewDetails)
+        .then((review) => {
+          done();
+        })
+        .catch(err => done(err));
+    });
+
+    it('updates a business\'s review', (done) => {
+      BusinessReview.findOne({ where: { review: 'Nice Business' } })
+        .then((review) => {
+          review.update({ review: 'Awesome Business' })
+            .then((updatedReview) => {
+              expect(updatedReview.review).to.equal('Awesome Business');
+              done();
+            })
+            .catch(err => done(err));
+        })
+        .catch(err => done(err));
+    });
+  });
+
+  describe('deletes business reviews', () => {
+    beforeEach((done) => {
+      const reviewDetails = {
+        reviewerId,
+        businessId,
+        review: 'Nice Business'
+      };
+      BusinessReview.create(reviewDetails)
+        .then((review) => {
+          done();
+        })
+        .catch(err => done(err));
+    });
+
+    it('deletes a business review', (done) => {
+      BusinessReview.findOne({ where: { review: 'Nice Business' } })
+        .then((review) => {
+          review.destroy()
+            .then((deletedReview) => {
+              expect(deletedReview.review).to.equal(undefined);
+              done();
+            });
+        });
     });
   });
 });

@@ -1,37 +1,33 @@
-const businessDetails = {
+export const businessDetails = {
   name: 'House rentals',
-  category: 'Housing',
+  category: 'HOUSING',
   email: 'ajiboye_j@yahoo.com',
   telephoneNumber: '07011041032',
   homeNumber: '08011031456',
-  location: 'Enugu',
+  location: 'ENUGU',
   address: '7,Adeba Road Lakowe Lagos',
-  description: 'Rent houses here for affordable prices',
-  UserId: 1
+  description: 'Rent houses here for affordable prices'
 };
 
-const businessDetails1 = {
+export const businessDetails1 = {
   name: 'Weather Control',
-  category: 'Weather',
+  category: 'GAMING',
   email: 'weather@yahoo.com',
   telephoneNumber: '07011041032',
   homeNumber: '08011031456',
-  location: 'London',
+  location: 'LAGOS',
   address: '7,Adeba Road Lakowe Lagos',
   description: 'Rent houses here for affordable prices',
-  UserId: 1
 };
 
-const businessDetails2 = {
+export const businessDetails2 = {
   name: 'Clash Royale',
   email: 'damilolaajiboye@yahoo.com',
-  location: 'Lagos',
-  category: 'gaming',
+  location: 'LAGOS',
+  category: 'GAMING',
   description: 'Card Game for collaboration',
   address: '23,Adeba Ibeju Lekki Lagos',
   telephoneNumber: '07066444523',
-  homeNumber: '08043553081',
-  UserId: 1
+  homeNumber: '08043553081'
 };
 
-export default { businessDetails, businessDetails1, businessDetails2 };
