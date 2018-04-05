@@ -771,6 +771,7 @@
           "lastname",
           "email",
           "password",
+          "confirmPassword",
           "telephoneNumber"
         ],
         "properties": {
@@ -787,6 +788,10 @@
             "example": "pammword@yahoo.com"
           },
           "password": {
+            "type": "string",
+            "example": "pammord"
+          },
+          "confirmPassword": {
             "type": "string",
             "example": "pammord"
           },
