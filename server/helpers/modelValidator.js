@@ -21,7 +21,8 @@ function modelValidator(validationRules) {
       errors.forEach((error) => {
         validationErrors.push(error.msg);
       });
-      if (req.body.password !== req.body.confirmPassword) {
+      if (req.body.password && req.body.confirmPassword && req.body.password
+        !== req.body.confirmPassword) {
         validationErrors.push('Passwords dont match');
       }
       res.status(400)
