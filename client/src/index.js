@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, IndexRoute } from 'react-router-dom';
 
 import App from './app/components/App';
 import Header from './app/components/Container/Header';
@@ -20,18 +20,18 @@ import ContactUs from './app/components/Home/ContactUs';
 ReactDOM.render(
 <Router>
     <div>
-    <Route path='/' component={Header}/>
-    <Route path='/home' component={App}/>
-    <Route path='/aboutUs' component={AboutUs}/>
-    <Route path='/contactUs' component={ContactUs}/>
-    <Route path='/howitworks' component={HowItWorks}/>
-    <Route path='/registerBusiness' component={RegisterBusiness}/>
-    <Route path='/businessProfile' component={BusinessProfile}/>
-    <Route path='/businessListing' component={BusinessListing}/>
-    <Route path='/updateBusiness' component={UpdateBusiness}/>
-    <Route path='/userProfile' component={UserProfile}/>
-    <Route path='/signup' component={SignUp}/>
-    <Route path='/login' component={Login}/>
+      <Route path='/' component={Header}/>
+      <Route path='/home' component={App}/>
+      <Route path='/aboutUs' component={AboutUs}/>
+      <Route path='/contactUs' component={ContactUs}/>
+      <Route path='/howitworks' component={HowItWorks}/>
+      <Route path='/registerBusiness' component={RegisterBusiness}/>
+      <Route path='/businessProfile' component={BusinessProfile}/>
+      <Route path='/businessListing' component={BusinessListing}/>
+      <Route path='/updateBusiness' component={UpdateBusiness}/>
+      <Route path='/userProfile' component={UserProfile}/>
+      <Route path='/signup' component={SignUp}/>
+      <Route path='/login' component={Login}/>
     </div>
 </Router>,
 document.getElementById('root')

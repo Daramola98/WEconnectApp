@@ -1,21 +1,18 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const CLIENT_DIR = path.resolve(__dirname, 'client');
 const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = {
+  mode: 'development',
   entry: [
     './client/src/index.js'
   ],
   devtool: 'inline-source-map',
-  output: {
-    path: path.join(__dirname, 'client/dist'),
-    publicPath: '/',
-    filename: '[name].js'
-  },
   module: {
     rules: [
       {
@@ -59,6 +56,7 @@ module.exports = {
     ]
   },
   plugins: [
+    // new CleanWebpackPlugin(['client/dist']),
     new HtmlWebPackPlugin({
       template: './client/src/index.html',
       filename: './index.html',
@@ -68,8 +66,14 @@ module.exports = {
       chunkFilename: '[id].css'
     })
   ],
-  devServer: {
-    contentBase: `${CLIENT_DIR}/dist`
-  }
+  output: {
+    path: '/',
+    publicPath: 'http://localhost:8080/',
+    filename: '[name].bundle.js'
+  },
+  target: 'web'
+  // devServer: {
+  //   contentBase: `${CLIENT_DIR}/dist`
+  // }
 };
 

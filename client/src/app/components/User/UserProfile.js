@@ -20,9 +20,20 @@ export default class UserProfile extends React.Component {
                             <h3>My Profile</h3>
                         </div>
                         <div className="card-content">
-                            <div className='row'>
-                                <h4 className="col s12 m12 l12 center">Personal Information</h4>
-                            </div>
+                        <div className="row">
+                        <ul id="businessProfile" className="tabs">
+                            <li className="tab tabs-fixed-width col s3 m3 l5">
+                                <a className="active" href="#personalInfo">
+                                    <span className="truncate center blue-text text-lighten-1">Information</span>
+                                </a>
+                            </li>
+                            <li className="tab tabs-fixed-width col s3 m3 l5">
+                                <a href="#businesses">
+                                    <span className="truncate center blue-text text-lighten-1">Businesses</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
 
                             <ul className="collection">
                                 <li className="collection-item avatar">
@@ -126,11 +137,81 @@ export default class UserProfile extends React.Component {
                                             </div>
                                         </li>
                                     </ul>
+
                                     </div>
                                     </div>
                                 </li>
                             </ul>
+                            <div id="businesses">
+                                <table className="bordered highlight centered center">
+                                    <thead>
+                                        <tr>
+                                            <th>Business Name</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                Clash of Clans
+                                            </td>
+                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
+                                            <td>
+                                              <a href="" className="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Uber Driving
+                                            </td>
+                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
+                                            <td>
+                                              <a href="updateBusiness.html" className="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Car Rentals
+                                            </td>
+                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
+                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
+                                            <td>
+                                              <a href="updateBusiness.html" className="">DELETE</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <ul className="pagination">
+                                        <li className="disabled">
+                                            <a href="#!">
+                                                <i className="material-icons">chevron_left</i>
+                                            </a>
+                                        </li>
+                                        <li className="active">
+                                            <a href="#!">1</a>
+                                        </li>
+                                        <li className="waves-effect">
+                                            <a href="#!">2</a>
+                                        </li>
+                                        <li className="waves-effect">
+                                            <a href="#!">3</a>
+                                        </li>
+                                        <li className="waves-effect">
+                                            <a href="#!">4</a>
+                                        </li>
+                                        <li className="waves-effect">
+                                            <a href="#!">5</a>
+                                        </li>
+                                        <li className="waves-effect">
+                                            <a href="#!">
+                                                <i className="material-icons">chevron_right</i>
+                                            </a>
+                                        </li>
+                                    </ul>
                         </div>
+                       </div>
                     </div>
                 </div>
             </div>

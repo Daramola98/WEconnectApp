@@ -75,84 +75,16 @@ export default class BusinessListing extends React.Component {
                     </form>
                 </div>
             </div>
-            <table className="bordered highlight centered responsive-table">
+            <table id="businessListing" className="bordered highlight centered">
                 <thead>
                     <tr>
                         <th>Business Name</th>
-                        <th>Contact Email</th>
                         <th>Business Category</th>
                         <th>Location</th>
-                        <th>Business Address</th>
-                        <th>Telephone Number</th>
-                        <th>Home Number</th>
-                        <th>Business Description</th>
-                        <th>Business Owner</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td>
-                            <a href="businessProfile.html">Clash of Clans</a>
-                        </td>
-                        <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
-                        </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
-                        <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="businessProfile.html">Uber Driving</a>
-                        </td>
-                        <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
-                        </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
-                        <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="businessProfile.html">Car Rentals</a>
-                        </td>
-                        <td>
-                            <a href="mailto:daramola.ajiboye@live.com">daramola.ajiboye@live.com</a>
-                        </td>
-                        <td>Gaming</td>
-                        <td>Lagos</td>
-                        <td>235,Ikorodu Road, Epic Tower</td>
-                        <td>07011031609</td>
-                        <td>07011041809</td>
-                        <td>Mobile Game for Collaboration and Competition</td>
-                        <td>
-                            <a href="userProfile.html">Ajiboye Daramola</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>xyz</td>
-                        <td>abc</td>
-                        <td>der</td>
-                        <td>fre</td>
-                        <td>hgjg</td>
-                        <td>iure</td>
-                        <td>sure</td>
-                        <td>dare</td>
-                        <td>goat</td>
-                    </tr>
                 </tbody>
             </table>
             <ul className="pagination">

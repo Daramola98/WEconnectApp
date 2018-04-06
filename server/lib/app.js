@@ -16,20 +16,18 @@ import customValidations from '../validations/customValidations';
 dotenv.config();
 const app = express();
 const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath
-}));
 // EXPRESS MIDDLEWARES
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(validator({
   customValidators: customValidations
 }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath
+}));
 
 // CORS
 
@@ -39,16 +37,16 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
   next();
 });
-// EXPRESS MIDDLEWARES
-app.use(cors({ credentials: true, origin: true }));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(validator());
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// // EXPRESS MIDDLEWARES
+// app.use(cors({ credentials: true, origin: true }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(express.static(path.join(__dirname, 'public')));
+// app.use(validator());
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ROUTES
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   const apiRootMessage = {
     message: 'Welcome to the WEconnect API, Available endpoints are shown below',
     endpoints: {
@@ -67,6 +65,9 @@ app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1/businesses', businessRoutes);
 
 // CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
 app.all('*', (req, res) => {
   res.status(404).json({ message: 'Endpoint not Found' });
 });
