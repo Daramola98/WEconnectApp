@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
 import dotenv from 'dotenv';
 import validator from 'express-validator';
 import cors from 'cors';
@@ -16,34 +17,27 @@ import customValidations from '../validations/customValidations';
 dotenv.config();
 const app = express();
 const compiler = webpack(config);
+
 // EXPRESS MIDDLEWARES
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors());
+app.use(express.static('../../client/public/images'));
+app.use(webpackDevMiddleware(compiler));
+app.use(webpackHotMiddleware(compiler));
+
+app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(validator({
   customValidators: customValidations
 }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use(webpackDevMiddleware(compiler, {
-  publicPath: config.output.publicPath
-}));
 
 // CORS
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PATCH, DELETE, OPTIONS');
   next();
 });
-// // EXPRESS MIDDLEWARES
-// app.use(cors({ credentials: true, origin: true }));
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use(validator());
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // ROUTES
 app.get('/api', (req, res) => {
@@ -71,6 +65,7 @@ app.get('*', (req, res) => {
 app.all('*', (req, res) => {
   res.status(404).json({ message: 'Endpoint not Found' });
 });
+
 // LISTEN TO ACTIVITY ON PORT
 const port = parseInt(process.env.PORT, 10) || 8080;
 app.listen(port);

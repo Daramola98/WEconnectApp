@@ -5,20 +5,29 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const CLIENT_DIR = path.resolve(__dirname, 'client');
-const SRC_DIR = path.resolve(__dirname, 'src');
 
 module.exports = {
   mode: 'development',
   entry: [
     './client/src/index.js'
   ],
-  devtool: 'inline-source-map',
+  output: {
+    path: '/',
+    filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
+      // {
+      //   test: /\.s?css$/,
+      //   loader: 'style-loader!css-loader!sass-loader'
+      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -64,14 +73,27 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].css',
       chunkFilename: '[id].css'
-    })
+    }),
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.ProvidePlugin({
+    //   '$': 'jquery',
+    //   'jQuery': 'jquery',
+    //   'window.jQuery': 'jquery',
+    //   Hammer: 'hammerjs/hammer',
+    //   createDayLabel: 'jquery',
+    //   createWeekdayLabel: 'jquery',
+    //   activateOption: 'jquery',
+    //   leftPosition: 'jquery'
+    // })
   ],
-  output: {
-    path: '/',
-    publicPath: 'http://localhost:8080/',
-    filename: '[name].bundle.js'
-  },
-  target: 'web'
+  devtool: 'source-map',
+  // output: {
+  //   path: '/',
+  //   publicPath: 'http://localhost:8080/',
+  //   filename: '[name].bundle.js'
+  // },
   // devServer: {
   //   contentBase: `${CLIENT_DIR}/dist`
   // }
