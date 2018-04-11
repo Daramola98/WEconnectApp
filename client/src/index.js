@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserHistory } from 'react-router';
 import { BrowserRouter as Router, Route, Switch, IndexRoute } from 'react-router-dom';
-import BusinessesStore from './store';
+import WeConnectStore from './store';
 
 import App from './components/App';
 import Header from './components/NavBar/Header';
@@ -12,7 +12,7 @@ import BusinessProfile from './containers/businessProfile';
 import BusinessList from './containers/businessList';
 import UpdateBusiness from './components/Businesses/UpdateBusiness';
 import UserProfile from './components/Users/UserProfile';
-import SignUp from './components/Auth/SignUp';
+import SignUp from './containers/userSignUp';
 import Login from './components/Auth/Login';
 import AboutUs from './components/Home/AboutUs';
 import HowItWorks from './components/Home/HowItWorks';
@@ -22,7 +22,7 @@ import Home from './components/Home/Home';
 
 
 ReactDOM.render(
-<Provider store={BusinessesStore}>
+<Provider store={WeConnectStore}>
   <Router history={BrowserHistory}>
     <div>
       <Route path='/' component={App}></Route>

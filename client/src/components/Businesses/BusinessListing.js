@@ -38,7 +38,7 @@ export default class BusinessListing extends React.Component {
     * @memberof React Component
     */
     componentDidMount() {
-    //   console.log(this.props);
+      console.log(this.props);
       this.props.fetchBusinesses();
       const select1 = ReactDOM.findDOMNode(this.refs.location);
       const select2 = ReactDOM.findDOMNode(this.refs.category);

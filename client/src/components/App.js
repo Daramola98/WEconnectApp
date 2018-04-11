@@ -1,7 +1,5 @@
 import React from 'react';
 import Header from './NavBar/Header';
-import Home from './Home/Home';
-import HomeImageSlider from './Home/HomeImageSlider';
 
 /**
  *

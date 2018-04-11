@@ -82,7 +82,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Office Phone</h5>
                           </span>
                           <p>
-                            <strong>{'Nil' || this.props.businessProfile.homeNumber}</strong>
+                            <strong>{this.props.businessProfile.homeNumber || 'Nil'}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">

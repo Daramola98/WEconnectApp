@@ -2,7 +2,7 @@
 import { checkForWhiteSpace } from '../helpers/genericHelper';
 
 /**
-   * Checks if business id is valid i.e an integer
+   * Checks if business id is valid i.e a uuid
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @param {object} next - callback function to move to next middleware
@@ -19,6 +19,43 @@ export const businessIdCheck = (req, res, next) => {
       },
       isUUID: {
         errorMessage: 'Business id should be a uuid'
+      }
+    }
+  });
+  const errors = req.validationErrors();
+  if (errors) {
+    const validationErrors = [];
+    errors.forEach((error) => {
+      validationErrors.push(error.msg);
+    });
+    res.status(400)
+      .json({
+        message: 'Cannot Complete Request, Errors Found ',
+        validationErrors
+      });
+  } else {
+    return next();
+  }
+};
+
+/**
+   * Checks if user id is valid i.e a uuid
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof validationHelper
+   */
+export const userIdCheck = (req, res, next) => {
+  checkForWhiteSpace(req.params.businessId);
+  req.checkParams({
+    userId: {
+      trim: true,
+      notEmpty: {
+        errorMessage: 'User Id is required'
+      },
+      isUUID: {
+        errorMessage: 'User id should be a uuid'
       }
     }
   });

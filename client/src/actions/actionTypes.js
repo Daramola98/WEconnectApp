@@ -1,0 +1,4 @@
+export const REGISTER_BUSINESS = 'REGISTER_BUSINESS';
+export const SET_BUSINESS_PROFILE = 'SET_BUSINESS_PROFILE';
+export const REGISTER_USER = 'REGISTER_USER';
+export const 

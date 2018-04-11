@@ -95,6 +95,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.0.0",
+    "redux-thunk": "^2.2.0",
     "sequelize": "^4.37.4",
     "swagger-ui-express": "^2.0.15",
     "webpack": "^4.5.0",
