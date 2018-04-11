@@ -8,18 +8,18 @@ import validator from 'express-validator';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
-import userRoutes from '../routes/user';
-import businessRoutes from '../routes/businesses';
-import swaggerDocument from '../../swagger.json';
-import config from '../../webpack.config';
-import customValidations from '../validations/customValidations';
+import userRoutes from './server/routes/user';
+import businessRoutes from './server/routes/businesses';
+import swaggerDocument from './swagger.json';
+import config from './webpack.config';
+import customValidations from './server/validations/customValidations';
 
 dotenv.config();
 const app = express();
 const compiler = webpack(config);
 
 // EXPRESS MIDDLEWARES
-app.use(express.static('../../client/public/images'));
+app.use(express.static(path.join(__dirname, './client/public/images')));
 app.use(webpackDevMiddleware(compiler));
 app.use(webpackHotMiddleware(compiler));
 
@@ -60,7 +60,7 @@ app.use('/api/v1/businesses', businessRoutes);
 
 // CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
 app.get('*', (req, res) => {
-  res.redirect('/');
+  res.sendFile(path.join(__dirname, './client/index.html'));
 });
 app.all('*', (req, res) => {
   res.status(404).json({ message: 'Endpoint not Found' });

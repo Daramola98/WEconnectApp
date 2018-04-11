@@ -9,7 +9,7 @@ const CLIENT_DIR = path.resolve(__dirname, 'client');
 module.exports = {
   mode: 'development',
   entry: [
-    './client/src/index.js'
+    './client/index.js'
   ],
   output: {
     path: '/',
@@ -21,8 +21,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        test: /(\.s?css)$/,
+        loader: ['style-loader', 'css-loader', 'sass-loader']
       },
       // {
       //   test: /\.s?css$/,
@@ -65,37 +65,13 @@ module.exports = {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin(['client/dist']),
-    new HtmlWebPackPlugin({
-      template: './client/src/index.html',
-      filename: './index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css'
-    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.ProvidePlugin({
-    //   '$': 'jquery',
-    //   'jQuery': 'jquery',
-    //   'window.jQuery': 'jquery',
-    //   Hammer: 'hammerjs/hammer',
-    //   createDayLabel: 'jquery',
-    //   createWeekdayLabel: 'jquery',
-    //   activateOption: 'jquery',
-    //   leftPosition: 'jquery'
-    // })
   ],
-  devtool: 'source-map',
-  // output: {
-  //   path: '/',
-  //   publicPath: 'http://localhost:8080/',
-  //   filename: '[name].bundle.js'
-  // },
-  // devServer: {
-  //   contentBase: `${CLIENT_DIR}/dist`
-  // }
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './client/dist'
+  }
 };
 

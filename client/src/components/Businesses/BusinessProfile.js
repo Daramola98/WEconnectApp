@@ -14,8 +14,8 @@ export default class BusinessProfile extends React.Component {
     * @memberof React Component
     */
   componentDidMount() {
-    // $('li.active').addClass('blue');
-    // $('li.indicator').addClass('blue');
+    console.log(this.props);
+    this.props.setBusinessProfile(this.props.match.params.id);
   }
   /**
     * Creates a React Component
@@ -32,19 +32,6 @@ export default class BusinessProfile extends React.Component {
                 </div>
                 <div className="card-content">
                   <div className="row">
-                    {/* <ul id="businessProfile" className="tabs">
-                      <li className="tab tabs-fixed-width col s3 m3 l3">
-                        <a className="active" href="#businessInfo">
-                          <span className="truncate center blue-text text-lighten-1">
-                          Information</span>
-                        </a>
-                      </li>
-                      <li className="tab tabs-fixed-width col s3 m3 l3">
-                        <a href="#businessReviews">
-                          <span className="truncate center blue-text text-lighten-1">Review</span>
-                        </a>
-                      </li>
-                    </ul> */}
                     <Tabs className="tab-demo z-depth-1">
                       <Tab title="Information" active className="blue-text lighten-1">
                       <div id="businessInfo" className="col s12 m12 l12 ">
@@ -55,7 +42,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Name</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.name}</strong>
+                            {/* <strong>{this.props.businessProfile.name}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -64,7 +51,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Contact Email</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.email}</strong>
+                            {/* <strong>{this.props.businessProfile.email}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -73,7 +60,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Telephone Number</h5>
                           </span>
                           <p>
-                            <strong> {this.props.businessProfile.telephoneNumber}</strong>
+                            {/* <strong> {this.props.businessProfile.telephoneNumber}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -82,7 +69,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Office Phone</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.homeNumber || 'Nil'}</strong>
+                            {/* <strong>{this.props.businessProfile.homeNumber || 'Nil'}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -91,7 +78,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Category</h5>
                           </span>
                           <p>
-                           <strong>{this.props.businessProfile.category}</strong>
+                           {/* <strong>{this.props.businessProfile.category}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -100,7 +87,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Location</h5>
                           </span>
                           <p>
-                           <strong>{this.props.businessProfile.location}</strong>
+                           {/* <strong>{this.props.businessProfile.location}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -109,7 +96,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Address</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.address}</strong>
+                            {/* <strong>{this.props.businessProfile.address}</strong> */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -118,7 +105,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Description</h5>
                           </span>
                           <p>
-                            {this.props.businessProfile.description}
+                            {/* {this.props.businessProfile.description} */}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -127,7 +114,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Owner</h5>
                           </span>
                           <p>
-                            <a href="userProfile.html" className="waves-effect waves-light btn blue lighten-1">{this.props.businessProfile.userId}</a>
+                            {/* <a href="userProfile.html" className="waves-effect waves-light btn blue lighten-1">{this.props.businessProfile.userId}</a> */}
                           </p>
                         </li>
                       </ul>

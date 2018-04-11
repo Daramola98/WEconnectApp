@@ -12,5 +12,5 @@ export default createStore(
   combineReducers({
     businessesReducer, businessProfile, usersReducers
   }),
-  composeEnhancers(applyMiddleware(createLogger(), thunk, promise()))
+  composeEnhancers(applyMiddleware(createLogger(), thunk))
 );

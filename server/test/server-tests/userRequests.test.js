@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import bcrypt from 'bcrypt';
-import app from '../../lib/app';
+import app from '../../../app';
 import db, { User } from '../../models';
 import { userDetails, userDetails1 } from '../testData/userData';
 

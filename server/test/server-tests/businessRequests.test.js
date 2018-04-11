@@ -1,7 +1,7 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import bcrypt from 'bcrypt';
-import app from '../../lib/app';
+import app from '../../../app';
 import db, { User, Business, BusinessReview } from '../../models/index';
 import { userDetails, userDetails1 } from '../testData/userData';
 import { businessDetails, businessDetails1, businessDetails2 } from '../testData/businessData';
@@ -46,16 +46,6 @@ describe(`${baseEndpoint}`, () => {
  * POST /api/v1/businesses route to register a business.
  */
   describe(`${baseEndpoint} POST businesses`, () => {
-    // beforeEach((done) => {
-    //   chai.request(app)
-    //     .post('/api/v1/auth/login')
-    //     .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-    //     .end((err, res) => {
-    //       authToken = res.body.token;
-    //       done();
-    //     });
-    // });
-
     it('should add a business to the businesses database', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}`)
@@ -653,14 +643,6 @@ describe(`${baseEndpoint}`, () => {
         .then((business) => {
           businessId = business.id;
           done();
-          // const review = { review: 'Business is so great would like to invest' };
-          // chai.request(app)
-          //   .post(`${baseEndpoint}/${businessId}/reviews`)
-          //   .send(review)
-          //   .set('authorization', authToken)
-          //   .end((err, res) => {
-          //     businessId2 = res.body.reviewDetails.id;
-          //   });
         })
         .catch(err => done(err));
     });

@@ -1,3 +1,5 @@
+import { FETCH_BUSINESSES } from '../actions/actionTypes';
+
 const initialState = {
   businesses: [],
   loading: false,
@@ -15,13 +17,9 @@ function businessesReducer(state = initialState, action) {
   let businesses;
 
   switch (action.type) {
-    case 'FETCH_BUSINESSES_PENDING':
-      return { ...state, loading: true };
-    case 'FETCH_BUSINESSES_FULFILLED':
-      businesses = action.payload.data;
+    case FETCH_BUSINESSES:
+      businesses = action.businessList;
       return { ...state, loading: false, businesses };
-    case 'FETCH_BUSINESSES_REJECTED':
-      return { ...state, loading: false, error: `${action.payload.message}` };
 
     default:
       return state;

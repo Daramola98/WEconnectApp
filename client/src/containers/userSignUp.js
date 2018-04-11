@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SignUp from '../components/Auth/SignUp';
-import { registerUser } from '../actions/users';
+import { registerUser } from '../store/actions/users';
 
 const mapStateToProps = state => ({
   usersReducer: state.usersReducer

@@ -1,3 +1,5 @@
+import { SET_BUSINESS_PROFILE } from '../actions/actionTypes';
+
 /**
     * Creates a React Component
     * @param {object} state current state of the application
@@ -7,8 +9,8 @@
     */
 function businessProfile(state = null, action) {
   switch (action.type) {
-    case 'SET_BUSINESS_PROFILE':
-      return action.payload;
+    case SET_BUSINESS_PROFILE:
+      return action.business;
 
     default:
       return state;
