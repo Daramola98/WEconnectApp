@@ -7,6 +7,28 @@ import React from 'react';
  */
 export default class UserProfile extends React.Component {
   /**
+    * Creates a React Component
+    * @param {object} props message with the business created or error message
+    * @return {null} Success message with the business created or error message
+    * @memberof React Component
+    */
+  constructor(props) {
+    super(props);
+    this.componentWillMount = this.componentWillMount.bind(this);
+  }
+
+  /**
+   * @description - redirect registered user to all-budiness page
+   *
+   * @return {void} no return or void
+   */
+  componentWillMount() {
+    console.log(this.props);
+    if (localStorage.weConnectToken) {
+      this.props.isLoggedIn(localStorage.weConnectToken);
+    }
+  }
+  /**
        * Creates a React Component
        * @return {jsx} Success message with the business created or error message
        * @memberof React Component
@@ -42,7 +64,7 @@ export default class UserProfile extends React.Component {
                                         <h5>Full Name</h5>
                                     </span>
                                     <p>
-                                        Ajiboye Daramola
+                                        {`${this.props.usersReducer.firstname} ${this.props.usersReducer.lastname}`}
                                     </p>
                                 </li>
                                 <li className="collection-item avatar">
@@ -51,7 +73,7 @@ export default class UserProfile extends React.Component {
                                         <h5>Email</h5>
                                     </span>
                                     <p>
-                                        daramola.ajiboye@live.com
+                                        {this.props.usersReducer.email}
                                     </p>
                                 </li>
                                 <li className="collection-item avatar">
@@ -60,7 +82,7 @@ export default class UserProfile extends React.Component {
                                         <h5>Telephone Number</h5>
                                     </span>
                                     <p>
-                                        07011031609
+                                     {this.props.usersReducer.telephoneNumber}
                                     </p>
                                 </li>
                                 <li className="collection-item avatar">

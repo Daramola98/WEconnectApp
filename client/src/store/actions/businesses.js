@@ -4,6 +4,7 @@ import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE } from './action
 export const fetchBusinesses = () => dispatch =>
   axios.get('api/v1/businesses')
     .then((response) => {
+      console.log(response);
       dispatch({
         type: FETCH_BUSINESSES,
         businessList: response.data
@@ -16,14 +17,17 @@ export const registerBusiness = () => ({
   payload: 'toBeContinued'
 });
 
-export const setBusinessProfile = businessId => dispatch =>
-  axios.get('api/v1/businesses')
+export const setBusinessProfile = business => ({
+  type: SET_BUSINESS_PROFILE,
+  business
+});
+
+
+export const fetchBusiness = businessId => dispatch =>
+  axios.get(`api/v1/businesses/${businessId}`)
     .then((response) => {
       console.log(response);
-      dispatch({
-        type: SET_BUSINESS_PROFILE,
-        business: response
-      });
+      dispatch(setBusinessProfile(response.data.business));
     })
     .catch(error => Promise.reject(error.response.data.message));
 

@@ -8,10 +8,22 @@ import Errors from '../Messages/Errors';
 export default class SignUp extends React.Component {
     state = {
       errors: {
-        message: null
+        message: null,
+        conflict: null,
+        confirmPassError: null
       }
     }
 
+    /**
+   * @description - redirect registered user to all-budiness page
+   *
+   * @return {void} no return or void
+   */
+    componentWillMount() {
+      if (localStorage.weConnectToken) {
+        this.props.history.push('/userProfile');
+      }
+    }
   /**
     * Handles SignUp Form Submission
     * @param {object} e the signup page
@@ -21,7 +33,7 @@ export default class SignUp extends React.Component {
     handleSignUpSubmit(e) {
       e.preventDefault();
       if (this.refs.confirmPassword.value !== this.refs.password.value) {
-        return this.setState({ errors: { message: 'Passwords don\'t match' } });
+        return this.setState({ errors: { confirmPassError: 'Passwords don\'t match' } });
       }
       const {
         firstname, lastname, telephoneNumber, password, email, confirmPassword, homeNumber
@@ -41,12 +53,15 @@ export default class SignUp extends React.Component {
       if (homeNumber.value.trim().length > 1) {
         userDetails.homeNumber = homeNumber.value;
       }
-      this.props.registerUser(userDetails)
+      this.props.signUp(userDetails)
         .then(() => {
-          console.log(this.props);
-          if (this.props.usersReducer.errors) {
-            return this.setState({ errors: { message: this.props.usersReducer.errors.validationErrors } });
+          this.props.history.push('/userProfile');
+        })
+        .catch((error) => {
+          if (error && error.response.data.validationErrors) {
+            return this.setState({ errors: { message: error.response.data.validationErrors } });
           }
+          return this.setState({ errors: { conflict: error.response.data.message } });
         });
     }
 
@@ -64,13 +79,19 @@ export default class SignUp extends React.Component {
                 <h3>Sign Up to WEconnect</h3>
               </div>
               <div className="card-content">
-                {errors.message ? <ul class="collection with-header">
-                  <li class="collection-header">
-                    <h4>Something Went Wrong</h4>
+                {errors.message ? <ul className="collection with-header">
+                  <li key="header" className="collection-header">
+                    <h4 className="red-text">Something Went Wrong</h4>
                   </li>
                   {errors.message.map((error, i) =>
-                  <Errors message={error} key={i}/>)}
-                </ul> : null }
+                  <Errors key ={`error${i}`} message={error} index={i}/>)}
+                 </ul> : null }
+                {errors.conflict ? <ul className="collection with-header">
+                  <li key="header" className="collection-header">
+                    <h4 className="red-text">Something Went Wrong</h4>
+                  </li>
+                  <li key="conflict" className="collection-item"><span className="red-text">{errors.conflict}</span></li>
+                 </ul> : null }
                 <form onSubmit={this.handleSignUpSubmit.bind(this)}>
                   <div className="row">
                     <div className="input-field col s12 m12 l6">
@@ -102,9 +123,9 @@ export default class SignUp extends React.Component {
                         Confirm Password
                       </label>
                       <input type="password" ref="confirmPassword" className="confirmPassword" required />
-                      {this.state.errors.message && <div className="right-align">
+                      {this.state.errors.confirmPassError && <div className="right-align">
                           <span className="red-text">
-                            {this.state.errors.message}
+                            {this.state.errors.confirmPassError}
                           </span>
                         </div>}
                     </div>

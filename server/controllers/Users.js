@@ -41,13 +41,21 @@ export default class Users {
           .create(userDetails)
           .then((user) => {
             const createdUser = {
+              userId: user.id, 
               firstname: user.firstname,
               lastname: user.lastname,
               email: user.email,
               telephoneNumber: user.telephoneNumber,
               homeNumber: user.homeNumber
             };
-            res.status(201).json({ message: userCreatedMessage, createdUser });
+            const token = jwt.sign(
+              createdUser
+              , process.env.JWT_KEY,
+              {
+                expiresIn: '6hr'
+              }
+            );
+            res.status(201).json({ message: userCreatedMessage, createdUser, token });
           })
           .catch((err) => {
             if (err.errors) {
@@ -232,10 +240,14 @@ export default class Users {
             const token = jwt.sign(
               {
                 email: user.email,
-                userId: user.id
+                userId: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                telephoneNumber: user.telephoneNumber,
+                homeNumber: user.homeNumber
               }, process.env.JWT_KEY,
               {
-                expiresIn: '3hr'
+                expiresIn: '6hr'
               }
             );
             return res.status(200).json({ message: 'Authentication Successful', token });

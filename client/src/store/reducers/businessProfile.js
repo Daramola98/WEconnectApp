@@ -7,7 +7,7 @@ import { SET_BUSINESS_PROFILE } from '../actions/actionTypes';
     * @return {object} the state of the application
     * @memberof React Component
     */
-function businessProfile(state = null, action) {
+function businessProfile(state = {}, action) {
   switch (action.type) {
     case SET_BUSINESS_PROFILE:
       return action.business;

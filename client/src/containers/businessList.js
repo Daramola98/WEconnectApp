@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import BusinessListing from '../components/Businesses/BusinessListing';
-import { fetchBusinesses, setBusinessProfile } from '../store/actions/businesses';
+import { fetchBusinesses } from '../store/actions/businesses';
 
 const mapStateToProps = state => ({
   data: state.businessesReducer
@@ -9,9 +9,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchBusinesses() {
     return dispatch(fetchBusinesses());
-  },
-  setBusinessProfile(businessId) {
-    return dispatch(setBusinessProfile(businessId));
   }
 });
 const BusinessListContainer = connect(mapStateToProps, mapDispatchToProps)(BusinessListing);

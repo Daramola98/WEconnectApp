@@ -1,14 +1,18 @@
 import { connect } from 'react-redux';
 import SignUp from '../components/Auth/SignUp';
-import { registerUser } from '../store/actions/users';
+import { registerUser, signUp } from '../store/actions/users';
+import { isLoggedIn } from '../store/actions/auth';
 
 const mapStateToProps = state => ({
   usersReducer: state.usersReducer
 });
 
 const mapDispatchToProps = dispatch => ({
-  registerUser(userDetails) {
-    return dispatch(registerUser(userDetails));
+  signUp(userDetails) {
+    return dispatch(signUp(userDetails));
+  },
+  isLoggedIn(userDetails) {
+    return dispatch(isLoggedIn(userDetails));
   }
 });
 

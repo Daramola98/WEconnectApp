@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
 import BusinessProfile from '../components/Businesses/BusinessProfile';
-import { setBusinessProfile } from '../store/actions/businesses';
+import { fetchBusiness } from '../store/actions/businesses';
 
 const mapStateToProps = state => ({
   businessProfile: state.businessProfile
 });
 
 const mapDispatchToProps = dispatch => ({
-  setBusinessProfile(businessId) {
-    return dispatch(setBusinessProfile(businessId));
+  fetchBusiness(businessId) {
+    return dispatch(fetchBusiness(businessId));
   }
 });
 
