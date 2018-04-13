@@ -66,7 +66,7 @@ const user = (sequelize, DataTypes) => {
         },
         len: {
           options: [6, 16],
-          msg: 'password should be more than 5 and not greater than 16 characters'
+          msg: 'password should be more than 6 and not greater than 16 characters'
         },
         // matches: {
         //   args: /[^0-9a-bA-B\s]/gi,
@@ -77,6 +77,9 @@ const user = (sequelize, DataTypes) => {
     telephoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        msg: 'Telephone Number already in use'
+      },
       validate: {
         notEmpty: {
           msg: 'Telephone Number is required'
@@ -84,9 +87,9 @@ const user = (sequelize, DataTypes) => {
         isInt: {
           msg: 'Enter a valid Telephone Number'
         },
-        isLength: {
-          options: [{ min: 7, max: 11 }],
-          msg: 'Telephone Number should be 11 characters'
+        len: {
+          args: [7, 11],
+          msg: 'Telephone Number should be within 7 to 11 characters'
         },
       }
     },
@@ -102,7 +105,7 @@ const user = (sequelize, DataTypes) => {
         },
         len: {
           args: [7, 11],
-          msg: 'Home number should be more 11 characters'
+          msg: 'Home number should be within 7 to 11 characters'
         },
       }
     }

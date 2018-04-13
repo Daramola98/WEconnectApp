@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.brand-logo {
+    margin-left: 10px;
+}
+
+.home-card {
+    height: 310px;
+    overflow: auto;
+}
+.indicator {
+    background-color:#42A5F5 !important
+}
+.tabs .tab a:hover, .tabs .tab a.active{
+    color: #42A5F5 !important
+}
+li > a.active {
+    color:  #42A5F5 !important
+}
+li.tab > a {
+    color: #42A5F5 !important
+}
+li.active {
+    background-color: #42A5F5 !important
+}

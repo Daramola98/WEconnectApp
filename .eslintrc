@@ -7,6 +7,7 @@
     "node": true,
     "es6": true,
     "mocha": true,
+    "jquery": true,
     "browser": true
   },
 "parserOptions": {

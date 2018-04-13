@@ -24,11 +24,6 @@ export default class Users {
      * @memberof UserController
      */
   static createUser(req, res) {
-    // // let isValidated;
-    // modelValidator(userValidation, req, res);
-    // // if (!isValidated) {
-    // //   return;
-    // // }
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
         res.status(500).json({ error: err });
@@ -46,13 +41,21 @@ export default class Users {
           .create(userDetails)
           .then((user) => {
             const createdUser = {
+              userId: user.id,
               firstname: user.firstname,
               lastname: user.lastname,
               email: user.email,
               telephoneNumber: user.telephoneNumber,
               homeNumber: user.homeNumber
             };
-            res.status(201).json({ message: userCreatedMessage, createdUser });
+            const token = jwt.sign(
+              createdUser
+              , process.env.JWT_KEY,
+              {
+                expiresIn: '6hr'
+              }
+            );
+            res.status(201).json({ message: userCreatedMessage, createdUser, token });
           })
           .catch((err) => {
             if (err.errors) {
@@ -63,6 +66,98 @@ export default class Users {
           });
       }
     });
+  }
+  /**
+     * Retrieves a user from the database
+     * @param {object} req - The request object
+     * @param {object} res - The response object
+     * @return {object} Success message with the user found or error message
+     * @memberof UserController
+     */
+  static getUser(req, res) {
+    return User
+      .findOne({
+        where: {
+          id: req.userData.userId
+        }
+      })
+      .then((user) => {
+        const userDetails = {
+          firstname: user.firstname,
+          lastname: user.lastname,
+          telephoneNumber: user.telephoneNumber,
+          homeNumber: user.homeNumber,
+          email: user.email
+        };
+        res.status(200).json(userDetails);
+      })
+      .catch((err) => {
+        if (err.errors) {
+          handleValidationErrors(err.errors, res);
+        } else {
+          return res.status(500).json(serverErrorMessage.message);
+        }
+      });
+  }
+
+  /**
+     * Retrieves all users from the database
+     * @param {object} req - The request object
+     * @param {object} res - The response object
+     * @return {object} Success message with the user found or error message
+     * @memberof UserController
+     */
+  static getUsers(req, res) {
+    if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
+      return res.status(403).json({ message: 'You are not allowed to access this endpoint' });
+    }
+    return User
+      .findAll()
+      .then((users) => {
+        res.status(200).json(users);
+      })
+      .catch((err) => {
+        if (err.errors) {
+          handleValidationErrors(err.errors, res);
+        } else {
+          return res.status(500).json(serverErrorMessage.message);
+        }
+      });
+  }
+
+  /**
+     * Deletes a user from the database
+     * @param {object} req - The request object
+     * @param {object} res - The response object
+     * @return {object} Success message with the user found or error message
+     * @memberof UserController
+     */
+  static delete(req, res) {
+    if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
+      return res.status(403).json({ message: 'You are not allowed to access this endpoint' });
+    }
+    return User
+      .findOne({
+        where: {
+          id: req.params.userId
+        }
+      })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+        return user
+          .destroy()
+          .then(() => res.status(200).json({ message: 'User deleted' }))
+          .catch(err => res.status(500).json(serverErrorMessage.message));
+      })
+      .catch((err) => {
+        if (err.errors) {
+          handleValidationErrors(err.errors, res);
+        } else {
+          return res.status(500).json(serverErrorMessage.message);
+        }
+      });
   }
 
   /**
@@ -145,10 +240,14 @@ export default class Users {
             const token = jwt.sign(
               {
                 email: user.email,
-                userId: user.id
+                userId: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                telephoneNumber: user.telephoneNumber,
+                homeNumber: user.homeNumber
               }, process.env.JWT_KEY,
               {
-                expiresIn: '3hr'
+                expiresIn: '6hr'
               }
             );
             return res.status(200).json({ message: 'Authentication Successful', token });

@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import bcrypt from 'bcrypt';
-import app from '../../lib/app';
+import app from '../../../app';
 import db, { User } from '../../models';
 import { userDetails, userDetails1 } from '../testData/userData';
 
@@ -254,7 +254,7 @@ describe(`${baseEndpoint}`, () => {
             .post(`${baseEndpoint}/login`)
             .send(userDetails11)
             .end((err, res) => {
-              userToken = res.body.token;
+              userToken = `Bearer ${res.body.token}`;
               return Promise.resolve(done());
             });
         })

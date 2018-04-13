@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WEconnect Application</title>
+    <!-- Material Icon CDN -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Materialize CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Your custom styles -->
+</head>
+
+<body>
+    <main>
+        <div id="root"></div>
+    </main>
+    
+    <footer class="page-footer blue">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2018 WEconnect
+                <a class="grey-text text-lighten-4 right" href="#!">Subscribe to Our Newsletters</a>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <!-- Materialize JS CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $("document").ready(function () {
+            $(".button-collapse").sideNav();
+            $('.carousel.carousel-slider').carousel({
+                fullWidth: true
+            });
+            $('.slider').slider();
+            $('select').material_select();
+            $('#description').val();
+            $('#description').trigger('autoresize');
+            $('ul.tabs').tabs();
+            $('#review').val();
+            $('#review').trigger('autoresize');
+            $('#contact-message').val();
+            $('#contact-message').trigger('autoresize');
+            // $('li.active').addClass('blue');
+            // $('li.indicator').addClass('blue');
+        });
+    </script>
+    <script src="/bundle.js"></script>
+</body>
+</html>

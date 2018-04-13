@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../../lib/app';
+import app from '../../../app';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -11,7 +11,7 @@ const { expect } = chai;
 describe('/ GET ', () => {
   it('it should return api documentation', (done) => {
     chai.request(app)
-      .get('/')
+      .get('/api')
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.a('object');
@@ -26,7 +26,8 @@ describe('/ GET ', () => {
 describe('/ GET undefined routes ', () => {
   it('it should return error message', (done) => {
     chai.request(app)
-      .get('/hello')
+      .post('/hello')
+      .send({})
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body).to.be.a('object');
