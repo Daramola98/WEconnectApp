@@ -4,7 +4,7 @@ import { registerUser, signUp } from '../store/actions/users';
 import { isLoggedIn } from '../store/actions/auth';
 
 const mapStateToProps = state => ({
-  usersReducer: state.usersReducer
+  usersReducer: state.usersReducers
 });
 
 const mapDispatchToProps = dispatch => ({

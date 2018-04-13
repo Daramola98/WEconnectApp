@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import UserProfile from '../components/Users/UserProfile';
 import { isLoggedIn } from '../store/actions/auth';
+import { getUserBusinesses } from '../store/actions/users';
 import usersReducer from '../store/reducers';
 
 const mapStateToProps = state => ({
@@ -10,6 +11,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   isLoggedIn(userDetails) {
     return dispatch(isLoggedIn(userDetails));
+  },
+  fetchUserBusinesses() {
+    return dispatch(getUserBusinesses());
   }
 });
 

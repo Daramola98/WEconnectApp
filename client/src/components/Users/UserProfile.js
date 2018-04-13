@@ -1,4 +1,7 @@
 import React from 'react';
+import { Tabs, Tab } from 'react-materialize';
+import { Link } from 'react-router-dom';
+import Business from '../Businesses/Business';
 
 /**
  *
@@ -23,10 +26,18 @@ export default class UserProfile extends React.Component {
    * @return {void} no return or void
    */
   componentWillMount() {
-    console.log(this.props);
-    if (localStorage.weConnectToken) {
-      this.props.isLoggedIn(localStorage.weConnectToken);
+    if (this.props.usersReducer.authenticated !== true) {
+      this.props.history.push('/login');
     }
+  }
+
+  /**
+   * @description - redirect registered user to all-budiness page
+   *
+   * @return {void} no return or void
+   */
+  componentDidMount() {
+    this.props.fetchUserBusinesses();
   }
   /**
        * Creates a React Component
@@ -34,209 +45,123 @@ export default class UserProfile extends React.Component {
        * @memberof React Component
        */
   render() {
+    const {
+      firstname, lastname, email, telephoneNumber, homeNumber
+    } = this.props.usersReducer.user;
     return (
-            <div className="row container">
-                <div className="col s12 m8 offset-m2 l8 offset-l2">
-                    <div className="card">
-                        <div className="card-action blue lighten-1 white-text center">
-                            <h3>My Profile</h3>
-                        </div>
-                        <div className="card-content">
-                        <div className="row">
-                        <ul id="businessProfile" className="tabs">
-                            <li className="tab tabs-fixed-width col s3 m3 l5">
-                                <a className="active" href="#personalInfo">
-                                    <span className="truncate center blue-text text-lighten-1">Information</span>
-                                </a>
-                            </li>
-                            <li className="tab tabs-fixed-width col s3 m3 l5">
-                                <a href="#businesses">
-                                    <span className="truncate center blue-text text-lighten-1">Businesses</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
-                            <ul className="collection">
-                                <li className="collection-item avatar">
-                                    <i className="material-icons circle blue lighten-1">account_circle</i>
-                                    <span className="title">
-                                        <h5>Full Name</h5>
-                                    </span>
-                                    <p>
-                                        {`${this.props.usersReducer.firstname} ${this.props.usersReducer.lastname}`}
-                                    </p>
-                                </li>
-                                <li className="collection-item avatar">
-                                    <i className="material-icons circle blue lighten-1">email</i>
-                                    <span className="title">
-                                        <h5>Email</h5>
-                                    </span>
-                                    <p>
-                                        {this.props.usersReducer.email}
-                                    </p>
-                                </li>
-                                <li className="collection-item avatar">
-                                    <i className="material-icons circle blue lighten-1">phone</i>
-                                    <span className="title">
-                                        <h5>Telephone Number</h5>
-                                    </span>
-                                    <p>
-                                     {this.props.usersReducer.telephoneNumber}
-                                    </p>
-                                </li>
-                                <li className="collection-item avatar">
-                                    <i className="material-icons circle blue lighten-1">business_center</i>
-                                    <span className="title">
-                                        <h5>My Businesses</h5>
-                                    </span>
-                                    <br/>
-                                    <div className="row">
-                                        <div className="col s12 m12 align-centre">
-                                    <ul className="collapsible popout" data-collapsible="accordion">
-                                        <li>
-                                            <div className="collapsible-header">
-                                                <i className="material-icons prefix">account_circle</i>
-                                                Clash of Clans
-                                            </div>
-
-                                            <div className="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" className="waves-effect waves-light btn">View Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="updateBusiness.html" className="waves-effect waves-light btn">Update Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="/delete/business" className="waves-effect waves-light btn">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="collapsible-header">
-                                                <i className="material-icons">place</i>
-                                                Uber Driving
-                                            </div>
-                                            <div className="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" className="waves-effect waves-light btn">View Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="updateBusiness.html" className="waves-effect waves-light btn">Update Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="#" className="waves-effect waves-light btn">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className="collapsible-header">
-                                                <i className="material-icons prefix">directions_car</i>
-                                                Car rentals
-                                            </div>
-                                            <div className="collapsible-body center">
-                                                <span>
-                                                    <a href="businessProfile.html" className="waves-effect waves-light btn">View Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="updateBusiness.html" className="waves-effect waves-light btn">Update Business Profile</a>
-                                                </span>
-                                                <br/>
-                                                <br/>
-                                                <span>
-                                                    <a href="#" className="waves-effect waves-light btn">Delete Business Profile</a>
-                                                </span>
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                    </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div id="businesses">
-                                <table className="bordered highlight centered center">
-                                    <thead>
-                                        <tr>
-                                            <th>Business Name</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Clash of Clans
-                                            </td>
-                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
-                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
-                                            <td>
-                                              <a href="" className="">DELETE</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Uber Driving
-                                            </td>
-                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
-                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
-                                            <td>
-                                              <a href="updateBusiness.html" className="">DELETE</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                Car Rentals
-                                            </td>
-                                            <td><a href="businessProfile.html" className="">VIEW</a></td>
-                                            <td><a href="updateBusiness.html" className="">UPDATE</a></td>
-                                            <td>
-                                              <a href="updateBusiness.html" className="">DELETE</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <ul className="pagination">
-                                        <li className="disabled">
-                                            <a href="#!">
-                                                <i className="material-icons">chevron_left</i>
-                                            </a>
-                                        </li>
-                                        <li className="active">
-                                            <a href="#!">1</a>
-                                        </li>
-                                        <li className="waves-effect">
-                                            <a href="#!">2</a>
-                                        </li>
-                                        <li className="waves-effect">
-                                            <a href="#!">3</a>
-                                        </li>
-                                        <li className="waves-effect">
-                                            <a href="#!">4</a>
-                                        </li>
-                                        <li className="waves-effect">
-                                            <a href="#!">5</a>
-                                        </li>
-                                        <li className="waves-effect">
-                                            <a href="#!">
-                                                <i className="material-icons">chevron_right</i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                        </div>
-                       </div>
-                    </div>
-                </div>
+    <div className="row container">
+        <div className="col s12 m8 offset-m2 l8 offset-l2">
+          <div className="card">
+            <div className="card-action blue lighten-1 white-text center">
+              <h3>My Profile</h3>
             </div>
+            <div className="card-content">
+              <div className="row">
+                <Tabs className="tab-demo z-depth-1">
+                  <Tab title="Information" active >
+                   <div id="personal_info" className="col s12 m12 l12 ">
+                    <ul className="collection">
+                      <li className="collection-item avatar">
+                        <i className="material-icons circle blue lighten-1">
+                          account_circle
+                        </i>
+                        <span className="title">
+                          <h5>Full Name</h5>
+                        </span>
+                        <p>{`${firstname} ${lastname}`}</p>
+                      </li>
+                      <li className="collection-item avatar">
+                        <i className="material-icons circle blue lighten-1">
+                          email
+                        </i>
+                        <span className="title">
+                          <h5>Email</h5>
+                        </span>
+                        <p>{email}</p>
+                      </li>
+                      <li className="collection-item avatar">
+                        <i className="material-icons circle blue lighten-1">
+                          phone
+                        </i>
+                        <span className="title">
+                          <h5>Telephone Number</h5>
+                        </span>
+                        <p>{telephoneNumber}</p>
+                      </li>
+                      <li className="collection-item avatar">
+                        <i className="material-icons circle blue lighten-1">
+                          phone
+                        </i>
+                        <span className="title">
+                          <h5>Home Number</h5>
+                        </span>
+                        <p>{homeNumber || 'Nil'} </p>
+                      </li>
+                    </ul>
+                    </div>
+                  </Tab>
+                  <Tab title="Businesses">
+                    <div id="businesses" className="col s12 m12 l12 ">
+                      <table className="bordered highlight centered center">
+                        <thead>
+                          <tr>
+                            <th>Business Name</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {this.props.usersReducer.businesses.length > 0 ?
+                          this.props.usersReducer.businesses.map((business, i) => (
+                                <Business business={business} key={i}>
+                                  <td key={'update'}>
+                                    <Link to="/updateBusiness">UPDATE</Link>
+                                  </td>
+                                  <td key={'delete'}>
+                                    <Link to="/delete">DELETE</Link>
+                                  </td>
+                                </Business>
+                              )) : <tr>
+                              <td>No Businesses !!</td>
+                            </tr>}
+                        </tbody>
+                      </table>
+                      <ul className="pagination">
+                        <li className="disabled">
+                          <a href="#!">
+                            <i className="material-icons">chevron_left</i>
+                          </a>
+                        </li>
+                        <li className="active">
+                          <a href="#!">1</a>
+                        </li>
+                        <li className="waves-effect">
+                          <a href="#!">2</a>
+                        </li>
+                        <li className="waves-effect">
+                          <a href="#!">3</a>
+                        </li>
+                        <li className="waves-effect">
+                          <a href="#!">4</a>
+                        </li>
+                        <li className="waves-effect">
+                          <a href="#!">5</a>
+                        </li>
+                        <li className="waves-effect">
+                          <a href="#!">
+                            <i className="material-icons">chevron_right</i>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </Tab>
+                </Tabs>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
     );
   }
 }

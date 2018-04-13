@@ -15,10 +15,10 @@ export default class BusinessProfile extends React.Component {
     */
   componentWillMount() {
     console.log(this.props);
-    this.props.fetchBusiness('50df1df1-4f56-4fcb-a3c4-7163a4e5cad5')
-    .then(() => {
-      console.log(this.props);
-    });
+    this.props.fetchBusiness(this.props.match.params.id)
+      .then(() => {
+        console.log(this.props);
+      });
   }
   /**
     * Creates a React Component

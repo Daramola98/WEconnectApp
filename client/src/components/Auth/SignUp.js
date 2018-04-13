@@ -20,7 +20,7 @@ export default class SignUp extends React.Component {
    * @return {void} no return or void
    */
     componentWillMount() {
-      if (localStorage.weConnectToken) {
+      if (this.props.usersReducer.authenticated) {
         this.props.history.push('/userProfile');
       }
     }
@@ -33,7 +33,7 @@ export default class SignUp extends React.Component {
     handleSignUpSubmit(e) {
       e.preventDefault();
       if (this.refs.confirmPassword.value !== this.refs.password.value) {
-        return this.setState({ errors: { confirmPassError: 'Passwords don\'t match' } });
+        return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
       }
       const {
         firstname, lastname, telephoneNumber, password, email, confirmPassword, homeNumber
@@ -59,9 +59,15 @@ export default class SignUp extends React.Component {
         })
         .catch((error) => {
           if (error && error.response.data.validationErrors) {
-            return this.setState({ errors: { message: error.response.data.validationErrors } });
+            return this.setState({
+              errors:
+              { ...this.state.errors, message: error.response.data.validationErrors }
+            });
           }
-          return this.setState({ errors: { conflict: error.response.data.message } });
+          return this.setState({
+            errors:
+             { ...this.state.errors, conflict: error.response.data.message }
+          });
         });
     }
 

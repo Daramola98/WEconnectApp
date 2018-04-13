@@ -137,9 +137,9 @@ export default class Businesses {
           userId: req.userData.userId
         }
       })
-      .then((business) => {
-        if (business.length > 0) {
-          return res.status(200).json(business);
+      .then((businesses) => {
+        if (businesses.length > 0) {
+          return res.status(200).json(businesses);
         }
         return res.status(404).json({ message: 'No Businesses' });
       })

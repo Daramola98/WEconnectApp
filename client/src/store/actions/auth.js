@@ -15,7 +15,7 @@ export const userLoggedOut = () => ({
 export const login = credentials => dispatch =>
   axios.post('api/v1/auth/login', credentials)
     .then((response) => {
-      const { token } = response.data.token;
+      const { token } = response.data;
       localStorage.setItem('weConnectToken', token);
       setAuthorizationHeader(token);
       const user = jwtDecode(token);
@@ -29,6 +29,12 @@ export const logout = () => (dispatch) => {
 };
 
 export const isLoggedIn = token => (dispatch) => {
-  const user = jwtDecode(token);
+  let user;
+  try {
+    user = jwtDecode(token);
+  } catch (error) {
+    return error;
+  }
+  setAuthorizationHeader(token);
   dispatch(userLoggedIn(user));
 };

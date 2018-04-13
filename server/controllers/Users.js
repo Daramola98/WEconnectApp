@@ -41,7 +41,7 @@ export default class Users {
           .create(userDetails)
           .then((user) => {
             const createdUser = {
-              userId: user.id, 
+              userId: user.id,
               firstname: user.firstname,
               lastname: user.lastname,
               email: user.email,
