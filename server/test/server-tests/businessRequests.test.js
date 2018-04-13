@@ -34,7 +34,7 @@ describe(`${baseEndpoint}`, () => {
               .post('/api/v1/auth/login')
               .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
               .end((err, res) => {
-                authToken = res.body.token;
+                authToken = `Bearer ${res.body.token}`;
                 done();
               });
           })
@@ -345,7 +345,7 @@ describe(`${baseEndpoint}`, () => {
             .post('/api/v1/auth/login')
             .send({ email: 'clintfidel@gmail.com', password: 'daramola10' })
             .end((err, res) => {
-              authToken2 = res.body.token;
+              authToken2 = `Bearer ${res.body.token}`;
               done();
             });
         });

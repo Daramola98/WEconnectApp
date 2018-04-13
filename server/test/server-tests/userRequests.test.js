@@ -254,7 +254,7 @@ describe(`${baseEndpoint}`, () => {
             .post(`${baseEndpoint}/login`)
             .send(userDetails11)
             .end((err, res) => {
-              userToken = res.body.token;
+              userToken = `Bearer ${res.body.token}`;
               return Promise.resolve(done());
             });
         })
