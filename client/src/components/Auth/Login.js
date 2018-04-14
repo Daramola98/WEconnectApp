@@ -1,4 +1,5 @@
 import React from 'react';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 /**
  *
@@ -20,6 +21,7 @@ export default class Login extends React.Component {
         this.props.history.push('/userProfile');
       }
     }
+
     /**
       * Creates a React Component
       * @param {object} e message with the business created or error message
@@ -33,9 +35,11 @@ export default class Login extends React.Component {
         email: username.value,
         password: password.value
       };
-      console.log(credentials);
       this.props.login(credentials)
-        .then(() => this.props.history.push('/userProfile'))
+        .then(() => {
+          NotificationManager.success('Login Successful Welcome Back!!', 'Successful');
+          setTimeout(() => this.props.history.push('/userProfile'), 2000);
+        })
         .catch((err) => {
           this.setState({ message: err.response.data.message });
         });
@@ -81,6 +85,7 @@ export default class Login extends React.Component {
                     </button>
                   </div>
                 </form>
+                <NotificationContainer/>
               </div>
             </div>
           </div>

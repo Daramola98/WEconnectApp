@@ -54,6 +54,22 @@ module.exports = {
           }
         }]
       },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.woff2(\?\S*)?$/,
+        loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.woff(\?\S*)?$/,
+        loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=100000&mimetype=application/octet-stream'
+      },
       /*
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,

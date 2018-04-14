@@ -4,6 +4,7 @@ import decode from 'jwt-decode';
 import { Provider } from 'react-redux';
 import { BrowserHistory } from 'react-router';
 import { BrowserRouter as Router, Route, Switch, IndexRoute } from 'react-router-dom';
+import 'react-notifications/lib/notifications.css';
 import WeConnectStore from './src/store/store';
 import { userLoggedIn } from './src/store/actions/auth';
 import setAuthorizationHeader from './src/utils/setAuthorizationHeader';
