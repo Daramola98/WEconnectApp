@@ -46,6 +46,8 @@ ReactDOM.render(
       <Route path = '/howItWorks' component={HowItWorks}/>
       <Route path = '/login' component={Login}/>
       <Route path = '/signUp' component={SignUp}/>
+      <Route path = '/registerBusiness' component={RegisterBusiness}/>
+      <Route path = '/updateBusiness' component={UpdateBusiness}/>
     </div>
   </Router>
 </Provider>,
