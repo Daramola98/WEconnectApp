@@ -1,5 +1,7 @@
 import React from 'react';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Errors from '../Messages/Errors';
+
 /**
  *
  *@class SignUp
@@ -55,7 +57,8 @@ export default class SignUp extends React.Component {
       }
       this.props.signUp(userDetails)
         .then(() => {
-          this.props.history.push('/userProfile');
+          NotificationManager.success('Registration Successful', 'Successful');
+          setTimeout(() => this.props.history.push('/userProfile'), 2000);
         })
         .catch((error) => {
           if (error && error.response.data.validationErrors) {

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE } from './actionTypes';
+import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS } from './actionTypes';
 
 export const fetchBusinesses = () => dispatch =>
   axios.get('api/v1/businesses')
@@ -12,8 +12,7 @@ export const fetchBusinesses = () => dispatch =>
     .catch(error => Promise.reject(error.response.data.message));
 
 export const registerBusiness = () => ({
-  type: 'REGISTER_BUSINESS',
-  payload: 'toBeContinued'
+  type: REGISTER_BUSINESS
 });
 
 export const setBusinessProfile = business => ({
@@ -21,6 +20,11 @@ export const setBusinessProfile = business => ({
   business
 });
 
+export const createBusiness = businessDetails => dispatch =>
+  axios.post('api/v1/businesses', businessDetails)
+    .then((response) => {
+      dispatch(registerBusiness());
+    });
 
 export const fetchBusiness = businessId => dispatch =>
   axios.get(`api/v1/businesses/${businessId}`)

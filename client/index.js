@@ -4,6 +4,7 @@ import decode from 'jwt-decode';
 import { Provider } from 'react-redux';
 import { BrowserHistory } from 'react-router';
 import { BrowserRouter as Router, Route, Switch, IndexRoute } from 'react-router-dom';
+import 'react-notifications/lib/notifications.css';
 import WeConnectStore from './src/store/store';
 import { userLoggedIn } from './src/store/actions/auth';
 import setAuthorizationHeader from './src/utils/setAuthorizationHeader';
@@ -14,9 +15,9 @@ import BusinessList from './src/containers/businessList';
 import UserProfile from './src/containers/userProfile';
 import Login from './src/containers/login';
 import Header from './src/containers/navigation';
+import RegisterBusiness from './src/containers/registerBusiness';
 
 import App from './src/components/App';
-import RegisterBusiness from './src/components/Businesses/RegisterBusiness';
 import UpdateBusiness from './src/components/Businesses/UpdateBusiness';
 import AboutUs from './src/components/Home/AboutUs';
 import HowItWorks from './src/components/Home/HowItWorks';
@@ -45,6 +46,8 @@ ReactDOM.render(
       <Route path = '/howItWorks' component={HowItWorks}/>
       <Route path = '/login' component={Login}/>
       <Route path = '/signUp' component={SignUp}/>
+      <Route path = '/registerBusiness' component={RegisterBusiness}/>
+      <Route path = '/updateBusiness' component={UpdateBusiness}/>
     </div>
   </Router>
 </Provider>,
