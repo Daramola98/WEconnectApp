@@ -14,11 +14,7 @@ export default class BusinessProfile extends React.Component {
     * @memberof React Component
     */
   componentWillMount() {
-    console.log(this.props);
-    this.props.fetchBusiness(this.props.match.params.id)
-      .then(() => {
-        console.log(this.props);
-      });
+    this.props.fetchBusiness(this.props.match.params.id);
   }
   /**
     * Creates a React Component

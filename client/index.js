@@ -40,7 +40,7 @@ ReactDOM.render(
       <Route exact path='/' component={Home}/>
       <Route path = '/aboutUs' component={AboutUs}/>
       <Route path = '/businessListing' component={BusinessList}/>
-      <Route path = '/businessProfile' component={BusinessProfile}/>
+      <Route path = '/businessProfile:id' component={BusinessProfile}/>
       <Route path = '/userProfile' component={UserProfile}/>
       <Route path = '/contactUs' component={ContactUs}/>
       <Route path = '/howItWorks' component={HowItWorks}/>
