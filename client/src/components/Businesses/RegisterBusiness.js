@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Error from '../Messages/Errors';
+import { NotificationManager, NotificationContainer } from 'react-notifications';
+import { Input } from 'react-materialize';
+import Errors from '../Messages/Errors';
 
 
 /**
@@ -20,8 +22,8 @@ export default class RegisterBusiness extends React.Component {
     this.state = {
       business: {
         name: '',
-        location: '',
-        category: '',
+        location: 'null',
+        category: 'null',
         address: '',
         email: '',
         description: '',
@@ -50,6 +52,17 @@ static defaultProps = {
 }
 
 /**
+   * @description - redirect registered user to all-budiness page
+   *
+   * @return {void} no return or void
+   */
+componentWillMount() {
+  if (this.props.usersReducer.authenticated !== true) {
+    this.props.history.push('/login');
+  }
+}
+
+/**
 * Creates a React Component
 * @param {object} e the register business page
 * @return {jsx} renders the register business page
@@ -69,6 +82,37 @@ onChange = e =>
 */
 handleRegisterBusinessSubmit = (e) => {
   e.preventDefault();
+  const businessDetails = {
+    name: this.state.business.name,
+    location: this.state.business.location,
+    category: this.state.business.category,
+    description: this.state.business.description,
+    address: this.state.business.address,
+    email: this.state.business.email,
+    telephoneNumber: this.state.business.telephoneNumber
+  };
+
+  if (this.state.business.homeNumber.length > 1) {
+    businessDetails.homeNumber = this.state.business.homeNumber;
+  }
+  this.props.registerBusiness(businessDetails)
+    .then((response) => {
+      NotificationManager.success('Business Registered', 'Successful');
+      setTimeout(() => this.props.history.push('/userProfile'), 2000);
+    })
+    .catch((error) => {
+      console.log(error.response);
+      if (error && error.response.data.validationErrors) {
+        return this.setState({
+          errors:
+          { ...this.state.errors, message: error.response.data.validationErrors }
+        });
+      }
+      return this.setState({
+        errors:
+        { ...this.state.errors, conflict: error.response.data.message }
+      });
+    });
 }
 
 /**
@@ -84,7 +128,7 @@ render() {
   <option key={location} value={location}>{location}</option>);
 
   const { business, errors } = this.state;
-  return <div className="row">
+  return <div className="row container">
       <div className="col s12 m8 offset-m2 l8 offset-l2">
         <div className="card">
           <div className="card-action blue lighten-1 white-text center">
@@ -112,23 +156,27 @@ render() {
                 <div className="input-field col s12 m12 l12">
                   <i className="material-icons prefix">business_center</i>
                   <label htmlFor="name">Business Name</label>
-                  <input type="text" name="name" pattern="[A-Za-z0-9]+$" title="should contain only alphabets" minLength="3" maxLength="50" value={business.name} onChange={this.onChange} className="validate" required />
+                  <input type="text" name="name" pattern="^[a-zA-Z0-9\s.\-]+$" title="should contain only alphabets" minLength="3" maxLength="50" value={business.name} onChange={this.onChange} className="validate" required />
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12 m6 l6">
-                  <select name="location" value={business.location} onChange={this.onChange} required>
-                    <option disabled>Choose your location</option>
+                  <Input type="select" name="location" value={business.location} onChange={this.onChange}>
+                    <option value="null" disabled>
+                      Choose Your Location
+                    </option>
                     {locationOptions}
-                  </select>
-                  <label>Location</label>
+                  </Input>
+                  {/* <label>Location</label> */}
                 </div>
                 <div className="input-field col s12 m6 l6">
-                  <select name="category" value={business.category} onChange={this.onChange} required>
-                    <option disabled>Choose your category</option>
+                  <Input type="select" name="category" value={business.category} onChange={this.onChange}>
+                    <option value="null" disabled>
+                      Choose Your Category
+                    </option>
                     {categoryOptions}
-                  </select>
-                  <label>Category</label>
+                  </Input>
+                  {/* <label>Category</label> */}
                 </div>
               </div>
               <div className="row">
@@ -142,26 +190,26 @@ render() {
                 <div className="input-field col s12 m12 l12">
                   <i className="material-icons prefix">location_on</i>
                   <label htmlFor="address">Business Address</label>
-                  <input type="text" name="address" value={business.address} onChange={this.onChange} placeholder="Enter Business Address" ref="address" className="validate" required />
+                  <input type="text" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} placeholder="Enter Business Address" ref="address" className="validate" required />
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12 m12 l6">
                   <i className="material-icons prefix">phone</i>
                   <label htmlFor="telephoneNumber">Telephone Number</label>
-                  <input type="number" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.telephoneNumber} onChange={this.onChange} ref="telephoneNumber" className="validate" required />
+                  <input type="text" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.telephoneNumber} onChange={this.onChange} ref="telephoneNumber" className="validate" required />
                 </div>
                 <div className="input-field col s12 m12 l6">
                   <i className="material-icons prefix">phone</i>
                   <label htmlFor="homeNumber">Home Number</label>
 
-                  <input type="number" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.homeNumber} onChange={this.onChange} ref="homeNumber" className="validate" />
+                  <input type="text" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.homeNumber} onChange={this.onChange} ref="homeNumber" className="validate" />
                 </div>
               </div>
               <div className="row">
                 <div className="input-field col s12 m12 l12">
                   <i className="material-icons prefix">mode_edit</i>
-                  <textarea name="description" value={business.description} onChange={this.onChange} className="materialize-textarea" ref="description" />
+                  <textarea name="description" value={business.description} minLength="20" maxLength="500" onChange={this.onChange} className="materialize-textarea" ref="description" required />
                   <label htmlFor="description">Business Description</label>
                 </div>
               </div>
@@ -183,6 +231,7 @@ render() {
           </div>
         </div>
       </div>
+      <NotificationContainer/>
     </div>;
 }
 }

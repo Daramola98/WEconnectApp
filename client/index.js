@@ -15,9 +15,9 @@ import BusinessList from './src/containers/businessList';
 import UserProfile from './src/containers/userProfile';
 import Login from './src/containers/login';
 import Header from './src/containers/navigation';
+import RegisterBusiness from './src/containers/registerBusiness';
 
 import App from './src/components/App';
-import RegisterBusiness from './src/components/Businesses/RegisterBusiness';
 import UpdateBusiness from './src/components/Businesses/UpdateBusiness';
 import AboutUs from './src/components/Home/AboutUs';
 import HowItWorks from './src/components/Home/HowItWorks';
