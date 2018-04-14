@@ -23,7 +23,6 @@ export const setBusinessProfile = business => ({
 export const createBusiness = businessDetails => dispatch =>
   axios.post('api/v1/businesses', businessDetails)
     .then((response) => {
-      console.log(response);
       dispatch(registerBusiness());
     });
 

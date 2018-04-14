@@ -101,7 +101,6 @@ handleRegisterBusinessSubmit = (e) => {
       setTimeout(() => this.props.history.push('/userProfile'), 2000);
     })
     .catch((error) => {
-      console.log(error.response);
       if (error && error.response.data.validationErrors) {
         return this.setState({
           errors:
