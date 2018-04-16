@@ -8,6 +8,10 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
  */
 export default class Login extends React.Component {
     state = {
+      credentials: {
+        email: '',
+        password: ''
+      },
       message: null
     }
 
@@ -23,6 +27,18 @@ export default class Login extends React.Component {
     }
 
     /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onChange = e =>
+      this.setState({
+        ...this.state,
+        credentials: { ...this.state.credentials, [e.target.name]: e.target.value }
+      });
+
+    /**
       * Creates a React Component
       * @param {object} e message with the business created or error message
       * @return {jsx} Success message with the business created or error message
@@ -30,12 +46,7 @@ export default class Login extends React.Component {
       */
     onSubmit = (e) => {
       e.preventDefault();
-      const { username, password } = this.refs;
-      const credentials = {
-        email: username.value,
-        password: password.value
-      };
-      this.props.login(credentials)
+      this.props.login(this.state.credentials)
         .then(() => {
           NotificationManager.success('Login Successful Welcome Back!!', 'Successful');
           setTimeout(() => this.props.history.push('/userProfile'), 2000);
@@ -52,6 +63,7 @@ export default class Login extends React.Component {
     */
     render() {
       const { message } = this.state;
+      const { email, password } = this.state.credentials;
       return <div className="row container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
@@ -68,14 +80,14 @@ export default class Login extends React.Component {
                 <form onSubmit={this.onSubmit}>
                   <div className="form-field">
                     <label htmlFor="username">Email</label>
-                    <input type="email" ref="username" className="validate" required />
+                    <input type="email" name="email" value={email} onChange={this.onChange} className="validate" required />
                   </div>
                   <div className="form-field">
                     <label htmlFor="password">Password</label>
-                    <input type="password" ref="password" className="validate" required />
+                    <input type="password" name="password" value={password} onChange={this.onChange} className="validate" required />
                   </div>
                   <div className="form-field">
-                    <input type="checkbox" ref="remember" />
+                    <input type="checkbox" name="remember" />
                     <label htmlFor="remember">Remember Me</label>
                   </div>
                   <br />

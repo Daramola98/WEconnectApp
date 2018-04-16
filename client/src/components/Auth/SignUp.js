@@ -11,6 +11,15 @@ import Errors from '../Messages/Errors';
  */
 export default class SignUp extends React.Component {
     state = {
+      user: {
+        firstname: '',
+        lastname: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        telephoneNumber: '',
+        homeNumber: '',
+      },
       errors: {
         message: null,
         conflict: null,
@@ -29,6 +38,17 @@ export default class SignUp extends React.Component {
       }
     }
   /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onChange = e =>
+      this.setState({
+        ...this.state,
+        user: { ...this.state.user, [e.target.name]: e.target.value }
+      });
+  /**
     * Handles SignUp Form Submission
     * @param {object} e the signup page
     * @return {jsx} renders the signup page
@@ -36,26 +56,26 @@ export default class SignUp extends React.Component {
     */
     handleSignUpSubmit(e) {
       e.preventDefault();
-      if (this.refs.confirmPassword.value !== this.refs.password.value) {
+      if (this.state.user.confirmPassword !== this.state.user.password) {
         return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
       }
       const {
         firstname, lastname, telephoneNumber, password, email, confirmPassword, homeNumber
-      } = this.refs;
+      } = this.state.user;
 
       const userDetails = {
-        firstname: firstname.value,
-        lastname: lastname.value,
-        email: email.value,
-        telephoneNumber: telephoneNumber.value,
-        password: password.value,
-        confirmPassword: confirmPassword.value,
+        firstname,
+        lastname,
+        email,
+        telephoneNumber,
+        password,
+        confirmPassword,
       };
 
       let userHomeNumber;
 
-      if (homeNumber.value.trim().length > 1) {
-        userDetails.homeNumber = homeNumber.value;
+      if (homeNumber.trim().length > 1) {
+        userDetails.homeNumber = homeNumber;
       }
       this.props.signUp(userDetails)
         .then(() => {
@@ -85,6 +105,9 @@ export default class SignUp extends React.Component {
     */
     render() {
       const { errors } = this.state;
+      const {
+        firstname, lastname, email, telephoneNumber, homeNumber, password, confirmPassword
+      } = this.state.user;
       return <div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
@@ -113,7 +136,7 @@ export default class SignUp extends React.Component {
                       </i>
                       <label htmlFor="firstname">First Name</label>
 
-                      <input type="text" ref="firstname" pattern="[A-Za-z]+$" title="should contain only alphabets" minLength="3" maxLength="50" className="validate" required />
+                      <input type="text" name="firstname" pattern="[A-Za-z]+$" title="should contain only alphabets" value={firstname} onChange={this.onChange} minLength="3" maxLength="50" className="validate" required />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">
@@ -121,21 +144,21 @@ export default class SignUp extends React.Component {
                       </i>
                       <label htmlFor="lastname">Last Name</label>
 
-                      <input type="text" ref="lastname" pattern="[A-Za-z]+$" title="should contain only alphabets" minLength="3" maxLength="50" className="validate" required />
+                      <input type="text" name="lastname" pattern="[A-Za-z]+$" value={lastname} onChange={this.onChange} title="should contain only alphabets" minLength="3" maxLength="50" className="validate" required />
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">lock</i>
                       <label htmlFor="password">Password</label>
-                      <input type="password" ref="password" title="Password should be 6-16 characters long" pattern="^([a-zA-Z0-9@*#]{6,16})$" maxLength="16" minLength="6" className="validate" required />
+                      <input type="password" name="password" value={password} onChange={this.onChange} title="Password should be 6-16 characters long" pattern="^([a-zA-Z0-9@*#]{6,16})$" maxLength="16" minLength="6" className="validate" required />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">lock</i>
                       <label htmlFor="confirmPass">
                         Confirm Password
                       </label>
-                      <input type="password" ref="confirmPassword" className="confirmPassword" required />
+                      <input type="password" name="confirmPassword" value={confirmPassword} onChange={this.onChange} className="confirmPassword" required />
                       {this.state.errors.confirmPassError && <div className="right-align">
                           <span className="red-text">
                             {this.state.errors.confirmPassError}
@@ -147,7 +170,7 @@ export default class SignUp extends React.Component {
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">email</i>
                       <label htmlFor="email">Email Address</label>
-                      <input type="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="johndoe@gmail.com" ref="email" className="validate" required />
+                      <input type="email" value={email} onChange={this.onChange} pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="johndoe@gmail.com" name="email" className="validate" required />
                     </div>
                   </div>
                   <div className="row">
@@ -157,13 +180,13 @@ export default class SignUp extends React.Component {
                         Telephone Number
                       </label>
 
-                      <input type="text" ref="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" required />
+                      <input type="text" name="telephoneNumber" value={telephoneNumber} onChange={this.onChange} pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" required />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">phone</i>
                       <label htmlFor="homeNumber">Home Number</label>
 
-                      <input type="text" ref="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
+                      <input type="text" name="homeNumber" value={homeNumber} onChange={this.onChange} pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
                     </div>
                   </div>
 
