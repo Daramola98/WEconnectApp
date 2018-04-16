@@ -1,13 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Errors from '../Messages/Errors';
 
 /**
  *
- *@class SignUp
- *@classdesc creates a React component- SignUp
+ *@class UpdateUser
+ *@classdesc creates a React component- UpdateUser
  */
-export default class SignUp extends React.Component {
+export default class UpdateUser extends React.Component {
     state = {
       errors: {
         message: null,
@@ -173,11 +174,12 @@ export default class SignUp extends React.Component {
                   <div className="row">
                     <div className="col s12 m12 l6 offset-l3 center">
                       <h6>
-                        <a>Already have an Account? Login here</a>
+                        <Link>Already have an Account? Login here</Link>
                       </h6>
                     </div>
                   </div>
                 </form>
+                <NotificationContainer/>
               </div>
             </div>
           </div>

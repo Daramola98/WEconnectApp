@@ -1,10 +1,15 @@
 import axios from 'axios';
-import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES } from './actionTypes';
+import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES, UPDATE_USER } from './actionTypes';
 import { userLoggedIn } from './auth';
 
 
 export const registerUser = user => ({
   type: REGISTER_USER,
+  user
+});
+
+export const updatesUser = user => ({
+  type: UPDATE_USER,
   user
 });
 
@@ -19,6 +24,12 @@ export const signUp = userDetails => dispatch =>
       const { token } = response.data;
       localStorage.setItem('weConnectToken', token);
       dispatch(userLoggedIn(response.data.createdUser));
+    });
+
+export const updateUser = userDetails => dispatch =>
+  axios.put('api/v1/auth/user', userDetails)
+    .then((response) => {
+      dispatch(updatesUser(response.data.updatedUserDetails));
     });
 
 export const getUserBusinesses = () => dispatch =>
