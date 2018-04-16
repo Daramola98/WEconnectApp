@@ -17,17 +17,25 @@ main {
     overflow: auto;
 }
 .indicator {
-    background-color:#42A5F5 !important
+    background-color: #42A5F5 !important
 }
-.tabs .tab a:hover, .tabs .tab a.active{
+
+.tabs .tab a:hover,
+.tabs .tab a.active {
     color: #42A5F5 !important
 }
-li > a.active {
-    color:  #42A5F5 !important
-}
-li.tab > a {
+
+li>a.active {
     color: #42A5F5 !important
 }
+
+li.tab>a {
+    color: #42A5F5 !important
+}
+
 li.active {
     background-color: #42A5F5 !important
+}
+.confirmDelete {
+    margin-right: 15px
 }
