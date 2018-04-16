@@ -178,7 +178,7 @@ export default class UserProfile extends React.Component {
                             });
                         }}
                         >
-                        CONFIRM
+                        DELETE
                         </button>
                         <button>CLOSE</button>
                       </div>
