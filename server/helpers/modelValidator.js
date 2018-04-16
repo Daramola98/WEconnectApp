@@ -14,7 +14,7 @@ function modelValidator(validationRules) {
       !== req.body.confirmPassword && !errors) {
       validationErrors.push('Passwords dont match');
       res.status(400)
-        .json(validationErrors);
+        .json({ validationErrors });
     }
 
     if (errors && validationErrors.length === 0) {
@@ -26,7 +26,7 @@ function modelValidator(validationRules) {
         validationErrors.push('Passwords dont match');
       }
       res.status(400)
-        .json(validationErrors);
+        .json({ validationErrors });
     }
     if (!errors && validationErrors.length === 0) {
       next();

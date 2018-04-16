@@ -1,10 +1,11 @@
-import { FETCH_BUSINESSES, REGISTER_BUSINESS } from '../actions/actionTypes';
+import { FETCH_BUSINESSES, REGISTER_BUSINESS, UPDATE_BUSINESS } from '../actions/actionTypes';
 
 const initialState = {
   businesses: [],
   loading: false,
   noOfBusinessesCreated: 0,
-  error: null
+  error: null,
+  businessUpdated: false
 };
 
 /**
@@ -23,7 +24,8 @@ function businessesReducer(state = initialState, action) {
       return { ...state, loading: false, businesses };
     case REGISTER_BUSINESS:
       return { ...state, noOfBusinessesCreated: state.noOfBusinessesCreated + 1 };
-
+    case UPDATE_BUSINESS:
+      return { ...state, businessUpdated: true };
     default:
       return state;
   }

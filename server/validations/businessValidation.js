@@ -157,6 +157,9 @@ export const businessUpdateValidation = {
    */
 export const businessExists = (req, res, next) => {
   handleInputFormat(req);
+  if (!req.body.name && !req.body.email) {
+    return next();
+  }
   if (req.body.name) {
     Business
       .find({
@@ -192,7 +195,8 @@ export const businessExists = (req, res, next) => {
         }
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
+  } else {
+    return next();
   }
-  // next();
 };
 
