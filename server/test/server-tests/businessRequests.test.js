@@ -93,8 +93,8 @@ describe(`${baseEndpoint}`, () => {
         .send(businessDetails3)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0]).to.equal('Business Address is required');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Business Address is required');
           // expect(res.body[1]).to.equal('Business Address is required');
           done();
         });
@@ -164,10 +164,10 @@ describe(`${baseEndpoint}`, () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0]).to.equal('Business name is required');
-          expect(res.body[1]).to.equal('Business Name should be a valid string');
-          expect(res.body[2]).to.equal('Business description is required');
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Business name is required');
+          expect(res.body.validationErrors[1]).to.equal('Business Name should be a valid string');
+          expect(res.body.validationErrors[2]).to.equal('Business description is required');
           done();
         });
     });
@@ -529,7 +529,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Review is required');
+          expect(res.body.validationErrors[0]).to.equal('Review is required');
           done();
         });
     });
