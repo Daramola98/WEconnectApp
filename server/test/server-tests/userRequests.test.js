@@ -107,7 +107,7 @@ describe(`${baseEndpoint}`, () => {
         .send(userDetails6)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Passwords dont match');
+          expect(res.body.validationErrors[0]).to.equal('Passwords dont match');
           done();
         });
     });
@@ -286,7 +286,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', userToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Enter a Valid Email Address');
+          expect(res.body.validationErrors[0]).to.equal('Enter a Valid Email Address');
           done();
         });
     });
