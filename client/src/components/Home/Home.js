@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import HomeImageSlider from './HomeImageSlider';
 
 const Home = props => (
@@ -17,8 +18,8 @@ const Home = props => (
                             </p>
                         </div>
                         <div className="card-action">
-                            <a href="signUp.html">Sign Up</a>
-                            <a href="login.html">Login</a>
+                            <Link to="/signUp">Sign Up</Link>
+                            <Link to="/login">Login</Link>
                         </div>
                     </div>
                 </div>
@@ -35,7 +36,7 @@ const Home = props => (
                             </p>
                         </div>
                         <div className="card-action">
-                            <a href="about.html">About WEconnect</a>
+                            <Link to="/aboutUs">About WEconnect</Link>
                         </div>
                     </div>
                 </div>
@@ -49,7 +50,7 @@ const Home = props => (
                             </p>
                         </div>
                         <div className="card-action">
-                            <a href="contact.html">Contact Us</a>
+                            <Link to="/contactUs">Contact Us</Link>
                         </div>
                     </div>
                 </div>
@@ -66,8 +67,10 @@ const Home = props => (
                             </p>
                         </div>
                         <div className="card-action">
-                            <a href="signUp.html">Sign Up</a>
-                            <a href="login.html">Login</a>
+                            <div>
+                            <Link to="/signUp">Sign Up</Link>
+                            <Link to="/login">Login</Link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -83,8 +86,8 @@ const Home = props => (
                                 businesses they have interacted with.
                             </p>
                         </div>
-                        <div className="card-action">
-                            <a href="about.html">About WEconnect</a>
+                        <div className="card-action action-aboutlink">
+                            <Link to="/aboutUs">About WEconnect</Link>
                         </div>
                     </div>
                 </div>
@@ -97,8 +100,8 @@ const Home = props => (
                                  the form in the contact us form in the link below
                             </p>
                         </div>
-                        <div className="card-action">
-                            <a href="contact.html">Contact Us</a>
+                        <div className="card-action action-contactlink">
+                            <Link to="/contactUs">Contact Us</Link>
                         </div>
                     </div>
                 </div>

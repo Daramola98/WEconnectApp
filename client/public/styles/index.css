@@ -39,3 +39,6 @@ li.active {
 .confirmDelete {
     margin-right: 15px
 }
+.home-card .card-content p {
+    height: 154px
+}
