@@ -24,16 +24,16 @@ module.exports = {
         test: /(\.s?css)$/,
         loader: ['style-loader', 'css-loader', 'sass-loader']
       },
-      // {
-      //   test: /\.s?css$/,
-      //   loader: 'style-loader!css-loader!sass-loader'
-      // },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader'
         },
+      },
+      {
+        test: /\.less$/,
+        loader: 'less-loader' // compiles Less to CSS
       },
       {
         test: /\.html$/,

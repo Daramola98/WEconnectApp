@@ -1,13 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import alertify from 'alertifyjs';
 import Errors from '../Messages/Errors';
 
 /**
  *
- *@class SignUp
- *@classdesc creates a React component- SignUp
+ *@class UpdateUser
+ *@classdesc creates a React component- UpdateUser
  */
-export default class SignUp extends React.Component {
+export default class UpdateUser extends React.Component {
   state = {
     user: {
       firstname: '',
@@ -28,8 +30,8 @@ export default class SignUp extends React.Component {
    * @return {void} no return or void
    */
   componentWillMount() {
-    if (this.props.usersReducer.authenticated) {
-      this.props.history.push('/userProfile');
+    if (this.props.usersReducer.authenticated !== true) {
+      this.props.history.push('/login');
     }
   }
 
@@ -42,7 +44,7 @@ export default class SignUp extends React.Component {
     onChange = e =>
       this.setState({
         ...this.state,
-        business: { ...this.state.business, [e.target.name]: e.target.value }
+        user: { ...this.state.user, [e.target.name]: e.target.value }
       });
 
   /**
@@ -62,10 +64,15 @@ export default class SignUp extends React.Component {
           userDetails[key] = this.state.user[key];
         }
       }
-      this.props.signUp(userDetails)
+      this.props.updateUser(userDetails)
         .then(() => {
-          NotificationManager.success('Update Successful', 'Successful');
-          setTimeout(() => this.props.history.push('/userProfile'), 2000);
+          // NotificationManager.success('Update Successful', 'Successful');
+          // NotificationManager.warning('Redirecting to login page', 'Login to view changes made');
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.success('Updated Successfully');
+          alertify.warning('Redirecting to login page!, You need to login to view changes made');
+          this.props.logout();
+          setTimeout(() => this.props.history.push('/login'), 4000);
         })
         .catch((error) => {
           if (error && error.response.data.validationErrors) {
@@ -88,6 +95,9 @@ export default class SignUp extends React.Component {
     */
     render() {
       const { errors } = this.state;
+      const {
+        firstname, lastname, email, telephoneNumber, homeNumber
+      } = this.state.user;
       return <div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
@@ -116,7 +126,7 @@ export default class SignUp extends React.Component {
                       </i>
                       <label htmlFor="firstname">First Name</label>
 
-                      <input type="text" ref="firstname" pattern="[A-Za-z]+$" title="should contain only alphabets" minLength="3" maxLength="50" className="validate" />
+                      <input type="text" name="firstname" pattern="[A-Za-z]+$" title="should contain only alphabets" value={firstname} onChange={this.onChange} minLength="3" maxLength="50" className="validate" />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">
@@ -124,14 +134,14 @@ export default class SignUp extends React.Component {
                       </i>
                       <label htmlFor="lastname">Last Name</label>
 
-                      <input type="text" ref="lastname" pattern="[A-Za-z]+$" title="should contain only alphabets" minLength="3" maxLength="50" className="validate" />
+                      <input type="text" name="lastname" pattern="[A-Za-z]+$" value={lastname} onChange={this.onChange} title="should contain only alphabets" minLength="3" maxLength="50" className="validate" />
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">email</i>
                       <label htmlFor="email">Email Address</label>
-                      <input type="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="johndoe@gmail.com" ref="email" className="validate" />
+                      <input type="email" value={email} onChange={this.onChange} pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="johndoe@gmail.com" name="email" className="validate" />
                     </div>
                   </div>
                   <div className="row">
@@ -141,13 +151,13 @@ export default class SignUp extends React.Component {
                         Telephone Number
                       </label>
 
-                      <input type="text" ref="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
+                      <input type="text" name="telephoneNumber" value={telephoneNumber} onChange={this.onChange} pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">phone</i>
                       <label htmlFor="homeNumber">Home Number</label>
 
-                      <input type="text" ref="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
+                      <input type="text" name="homeNumber" value={homeNumber} onChange={this.onChange} pattern="^[0-9]+$" minLength="7" maxLength="11" className="validate" />
                     </div>
                   </div>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { Input } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
+import alertify from 'alertifyjs';
 import Errors from '../Messages/Errors';
 
 /**
@@ -71,8 +72,10 @@ export default class UpdateBusiness extends React.Component {
       }
       this.props.updateBusiness(this.props.match.params.id, businessDetails)
         .then((response) => {
-          NotificationManager.success('Business Updated', 'Successful');
-          setTimeout(() => this.props.history.push(`/businessProfile${this.props.match.params.id}`), 2000);
+        //   NotificationManager.success('Business Updated', 'Successful');
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.success('Business Updated Successfully');
+          setTimeout(() => this.props.history.push(`/businessProfile${this.props.match.params.id}`), 4000);
         })
         .catch((error) => {
           if (error && error.response.data.validationErrors) {

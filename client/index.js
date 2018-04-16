@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import { BrowserHistory } from 'react-router';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'react-notifications/lib/notifications.css';
+import 'alertifyjs/build/css/alertify.min.css';
+import 'alertifyjs/build/css/themes/default.min.css';
 import WeConnectStore from './src/store/store';
 import { userLoggedIn } from './src/store/actions/auth';
 import setAuthorizationHeader from './src/utils/setAuthorizationHeader';
@@ -17,6 +19,7 @@ import Login from './src/containers/login';
 import Header from './src/containers/navigation';
 import RegisterBusiness from './src/containers/registerBusiness';
 import UpdateBusiness from './src/containers/updateBusiness';
+import UpdateUser from './src/containers/updateUser';
 
 import App from './src/components/App';
 import AboutUs from './src/components/Home/AboutUs';
@@ -48,6 +51,7 @@ ReactDOM.render(
       <Route path = '/signUp' component={SignUp}/>
       <Route path = '/registerBusiness' component={RegisterBusiness}/>
       <Route path = '/updateBusiness:id' component={UpdateBusiness}/>
+      <Route path = '/updateUserProfile' component={UpdateUser}/>
     </div>
   </Router>
 </Provider>,

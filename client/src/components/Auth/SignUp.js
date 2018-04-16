@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import alertify from 'alertifyjs';
 import Errors from '../Messages/Errors';
 
 /**
  *
- *@class UpdateUser
- *@classdesc creates a React component- UpdateUser
+ *@class SignUp
+ *@classdesc creates a React component- SignUp
  */
-export default class UpdateUser extends React.Component {
+export default class SignUp extends React.Component {
     state = {
       errors: {
         message: null,
@@ -58,8 +59,10 @@ export default class UpdateUser extends React.Component {
       }
       this.props.signUp(userDetails)
         .then(() => {
-          NotificationManager.success('Registration Successful', 'Successful');
-          setTimeout(() => this.props.history.push('/userProfile'), 2000);
+          // NotificationManager.success('Registration Successful', 'Successful');
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.success('Registration Successful');
+          setTimeout(() => this.props.history.push('/userProfile'), 4000);
         })
         .catch((error) => {
           if (error && error.response.data.validationErrors) {
