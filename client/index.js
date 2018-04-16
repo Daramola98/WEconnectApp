@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import decode from 'jwt-decode';
 import { Provider } from 'react-redux';
 import { BrowserHistory } from 'react-router';
-import { BrowserRouter as Router, Route, Switch, IndexRoute } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'react-notifications/lib/notifications.css';
 import WeConnectStore from './src/store/store';
 import { userLoggedIn } from './src/store/actions/auth';
@@ -16,9 +16,9 @@ import UserProfile from './src/containers/userProfile';
 import Login from './src/containers/login';
 import Header from './src/containers/navigation';
 import RegisterBusiness from './src/containers/registerBusiness';
+import UpdateBusiness from './src/containers/updateBusiness';
 
 import App from './src/components/App';
-import UpdateBusiness from './src/components/Businesses/UpdateBusiness';
 import AboutUs from './src/components/Home/AboutUs';
 import HowItWorks from './src/components/Home/HowItWorks';
 import ContactUs from './src/components/Home/ContactUs';
@@ -47,7 +47,7 @@ ReactDOM.render(
       <Route path = '/login' component={Login}/>
       <Route path = '/signUp' component={SignUp}/>
       <Route path = '/registerBusiness' component={RegisterBusiness}/>
-      <Route path = '/updateBusiness' component={UpdateBusiness}/>
+      <Route path = '/updateBusiness:id' component={UpdateBusiness}/>
     </div>
   </Router>
 </Provider>,

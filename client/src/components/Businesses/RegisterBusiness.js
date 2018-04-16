@@ -30,8 +30,6 @@ export default class RegisterBusiness extends React.Component {
         telephoneNumber: '',
         homeNumber: ''
       },
-      locationValue: 'Choose your location',
-      categoryValue: 'Choose your category',
       errors: {
         message: null,
         conflict: null
@@ -160,7 +158,7 @@ render() {
               </div>
               <div className="row">
                 <div className="input-field col s12 m6 l6">
-                  <Input type="select" name="location" value={business.location} onChange={this.onChange}>
+                  <Input type="select" name="location" value={business.location} onChange={this.onChange} required>
                     <option value="null" disabled>
                       Choose Your Location
                     </option>
@@ -169,7 +167,7 @@ render() {
                   {/* <label>Location</label> */}
                 </div>
                 <div className="input-field col s12 m6 l6">
-                  <Input type="select" name="category" value={business.category} onChange={this.onChange}>
+                  <Input type="select" name="category" value={business.category} onChange={this.onChange} required>
                     <option value="null" disabled>
                       Choose Your Category
                     </option>

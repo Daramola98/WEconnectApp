@@ -116,10 +116,10 @@ export default class UserProfile extends React.Component {
                           this.props.usersReducer.businesses.map((business, i) => (
                                 <Business business={business} key={i}>
                                   <td key={'update'}>
-                                    <Link to="/updateBusiness">UPDATE</Link>
+                                    <Link to={`/updateBusiness${business.id}`}>UPDATE</Link>
                                   </td>
                                   <td key={'delete'}>
-                                    <Link to="/delete">DELETE</Link>
+                                    <Link to={`/delete${business.id}`}>DELETE</Link>
                                   </td>
                                 </Business>
                               )) : <tr>

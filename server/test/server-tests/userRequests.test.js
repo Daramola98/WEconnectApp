@@ -107,7 +107,7 @@ describe(`${baseEndpoint}`, () => {
         .send(userDetails6)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Passwords dont match');
+          expect(res.body.validationErrors[0]).to.equal('Passwords dont match');
           done();
         });
     });
@@ -126,11 +126,11 @@ describe(`${baseEndpoint}`, () => {
         .send(userDetails6)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Firstname is required');
-          expect(res.body[1]).to.equal('Firstname should be a valid string');
-          expect(res.body[2]).to.equal('Lastname is required');
-          expect(res.body[3]).to.equal('Lastname should be a valid string');
-          expect(res.body[4]).to.equal('Passwords dont match');
+          expect(res.body.validationErrors[0]).to.equal('Firstname is required');
+          expect(res.body.validationErrors[1]).to.equal('Firstname should be a valid string');
+          expect(res.body.validationErrors[2]).to.equal('Lastname is required');
+          expect(res.body.validationErrors[3]).to.equal('Lastname should be a valid string');
+          expect(res.body.validationErrors[4]).to.equal('Passwords dont match');
           done();
         });
     });
@@ -286,7 +286,7 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', userToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body[0]).to.equal('Enter a Valid Email Address');
+          expect(res.body.validationErrors[0]).to.equal('Enter a Valid Email Address');
           done();
         });
     });
