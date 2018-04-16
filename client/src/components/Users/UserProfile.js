@@ -1,6 +1,7 @@
 import React from 'react';
-import { Tabs, Tab } from 'react-materialize';
+import { Tabs, Tab, Modal } from 'react-materialize';
 import { Link } from 'react-router-dom';
+import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Business from '../Businesses/Business';
 
 /**
@@ -48,8 +49,8 @@ export default class UserProfile extends React.Component {
     const {
       firstname, lastname, email, telephoneNumber, homeNumber
     } = this.props.usersReducer.user;
-    return (
-    <div className="row container">
+    let businessId;
+    return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue lighten-1 white-text center">
@@ -58,46 +59,46 @@ export default class UserProfile extends React.Component {
             <div className="card-content">
               <div className="row">
                 <Tabs className="tab-demo z-depth-1">
-                  <Tab title="Information" active >
-                   <div id="personal_info" className="col s12 m12 l12 ">
-                    <ul className="collection">
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle blue lighten-1">
-                          account_circle
-                        </i>
-                        <span className="title">
-                          <h5>Full Name</h5>
-                        </span>
-                        <p>{`${firstname} ${lastname}`}</p>
-                      </li>
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle blue lighten-1">
-                          email
-                        </i>
-                        <span className="title">
-                          <h5>Email</h5>
-                        </span>
-                        <p>{email}</p>
-                      </li>
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle blue lighten-1">
-                          phone
-                        </i>
-                        <span className="title">
-                          <h5>Telephone Number</h5>
-                        </span>
-                        <p>{telephoneNumber}</p>
-                      </li>
-                      <li className="collection-item avatar">
-                        <i className="material-icons circle blue lighten-1">
-                          phone
-                        </i>
-                        <span className="title">
-                          <h5>Home Number</h5>
-                        </span>
-                        <p>{homeNumber || 'Nil'} </p>
-                      </li>
-                    </ul>
+                  <Tab title="Information" active>
+                    <div id="personal_info" className="col s12 m12 l12 ">
+                      <ul className="collection">
+                        <li className="collection-item avatar">
+                          <i className="material-icons circle blue lighten-1">
+                            account_circle
+                          </i>
+                          <span className="title">
+                            <h5>Full Name</h5>
+                          </span>
+                          <p>{`${firstname} ${lastname}`}</p>
+                        </li>
+                        <li className="collection-item avatar">
+                          <i className="material-icons circle blue lighten-1">
+                            email
+                          </i>
+                          <span className="title">
+                            <h5>Email</h5>
+                          </span>
+                          <p>{email}</p>
+                        </li>
+                        <li className="collection-item avatar">
+                          <i className="material-icons circle blue lighten-1">
+                            phone
+                          </i>
+                          <span className="title">
+                            <h5>Telephone Number</h5>
+                          </span>
+                          <p>{telephoneNumber}</p>
+                        </li>
+                        <li className="collection-item avatar">
+                          <i className="material-icons circle blue lighten-1">
+                            phone
+                          </i>
+                          <span className="title">
+                            <h5>Home Number</h5>
+                          </span>
+                          <p>{homeNumber || 'Nil'} </p>
+                        </li>
+                      </ul>
                     </div>
                   </Tab>
                   <Tab title="Businesses">
@@ -113,13 +114,22 @@ export default class UserProfile extends React.Component {
 
                         <tbody>
                           {this.props.usersReducer.businesses.length > 0 ?
-                          this.props.usersReducer.businesses.map((business, i) => (
+                           this.props.usersReducer.businesses.map((business, i) => (
                                 <Business business={business} key={i}>
                                   <td key={'update'}>
-                                    <Link to={`/updateBusiness${business.id}`}>UPDATE</Link>
+                                    <Link
+                                      to={`/updateBusiness${business.id}`}
+                                    >
+                                      UPDATE
+                                    </Link>
                                   </td>
                                   <td key={'delete'}>
-                                    <Link to={`/delete${business.id}`}>DELETE</Link>
+                                    <a className="waves-effect waves-light btn-small" onClick={() => {
+                                      businessId = business.id;
+                                      $('#deleteBusiness').modal('open');
+                                    }}>
+                                      DELETE
+                                    </a>
                                   </td>
                                 </Business>
                               )) : <tr>
@@ -154,14 +164,36 @@ export default class UserProfile extends React.Component {
                           </a>
                         </li>
                       </ul>
+                      <Modal
+                      id="deleteBusiness"
+                      header="Confirm Business Deletion"
+                      actions={
+                      <div>
+                        <button className="confirmDelete"
+                        onClick={() => {
+                          this.props.deleteBusiness(businessId)
+                            .then(() => {
+                              NotificationManager.success('Business Deleted', 'Successful');
+                              setTimeout(() => window.location.reload(), 2000);
+                            });
+                        }}
+                        >
+                        DELETE
+                        </button>
+                        <button>CLOSE</button>
+                      </div>
+                    }
+                      >
+                        <strong>DO YOU WANT TO DELETE THIS BUSINESS</strong>
+                      </Modal>
                     </div>
                   </Tab>
                 </Tabs>
+                <NotificationContainer/>
               </div>
             </div>
           </div>
         </div>
-    </div>
-    );
+      </div>;
   }
 }

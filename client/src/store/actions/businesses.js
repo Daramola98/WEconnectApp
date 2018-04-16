@@ -19,6 +19,10 @@ export const updatesBusiness = () => ({
   type: UPDATE_BUSINESS
 });
 
+export const deletesBusiness = () => ({
+  type: UPDATE_BUSINESS
+});
+
 export const setBusinessProfile = business => ({
   type: SET_BUSINESS_PROFILE,
   business
@@ -34,6 +38,12 @@ export const updateBusiness = (businessId, businessDetails) => dispatch =>
   axios.put(`api/v1/businesses/${businessId}`, businessDetails)
     .then((response) => {
       dispatch(updatesBusiness());
+    });
+
+export const deleteBusiness = businessId => dispatch =>
+  axios.delete(`api/v1/businesses/${businessId}`)
+    .then((response) => {
+      dispatch(deletesBusiness());
     });
 
 export const fetchBusiness = businessId => dispatch =>
