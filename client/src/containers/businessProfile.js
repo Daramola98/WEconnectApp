@@ -3,7 +3,8 @@ import BusinessProfile from '../components/Businesses/BusinessProfile';
 import { fetchBusiness } from '../store/actions/businesses';
 
 const mapStateToProps = state => ({
-  businessProfile: state.businessProfile
+  businessProfile: state.businessProfile,
+  user: state.usersReducers
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -113,7 +113,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Owner</h5>
                           </span>
                           <p>
-                            <a href="userProfile.html" className="waves-effect waves-light btn blue lighten-1">{this.props.businessProfile.userId}</a>
+                            <a href="" className="waves-effect waves-light btn blue lighten-1">{this.props.businessProfile.userId}</a>
                           </p>
                         </li>
                       </ul>
@@ -147,27 +147,7 @@ export default class BusinessProfile extends React.Component {
                                 </div>
                                 <div>
                                 <ul>
-                                  <li>
-                                    <i className="material-icons prefix">account_circle</i>
-                                    <a href="userProfile.html">
-                                      <span>Ajiboye Damilola</span>
-                                    </a>
-                                    <p>This business is awesome
-                                        you guys should try
-                                        it out you wont be dissapointed
-                                    </p>
-                                    <hr/>
-                                  </li>
-                                  <li>
-                                    <i className="material-icons prefix">account_circle</i>
-                                    <a href="userProfile.html">
-                                      <span>Ajiboye Daramola</span>
-                                    </a>
-                                      <p>This business is
-                                        bad skip it or you would be disappointed
-                                      </p>
-                                      <hr/>
-                                  </li>
+
                                 </ul>
                               </div>
                             </div>
