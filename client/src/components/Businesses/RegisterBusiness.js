@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import { Input } from 'react-materialize';
+import alertify from 'alertifyjs';
 import Errors from '../Messages/Errors';
 
 
@@ -95,8 +96,10 @@ handleRegisterBusinessSubmit = (e) => {
   }
   this.props.registerBusiness(businessDetails)
     .then((response) => {
-      NotificationManager.success('Business Registered', 'Successful');
-      setTimeout(() => this.props.history.push('/userProfile'), 2000);
+      // NotificationManager.success('Business Registered', 'Successful');
+      alertify.set('notifier', 'position', 'top-right');
+      alertify.success('Business Registered Successfully');
+      setTimeout(() => this.props.history.push('/userProfile'), 4000);
     })
     .catch((error) => {
       if (error && error.response.data.validationErrors) {

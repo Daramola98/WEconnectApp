@@ -137,14 +137,14 @@ export const userUpdateValidation = {
     optional: true,
     trim: true,
     notEmpty: true,
-    isString: {
+    isEqualString: {
       errorMessage: 'Telephone Number should be number but in string format e.g "07040110450"'
     },
     errorMessage: 'Telephone Number is required',
   },
   homeNumber: {
     trim: true,
-    isString: {
+    isEqualString: {
       errorMessage: 'Home Number should be number but in string format e.g "07040110450"'
     },
     notEmpty: false,

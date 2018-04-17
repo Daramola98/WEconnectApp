@@ -182,6 +182,7 @@ export default class Users {
         .update(req.body, { fields: Object.keys(req.body) })
         .then((updatedUser) => {
           const updatedUserDetails = {
+            userId: updatedUser.id,
             firstname: updatedUser.firstname,
             lastname: updatedUser.lastname,
             email: updatedUser.email,
