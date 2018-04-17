@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs, Tab } from 'react-materialize';
+import Review from '../Review/Review';
 
 /**
  *
@@ -22,6 +23,7 @@ export default class BusinessProfile extends React.Component {
     * @memberof React Component
     */
   render() {
+    const { business } = this.props.businessProfile;
     return (
       <div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
@@ -41,7 +43,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Name</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.name}</strong>
+                            <strong>{business.name}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -50,7 +52,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Contact Email</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.email}</strong>
+                            <strong>{business.email}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -59,7 +61,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Telephone Number</h5>
                           </span>
                           <p>
-                            <strong> {this.props.businessProfile.telephoneNumber}</strong>
+                            <strong> {business.telephoneNumber}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -68,7 +70,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Office Phone</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.homeNumber || 'Nil'}</strong>
+                            <strong>{business.homeNumber || 'Nil'}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -77,7 +79,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Category</h5>
                           </span>
                           <p>
-                           <strong>{this.props.businessProfile.category}</strong>
+                           <strong>{business.category}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -86,7 +88,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Location</h5>
                           </span>
                           <p>
-                           <strong>{this.props.businessProfile.location}</strong>
+                           <strong>{business.location}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -95,7 +97,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Address</h5>
                           </span>
                           <p>
-                            <strong>{this.props.businessProfile.address}</strong>
+                            <strong>{business.address}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -104,7 +106,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Description</h5>
                           </span>
                           <p>
-                            {this.props.businessProfile.description}
+                            {business.description}
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -113,7 +115,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Owner</h5>
                           </span>
                           <p>
-                            <a href="" className="waves-effect waves-light btn blue lighten-1">{this.props.businessProfile.userId}</a>
+                            <a href="" className="waves-effect waves-light btn blue lighten-1">{business.userId}</a>
                           </p>
                         </li>
                       </ul>
@@ -147,7 +149,12 @@ export default class BusinessProfile extends React.Component {
                                 </div>
                                 <div>
                                 <ul>
-
+                                  {
+                                   this.props.businessProfile.reviews.length > 1 ?
+                                   this.props.businessProfile.review.map((review, i) =>
+                                    <Review key={review.id} review={review}/>) :
+                                   <li className="blue-text">NO REVIEWS</li>
+                                  }
                                 </ul>
                               </div>
                             </div>

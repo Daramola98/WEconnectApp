@@ -104,7 +104,7 @@ export default class BusinessListing extends React.Component {
                             .map((business, i) =>
                             <Business business={business}
                             key={i}
-                            onClick={() => setBusinessProfile(business)} />)}
+                             />)}
                     </tbody>
                 </table>
             </div>
