@@ -20,5 +20,10 @@ export const fetchReviews = businessId => dispatch =>
   axios.get(`api/v1/businesses/${businessId}/reviews`)
     .then((response) => {
       dispatch(fetchBusinessReviews(response.data.reviews));
+    })
+    .catch((error) => {
+      if (error) {
+        Promise.reject(error.response.data.message);
+      }
     });
 
