@@ -53,6 +53,33 @@ export const findBusinessByCategory = (req, res) => {
 };
 
   /**
+   * Filter businesses in the database by the provided name
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const findBusinessByName = (req, res) => {
+  const searchName = req.query.name.replace(/ /g, '');
+  return Business
+    .findAll({
+      where: {
+        name: {
+          $ilike: `%${searchName}%`
+        }
+      }
+    })
+    .then((businesses) => {
+      if (businesses.length > 0) {
+        return res.status(200)
+          .json({ message: businessesFoundMessage, businesses });
+      }
+      res.status(404).json({ message: 'No Business found with this name' });
+    })
+    .catch(err => res.status(500).json(serverErrorMessage.message));
+};
+
+/**
    * Filter businesses in the database by the provided location
    * @param {object} req - The request object
    * @param {object} res - The response object

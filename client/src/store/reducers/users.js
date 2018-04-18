@@ -1,4 +1,4 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT, FETCH_USER_BUSINESSES, UPDATE_USER } from '../actions/actionTypes';
+import { USER_LOGGED_IN, USER_LOGGED_OUT, FETCH_USER_BUSINESSES, UPDATE_USER, FETCH_USER_BUSINESSES_FAILED } from '../actions/actionTypes';
 
 const initialState = {
   user: {},
@@ -21,6 +21,8 @@ function usersReducer(state = initialState, action) {
       return { ...state, user: {}, authenticated: false };
     case FETCH_USER_BUSINESSES:
       return { ...state, businesses: action.businesses };
+    case FETCH_USER_BUSINESSES_FAILED:
+      return { ...state, businesses: [] };
     case UPDATE_USER:
       return { ...state, user: action.user };
     default:

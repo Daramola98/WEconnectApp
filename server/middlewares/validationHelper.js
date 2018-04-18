@@ -112,6 +112,17 @@ export const businessQueryCheck = (req, res, next) => {
         errorMessage: 'Category should be more than 0 and not greater than 50 characters'
       },
       errorMessage: 'Business category should be a string'
+    },
+    name: {
+      trim: true,
+      optional: true,
+      notEmpty: {
+        errorMessage: 'Business Name is required'
+      },
+      isLength: {
+        options: [{ min: 1 }, { max: 50 }],
+        errorMessage: 'Business Name should be more than 0 and not greater than 50 characters'
+      }
     }
   });
 

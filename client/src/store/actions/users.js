@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES, UPDATE_USER } from './actionTypes';
+import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES, FETCH_USER_BUSINESSES_FAILED, UPDATE_USER } from './actionTypes';
 import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
 import { userLoggedIn } from './auth';
 
@@ -17,6 +17,10 @@ export const updatesUser = user => ({
 export const fetchUserBusinesses = businesses => ({
   type: FETCH_USER_BUSINESSES,
   businesses
+});
+
+export const fetchUserBusinessesFailed = () => ({
+  type: FETCH_USER_BUSINESSES,
 });
 
 export const signUp = userDetails => dispatch =>
@@ -39,5 +43,5 @@ export const getUserBusinesses = () => dispatch =>
     .then((response) => {
       dispatch(fetchUserBusinesses(response.data));
     })
-    .catch(error => error.response);
+    .catch(error => dispatch(fetchUserBusinessesFailed));
 
