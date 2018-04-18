@@ -46,6 +46,11 @@ export default class BusinessProfile extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    if (!this.props.user.authenticated) {
+      alertify.set('notifier', 'position', 'top-right');
+      alertify.warning('You need to be logged in to post a review');
+      setTimeout(() => this.props.history.push('/login'), 2000);
+    }
     const review = this.refs.review.value;
     this.props.postReview(this.props.match.params.id, { review })
       .then((response) => {
@@ -275,6 +280,11 @@ export default class BusinessProfile extends React.Component {
                 <Modal id="replyReview" header={'REPLY TO REVIEW'}>
                   <form onSubmit={(e) => {
                       e.preventDefault();
+                      if (!this.props.user.authenticated) {
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.warning('You need to be logged in to post a review');
+                        setTimeout(() => this.props.history.push('/login'), 2000);
+                      }
                       this.props
                       .postReviewResponse(
                         this.props.match.params.id,

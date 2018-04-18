@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { POST_REVIEW, FETCH_BUSINESS_REVIEWS, POST_REVIEW_RESPONSE } from './actionTypes';
+import { POST_REVIEW, FETCH_BUSINESS_REVIEWS, POST_REVIEW_RESPONSE, FETCH_BUSINESS_REVIEWS_FAILED } from './actionTypes';
 
 export const postsReview = () => ({
   type: POST_REVIEW
@@ -12,6 +12,10 @@ export const postsReviewResponse = () => ({
 export const fetchBusinessReviews = reviews => ({
   type: FETCH_BUSINESS_REVIEWS,
   reviews
+});
+
+export const fetchBusinessReviewsFailed = () => ({
+  type: FETCH_BUSINESS_REVIEWS_FAILED,
 });
 
 export const postReview = (businessId, review) => dispatch =>
@@ -33,7 +37,7 @@ export const fetchReviews = businessId => dispatch =>
     })
     .catch((error) => {
       if (error) {
-        Promise.reject(error.response.data.message);
+        dispatch(fetchBusinessReviewsFailed());
       }
     });
 

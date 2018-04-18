@@ -1,4 +1,4 @@
-import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_REVIEWS, POST_REVIEW } from '../actions/actionTypes';
+import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_REVIEWS, FETCH_BUSINESS_REVIEWS_FAILED, POST_REVIEW } from '../actions/actionTypes';
 
 const initialState = {
   business: {},
@@ -20,6 +20,9 @@ function businessProfile(state = initialState, action) {
 
     case FETCH_BUSINESS_REVIEWS:
       return { ...state, reviews: action.reviews };
+
+    case FETCH_BUSINESS_REVIEWS_FAILED:
+      return { ...state, reviews: [] };
 
     case POST_REVIEW:
       return { ...state, reviewSubmitted: true };
