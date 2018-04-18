@@ -83,7 +83,7 @@ export default class BusinessProfile extends React.Component {
             </div>
             <div className="card-content">
               <div className="row">
-                <Tabs className="tab-demo z-depth-1">
+                <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
                   <Tab title="Information" active className="blue-text lighten-1">
                     <div id="businessInfo" className="col s12 m12 l12 ">
                       <ul className="collection">

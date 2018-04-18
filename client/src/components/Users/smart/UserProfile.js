@@ -64,7 +64,7 @@ export default class UserProfile extends React.Component {
             </div>
             <div className="card-content">
               <div className="row">
-                <Tabs className="tab-demo z-depth-1">
+                <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
                   <Tab title="Information" active>
                     <div id="personal_info" className="col s12 m12 l12 ">
                       <ul className="collection">
