@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { NotificationManager, NotificationContainer } from 'react-notifications';
 import { Input } from 'react-materialize';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/Errors';
+import Errors from '../../Messages/presentational/Errors';
 
 
 /**

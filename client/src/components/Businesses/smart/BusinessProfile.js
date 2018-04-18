@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tabs, Tab, Modal } from 'react-materialize';
 import alertify from 'alertifyjs';
-import Review from '../Review/Review';
-import Errors from '../Messages/Errors';
+import Review from '../../Review/presentational/Review';
+import Errors from '../../Messages/presentational/Errors';
 
 /**
  *

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Input } from 'react-materialize';
-import Business from './Business';
+import Business from '../presentational/Business';
 
 /**
  *
