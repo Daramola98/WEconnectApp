@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/Errors';
+import Errors from '../Messages/presentational/Errors';
 
 /**
  *

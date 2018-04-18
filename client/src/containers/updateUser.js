@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UpdateUser from '../components/Users/UpdateUser';
+import UpdateUser from '../components/Users/smart/UpdateUser';
 import { updateUser } from '../store/actions/users';
 import { logout } from '../store/actions/auth';
 

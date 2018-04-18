@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tabs, Tab, Modal } from 'react-materialize';
 import { Link } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
-import Business from '../Businesses/Business';
+import alertify from 'alertifyjs';
+import Business from '../../Businesses/presentational/Business';
 
 /**
  *
@@ -38,7 +38,13 @@ export default class UserProfile extends React.Component {
    * @return {void} no return or void
    */
   componentDidMount() {
-    this.props.fetchUserBusinesses();
+    this.props.fetchUserBusinesses()
+      // .then(() => $('ul.tabs li:nth-child(2)').children().addClass('active'))
+      .catch((error) => {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.warning('Session Expired Login again');
+        setTimeout(() => this.props.history.push('/login'), 2000);
+      });
   }
   /**
        * Creates a React Component
@@ -133,7 +139,7 @@ export default class UserProfile extends React.Component {
                                   </td>
                                 </Business>
                               )) : <tr>
-                              <td colspan="3">No Businesses !!</td>
+                              <td colSpan="3">No Businesses !!</td>
                             </tr>}
                         </tbody>
                       </table>
@@ -173,7 +179,8 @@ export default class UserProfile extends React.Component {
                         onClick={() => {
                           this.props.deleteBusiness(businessId)
                             .then(() => {
-                              NotificationManager.success('Business Deleted', 'Successful');
+                              alertify.set('notifier', 'position', 'top-right');
+                              alertify.success('Business Deleted');
                               setTimeout(() => window.location.reload(), 2000);
                             });
                         }}
@@ -189,7 +196,6 @@ export default class UserProfile extends React.Component {
                     </div>
                   </Tab>
                 </Tabs>
-                <NotificationContainer/>
               </div>
             </div>
           </div>

@@ -22,10 +22,10 @@ import UpdateBusiness from './src/containers/updateBusiness';
 import UpdateUser from './src/containers/updateUser';
 
 import App from './src/components/App';
-import AboutUs from './src/components/Home/AboutUs';
-import HowItWorks from './src/components/Home/HowItWorks';
-import ContactUs from './src/components/Home/ContactUs';
-import Home from './src/components/Home/Home';
+import AboutUs from './src/components/Home/presentational/AboutUs';
+import HowItWorks from './src/components/Home/presentational/HowItWorks';
+import ContactUs from './src/components/Home/smart/ContactUs';
+import Home from './src/components/Home/presentational/Home';
 
 import style from './public/styles/index.css';
 

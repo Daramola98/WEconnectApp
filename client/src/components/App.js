@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './NavBar/Header';
+import Header from './NavBar/smart/Header';
 
 /**
  *

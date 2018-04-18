@@ -1,6 +1,6 @@
 import React from 'react';
-import GuestNavBar from './GuestNavBar';
-import UserNavBar from './UserNavBar';
+import GuestNavBar from '../presentational/GuestNavBar';
+import UserNavBar from '../presentational/UserNavBar';
 
 /**
  *

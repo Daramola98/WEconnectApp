@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Input } from 'react-materialize';
-import Business from './Business';
+import Business from '../presentational/Business';
 
 /**
  *
@@ -167,7 +167,7 @@ export default class BusinessListing extends React.Component {
                 {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <tr>
-                  <td colspan="3">NO BUSINESSES</td>
+                  <td colSpan="3">NO BUSINESSES</td>
                 </tr>}
               </tbody>
             </table>

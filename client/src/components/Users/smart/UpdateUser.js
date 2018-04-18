@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/Errors';
+import Errors from '../../Messages/presentational/Errors';
 
 /**
  *
@@ -66,8 +66,6 @@ export default class UpdateUser extends React.Component {
       }
       this.props.updateUser(userDetails)
         .then(() => {
-          // NotificationManager.success('Update Successful', 'Successful');
-          // NotificationManager.warning('Redirecting to login page', 'Login to view changes made');
           alertify.set('notifier', 'position', 'top-right');
           alertify.success('Updated Successfully');
           alertify.warning('Redirecting to login page!, You need to login to view changes made');

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import BusinessProfile from '../components/Businesses/BusinessProfile';
+import BusinessProfile from '../components/Businesses/smart/BusinessProfile';
 import { fetchBusiness } from '../store/actions/businesses';
 import { fetchReviews, postReview, postReviewResponse } from '../store/actions/businessReview';
 
