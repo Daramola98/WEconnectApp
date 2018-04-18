@@ -78,6 +78,7 @@ export default class UpdateBusiness extends React.Component {
           setTimeout(() => this.props.history.push(`/businessProfile${this.props.match.params.id}`), 4000);
         })
         .catch((error) => {
+          window.scroll(0, 0);
           if (error && error.response.data.validationErrors) {
             return this.setState({
               errors:

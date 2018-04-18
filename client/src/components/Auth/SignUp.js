@@ -85,6 +85,7 @@ export default class SignUp extends React.Component {
           setTimeout(() => this.props.history.push('/userProfile'), 4000);
         })
         .catch((error) => {
+          window.scroll(0, 0);
           if (error && error.response.data.validationErrors) {
             return this.setState({
               errors:

@@ -103,7 +103,7 @@ export default class UserProfile extends React.Component {
                   </Tab>
                   <Tab title="Businesses">
                     <div id="businesses" className="col s12 m12 l12 ">
-                      <table className="bordered highlight centered center">
+                      <table className="bordered highlight responsive-table centered center">
                         <thead>
                           <tr>
                             <th>Business Name</th>
@@ -133,7 +133,7 @@ export default class UserProfile extends React.Component {
                                   </td>
                                 </Business>
                               )) : <tr>
-                              <td>No Businesses !!</td>
+                              <td colspan="3">No Businesses !!</td>
                             </tr>}
                         </tbody>
                       </table>
