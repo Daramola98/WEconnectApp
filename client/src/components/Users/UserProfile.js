@@ -180,7 +180,7 @@ export default class UserProfile extends React.Component {
                         >
                         DELETE
                         </button>
-                        <button>CLOSE</button>
+                        <button onClick={() => $('#deleteBusiness').modal('close')}>CLOSE</button>
                       </div>
                     }
                       >

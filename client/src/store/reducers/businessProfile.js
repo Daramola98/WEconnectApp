@@ -1,4 +1,10 @@
-import { SET_BUSINESS_PROFILE } from '../actions/actionTypes';
+import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_REVIEWS, FETCH_BUSINESS_REVIEWS_FAILED, POST_REVIEW } from '../actions/actionTypes';
+
+const initialState = {
+  business: {},
+  reviews: [],
+  reviewSubmitted: false
+};
 
 /**
     * Creates a React Component
@@ -7,10 +13,19 @@ import { SET_BUSINESS_PROFILE } from '../actions/actionTypes';
     * @return {object} the state of the application
     * @memberof React Component
     */
-function businessProfile(state = {}, action) {
+function businessProfile(state = initialState, action) {
   switch (action.type) {
     case SET_BUSINESS_PROFILE:
-      return action.business;
+      return { ...state, business: action.business };
+
+    case FETCH_BUSINESS_REVIEWS:
+      return { ...state, reviews: action.reviews };
+
+    case FETCH_BUSINESS_REVIEWS_FAILED:
+      return { ...state, reviews: [] };
+
+    case POST_REVIEW:
+      return { ...state, reviewSubmitted: true };
 
     default:
       return state;

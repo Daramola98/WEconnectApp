@@ -7,6 +7,7 @@
     "start": "cross-env NODE_ENV=production sequelize db:migrate --env production && babel-node app.js",
     "start:dev": "cross-env NODE_ENV=development nodemon app.js --exec babel-node",
     "start:client": "webpack-dev-server --mode development --open --history-api-fallback",
+    "start:webpack": "babel-node app.js",
     "build:client": "webpack --mode development",
     "build:clientProd": "webpack --mode production",
     "db-migrate": "sequelize db:migrate",

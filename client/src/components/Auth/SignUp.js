@@ -200,7 +200,7 @@ export default class SignUp extends React.Component {
                   <div className="row">
                     <div className="col s12 m12 l6 offset-l3 center">
                       <h6>
-                        <Link>Already have an Account? Login here</Link>
+                        <Link to="/login">Already have an Account? Login here</Link>
                       </h6>
                     </div>
                   </div>

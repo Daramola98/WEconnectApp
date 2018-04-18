@@ -257,10 +257,10 @@ describe(`${baseEndpoint}`, () => {
 
     it('catches validation error for empty input when a location query is passed', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}?location= `)
+        .get(`${baseEndpoint}?location=`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Location is required');
+          expect(res.body.validationErrors[0]).to.equal('Business location should be a string');
           done();
         });
     });
@@ -306,10 +306,10 @@ describe(`${baseEndpoint}`, () => {
 
     it('catches validation error for empty input when a category query is passed', (done) => {
       chai.request(app)
-        .get(`${baseEndpoint}?category= `)
+        .get(`${baseEndpoint}?category=`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Category is required');
+          expect(res.body.validationErrors[0]).to.equal('Business category should be a string');
           done();
         });
     });
