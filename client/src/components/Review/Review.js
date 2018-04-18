@@ -8,7 +8,7 @@ const Review = props => (
     <p>
       {props.review.review}
     </p>
-    <div className="align-right"><span className="blue-text"><u>Reply</u></span></div>
+    {props.children}
     <hr/>
   </li>
 );

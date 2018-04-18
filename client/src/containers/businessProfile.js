@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import BusinessProfile from '../components/Businesses/BusinessProfile';
 import { fetchBusiness } from '../store/actions/businesses';
-import { fetchReviews, postReview } from '../store/actions/businessReview';
+import { fetchReviews, postReview, postReviewResponse } from '../store/actions/businessReview';
 
 const mapStateToProps = state => ({
   businessProfile: state.businessProfile,
@@ -17,6 +17,9 @@ const mapDispatchToProps = dispatch => ({
   },
   postReview(businessId, review) {
     return dispatch(postReview(businessId, review));
+  },
+  postReviewResponse(businessId, reviewId, review) {
+    return dispatch(postReviewResponse(businessId, reviewId, review));
   }
 });
 

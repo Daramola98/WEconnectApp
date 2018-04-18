@@ -36,7 +36,7 @@ li.tab>a {
 li.active {
     background-color: #42A5F5 !important
 }
-.confirmDelete {
+.confirmDelete, .replyReview {
     margin-right: 15px
 }
 .home-card .card-content p {

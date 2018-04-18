@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from 'react-materialize';
+import { Tabs, Tab, Modal } from 'react-materialize';
 import alertify from 'alertifyjs';
 import Review from '../Review/Review';
 import Errors from '../Messages/Errors';
@@ -12,12 +12,14 @@ import Errors from '../Messages/Errors';
  */
 export default class BusinessProfile extends React.Component {
   state = {
-    // userReview: {
-    //   review: ''
-    // },
+    response: {
+      message: ''
+    },
     errors: {
       message: null
-    }
+    },
+    reviewId: null,
+    reviewResponses: []
   }
   /**
     * Creates a React Component
@@ -30,17 +32,17 @@ export default class BusinessProfile extends React.Component {
     this.props.fetchReviews(this.props.match.params.id);
   }
 
-  // /**
-  // * Creates a React Component
-  // * @param {object} e the register business page
-  // * @return {jsx} renders the register business page
-  // * @memberof React Component
-  // */
-  // onChange = e =>
-  //   this.setState({
-  //     ...this.state,
-  //     userReview: { ...this.state.userReview, [e.target.name]: e.target.value }
-  //   });
+  /**
+  * Creates a React Component
+  * @param {object} e the register business page
+  * @return {jsx} renders the register business page
+  * @memberof React Component
+  */
+  onChange = e =>
+    this.setState({
+      ...this.state,
+      response: { ...this.state.response, [e.target.name]: e.target.value }
+    });
 
   onSubmit = (e) => {
     e.preventDefault();
@@ -231,17 +233,38 @@ export default class BusinessProfile extends React.Component {
                           </div>
                           <div>
                             <ul>
-                              {this.props.businessProfile.reviews.length >
-                              0 ? (
-                                this.props.businessProfile.reviews.map((review, i) => (
-                                    <Review
-                                      key={review.id}
-                                      review={review}
-                                    />
-                                  ))
-                              ) : (
-                                <li className="blue-text">NO REVIEWS</li>
-                              )}
+                              {this.props.businessProfile.reviews.length > 0 ?
+                               this.props.businessProfile.reviews.map((review, i) => (
+                                    <Review key={review.id} review={review}>
+                                      <div className="align-right">
+                                        <a
+                                          className="blue-text"
+                                          onClick={() => {
+                                            this.setState({ reviewResponses: review.responses });
+                                            $('#prevReplies').modal('open');
+                                          }}
+                                        >
+                                          <span className="new badge blue">
+                                            {review.responses.length}
+                                          </span>
+                                          <u>View Previous Replies</u>
+                                        </a>
+                                      </div>
+                                      <div className="align-right">
+                                        <a
+                                          className="blue-text"
+                                          onClick={() => {
+                                            this.setState({ reviewId: review.id });
+                                            $('#replyReview').modal('open');
+                                          }}
+                                        >
+                                          <u>Reply</u>
+                                        </a>
+                                      </div>
+                                    </Review>
+                                  )) : <li className="blue-text">
+                                  NO REVIEWS
+                                </li>}
                             </ul>
                           </div>
                         </div>
@@ -249,6 +272,34 @@ export default class BusinessProfile extends React.Component {
                     </div>
                   </Tab>
                 </Tabs>
+                <Modal id="replyReview" header={'REPLY TO REVIEW'}>
+                  <form onSubmit={(e) => {
+                      e.preventDefault();
+                      this.props
+                      .postReviewResponse(
+                        this.props.match.params.id,
+                         this.state.reviewId, this.state.response
+                        )
+                      .then(() => {
+                        alertify.set('notifier', 'position', 'top-right');
+                        alertify.success('Response Submitted');
+                        setTimeout(() => window.location.reload(), 2000);
+                      });
+                      }}>
+                    <input type="text" name="message" minLength="2" value={this.state.response.message} onChange={this.onChange} required />
+                    <button type="submit">SUBMIT</button>
+                  </form>
+                </Modal>
+                <Modal id="prevReplies" header={'PREVIOUS REPLIES'}>
+                  <ul className="collection">
+                    {this.state.reviewResponses.length > 0 ? this.state.reviewResponses.map((response, i) => <li key={response.id} className="collection-item">
+                    <span>{response.userId}</span>
+                    <p>
+                      {response.message}
+                    </p>
+                    </li>) : <li>NO REPLIES</li>}
+                  </ul>
+                </Modal>
               </div>
             </div>
           </div>
