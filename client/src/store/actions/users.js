@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES, UPDATE_USER } from './actionTypes';
+import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
 import { userLoggedIn } from './auth';
 
 
@@ -23,6 +24,7 @@ export const signUp = userDetails => dispatch =>
     .then((response) => {
       const { token } = response.data;
       localStorage.setItem('weConnectToken', token);
+      setAuthorizationHeader(token);
       dispatch(userLoggedIn(response.data.createdUser));
     });
 
