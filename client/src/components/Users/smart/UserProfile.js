@@ -39,6 +39,7 @@ export default class UserProfile extends React.Component {
    */
   componentDidMount() {
     this.props.fetchUserBusinesses()
+      // .then(() => $('ul.tabs li:nth-child(2)').children().addClass('active'))
       .catch((error) => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.warning('Session Expired Login again');
@@ -138,7 +139,7 @@ export default class UserProfile extends React.Component {
                                   </td>
                                 </Business>
                               )) : <tr>
-                              <td colspan="3">No Businesses !!</td>
+                              <td colSpan="3">No Businesses !!</td>
                             </tr>}
                         </tbody>
                       </table>
