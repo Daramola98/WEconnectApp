@@ -59,6 +59,13 @@ export default class BusinessProfile extends React.Component {
         setTimeout(() => window.location.reload(), 2000);
       })
       .catch((error) => {
+        if (error.response.status === 401) {
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.warning('Session Expired Login again');
+          this.props.logout();
+          setTimeout(() => this.props.history.push('/login'), 1000);
+          return;
+        }
         if (error) {
           this.setState({
             errors:

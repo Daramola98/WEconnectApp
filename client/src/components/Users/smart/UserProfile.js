@@ -39,11 +39,15 @@ export default class UserProfile extends React.Component {
    */
   componentDidMount() {
     this.props.fetchUserBusinesses()
-      // .then(() => $('ul.tabs li:nth-child(2)').children().addClass('active'))
       .catch((error) => {
-        alertify.set('notifier', 'position', 'top-right');
-        alertify.warning('Session Expired Login again');
-        setTimeout(() => this.props.history.push('/login'), 2000);
+        if (error.response.status === 401) {
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.warning('Session Expired Login again');
+          this.props.logout();
+          setTimeout(() => this.props.history.push('/login'), 1000);
+        } else {
+          this.props.fetchUserBusinessesFailed();
+        }
       });
   }
   /**

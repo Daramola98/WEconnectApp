@@ -77,6 +77,13 @@ export default class UpdateBusiness extends React.Component {
           setTimeout(() => this.props.history.push(`/businessProfile${this.props.match.params.id}`), 2000);
         })
         .catch((error) => {
+          if (error.response.status === 401) {
+            alertify.set('notifier', 'position', 'top-right');
+            alertify.warning('Session Expired Login again');
+            this.props.logout();
+            setTimeout(() => this.props.history.push('/login'), 1000);
+            return;
+          }
           window.scroll(0, 0);
           if (error && error.response.data.validationErrors) {
             return this.setState({

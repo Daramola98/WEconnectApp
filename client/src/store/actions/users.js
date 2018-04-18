@@ -20,7 +20,7 @@ export const fetchUserBusinesses = businesses => ({
 });
 
 export const fetchUserBusinessesFailed = () => ({
-  type: FETCH_USER_BUSINESSES,
+  type: FETCH_USER_BUSINESSES_FAILED,
 });
 
 export const signUp = userDetails => dispatch =>
@@ -42,6 +42,5 @@ export const getUserBusinesses = () => dispatch =>
   axios.get('api/v1/businesses/user')
     .then((response) => {
       dispatch(fetchUserBusinesses(response.data));
-    })
-    .catch(error => dispatch(fetchUserBusinessesFailed));
+    });
 

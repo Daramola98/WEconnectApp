@@ -20,6 +20,7 @@ export default class BusinessListing extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       search: '',
+      advancedSearch: '',
       location: 'null',
       category: 'null'
     };
@@ -37,6 +38,14 @@ export default class BusinessListing extends React.Component {
       ]
     }
 
+  /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onAdvancedSearchChange = e =>
+      this.setState({ advanceSearch: e.target.value });
   /**
     * Creates a React Component
     * @param {object} e the register business page
@@ -108,6 +117,7 @@ export default class BusinessListing extends React.Component {
           <div className="row">
             <div className="col s12 offset-m2 m8 offset-l2 l8">
               <form>
+                </form>
                 <div className="input-field">
                   <span className="col s8 l8">
                     <i className="material-icons prefix">search</i>
@@ -142,7 +152,6 @@ export default class BusinessListing extends React.Component {
                     {/* <label htmlFor="category">Filter By Category</label> */}
                   </div>
                 </div>
-              </form>
               <div className="center">
                 <a className="btn blue lighten-1" onClick={(e) => {
                     e.preventDefault();

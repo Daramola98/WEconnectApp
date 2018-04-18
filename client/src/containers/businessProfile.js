@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import BusinessProfile from '../components/Businesses/smart/BusinessProfile';
 import { fetchBusiness } from '../store/actions/businesses';
+import { logout } from '../store/actions/auth';
 import { fetchReviews, postReview, postReviewResponse } from '../store/actions/businessReview';
 
 const mapStateToProps = state => ({
@@ -11,6 +12,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchBusiness(businessId) {
     return dispatch(fetchBusiness(businessId));
+  },
+  logout() {
+    return dispatch(logout());
   },
   fetchReviews(businessId) {
     return dispatch(fetchReviews(businessId));

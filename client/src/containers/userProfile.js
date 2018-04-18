@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import UserProfile from '../components/Users/smart/UserProfile';
-import { isLoggedIn } from '../store/actions/auth';
-import { getUserBusinesses } from '../store/actions/users';
+import { isLoggedIn, logout } from '../store/actions/auth';
+import { getUserBusinesses, fetchUserBusinessesFailed } from '../store/actions/users';
 import { deleteBusiness } from '../store/actions/businesses';
 import usersReducer from '../store/reducers';
 
@@ -13,8 +13,14 @@ const mapDispatchToProps = dispatch => ({
   isLoggedIn(userDetails) {
     return dispatch(isLoggedIn(userDetails));
   },
+  logout() {
+    return dispatch(logout());
+  },
   fetchUserBusinesses() {
     return dispatch(getUserBusinesses());
+  },
+  fetchUserBusinessesFailed() {
+    return dispatch(fetchUserBusinessesFailed());
   },
   deleteBusiness(businessId) {
     return dispatch(deleteBusiness(businessId));
