@@ -164,9 +164,11 @@ export default class BusinessListing extends React.Component {
               </thead>
 
               <tbody>
-                {filteredBusinesses.map((business, i) => (
+                {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
-                ))}
+                )) : <tr>
+                  <td colspan="3">NO BUSINESSES</td>
+                </tr>}
               </tbody>
             </table>
           </div>
