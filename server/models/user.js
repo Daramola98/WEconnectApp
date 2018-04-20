@@ -40,6 +40,25 @@ const user = (sequelize, DataTypes) => {
         },
       }
     },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        msg: 'Username already in use'
+      },
+      validate: {
+        notEmpty: {
+          msg: 'Username is required'
+        },
+        isAlphanumeric: {
+          msg: 'Username should only contain alphanumeric characters'
+        },
+        len: {
+          args: [3, 50],
+          msg: 'Username should be more than 2 and not greater than 50'
+        },
+      }
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,

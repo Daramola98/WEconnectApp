@@ -28,6 +28,10 @@ const business = (sequelize, DataTypes) => {
         // }
       }
     },
+    businessOwner: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     location: {
       type: DataTypes.ENUM,
       values: ['ABIA',

@@ -65,6 +65,10 @@ module.exports = {
       type: Sequelize.STRING,
       allowNull: false,
     },
+    businessOwner: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     telephoneNumber: {
       type: Sequelize.STRING,
       allowNull: false,
