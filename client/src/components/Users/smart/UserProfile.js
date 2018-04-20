@@ -19,6 +19,12 @@ export default class UserProfile extends React.Component {
   constructor(props) {
     super(props);
     this.componentWillMount = this.componentWillMount.bind(this);
+    this.state = {
+      search: '',
+      info: true,
+      businesses: false,
+      searchFocus: ''
+    };
   }
 
   /**
@@ -50,17 +56,49 @@ export default class UserProfile extends React.Component {
         }
       });
   }
+
+  // /**
+  //   * Creates a React Component
+  //   * @param {object} e the register business page
+  //   * @param {string} searchValue the register business page
+  //   * @return {jsx} renders the register business page
+  //   * @memberof React Component
+  //   */
+  //    onSearchSubmit = (e) => {
+  //      e.preventDefault();
+  //      this.setState({ search: this.refs.search.value });
+  //    };
+
+  /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @param {string} searchValue the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+     onSearchSubmit = (e) => {
+       e.preventDefault();
+       this.setState({
+         search: e.target.value, info: false, businesses: true, searchFocus: true
+       });
+     };
   /**
        * Creates a React Component
        * @return {jsx} Success message with the business created or error message
        * @memberof React Component
        */
-  render() {
-    const {
-      firstname, lastname, email, telephoneNumber, homeNumber
-    } = this.props.usersReducer.user;
-    let businessId;
-    return <div className="row container">
+     render() {
+       const {
+         firstname, lastname, email, telephoneNumber, homeNumber
+       } = this.props.usersReducer.user;
+
+       let businessId;
+       let searchValue;
+
+       const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
+         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+
+       return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue lighten-1 white-text center">
@@ -69,7 +107,7 @@ export default class UserProfile extends React.Component {
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
-                  <Tab title="Information" active>
+                  <Tab title="Information" active={this.state.info}>
                     <div id="personal_info" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
@@ -111,7 +149,11 @@ export default class UserProfile extends React.Component {
                       </ul>
                     </div>
                   </Tab>
-                  <Tab title="Businesses">
+                  <Tab title="Businesses" active={this.state.businesses}>
+                    <form className="col s8 l8">
+                      <input
+                       type="text" ref="search" placeholder="Filter Businesses By Name" value={this.state.search} autoFocus={this.state.searchFocus} onChange={this.onSearchSubmit} required/>
+                    </form>
                     <div id="businesses" className="col s12 m12 l12 ">
                       <table className="bordered highlight responsive-table centered center">
                         <thead>
@@ -123,8 +165,8 @@ export default class UserProfile extends React.Component {
                         </thead>
 
                         <tbody>
-                          {this.props.usersReducer.businesses.length > 0 ?
-                           this.props.usersReducer.businesses.map((business, i) => (
+                          {filterBusinesses.length > 0 ?
+                           filterBusinesses.map((business, i) => (
                                 <Business business={business} key={i}>
                                   <td key={'update'}>
                                     <Link
@@ -186,6 +228,14 @@ export default class UserProfile extends React.Component {
                               alertify.set('notifier', 'position', 'top-right');
                               alertify.success('Business Deleted');
                               setTimeout(() => window.location.reload(), 2000);
+                            })
+                            .catch((error) => {
+                              if (error.response.status === 401) {
+                                alertify.set('notifier', 'position', 'top-right');
+                                alertify.warning('Session Expired Login again');
+                                this.props.logout();
+                                setTimeout(() => this.props.history.push('/login'), 1000);
+                              }
                             });
                         }}
                         >
@@ -205,5 +255,5 @@ export default class UserProfile extends React.Component {
           </div>
         </div>
       </div>;
-  }
+     }
 }

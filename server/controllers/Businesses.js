@@ -89,7 +89,7 @@ export default class Businesses {
     if (req.query.pageNumber && !req.query.location && !req.query.category) {
       listBusinessByPages(req, res);
     }
-    if (!req.query.location && !req.query.category && !req.query.pageNumber) {
+    if (!req.query.location && !req.query.category && !req.query.pageNumber && !req.query.name) {
       return Business
         .findAll()
         .then((businesses) => {

@@ -236,10 +236,10 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}?location=lagos`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.business[0].name).to.equal('Clash of clans');
-          expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('LAGOS');
-          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].location).to.equal('LAGOS');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
@@ -270,11 +270,11 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}?category=gaming `)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.business[0].name).to.equal('Clash of clans');
-          expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('LAGOS');
-          expect(res.body.business[0].category).to.equal('GAMING');
-          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].location).to.equal('LAGOS');
+          expect(res.body.businesses[0].category).to.equal('GAMING');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
@@ -285,11 +285,11 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('object');
-          expect(res.body.business[0].name).to.equal('Clash of clans');
-          expect(res.body.business[0]).to.have.property('id');
-          expect(res.body.business[0].location).to.equal('LAGOS');
-          expect(res.body.business[0].category).to.equal('GAMING');
-          expect(res.body.business[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].location).to.equal('LAGOS');
+          expect(res.body.businesses[0].category).to.equal('GAMING');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });

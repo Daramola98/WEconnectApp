@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS } from './actionTypes';
+import querystring from 'querystring';
+import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED } from './actionTypes';
 
 
 export const registerBusiness = () => ({
@@ -8,6 +9,15 @@ export const registerBusiness = () => ({
 
 export const updatesBusiness = () => ({
   type: UPDATE_BUSINESS
+});
+
+export const searchesBusiness = result => ({
+  type: SEARCH_BUSINESS,
+  result
+});
+
+export const searchesBusinessFailed = () => ({
+  type: SEARCH_BUSINESS_FAILED
 });
 
 export const deletesBusiness = () => ({
@@ -19,6 +29,10 @@ export const setBusinessProfile = business => ({
   business
 });
 
+export const fetchBusinessesFailed = () => ({
+  type: FETCH_BUSINESSES_FAILED
+});
+
 export const fetchBusinesses = () => dispatch =>
   axios.get('api/v1/businesses')
     .then((response) => {
@@ -27,7 +41,7 @@ export const fetchBusinesses = () => dispatch =>
         businessList: response.data
       });
     })
-    .catch(error => Promise.reject(error.response.data.message));
+    .catch(error => dispatch(fetchBusinessesFailed));
 
 export const createBusiness = businessDetails => dispatch =>
   axios.post('api/v1/businesses', businessDetails)
@@ -53,4 +67,13 @@ export const fetchBusiness = businessId => dispatch =>
       dispatch(setBusinessProfile(response.data.business));
     })
     .catch(error => Promise.reject(error.response.data.message));
+
+export const searchBusiness = (searchBy, value) => dispatch =>
+  axios.get(`api/v1/businesses?${searchBy}=${value}`)
+    .then((response) => {
+      dispatch(searchesBusiness(response.data.businesses));
+    })
+    .catch((error) => {
+      dispatch(searchesBusinessFailed());
+    });
 

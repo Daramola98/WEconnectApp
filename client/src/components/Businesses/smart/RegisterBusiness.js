@@ -81,6 +81,10 @@ onChange = e =>
 */
 handleRegisterBusinessSubmit = (e) => {
   e.preventDefault();
+  if (this.state.business.category === 'null' || this.state.business.location === 'null') {
+    alertify.set('notifier', 'position', 'top-right');
+    return alertify.error('Business Location and Category are required');
+  }
   const businessDetails = {
     name: this.state.business.name,
     location: this.state.business.location,
@@ -96,7 +100,6 @@ handleRegisterBusinessSubmit = (e) => {
   }
   this.props.registerBusiness(businessDetails)
     .then((response) => {
-      // NotificationManager.success('Business Registered', 'Successful');
       alertify.set('notifier', 'position', 'top-right');
       alertify.success('Business Registered Successfully');
       setTimeout(() => this.props.history.push('/userProfile'), 4000);
