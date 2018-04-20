@@ -36,6 +36,12 @@ li.tab>a {
 li.active {
     background-color: #42A5F5 !important
 }
+.adSearch {
+    margin-left: 100px
+}
+.radio-btn {
+    margin-top: 15px
+}
 .confirmDelete, .replyReview {
     margin-right: 15px
 }

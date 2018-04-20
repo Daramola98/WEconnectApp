@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import BusinessListing from '../components/Businesses/smart/BusinessListing';
-import { fetchBusinesses } from '../store/actions/businesses';
+import { fetchBusinesses, searchBusiness } from '../store/actions/businesses';
 
 const mapStateToProps = state => ({
   data: state.businessesReducer
@@ -9,6 +9,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchBusinesses() {
     return dispatch(fetchBusinesses());
+  },
+  searchBusiness(searchBy, value) {
+    return dispatch(searchBusiness(searchBy, value));
   }
 });
 const BusinessListContainer = connect(mapStateToProps, mapDispatchToProps)(BusinessListing);

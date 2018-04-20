@@ -81,6 +81,10 @@ onChange = e =>
 */
 handleRegisterBusinessSubmit = (e) => {
   e.preventDefault();
+  if (this.state.business.category === 'null' || this.state.business.location === 'null') {
+    alertify.set('notifier', 'position', 'top-right');
+    return alertify.error('Business Location and Category are required');
+  }
   const businessDetails = {
     name: this.state.business.name,
     location: this.state.business.location,
@@ -96,12 +100,18 @@ handleRegisterBusinessSubmit = (e) => {
   }
   this.props.registerBusiness(businessDetails)
     .then((response) => {
-      // NotificationManager.success('Business Registered', 'Successful');
       alertify.set('notifier', 'position', 'top-right');
       alertify.success('Business Registered Successfully');
       setTimeout(() => this.props.history.push('/userProfile'), 4000);
     })
     .catch((error) => {
+      if (error.response.status === 401) {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.warning('Session Expired Login again');
+        this.props.logout();
+        setTimeout(() => this.props.history.push('/login'), 1000);
+        return;
+      }
       window.scroll(0, 0);
       if (error && error.response.data.validationErrors) {
         return this.setState({

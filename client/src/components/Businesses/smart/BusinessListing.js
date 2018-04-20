@@ -20,6 +20,8 @@ export default class BusinessListing extends React.Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       search: '',
+      searchBy: 'name',
+      advancedSearch: '',
       location: 'null',
       category: 'null'
     };
@@ -43,6 +45,15 @@ export default class BusinessListing extends React.Component {
     * @return {jsx} renders the register business page
     * @memberof React Component
     */
+    onAdvancedSearchChange = e =>
+      this.setState({ advancedSearch: e.target.value });
+
+  /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
     onSearchChange = e =>
       this.setState({ search: e.target.value });
 
@@ -52,8 +63,28 @@ export default class BusinessListing extends React.Component {
     * @return {jsx} renders the register business page
     * @memberof React Component
     */
+    onSearchByChange = e =>
+      this.setState({ searchBy: e.target.value });
+
+  /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
     onLocationChange = e =>
       this.setState({ location: e.target.value });
+
+  /**
+    * Creates a React Component
+    * @param {object} e the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    handleSearchSubmit = (e) => {
+      e.preventDefault();
+      this.props.searchBusiness(this.state.searchBy, this.state.advancedSearch);
+    }
 
   /**
     * Creates a React Component
@@ -85,20 +116,26 @@ export default class BusinessListing extends React.Component {
       const locationOptions = this.props.locations.map(location =>
         <option key={location} value={location}>{location}</option>);
       const { data, setBusinessProfile } = this.props;
-      let filteredBusinesses = data.businesses
-        .filter(business =>
-          business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+      let filteredBusinesses = data.businesses;
+      if (filteredBusinesses.length > 0) {
+        filteredBusinesses = filteredBusinesses
+          .filter(business =>
+            business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+      }
+
       if (this.state.location !== 'null' && this.state.category !== 'null') {
         filteredBusinesses = data.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1
              && business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
+
       if (this.state.location !== 'null' && this.state.category === 'null') {
         filteredBusinesses = data.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1);
       }
+
       if (this.state.location === 'null' && this.state.category !== 'null') {
         filteredBusinesses = data.businesses
           .filter(business =>
@@ -107,42 +144,50 @@ export default class BusinessListing extends React.Component {
       return <div className="container">
           <div className="row">
             <div className="col s12 offset-m2 m8 offset-l2 l8">
-              <form>
+              <form onSubmit={this.handleSearchSubmit}>
+                <span className="col s12 l6 radio-btn">
+                <input type="text" placeholder={`Search for Business By ${this.state.searchBy}`} name="advancedSearch" value={this.state.advancedSearch} onChange={this.onAdvancedSearchChange} required/>
+                </span>
+                <span className="col s12 l4">
+                <Input name="searchBy" type="select" value={this.state.searchBy} onChange={this.onSearchByChange} >
+                  <option value="name">
+                    Search By Name
+                  </option>
+                  <option value="location">
+                    Search By Location
+                  </option>
+                  <option value="category">
+                    Search By Category
+                  </option>
+                </Input>
+                </span>
+                <span className="adSearch"><button type="submit" className="adSearch waves-effect waves-light btn blue ligthen-1">SEARCH</button></span>
+              </form>
                 <div className="input-field">
                   <span className="col s8 l8">
                     <i className="material-icons prefix">search</i>
                     <input type="text" name="search" value={this.state.search} onChange={this.onSearchChange} />
-                    <label htmlFor="search">Search For Businesses</label>
-                  </span>
-                  <span className="col s4 l4">
-                    <button className="waves-effect waves-light btn blue lighten-1">
-                      Search
-                    </button>
+                    <label htmlFor="search">Filter Businesses</label>
                   </span>
                 </div>
                 <div className="row">
                   <div className="input-field col l5">
-                    {/* <i className="material-icons prefix">search</i> */}
                     <Input type="select" value={this.state.location} onChange={this.onLocationChange}>
                       <option value="null" disabled>
                         Filter By Location
                       </option>
                       {locationOptions}
                     </Input>
-                    {/* <label>Filter By Location</label> */}
                   </div>
                   <div className="input-field col l5">
-                    {/* <i className="material-icons prefix">search</i> */}
                     <Input type="select" value={this.state.category} onChange={this.onCategoryChange}>
                       <option value="null" disabled>
                         Filter By Category
                       </option>
                       {categoryOptions}
                     </Input>
-                    {/* <label htmlFor="category">Filter By Category</label> */}
                   </div>
                 </div>
-              </form>
               <div className="center">
                 <a className="btn blue lighten-1" onClick={(e) => {
                     e.preventDefault();

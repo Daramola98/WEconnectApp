@@ -40,12 +40,12 @@ export const findBusinessByCategory = (req, res) => {
         { $ilike: `%${searchCategory}%` }
       )
     })
-    .then((business) => {
-      if (business.length > 0) {
+    .then((businesses) => {
+      if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessFoundMessage, business });
+          .json({ message: businessFoundMessage, businesses });
       }
-      if (business.length === 0) {
+      if (businesses.length === 0) {
         return res.status(404).json(businessNotFoundInCategoryMessage);
       }
     })
@@ -53,6 +53,33 @@ export const findBusinessByCategory = (req, res) => {
 };
 
   /**
+   * Filter businesses in the database by the provided name
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const findBusinessByName = (req, res) => {
+  const searchName = req.query.name.replace(/ /g, '');
+  return Business
+    .findAll({
+      where: {
+        name: {
+          $ilike: `%${searchName}%`
+        }
+      }
+    })
+    .then((businesses) => {
+      if (businesses.length > 0) {
+        return res.status(200)
+          .json({ message: businessesFoundMessage, businesses });
+      }
+      res.status(404).json({ message: 'No Business found with this name' });
+    })
+    .catch(err => res.status(500).json(serverErrorMessage.message));
+};
+
+/**
    * Filter businesses in the database by the provided location
    * @param {object} req - The request object
    * @param {object} res - The response object
@@ -68,10 +95,10 @@ export const findBusinessByLocation = (req, res) => {
         { $ilike: `%${searchLocation}%` }
       )
     })
-    .then((business) => {
-      if (business.length > 0) {
+    .then((businesses) => {
+      if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessesFoundMessage, business });
+          .json({ message: businessesFoundMessage, businesses });
       }
       res.status(404).json(businessNotFoundInLocationMessage);
     })
@@ -90,10 +117,10 @@ export const findBusinessByLocationAndCategory = (req, res) => {
   const searchLocation = req.query.location.replace(/ /g, '');
   return sequelize
     .query(`SELECT * FROM "Businesses" AS "Business" WHERE CAST("category" AS TEXT) ILIKE '%${searchCategory}%' AND CAST("location" AS TEXT) ILIKE '%${searchLocation}%'`, { type: sequelize.QueryTypes.SELECT })
-    .then((business) => {
-      if (business.length > 0) {
+    .then((businesses) => {
+      if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessFoundMessage, business });
+          .json({ message: businessFoundMessage, businesses });
       }
       return res.status(404).json(businessNotFoundMessage);
     })
@@ -116,10 +143,10 @@ export const listBusinessByPages = (req, res) => {
   }
   return Business
     .findAll({ offset, limit: 10 })
-    .then((business) => {
-      if (business.length > 0) {
+    .then((businesses) => {
+      if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessFoundMessage, business });
+          .json({ message: businessFoundMessage, businesses });
       }
       return res.status(404).json(businessNotFoundMessage);
     })

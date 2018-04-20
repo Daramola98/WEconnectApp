@@ -1,6 +1,6 @@
 import { Business, BusinessReview, reviewresponse } from '../models';
 import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
-import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, listBusinessByPages } from '../helpers/businessHelpers';
+import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, findBusinessByName, listBusinessByPages } from '../helpers/businessHelpers';
 import {
   businessNotFoundMessage,
   businessNotFoundInCategoryMessage,
@@ -83,11 +83,13 @@ export default class Businesses {
     if (req.query.category && !req.query.location) {
       findBusinessByCategory(req, res);
     }
-
+    if (req.query.name && !req.query.location && !req.query.category) {
+      findBusinessByName(req, res);
+    }
     if (req.query.pageNumber && !req.query.location && !req.query.category) {
       listBusinessByPages(req, res);
     }
-    if (!req.query.location && !req.query.category && !req.query.pageNumber) {
+    if (!req.query.location && !req.query.category && !req.query.pageNumber && !req.query.name) {
       return Business
         .findAll()
         .then((businesses) => {
