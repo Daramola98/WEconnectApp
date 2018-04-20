@@ -189,7 +189,7 @@ export default class BusinessProfile extends React.Component {
                           </span>
                           <p>
                             <a href="" className="waves-effect waves-light btn blue lighten-1">
-                              {business.userId}
+                              {business.businessOwner}
                             </a>
                           </p>
                         </li>
@@ -310,7 +310,7 @@ export default class BusinessProfile extends React.Component {
                 <Modal id="prevReplies" header={'PREVIOUS REPLIES'}>
                   <ul className="collection">
                     {this.state.reviewResponses.length > 0 ? this.state.reviewResponses.map((response, i) => <li key={response.id} className="collection-item">
-                    <span>{response.userId}</span>
+                    <span>{response.reviewer}</span>
                     <p>
                       {response.message}
                     </p>

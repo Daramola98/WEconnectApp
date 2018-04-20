@@ -23,6 +23,7 @@ describe(`${baseEndpoint}`, () => {
         User.create({
           firstname: 'Damilola',
           lastname: 'Ajiboye',
+          username: 'dammy10',
           email: 'damilolaajiboye@live.com',
           password: bcrypt.hashSync('dammyro1000', 10),
           telephoneNumber: '07066455523',
@@ -101,7 +102,17 @@ describe(`${baseEndpoint}`, () => {
     });
 
     it('should not allow a user to register a business with an existing name and email to the businesses database', (done) => {
-      Business.create(businessDetails);
+      Business.create({
+        name: 'House rentals',
+        category: 'HOUSING',
+        businessOwner: 'dammy50',
+        email: 'ajiboye_ja@yahoo.com',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'ENUGU',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices'
+      });
       chai.request(app)
         .post(`${baseEndpoint}`)
         .set('authorization', authToken)
@@ -121,6 +132,7 @@ describe(`${baseEndpoint}`, () => {
         email: 'ajiboye_j@yahoo.com',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
+        businessOwner: 'dammy10',
         location: 'ENUGU',
         address: '7,Adeba Road Lakowe Lagos',
         description: 'Rent houses here for affordable prices',
@@ -130,6 +142,7 @@ describe(`${baseEndpoint}`, () => {
         name: 'House Mortgage',
         category: 'Housing',
         email: 'ajiboye_j@yahoo.com',
+        businessOwner: 'dammy10',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
         location: 'Enugu',
@@ -195,12 +208,6 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           done();
         });
-      // chai.request(app)
-      //   .post('/api/v1/auth/login')
-      //   .send({ email: 'damilolaajiboye@live.com', password: 'dammyro1000' })
-      //   .end((err, res) => {
-      //     authToken = res.body.token;
-      //   });
     });
     it('should get all business in the businesses table', (done) => {
       chai.request(app)
@@ -335,6 +342,7 @@ describe(`${baseEndpoint}`, () => {
       User.create({
         firstname: 'Clinton',
         lastname: 'Fidelis',
+        username: 'clintfidel10',
         email: 'clintfidel@gmail.com',
         password: bcrypt.hashSync('daramola10', bcrypt.genSaltSync(10)),
         telephoneNumber: '08023112094',
@@ -369,7 +377,18 @@ describe(`${baseEndpoint}`, () => {
    */
   describe(`${baseEndpoint}/:businessId GET business`, () => {
     beforeEach((done) => {
-      Business.create(businessDetails2)
+      Business.create({
+        name: 'Clash Royale',
+        email: 'damilolaajiboye@yahoo.com',
+        businessOwner: 'dammy35',
+        location: 'LAGOS',
+        category: 'GAMING',
+        description: 'Card Game for collaboration',
+        address: '23,Adeba Ibeju Lekki Lagos',
+        telephoneNumber: '07066444523',
+        homeNumber: '08043553081',
+        userId
+      })
         .then((business) => {
           businessId = business.id;
           done();
@@ -423,6 +442,7 @@ describe(`${baseEndpoint}`, () => {
         email: 'weather@yahoo.com',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
+        businessOwner: 'dammy10',
         location: 'LAGOS',
         address: '7,Adeba Road Lakowe Lagos',
         description: 'Rent houses here for affordable prices',
@@ -467,6 +487,7 @@ describe(`${baseEndpoint}`, () => {
         name: 'Weather Control',
         category: 'GAMING',
         email: 'weather@yahoo.com',
+        businessOwner: 'dammy10',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
         location: 'LAGOS',
@@ -544,6 +565,7 @@ describe(`${baseEndpoint}`, () => {
         name: 'Andela',
         category: 'GAMING',
         email: 'weather@yahoo.com',
+        businessOwner: 'dammy10',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
         location: 'LAGOS',
@@ -633,6 +655,7 @@ describe(`${baseEndpoint}`, () => {
         name: 'Andela',
         category: 'GAMING',
         email: 'weather@yahoo.com',
+        businessOwner: 'dammy10',
         telephoneNumber: '07011041032',
         homeNumber: '08011031456',
         location: 'LAGOS',

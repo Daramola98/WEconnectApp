@@ -38,6 +38,7 @@ describe(`${baseEndpoint}`, () => {
       const userDetails3 = {
         firstname: 'D',
         lastname: 'B',
+        username: 'dammy',
         email: 'damilolaajiboye@live.com',
         password: 'dammyro100',
         confirmPassword: 'dammyro100',
@@ -62,6 +63,7 @@ describe(`${baseEndpoint}`, () => {
       const userDetails4 = {
         firstname: 'Damilare',
         lastname: 'Ajiboye',
+        username: 'dammy15',
         email: 'damilolaajiboye@livea.com',
         password: 'dammyro1000',
         telephoneNumber: '07066445526',
@@ -76,6 +78,7 @@ describe(`${baseEndpoint}`, () => {
       const userDetails6 = {
         firstname: 'Damilola',
         lastname: 'Ajiboye',
+        username: 'dammy20',
         email: 'damilolaajiboye@livea.com',
         password: 'dammyro1000',
         confirmPassword: 'dammyro1000',
@@ -96,6 +99,7 @@ describe(`${baseEndpoint}`, () => {
       const userDetails6 = {
         firstname: 'Damilola',
         lastname: 'Ajiboye',
+        username: 'dammy21',
         email: 'damilolaajiboye@liveb.com',
         password: 'dammyro1000',
         confirmPassword: 'dammyro2000',
@@ -115,6 +119,7 @@ describe(`${baseEndpoint}`, () => {
       const userDetails6 = {
         firstname: '',
         lastname: '',
+        username: 'dammy60',
         email: 'damilolaajiboye@liveb.com',
         password: 'dammyro1000',
         confirmPassword: 'dammyro2000',
@@ -141,6 +146,7 @@ describe(`${baseEndpoint}`, () => {
       User.create({
         firstname: 'Damilola',
         lastname: 'Ajiboye',
+        username: 'dammy30',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro1000', 10),
         telephoneNumber: '07066455523',
@@ -240,6 +246,7 @@ describe(`${baseEndpoint}`, () => {
       User.create({
         firstname: 'Damilola',
         lastname: 'Ajiboye',
+        username: 'dammy40',
         email: 'damilolaajiboye@live.com',
         password: bcrypt.hashSync('dammyro1000', 10),
         telephoneNumber: '07066455523',
