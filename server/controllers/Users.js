@@ -32,6 +32,7 @@ export default class Users {
         const userDetails = {
           firstname: req.body.firstname,
           lastname: req.body.lastname,
+          username: req.body.username,
           email: req.body.email,
           password: hash,
           telephoneNumber: req.body.telephoneNumber,
@@ -44,6 +45,7 @@ export default class Users {
               userId: user.id,
               firstname: user.firstname,
               lastname: user.lastname,
+              username: user.username,
               email: user.email,
               telephoneNumber: user.telephoneNumber,
               homeNumber: user.homeNumber
@@ -85,6 +87,7 @@ export default class Users {
         const userDetails = {
           firstname: user.firstname,
           lastname: user.lastname,
+          username: user.username,
           telephoneNumber: user.telephoneNumber,
           homeNumber: user.homeNumber,
           email: user.email
@@ -185,6 +188,7 @@ export default class Users {
             userId: updatedUser.id,
             firstname: updatedUser.firstname,
             lastname: updatedUser.lastname,
+            username: updatedUser.username,
             email: updatedUser.email,
             telephoneNumber: updatedUser.telephoneNumber,
             homeNumber: updatedUser.homeNumber
@@ -212,7 +216,7 @@ export default class Users {
     handleInputFormat(req);
     if (req.headers.authorization) {
       try {
-        const token = req.headers.authorization;
+        const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         req.userData = decoded;
         if (req.userData !== null) {
@@ -244,6 +248,7 @@ export default class Users {
                 userId: user.id,
                 firstname: user.firstname,
                 lastname: user.lastname,
+                username: user.username,
                 telephoneNumber: user.telephoneNumber,
                 homeNumber: user.homeNumber
               }, process.env.JWT_KEY,

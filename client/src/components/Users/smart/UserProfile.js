@@ -89,7 +89,7 @@ export default class UserProfile extends React.Component {
        */
      render() {
        const {
-         firstname, lastname, email, telephoneNumber, homeNumber
+         firstname, lastname, username, email, telephoneNumber, homeNumber
        } = this.props.usersReducer.user;
 
        let businessId;
@@ -118,6 +118,15 @@ export default class UserProfile extends React.Component {
                             <h5>Full Name</h5>
                           </span>
                           <p>{`${firstname} ${lastname}`}</p>
+                        </li>
+                        <li className="collection-item avatar">
+                          <i className="material-icons circle blue lighten-1">
+                            account_circle
+                          </i>
+                          <span className="title">
+                            <h5>User Name</h5>
+                          </span>
+                          <p>{`${username}`}</p>
                         </li>
                         <li className="collection-item avatar">
                           <i className="material-icons circle blue lighten-1">

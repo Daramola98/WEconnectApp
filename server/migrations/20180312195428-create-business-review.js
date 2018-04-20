@@ -10,6 +10,10 @@ module.exports = {
       type: Sequelize.UUID,
       allowNull: false
     },
+    reviewer: {
+      type: Sequelize.STRING,
+      allowNull: false
+    },
     review: {
       allowNull: false,
       type: Sequelize.TEXT,

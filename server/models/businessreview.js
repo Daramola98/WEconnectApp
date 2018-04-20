@@ -10,6 +10,10 @@ const businessReview = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false
     },
+    reviewer: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     review: {
       type: DataTypes.TEXT,
       allowNull: false,

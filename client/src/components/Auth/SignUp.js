@@ -14,6 +14,7 @@ export default class SignUp extends React.Component {
       user: {
         firstname: '',
         lastname: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -60,12 +61,13 @@ export default class SignUp extends React.Component {
         return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
       }
       const {
-        firstname, lastname, telephoneNumber, password, email, confirmPassword, homeNumber
+        firstname, lastname, username, telephoneNumber, password, email, confirmPassword, homeNumber
       } = this.state.user;
 
       const userDetails = {
         firstname,
         lastname,
+        username,
         email,
         telephoneNumber,
         password,
@@ -107,7 +109,7 @@ export default class SignUp extends React.Component {
     render() {
       const { errors } = this.state;
       const {
-        firstname, lastname, email, telephoneNumber, homeNumber, password, confirmPassword
+        firstname, lastname, username, email, telephoneNumber, homeNumber, password, confirmPassword
       } = this.state.user;
       return <div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
@@ -146,6 +148,13 @@ export default class SignUp extends React.Component {
                       <label htmlFor="lastname">Last Name</label>
 
                       <input type="text" name="lastname" pattern="[A-Za-z]+$" value={lastname} onChange={this.onChange} title="should contain only alphabets" minLength="3" maxLength="50" className="validate" required />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="input-field col s12 m12 l12">
+                      <i className="material-icons prefix">account_circle</i>
+                      <label htmlFor="username">Username</label>
+                      <input type="text" value={username} onChange={this.onChange} pattern="[A-Za-z0-9]*$" name="username" title="should contain only alphanumeric characters" minLength="3" maxLength="50" className="validate" required />
                     </div>
                   </div>
                   <div className="row">
