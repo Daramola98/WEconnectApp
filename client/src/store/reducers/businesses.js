@@ -1,10 +1,10 @@
-import { FETCH_BUSINESSES, FETCH_BUSINESSES_FAILED, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, REGISTER_BUSINESS, UPDATE_BUSINESS, DELETE_BUSINESS } from '../actions/actionTypes';
+import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESSES_FAILED, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, REGISTER_BUSINESS, UPDATE_BUSINESS, DELETE_BUSINESS } from '../actions/actionTypes';
 
 const initialState = {
   businesses: [],
   loading: false,
   noOfBusinessesCreated: 0,
-  error: null,
+  categories: [],
   businessUpdated: false,
   businessDeleted: false
 };
@@ -28,6 +28,8 @@ function businessesReducer(state = initialState, action) {
       return { ...state, loading: false, businesses };
     case SEARCH_BUSINESS_FAILED:
       return { ...state, loading: false, businesses: [] };
+    case FETCH_CATEGORIES:
+      return { ...state, loading: false, categories: action.categories };
     case FETCH_BUSINESSES_FAILED:
       return { ...state, loading: false, businesses: [] };
     case REGISTER_BUSINESS:

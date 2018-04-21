@@ -27,10 +27,6 @@ export default class BusinessListing extends React.Component {
     };
   }
     static defaultProps = {
-      categories: [
-        'Gaming', 'Technology', 'Housing', 'Transport', 'Power & Energy', 'Food',
-        'Consulting Services', 'Construction', 'Educational Services', 'Government', 'Religion'
-      ],
       locations: [
         'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
         'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
@@ -102,6 +98,7 @@ export default class BusinessListing extends React.Component {
     */
     componentDidMount() {
       this.props.fetchBusinesses();
+      this.props.fetchCategories();
     }
 
   /**
@@ -110,12 +107,14 @@ export default class BusinessListing extends React.Component {
     * @memberof React Component
     */
     render() {
-      const categoryOptions = this.props.categories.map(category =>
-        <option key={category} value={category}>{category}</option>);
+      const { data, setBusinessProfile } = this.props;
+      const businessCategories = data.categories;
+      const categoryOptions = businessCategories !== undefined ?
+        Array.from(businessCategories).map(category =>
+        <option key={category} value={category}>{category}</option>) : null;
 
       const locationOptions = this.props.locations.map(location =>
         <option key={location} value={location}>{location}</option>);
-      const { data, setBusinessProfile } = this.props;
       let filteredBusinesses = data.businesses;
       if (filteredBusinesses.length > 0) {
         filteredBusinesses = filteredBusinesses
@@ -184,7 +183,9 @@ export default class BusinessListing extends React.Component {
                       <option value="null" disabled>
                         Filter By Category
                       </option>
-                      {categoryOptions}
+                      {businessCategories.length > 0 ? categoryOptions : <option value="loading" disabled>
+                        Loading...
+                      </option> }
                     </Input>
                   </div>
                 </div>

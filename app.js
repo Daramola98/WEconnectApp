@@ -10,6 +10,7 @@ import bodyParser from 'body-parser';
 import swaggerUi from 'swagger-ui-express';
 import userRoutes from './server/routes/user';
 import businessRoutes from './server/routes/businesses';
+import adminRoutes from './server/routes/admin';
 import swaggerDocument from './swagger.json';
 import config from './webpack.config';
 import customValidations from './server/validations/customValidations';
@@ -57,6 +58,7 @@ app.get('/api', (req, res) => {
 });
 app.use('/api/v1/auth', userRoutes);
 app.use('/api/v1/businesses', businessRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // CATCH ALL ENDPOINT THAT DO NOT EXIST AND RETURN ERROR MESSAGE
 app.get('*', (req, res) => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import querystring from 'querystring';
-import { FETCH_BUSINESSES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED } from './actionTypes';
+import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED } from './actionTypes';
 
 
 export const registerBusiness = () => ({
@@ -14,6 +14,11 @@ export const updatesBusiness = () => ({
 export const searchesBusiness = result => ({
   type: SEARCH_BUSINESS,
   result
+});
+
+export const fetchesCategories = categories => ({
+  type: FETCH_CATEGORIES,
+  categories
 });
 
 export const searchesBusinessFailed = () => ({
@@ -42,6 +47,12 @@ export const fetchBusinesses = () => dispatch =>
       });
     })
     .catch(error => dispatch(fetchBusinessesFailed));
+
+export const fetchCategories = () => dispatch =>
+  axios.get('api/v1/admin/businessCategory')
+    .then((response) => {
+      dispatch(fetchesCategories(response.data));
+    });
 
 export const createBusiness = businessDetails => dispatch =>
   axios.post('api/v1/businesses', businessDetails)
