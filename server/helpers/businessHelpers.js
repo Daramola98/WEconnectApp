@@ -181,7 +181,8 @@ export const addBusinessCategory = (req, res) => {
 export const listBusinessCategories = (req, res) => sequelize
   .query('SELECT enum_range(null::public."enum_Businesses_category")', { type: sequelize.QueryTypes.SELECT })
   .then((result) => {
-    const categories = result[0].enum_range;
+    /* eslint-disable */
+    const categories = result[0]['enum_range'];
     res.status(200).json(categories);
   })
   .catch(err => res.status(500).json(serverErrorMessage.message));
