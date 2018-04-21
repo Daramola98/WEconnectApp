@@ -101,6 +101,15 @@ export const userUpdateValidation = {
     },
     errorMessage: 'Lastname name is required',
   },
+  username: {
+    optional: true,
+    trim: true,
+    notEmpty: true,
+    isString: {
+      errorMessage: 'Username should be a valid string'
+    },
+    errorMessage: 'Username is required',
+  },
   password: {
     optional: true,
     trim: true,

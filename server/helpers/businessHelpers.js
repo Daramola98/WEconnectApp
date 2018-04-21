@@ -153,3 +153,35 @@ export const listBusinessByPages = (req, res) => {
     .catch(err => res.status(500).json(err));
 };
 
+/**
+   * Filter businesses in the database by the provided location and category
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const addBusinessCategory = (req, res) => {
+  const businessCategory = req.body.category.toUpperCase();
+  if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
+    return res.status(403).json({ message: 'You are not allowed to perform this operation' });
+  }
+  return sequelize
+    .query(`ALTER TYPE public."enum_Businesses_category" ADD VALUE '${businessCategory}'`, { type: sequelize.QueryTypes.RAW })
+    .then(category => res.status(200).json({ message: 'Category added successfully' }))
+    .catch(err => res.status(500).json(serverErrorMessage.message));
+};
+
+/**
+   * Filter businesses in the database by the provided location and category
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const listBusinessCategories = (req, res) => sequelize
+  .query('SELECT enum_range(null::public."enum_Businesses_category")', { type: sequelize.QueryTypes.SELECT })
+  .then((result) => {
+    const categories = result[0].enum_range;
+    res.status(200).json(categories);
+  })
+  .catch(err => res.status(500).json(serverErrorMessage.message));
