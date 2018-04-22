@@ -20,11 +20,11 @@ import Header from './src/containers/navigation';
 import RegisterBusiness from './src/containers/registerBusiness';
 import UpdateBusiness from './src/containers/updateBusiness';
 import UpdateUser from './src/containers/updateUser';
+import ContactUs from './src/containers/contactUs';
 
 import App from './src/components/App';
 import AboutUs from './src/components/Home/presentational/AboutUs';
 import HowItWorks from './src/components/Home/presentational/HowItWorks';
-import ContactUs from './src/components/Home/smart/ContactUs';
 import Home from './src/components/Home/presentational/Home';
 
 import style from './public/styles/index.css';

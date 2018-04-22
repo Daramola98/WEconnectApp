@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { ContactUs } from '../models';
 import serverErrorMessage from '../messages/serverMessage';
-import { handleInputFormat } from './genericHelper';
+import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
 
 dotenv.config();
 
@@ -22,7 +22,13 @@ export const addContactInfo = (req, res) => {
   };
   return ContactUs.create(contactInfo)
     .then(result => res.status(200).json(result))
-    .catch(err => res.status(500).json(serverErrorMessage.message));
+    .catch((err) => {
+      if (err.errors) {
+        handleValidationErrors(err.errors, res);
+      } else {
+        return res.status(500).json(serverErrorMessage.message);
+      }
+    });
 };
 /**
    * Filter businesses in the database by the provided location and category

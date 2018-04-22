@@ -62,7 +62,7 @@ export default class Businesses {
         if (err.errors) {
           handleValidationErrors(err.errors, res);
         } else {
-          return res.status(500).json(err);
+          return res.status(500).json(serverErrorMessage.message);
         }
       });
   }

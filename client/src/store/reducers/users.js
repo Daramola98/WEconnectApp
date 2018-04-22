@@ -1,9 +1,10 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT, FETCH_USER_BUSINESSES, UPDATE_USER, FETCH_USER_BUSINESSES_FAILED } from '../actions/actionTypes';
+import { USER_LOGGED_IN, POST_CONTACTUS, USER_LOGGED_OUT, FETCH_USER_BUSINESSES, UPDATE_USER, FETCH_USER_BUSINESSES_FAILED } from '../actions/actionTypes';
 
 const initialState = {
   user: {},
   businesses: [],
-  authenticated: false
+  authenticated: false,
+  contactUsSubmitted: false
 };
 /**
       * Creates a React Component
@@ -23,6 +24,8 @@ function usersReducer(state = initialState, action) {
       return { ...state, businesses: action.businesses };
     case FETCH_USER_BUSINESSES_FAILED:
       return { ...state, businesses: [] };
+    case POST_CONTACTUS:
+      return { ...state, contactUsSubmitted: true };
     case UPDATE_USER:
       return { ...state, user: action.user };
     default:
