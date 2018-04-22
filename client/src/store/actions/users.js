@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { REGISTER_USER, REGISTER_USER_FAILED, FETCH_USER_BUSINESSES, FETCH_USER_BUSINESSES_FAILED, UPDATE_USER } from './actionTypes';
+import { REGISTER_USER, REGISTER_USER_FAILED, POST_CONTACTUS, FETCH_USER_BUSINESSES, FETCH_USER_BUSINESSES_FAILED, UPDATE_USER } from './actionTypes';
 import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
 import { userLoggedIn } from './auth';
 
@@ -7,6 +7,10 @@ import { userLoggedIn } from './auth';
 export const registerUser = user => ({
   type: REGISTER_USER,
   user
+});
+
+export const postsContactUs = () => ({
+  type: POST_CONTACTUS
 });
 
 export const updatesUser = user => ({
@@ -22,6 +26,12 @@ export const fetchUserBusinesses = businesses => ({
 export const fetchUserBusinessesFailed = () => ({
   type: FETCH_USER_BUSINESSES_FAILED,
 });
+
+export const postContactUs = contactInfo => dispatch =>
+  axios.post('api/v1/admin/contactUs', contactInfo)
+    .then((response) => {
+      dispatch(postsContactUs());
+    });
 
 export const signUp = userDetails => dispatch =>
   axios.post('api/v1/auth/signUp', userDetails)

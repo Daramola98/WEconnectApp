@@ -38,10 +38,6 @@ export default class RegisterBusiness extends React.Component {
     };
   }
 static defaultProps = {
-  categories: [
-    'Gaming', 'Technology', 'Housing', 'Transport', 'Power & Energy', 'Food',
-    'Consulting Services', 'Construction', 'Educational Services', 'Government', 'Religion'
-  ],
   locations: [
     'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
     'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
@@ -59,6 +55,15 @@ componentWillMount() {
   if (this.props.usersReducer.authenticated !== true) {
     this.props.history.push('/login');
   }
+}
+
+/**
+   * @description - redirect registered user to all-budiness page
+   *
+   * @return {void} no return or void
+   */
+componentDidMount() {
+  this.props.fetchCategories();
 }
 
 /**
@@ -132,8 +137,11 @@ handleRegisterBusinessSubmit = (e) => {
 * @memberof React Component
 */
 render() {
-  const categoryOptions = this.props.categories.map(category =>
-    <option key={category} value={category}>{category}</option>);
+  const { businesses } = this.props;
+  const businessCategories = businesses.categories;
+  const categoryOptions = businessCategories !== undefined ?
+    Array.from(businessCategories).map(category =>
+        <option key={category} value={category}>{category}</option>) : null;
 
   const locationOptions = this.props.locations.map(location =>
   <option key={location} value={location}>{location}</option>);
@@ -185,7 +193,9 @@ render() {
                     <option value="null" disabled>
                       Choose Your Category
                     </option>
-                    {categoryOptions}
+                    {businessCategories.length > 0 ? categoryOptions : <option value="loading" disabled>
+                        Loading...
+                      </option> }
                   </Input>
                   {/* <label>Category</label> */}
                 </div>
