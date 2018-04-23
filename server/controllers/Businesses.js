@@ -78,7 +78,7 @@ export default class Businesses {
     let offset = 0;
     offset = listByPages(req.query.pageNumber, offset);
     if (req.query.location && req.query.category) {
-      return findBusinessByLocationAndCategory(req, res);
+      return findBusinessByLocationAndCategory(req, res, offset);
     }
     if (req.query.location && !req.query.category) {
       return findBusinessByLocation(req, res, offset);
