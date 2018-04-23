@@ -1,20 +1,19 @@
 import React from 'react';
 import { Input } from 'react-materialize';
 import { Link } from 'react-router-dom';
-import { NotificationManager, NotificationContainer } from 'react-notifications';
 import alertify from 'alertifyjs';
 import Errors from '../../Messages/presentational/Errors';
 
 /**
- *
- *@class Header
- *@classdesc creates a React component- Header
+ * Class Representing React Component UpdateBusiness
+ *@class UpdateBusiness
+ *@classdesc creates a React component- UpdateBusiness
  */
 export default class UpdateBusiness extends React.Component {
     static defaultProps = {
       locations: [
         'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
-        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
+        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
         'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
         'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
       ]
@@ -38,7 +37,7 @@ export default class UpdateBusiness extends React.Component {
     }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - Redirects unauthenticated users to the login page
    *
    * @return {void} no return or void
    */
@@ -49,18 +48,20 @@ export default class UpdateBusiness extends React.Component {
     }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - dispatches the redux action to fetch business categories
    *
    * @return {void} no return or void
    */
     componentDidMount() {
       this.props.fetchCategories();
     }
+
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for UpdateBusiness form fields
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the UpdateBusiness component
+    * @memberof UpdateBusiness Component
     */
     onChange = e =>
       this.setState({
@@ -69,11 +70,12 @@ export default class UpdateBusiness extends React.Component {
       });
 
     /**
-    * Creates a React Component
-    * @param {object} e message with the business created or error message
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
-    */
+      * onSubmit Event handler callback for UpdateBusiness form
+      * @param {object} e The event object
+      *
+      * @return {null}  Business Updated message or returns error message
+      * @memberof UpdateBusiness Component
+      */
     handleUpdateSubmit = (e) => {
       e.preventDefault();
       const businessDetails = {};
@@ -114,9 +116,9 @@ export default class UpdateBusiness extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
+    * Renders the UpdateBusiness Component
+    * @return {jsx} jsx element to render
+    * @memberof UpdateBusiness Component
     */
     render() {
       const { businesses } = this.props;
@@ -241,7 +243,6 @@ export default class UpdateBusiness extends React.Component {
                     </div>
                   </div>
                 </form>
-                <NotificationContainer/>
               </div>
             </div>
           </div>

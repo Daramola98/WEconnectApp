@@ -1,23 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NotificationManager, NotificationContainer } from 'react-notifications';
 import { Input } from 'react-materialize';
 import alertify from 'alertifyjs';
 import Errors from '../../Messages/presentational/Errors';
 
 
 /**
- *
+ * Class Representing React Component RegisterBusiness
  *@class RegisterBusiness
  *@classdesc creates a React component- RegisterBusiness
 */
 export default class RegisterBusiness extends React.Component {
   /**
-* Creates a React Component
-* @param {object} props the props object for component
-* @return {jsx} renders the register business page
-* @memberof React Component
-*/
+    * @param {object} props props from parent class
+    * @return {null} creates state and initalizes class variables
+    * @memberof RegisterBusiness Component
+    */
   constructor(props) {
     super(props);
     this.state = {
@@ -37,117 +35,120 @@ export default class RegisterBusiness extends React.Component {
       }
     };
   }
-static defaultProps = {
-  locations: [
-    'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
-    'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
-    'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
-    'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
-  ]
-}
 
-/**
-   * @description - redirect registered user to all-budiness page
+  static defaultProps = {
+    locations: [
+      'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
+      'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
+      'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
+      'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
+    ]
+  }
+
+  /**
+   * @description - Redirects unauthenticated users to the login page
    *
    * @return {void} no return or void
    */
-componentWillMount() {
-  if (this.props.usersReducer.authenticated !== true) {
-    this.props.history.push('/login');
+  componentWillMount() {
+    if (this.props.usersReducer.authenticated !== true) {
+      this.props.history.push('/login');
+    }
   }
-}
 
-/**
-   * @description - redirect registered user to all-budiness page
+  /**
+   * @description - dispatches redux action to fetch business categories
    *
    * @return {void} no return or void
    */
-componentDidMount() {
-  this.props.fetchCategories();
-}
-
-/**
-* Creates a React Component
-* @param {object} e the register business page
-* @return {jsx} renders the register business page
-* @memberof React Component
-*/
-onChange = e =>
-  this.setState({
-    ...this.state,
-    business: { ...this.state.business, [e.target.name]: e.target.value }
-  });
-
-/**
-* Creates a React Component
-* @param {object} e the register business page
-* @return {jsx} renders the register business page
-* @memberof React Component
-*/
-handleRegisterBusinessSubmit = (e) => {
-  e.preventDefault();
-  if (this.state.business.category === 'null' || this.state.business.location === 'null') {
-    alertify.set('notifier', 'position', 'top-right');
-    return alertify.error('Business Location and Category are required');
+  componentDidMount() {
+    this.props.fetchCategories();
   }
-  const businessDetails = {
-    name: this.state.business.name,
-    location: this.state.business.location,
-    category: this.state.business.category,
-    description: this.state.business.description,
-    address: this.state.business.address,
-    email: this.state.business.email,
-    telephoneNumber: this.state.business.telephoneNumber
-  };
 
-  if (this.state.business.homeNumber.length > 1) {
-    businessDetails.homeNumber = this.state.business.homeNumber;
-  }
-  this.props.registerBusiness(businessDetails)
-    .then((response) => {
+  /**
+    * onChange Event handler callback for RegisterBusiness form fields
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the RegisterBusiness component
+    * @memberof RegisterBusiness Component
+    */
+  onChange = e =>
+    this.setState({
+      ...this.state,
+      business: { ...this.state.business, [e.target.name]: e.target.value }
+    });
+
+  /**
+      * onSubmit Event handler callback for RegisterBusiness form
+      * @param {object} e The event object
+      *
+      * @return {null}  Business Registered message or returns error message
+      * @memberof RegisterBusiness Component
+      */
+  handleRegisterBusinessSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.business.category === 'null' || this.state.business.location === 'null') {
       alertify.set('notifier', 'position', 'top-right');
-      alertify.success('Business Registered Successfully');
-      setTimeout(() => this.props.history.push('/userProfile'), 4000);
-    })
-    .catch((error) => {
-      if (error.response.status === 401) {
+      return alertify.error('Business Location and Category are required');
+    }
+    const businessDetails = {
+      name: this.state.business.name,
+      location: this.state.business.location,
+      category: this.state.business.category,
+      description: this.state.business.description,
+      address: this.state.business.address,
+      email: this.state.business.email,
+      telephoneNumber: this.state.business.telephoneNumber
+    };
+
+    if (this.state.business.homeNumber.length > 1) {
+      businessDetails.homeNumber = this.state.business.homeNumber;
+    }
+    this.props.registerBusiness(businessDetails)
+      .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
-        alertify.warning('Session Expired Login again');
-        this.props.logout();
-        setTimeout(() => this.props.history.push('/login'), 1000);
-        return;
-      }
-      window.scroll(0, 0);
-      if (error && error.response.data.validationErrors) {
+        alertify.success('Business Registered Successfully');
+        setTimeout(() => this.props.history.push('/userProfile'), 4000);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.warning('Session Expired Login again');
+          this.props.logout();
+          setTimeout(() => this.props.history.push('/login'), 1000);
+          return;
+        }
+        window.scroll(0, 0);
+        if (error && error.response.data.validationErrors) {
+          return this.setState({
+            errors:
+            { ...this.state.errors, message: error.response.data.validationErrors }
+          });
+        }
         return this.setState({
           errors:
-          { ...this.state.errors, message: error.response.data.validationErrors }
+          { ...this.state.errors, conflict: error.response.data.message }
         });
-      }
-      return this.setState({
-        errors:
-        { ...this.state.errors, conflict: error.response.data.message }
       });
-    });
-}
+  }
 
-/**
-* Creates a React Component
-* @return {jsx} renders the register business page
-* @memberof React Component
-*/
-render() {
-  const { businesses } = this.props;
-  const businessCategories = businesses.categories;
-  const categoryOptions = businessCategories !== undefined ?
-    Array.from(businessCategories).map(category =>
+  /**
+    * Renders the BusinessProfile Component
+    * @return {jsx} jsx element to render
+    * @memberof BusinessProfile Component
+    */
+  render() {
+    const { businesses } = this.props;
+    const businessCategories = businesses.categories;
+    const categoryOptions = businessCategories !== undefined ?
+      Array.from(businessCategories).map(category =>
         <option key={category} value={category}>{category}</option>) : null;
 
-  const locationOptions = this.props.locations.map(location =>
+    const locationOptions = this.props.locations.map(location =>
   <option key={location} value={location}>{location}</option>);
 
-  const { business, errors } = this.state;
-  return <div className="row container">
+    const { business, errors } = this.state;
+    return <div className="row container">
       <div className="col s12 m8 offset-m2 l8 offset-l2">
         <div className="card">
           <div className="card-action blue lighten-1 white-text center">
@@ -252,8 +253,7 @@ render() {
           </div>
         </div>
       </div>
-      <NotificationContainer/>
     </div>;
-}
+  }
 }
 

@@ -3,9 +3,9 @@ import alertify from 'alertifyjs';
 import Errors from '../../Messages/presentational/Errors';
 
 /**
- *
- *@class BusinessListing
- *@classdesc creates a React component- BusinessListing
+ * Class Representing React Component ContactUs
+ *@class ContactUs
+ *@classdesc creates a React component- ContactUs
  */
 export default class ContactUs extends React.Component {
     state = {
@@ -21,22 +21,25 @@ export default class ContactUs extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for ContactUs form fields
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the ContactUs component
+    * @memberof ContactUs Component
     */
     onChange = e =>
       this.setState({
         ...this.state,
         contactInfo: { ...this.state.contactInfo, [e.target.name]: e.target.value }
       });
+
     /**
-    * Handles SignUp Form Submission
-    * @param {object} e the signup page
-    * @return {jsx} renders the signup page
-    * @memberof React Component
-    */
+      * onSubmit Event handler callback for ContactUs form
+      * @param {object} e The event object
+      *
+      * @return {null}  Message Submitted message or returns error message
+      * @memberof ContactUs Component
+      */
     handleContactUsSubmit(e) {
       e.preventDefault();
       this.props.postContactUs(this.state.contactInfo)
@@ -57,9 +60,9 @@ export default class ContactUs extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
+    * Renders the ContactUs Component
+    * @return {jsx} jsx element to render
+    * @memberof ContactUs Component
     */
     render() {
       const {

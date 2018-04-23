@@ -4,35 +4,26 @@ import { Input, Pagination, PaginationButton } from 'react-materialize';
 import Business from '../presentational/Business';
 
 /**
-    * Creates a React Component
-    * @param {object} pageNumber message with the business created or error message
-    * @return {null} Success message with the business created or error message
-    * @memberof React Component
+    * Takes a pageNumber and updates the state of the Business listing Component
+    * @param {number} pageNumber number of the current page
+    * @param {string} propertyToUpdate number of the current page
+    *
+    * @return {func} function to update the state of the Business listing Component
     */
-function setCurrentPage(pageNumber) {
-  return (previousState, currentProps) => ({ ...previousState, currentPage: pageNumber });
-}
-/**
-    * Creates a React Component
-    * @param {object} pageNumber message with the business created or error message
-    * @return {null} Success message with the business created or error message
-    * @memberof React Component
-    */
-function setSearchCurrentPage(pageNumber) {
-  return (previousState, currentProps) => ({ ...previousState, searchCurrentPage: pageNumber });
+function setCurrentPage(pageNumber, propertyToUpdate) {
+  return (previousState, currentProps) => ({ ...previousState, propertyToUpdate: pageNumber });
 }
 
 /**
- *
+ * Class Representing a BusinessListing React Component
  *@class BusinessListing
  *@classdesc creates a React component- BusinessListing
  */
 export default class BusinessListing extends React.Component {
   /**
-    * Creates a React Component
-    * @param {object} props message with the business created or error message
-    * @return {null} Success message with the business created or error message
-    * @memberof React Component
+    * @param {object} props props from parent class
+    * @return {null} creates state and initalizes class variables
+    * @memberof BusinessListing Component
     */
   constructor(props) {
     super(props);
@@ -56,77 +47,95 @@ export default class BusinessListing extends React.Component {
     static defaultProps = {
       locations: [
         'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
-        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'FCT-ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
+        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
         'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
         'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
       ]
     }
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for Advanced Search form field
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onAdvancedSearchChange = e =>
       this.setState({ advancedSearch: e.target.value });
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for Filter Business Search field
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onSearchChange = e =>
       this.setState({ search: e.target.value });
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for Advanced search select field
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onSearchByChange = e =>
       this.setState({ searchBy: e.target.value });
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for location filter
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onLocationChange = e =>
       this.setState({ location: e.target.value });
 
   /**
-    * Creates a React Component
-    * @param {object} pageNumber the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for location filter
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
+    */
+    onCategoryChange = e =>
+      this.setState({ category: e.target.value });
+
+  /**
+    * onChange Event handler callback for pagination component
+    * @param {object} pageNumber the page number
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onChangePage = (pageNumber) => {
       this.props.fetchBusinesses(pageNumber)
-        .then(() => this.setState(setCurrentPage(pageNumber)));
+        .then(() => this.setState(setCurrentPage(pageNumber, 'currentPage')));
     }
+
   /**
-    * Creates a React Component
-    * @param {object} pageNumber the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for pagination component
+    * @param {object} pageNumber the page number
+    *
+    * @return {null} updates the state of the BusinessListing component
+    * @memberof BusinessListing Component
     */
     onSearchChangePage = (pageNumber) => {
       this.props.searchBusiness(
         this.state.searchBy,
         this.state.advancedSearch, pageNumber
       )
-        .then(() => this.setState(setSearchCurrentPage(pageNumber)));
+        .then(() => this.setState(setCurrentPage(pageNumber, 'searchCurrentPage')));
     }
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * Handles Search Form Submission
+    * @param {object} e the event object
+    *
+    * @return {null} result of the search
+    * @memberof BusinessListing Component
     */
     handleSearchSubmit = (e) => {
       e.preventDefault();
@@ -138,28 +147,19 @@ export default class BusinessListing extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
-    */
-    onCategoryChange = e =>
-      this.setState({ category: e.target.value });
-
-  /**
-    * Creates a React Component
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
-    */
+   * @description - Dispatches redux actions to fetch businesses and business categories
+   *
+   * @return {void} no return or void
+   */
     componentDidMount() {
       this.props.fetchBusinesses(this.state.currentPage);
       this.props.fetchCategories();
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
+    * Renders the BusinessListing Component
+    * @return {jsx} jsx element to render
+    * @memberof BusinessListing Component
     */
     render() {
       const { data, setBusinessProfile } = this.props;
