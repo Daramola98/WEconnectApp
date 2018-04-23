@@ -40,3 +40,20 @@ export const handleValidationErrors = (errors, res) => {
   }
   return res.status(400).json({ message: 'The following validation errors were found', validationErrors });
 };
+
+/**
+   * Filter businesses in the database by the provided location and category
+   * @param {object} pageNumber - The request object
+   * @param {object} offset - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const listByPages = (pageNumber = 0, offset = 0) => {
+  const searchPageNumber = Math.round(Number(pageNumber));
+  if (searchPageNumber <= 1) {
+    offset = 0;
+    return offset;
+  }
+  offset = (searchPageNumber - 1) * 10;
+  return offset;
+};

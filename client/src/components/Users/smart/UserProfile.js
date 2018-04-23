@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, Modal } from 'react-materialize';
+import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import Business from '../../Businesses/presentational/Business';
@@ -23,7 +23,8 @@ export default class UserProfile extends React.Component {
       search: '',
       info: true,
       businesses: false,
-      searchFocus: ''
+      searchFocus: '',
+      currentPage: 1
     };
   }
 
@@ -44,7 +45,7 @@ export default class UserProfile extends React.Component {
    * @return {void} no return or void
    */
   componentDidMount() {
-    this.props.fetchUserBusinesses()
+    this.props.fetchUserBusinesses(this.state.currentPage)
       .catch((error) => {
         if (error.response.status === 401) {
           alertify.set('notifier', 'position', 'top-right');
@@ -82,23 +83,35 @@ export default class UserProfile extends React.Component {
          search: e.target.value, info: false, businesses: true, searchFocus: true
        });
      };
+
+  /**
+    * Creates a React Component
+    * @param {object} pageNumber the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onPageChange = (pageNumber) => {
+      this.props.fetchUserBusinesses(pageNumber)
+        .then(() => this.setState({ currentPage: pageNumber, info: false, businesses: true }));
+    }
+
   /**
        * Creates a React Component
        * @return {jsx} Success message with the business created or error message
        * @memberof React Component
        */
-     render() {
-       const {
-         firstname, lastname, username, email, telephoneNumber, homeNumber
-       } = this.props.usersReducer.user;
+    render() {
+      const {
+        firstname, lastname, username, email, telephoneNumber, homeNumber
+      } = this.props.usersReducer.user;
 
-       let businessId;
-       let searchValue;
+      let businessId;
+      let searchValue;
+      const { businessesCount } = this.props.usersReducer;
+      const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
+        business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
 
-       const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
-         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
-
-       return <div className="row container">
+      return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue lighten-1 white-text center">
@@ -198,33 +211,13 @@ export default class UserProfile extends React.Component {
                             </tr>}
                         </tbody>
                       </table>
-                      <ul className="pagination">
-                        <li className="disabled">
-                          <a href="#!">
-                            <i className="material-icons">chevron_left</i>
-                          </a>
-                        </li>
-                        <li className="active">
-                          <a href="#!">1</a>
-                        </li>
-                        <li className="waves-effect">
-                          <a href="#!">2</a>
-                        </li>
-                        <li className="waves-effect">
-                          <a href="#!">3</a>
-                        </li>
-                        <li className="waves-effect">
-                          <a href="#!">4</a>
-                        </li>
-                        <li className="waves-effect">
-                          <a href="#!">5</a>
-                        </li>
-                        <li className="waves-effect">
-                          <a href="#!">
-                            <i className="material-icons">chevron_right</i>
-                          </a>
-                        </li>
-                      </ul>
+                      <br/><br/>
+                      <Pagination
+                       key={Date.now()}
+                        items={Math.ceil(businessesCount / 10) || 0 }
+                        activePage={this.state.currentPage}
+                        maxButtons={5}
+                        onSelect={this.onPageChange} />
                       <Modal
                       id="deleteBusiness"
                       header="Confirm Business Deletion"
@@ -264,5 +257,5 @@ export default class UserProfile extends React.Component {
           </div>
         </div>
       </div>;
-     }
+    }
 }

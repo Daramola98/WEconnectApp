@@ -2,6 +2,7 @@ import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESSES_FAILED, SEARCH_BUS
 
 const initialState = {
   businesses: [],
+  businessesCount: 0,
   loading: false,
   noOfBusinessesCreated: 0,
   categories: [],
@@ -22,16 +23,24 @@ function businessesReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_BUSINESSES:
       businesses = action.businessList;
-      return { ...state, loading: false, businesses };
+      return {
+        ...state, loading: false, businesses, businessesCount: action.businessesCount
+      };
     case SEARCH_BUSINESS:
       businesses = action.result;
-      return { ...state, loading: false, businesses };
+      return {
+        ...state, loading: false, businesses, businessesCount: action.businessesCount
+      };
     case SEARCH_BUSINESS_FAILED:
-      return { ...state, loading: false, businesses: [] };
+      return {
+        ...state, loading: false, businesses: [], businessesCount: 0
+      };
     case FETCH_CATEGORIES:
       return { ...state, loading: false, categories: action.categories };
     case FETCH_BUSINESSES_FAILED:
-      return { ...state, loading: false, businesses: [] };
+      return {
+        ...state, loading: false, businesses: [], businessesCount: 0
+      };
     case REGISTER_BUSINESS:
       return { ...state, noOfBusinessesCreated: state.noOfBusinessesCreated + 1 };
     case UPDATE_BUSINESS:

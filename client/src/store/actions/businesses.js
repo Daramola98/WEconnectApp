@@ -11,9 +11,10 @@ export const updatesBusiness = () => ({
   type: UPDATE_BUSINESS
 });
 
-export const searchesBusiness = result => ({
+export const searchesBusiness = (result, businessesCount) => ({
   type: SEARCH_BUSINESS,
-  result
+  result,
+  businessesCount
 });
 
 export const fetchesCategories = categories => ({
@@ -38,12 +39,13 @@ export const fetchBusinessesFailed = () => ({
   type: FETCH_BUSINESSES_FAILED
 });
 
-export const fetchBusinesses = () => dispatch =>
-  axios.get('api/v1/businesses')
+export const fetchBusinesses = (pageNumber = 0) => dispatch =>
+  axios.get(`api/v1/businesses?pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch({
         type: FETCH_BUSINESSES,
-        businessList: response.data
+        businessList: response.data.businesses,
+        businessesCount: response.data.businessesCount
       });
     })
     .catch(error => dispatch(fetchBusinessesFailed));
@@ -79,10 +81,10 @@ export const fetchBusiness = businessId => dispatch =>
     })
     .catch(error => Promise.reject(error.response.data.message));
 
-export const searchBusiness = (searchBy, value) => dispatch =>
-  axios.get(`api/v1/businesses?${searchBy}=${value}`)
+export const searchBusiness = (searchBy, value, pageNumber) => dispatch =>
+  axios.get(`api/v1/businesses?${searchBy}=${value}&pageNumber=${pageNumber}`)
     .then((response) => {
-      dispatch(searchesBusiness(response.data.businesses));
+      dispatch(searchesBusiness(response.data.businesses, response.data.businessesCount));
     })
     .catch((error) => {
       dispatch(searchesBusinessFailed());

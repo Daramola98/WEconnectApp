@@ -100,6 +100,16 @@ export const businessQueryCheck = (req, res, next) => {
       },
       errorMessage: 'Business location should be a string'
     },
+    pageNumber: {
+      trim: true,
+      optional: true,
+      notEmpty: {
+        errorMessage: 'Page Number is required'
+      },
+      isInt: {
+        errorMessage: 'Page Number should be a number'
+      },
+    },
     category: {
       trim: true,
       optional: true,

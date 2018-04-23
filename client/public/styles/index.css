@@ -51,3 +51,8 @@ li.active {
 .reviewerId {
     margin-left: 15px
 }
+.loader {
+    position: fixed;
+    top: 100%;
+    left: 100%;
+}

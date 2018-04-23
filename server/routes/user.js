@@ -9,8 +9,8 @@ const router = express.Router();
 
 router.post('/signUp', modelValidator(userValidation), userEmailValidation, Users.createUser);
 router.get('/user', isAuthorized, Users.getUser);
-router.get('/users', isAuthorized, Users.getUsers);
-router.delete('/user/:userId', isAuthorized, userIdCheck, Users.delete);
+// router.get('/users', isAuthorized, Users.getUsers);
+// router.delete('/user/:userId', isAuthorized, userIdCheck, Users.delete);
 router.post('/login', Users.loginUser);
 router.put('/user', isAuthorized, modelValidator(userUpdateValidation), Users.updateUserDetails);
 
