@@ -1,6 +1,6 @@
 import { Business, BusinessReview, reviewresponse } from '../models';
-import { handleInputFormat, handleValidationErrors } from '../helpers/genericHelper';
-import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, findBusinessByName, listBusinessByPages } from '../helpers/businessHelpers';
+import { handleInputFormat, handleValidationErrors, listByPages } from '../helpers/genericHelper';
+import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, findBusinessByName } from '../helpers/businessHelpers';
 import {
   businessNotFoundMessage,
   businessNotFoundInCategoryMessage,
@@ -75,32 +75,31 @@ export default class Businesses {
    * @memberof Business Controller
    */
   static listBusinesses(req, res) {
+    let offset = 0;
+    offset = listByPages(req.query.pageNumber, offset);
     if (req.query.location && req.query.category) {
-      findBusinessByLocationAndCategory(req, res);
+      return findBusinessByLocationAndCategory(req, res, offset);
     }
     if (req.query.location && !req.query.category) {
-      findBusinessByLocation(req, res);
+      return findBusinessByLocation(req, res, offset);
     }
     if (req.query.category && !req.query.location) {
-      findBusinessByCategory(req, res);
+      return findBusinessByCategory(req, res, offset);
     }
     if (req.query.name && !req.query.location && !req.query.category) {
-      findBusinessByName(req, res);
+      return findBusinessByName(req, res, offset);
     }
-    if (req.query.pageNumber && !req.query.location && !req.query.category) {
-      listBusinessByPages(req, res);
-    }
-    if (!req.query.location && !req.query.category && !req.query.pageNumber && !req.query.name) {
-      return Business
-        .findAll()
-        .then((businesses) => {
-          if (businesses.length > 0) {
-            return res.status(200).json(businesses);
-          }
-          return res.status(404).json({ message: 'No Businesses' });
-        })
-        .catch(err => res.status(500).json(serverErrorMessage.message));
-    }
+    return Business
+      .findAndCountAll({ offset, limit: 10 })
+      .then((result) => {
+        const businesses = result.rows;
+        const businessesCount = result.count;
+        if (businesses.length > 0) {
+          return res.status(200).json({ businesses, businessesCount });
+        }
+        return res.status(404).json({ message: 'No Businesses' });
+      })
+      .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
   /**
@@ -134,15 +133,21 @@ export default class Businesses {
    * @memberof Business
    */
   static retrieveUserBusinesses(req, res) {
+    let offset = 0;
+    offset = listByPages(req.query.pageNumber, offset);
     return Business
-      .findAll({
+      .findAndCountAll({
+        offset,
+        limit: 10,
         where: {
           userId: req.userData.userId
         }
       })
-      .then((businesses) => {
+      .then((result) => {
+        const businesses = result.rows;
+        const businessesCount = result.count;
         if (businesses.length > 0) {
-          return res.status(200).json(businesses);
+          return res.status(200).json({ businesses, businessesCount });
         }
         return res.status(404).json({ message: 'No Businesses' });
       })
@@ -328,6 +333,8 @@ export default class Businesses {
    * @memberof Business
    */
   static getReview(req, res) {
+    let offset = 0;
+    offset = listByPages(req.query.pageNumber, offset);
     return Business
       .findOne({
         where: {
@@ -337,7 +344,9 @@ export default class Businesses {
       .then((business) => {
         if (business) {
           return BusinessReview
-            .findAll({
+            .findAndCountAll({
+              offset,
+              limit: 10,
               include: [{
                 model: reviewresponse,
                 as: 'responses',
@@ -346,10 +355,12 @@ export default class Businesses {
                 businessId: req.params.businessId
               }
             })
-            .then((reviews) => {
+            .then((result) => {
+              const reviews = result.rows;
+              const reviewsCount = result.count;
               if (reviews.length > 0) {
                 return res.status(200)
-                  .json({ message: reviewFoundMessage, reviews });
+                  .json({ message: reviewFoundMessage, reviews, reviewsCount });
               }
               return res.status(404).json({ message: 'No review added' });
             })

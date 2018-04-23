@@ -18,9 +18,10 @@ export const updatesUser = user => ({
   user
 });
 
-export const fetchUserBusinesses = businesses => ({
+export const fetchUserBusinesses = (businesses, businessesCount) => ({
   type: FETCH_USER_BUSINESSES,
-  businesses
+  businesses,
+  businessesCount
 });
 
 export const fetchUserBusinessesFailed = () => ({
@@ -48,9 +49,9 @@ export const updateUser = userDetails => dispatch =>
       dispatch(updatesUser(response.data.updatedUserDetails));
     });
 
-export const getUserBusinesses = () => dispatch =>
-  axios.get('api/v1/businesses/user')
+export const getUserBusinesses = pageNumber => dispatch =>
+  axios.get(`api/v1/businesses/user?pageNumber=${pageNumber}`)
     .then((response) => {
-      dispatch(fetchUserBusinesses(response.data));
+      dispatch(fetchUserBusinesses(response.data.businesses, response.data.businessesCount));
     });
 

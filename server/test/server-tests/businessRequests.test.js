@@ -214,11 +214,10 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}`)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].name).to.equal('Clash of clans');
-          expect(res.body[0]).to.have.property('id');
-          expect(res.body[0].telephoneNumber).to.equal('07066445523');
-          expect(res.body[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].telephoneNumber).to.equal('07066445523');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
@@ -229,11 +228,10 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.be.a('array');
-          expect(res.body[0].name).to.equal('Clash of clans');
-          expect(res.body[0]).to.have.property('id');
-          expect(res.body[0].telephoneNumber).to.equal('07066445523');
-          expect(res.body[0].email).to.equal('damilolaajiboye@live.com');
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].telephoneNumber).to.equal('07066445523');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
           done();
         });
     });
@@ -327,7 +325,6 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}?location=lagos&category=housing `)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
           expect(res.body.message).to.equal('Business not found');
           done();
         });
@@ -365,7 +362,6 @@ describe(`${baseEndpoint}`, () => {
         .set('authorization', authToken2)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.be.a('object');
           expect(res.body.message).to.equal('No Businesses');
           done();
         });

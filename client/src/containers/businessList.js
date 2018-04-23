@@ -7,14 +7,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchBusinesses() {
-    return dispatch(fetchBusinesses());
+  fetchBusinesses(pageNumber) {
+    return dispatch(fetchBusinesses(pageNumber));
   },
   fetchCategories() {
     return dispatch(fetchCategories());
   },
-  searchBusiness(searchBy, value) {
-    return dispatch(searchBusiness(searchBy, value));
+  searchBusiness(searchBy, value, pageNumber) {
+    return dispatch(searchBusiness(searchBy, value, pageNumber));
   }
 });
 const BusinessListContainer = connect(mapStateToProps, mapDispatchToProps)(BusinessListing);

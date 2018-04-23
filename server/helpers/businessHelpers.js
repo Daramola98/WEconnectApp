@@ -28,22 +28,27 @@ if (config.use_env_variable) {
    * Filter businesses in the database by the provided category
    * @param {object} req - The request object
    * @param {object} res - The response object
+   * @param {number} offset - The response object
    * @return {object} res - The response to the client
    * @memberof BusinessHelper
    */
-export const findBusinessByCategory = (req, res) => {
+export const findBusinessByCategory = (req, res, offset) => {
   const searchCategory = req.query.category.replace(/ /g, '');
   return Business
-    .findAll({
+    .findAndCountAll({
+      offset,
+      limit: 10,
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('category'), 'TEXT'),
         { $ilike: `%${searchCategory}%` }
       )
     })
-    .then((businesses) => {
+    .then((result) => {
+      const businesses = result.rows;
+      const businessesCount = result.count;
       if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessFoundMessage, businesses });
+          .json({ message: businessFoundMessage, businesses, businessesCount });
       }
       if (businesses.length === 0) {
         return res.status(404).json(businessNotFoundInCategoryMessage);
@@ -56,23 +61,28 @@ export const findBusinessByCategory = (req, res) => {
    * Filter businesses in the database by the provided name
    * @param {object} req - The request object
    * @param {object} res - The response object
+   * @param {number} offset - The response object
    * @return {object} res - The response to the client
    * @memberof BusinessHelper
    */
-export const findBusinessByName = (req, res) => {
+export const findBusinessByName = (req, res, offset) => {
   const searchName = req.query.name.replace(/ /g, '');
   return Business
-    .findAll({
+    .findAndCountAll({
+      offset,
+      limit: 10,
       where: {
         name: {
           $ilike: `%${searchName}%`
         }
       }
     })
-    .then((businesses) => {
+    .then((result) => {
+      const businesses = result.rows;
+      const businessesCount = result.count;
       if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessesFoundMessage, businesses });
+          .json({ message: businessFoundMessage, businesses, businessesCount });
       }
       res.status(404).json({ message: 'No Business found with this name' });
     })
@@ -83,22 +93,27 @@ export const findBusinessByName = (req, res) => {
    * Filter businesses in the database by the provided location
    * @param {object} req - The request object
    * @param {object} res - The response object
+   * @param {number} offset - The response object
    * @return {object} res - The response to the client
    * @memberof BusinessHelper
    */
-export const findBusinessByLocation = (req, res) => {
+export const findBusinessByLocation = (req, res, offset) => {
   const searchLocation = req.query.location.replace(/ /g, '');
   return Business
-    .findAll({
+    .findAndCountAll({
+      offset,
+      limit: 10,
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('location'), 'TEXT'),
         { $ilike: `%${searchLocation}%` }
       )
     })
-    .then((businesses) => {
+    .then((result) => {
+      const businesses = result.rows;
+      const businessesCount = result.count;
       if (businesses.length > 0) {
         return res.status(200)
-          .json({ message: businessesFoundMessage, businesses });
+          .json({ message: businessFoundMessage, businesses, businessesCount });
       }
       res.status(404).json(businessNotFoundInLocationMessage);
     })
@@ -109,14 +124,15 @@ export const findBusinessByLocation = (req, res) => {
    * Filter businesses in the database by the provided location and category
    * @param {object} req - The request object
    * @param {object} res - The response object
+   * @param {number} offset - The response object
    * @return {object} res - The response to the client
    * @memberof BusinessHelper
    */
-export const findBusinessByLocationAndCategory = (req, res) => {
+export const findBusinessByLocationAndCategory = (req, res, offset) => {
   const searchCategory = req.query.category.replace(/ /g, '');
   const searchLocation = req.query.location.replace(/ /g, '');
   return sequelize
-    .query(`SELECT * FROM "Businesses" AS "Business" WHERE CAST("category" AS TEXT) ILIKE '%${searchCategory}%' AND CAST("location" AS TEXT) ILIKE '%${searchLocation}%'`, { type: sequelize.QueryTypes.SELECT })
+    .query(`SELECT * FROM "Businesses" AS "Business" WHERE CAST("category" AS TEXT) ILIKE '%${searchCategory}%' AND CAST("location" AS TEXT) ILIKE '%${searchLocation}%' LIMIT 10 OFFSET ${offset}`, { type: sequelize.QueryTypes.SELECT })
     .then((businesses) => {
       if (businesses.length > 0) {
         return res.status(200)
@@ -125,32 +141,6 @@ export const findBusinessByLocationAndCategory = (req, res) => {
       return res.status(404).json(businessNotFoundMessage);
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
-};
-  /**
-   * Filter businesses in the database by the provided location and category
-   * @param {object} req - The request object
-   * @param {object} res - The response object
-   * @return {object} res - The response to the client
-   * @memberof BusinessHelper
-   */
-export const listBusinessByPages = (req, res) => {
-  let offset;
-  const searchPageNumber = Math.round(Number(req.query.pageNumber));
-  if (searchPageNumber === 1) {
-    offset = 0;
-  } else {
-    offset = (searchPageNumber - 1) * 10;
-  }
-  return Business
-    .findAll({ offset, limit: 10 })
-    .then((businesses) => {
-      if (businesses.length > 0) {
-        return res.status(200)
-          .json({ message: businessFoundMessage, businesses });
-      }
-      return res.status(404).json(businessNotFoundMessage);
-    })
-    .catch(err => res.status(500).json(err));
 };
 
 /**
@@ -181,8 +171,10 @@ export const addBusinessCategory = (req, res) => {
 export const listBusinessCategories = (req, res) => sequelize
   .query('SELECT enum_range(null::public."enum_Businesses_category")', { type: sequelize.QueryTypes.SELECT })
   .then((result) => {
-    /* eslint-disable */
-    const categories = result[0]['enum_range'];
+    let categories = result[0].enum_range;
+    if (!Array.isArray(categories)) {
+      categories = categories.substring(1, categories.length - 1).split(',');
+    }
     res.status(200).json(categories);
   })
   .catch(err => res.status(500).json(serverErrorMessage.message));

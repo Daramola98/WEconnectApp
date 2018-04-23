@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ({
   logout() {
     return dispatch(logout());
   },
-  fetchUserBusinesses() {
-    return dispatch(getUserBusinesses());
+  fetchUserBusinesses(pageNumber) {
+    return dispatch(getUserBusinesses(pageNumber));
   },
   fetchUserBusinessesFailed() {
     return dispatch(fetchUserBusinessesFailed());

@@ -13,7 +13,7 @@ router.post('/', isAuthorized, modelValidator(businessValidation), businessExist
 
 router.get('/', businessQueryCheck, Businesses.listBusinesses);
 
-router.get('/user', isAuthorized, Businesses.retrieveUserBusinesses);
+router.get('/user', isAuthorized, businessQueryCheck, Businesses.retrieveUserBusinesses);
 
 router.get('/:businessId', businessIdCheck, Businesses.retrieveBusiness);
 
@@ -36,6 +36,6 @@ router.post(
   Businesses.addReviewResponse
 );
 
-router.get('/:businessId/reviews', businessIdCheck, Businesses.getReview);
+router.get('/:businessId/reviews', businessIdCheck, businessQueryCheck, Businesses.getReview);
 
 export default router;

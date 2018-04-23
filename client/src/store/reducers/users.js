@@ -3,6 +3,7 @@ import { USER_LOGGED_IN, POST_CONTACTUS, USER_LOGGED_OUT, FETCH_USER_BUSINESSES,
 const initialState = {
   user: {},
   businesses: [],
+  businessesCount: 0,
   authenticated: false,
   contactUsSubmitted: false
 };
@@ -21,9 +22,9 @@ function usersReducer(state = initialState, action) {
     case USER_LOGGED_OUT:
       return { ...state, user: {}, authenticated: false };
     case FETCH_USER_BUSINESSES:
-      return { ...state, businesses: action.businesses };
+      return { ...state, businesses: action.businesses, businessesCount: action.businessesCount };
     case FETCH_USER_BUSINESSES_FAILED:
-      return { ...state, businesses: [] };
+      return { ...state, businesses: [], businessesCount: 0 };
     case POST_CONTACTUS:
       return { ...state, contactUsSubmitted: true };
     case UPDATE_USER:

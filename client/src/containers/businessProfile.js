@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ({
   logout() {
     return dispatch(logout());
   },
-  fetchReviews(businessId) {
-    return dispatch(fetchReviews(businessId));
+  fetchReviews(businessId, pageNumber) {
+    return dispatch(fetchReviews(businessId, pageNumber));
   },
   postReview(businessId, review) {
     return dispatch(postReview(businessId, review));

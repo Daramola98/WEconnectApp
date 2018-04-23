@@ -9,9 +9,10 @@ export const postsReviewResponse = () => ({
   type: POST_REVIEW_RESPONSE
 });
 
-export const fetchBusinessReviews = reviews => ({
+export const fetchBusinessReviews = (reviews, reviewsCount) => ({
   type: FETCH_BUSINESS_REVIEWS,
-  reviews
+  reviews,
+  reviewsCount
 });
 
 export const fetchBusinessReviewsFailed = () => ({
@@ -30,10 +31,10 @@ export const postReviewResponse = (businessId, reviewId, review) => dispatch =>
       dispatch(postsReviewResponse());
     });
 
-export const fetchReviews = businessId => dispatch =>
-  axios.get(`api/v1/businesses/${businessId}/reviews`)
+export const fetchReviews = (businessId, pageNumber) => dispatch =>
+  axios.get(`api/v1/businesses/${businessId}/reviews?pageNumber=${pageNumber}`)
     .then((response) => {
-      dispatch(fetchBusinessReviews(response.data.reviews));
+      dispatch(fetchBusinessReviews(response.data.reviews, response.data.reviewsCount));
     })
     .catch((error) => {
       if (error) {

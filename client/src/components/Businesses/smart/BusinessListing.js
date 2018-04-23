@@ -1,7 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Input } from 'react-materialize';
+import { Input, Pagination, PaginationButton } from 'react-materialize';
 import Business from '../presentational/Business';
+
+/**
+    * Creates a React Component
+    * @param {object} pageNumber message with the business created or error message
+    * @return {null} Success message with the business created or error message
+    * @memberof React Component
+    */
+function setCurrentPage(pageNumber) {
+  return (previousState, currentProps) => ({ ...previousState, currentPage: pageNumber });
+}
+/**
+    * Creates a React Component
+    * @param {object} pageNumber message with the business created or error message
+    * @return {null} Success message with the business created or error message
+    * @memberof React Component
+    */
+function setSearchCurrentPage(pageNumber) {
+  return (previousState, currentProps) => ({ ...previousState, searchCurrentPage: pageNumber });
+}
 
 /**
  *
@@ -23,9 +42,17 @@ export default class BusinessListing extends React.Component {
       searchBy: 'name',
       advancedSearch: '',
       location: 'null',
-      category: 'null'
+      category: 'null',
+      currentPage: 1,
+      searchCurrentPage: 1,
+      searchPagination: 'hide',
+      businessPagination: ''
     };
+    this.searchBy = '';
+    this.advancedSearch = '';
   }
+
+
     static defaultProps = {
       locations: [
         'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
@@ -73,13 +100,41 @@ export default class BusinessListing extends React.Component {
 
   /**
     * Creates a React Component
+    * @param {object} pageNumber the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onChangePage = (pageNumber) => {
+      this.props.fetchBusinesses(pageNumber)
+        .then(() => this.setState(setCurrentPage(pageNumber)));
+    }
+  /**
+    * Creates a React Component
+    * @param {object} pageNumber the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onSearchChangePage = (pageNumber) => {
+      this.props.searchBusiness(
+        this.state.searchBy,
+        this.state.advancedSearch, pageNumber
+      )
+        .then(() => this.setState(setSearchCurrentPage(pageNumber)));
+    }
+
+  /**
+    * Creates a React Component
     * @param {object} e the register business page
     * @return {jsx} renders the register business page
     * @memberof React Component
     */
     handleSearchSubmit = (e) => {
       e.preventDefault();
-      this.props.searchBusiness(this.state.searchBy, this.state.advancedSearch);
+      this.setState({ businessPagination: 'hide', searchPagination: '' });
+      this.props.searchBusiness(
+        this.state.searchBy,
+        this.state.advancedSearch, this.state.searchCurrentPage
+      );
     }
 
   /**
@@ -97,7 +152,7 @@ export default class BusinessListing extends React.Component {
     * @memberof React Component
     */
     componentDidMount() {
-      this.props.fetchBusinesses();
+      this.props.fetchBusinesses(this.state.currentPage);
       this.props.fetchCategories();
     }
 
@@ -109,6 +164,7 @@ export default class BusinessListing extends React.Component {
     render() {
       const { data, setBusinessProfile } = this.props;
       const businessCategories = data.categories;
+      const { businessesCount } = this.props.data;
       const categoryOptions = businessCategories !== undefined ?
         Array.from(businessCategories).map(category =>
         <option key={category} value={category}>{category}</option>) : null;
@@ -218,33 +274,18 @@ export default class BusinessListing extends React.Component {
               </tbody>
             </table>
           </div>
-          <ul className="pagination">
-            <li className="disabled">
-              <a href="#!">
-                <i className="material-icons">chevron_left</i>
-              </a>
-            </li>
-            <li className="active">
-              <a href="#!">1</a>
-            </li>
-            <li className="waves-effect">
-              <a href="#!">2</a>
-            </li>
-            <li className="waves-effect">
-              <a href="#!">3</a>
-            </li>
-            <li className="waves-effect">
-              <a href="#!">4</a>
-            </li>
-            <li className="waves-effect">
-              <a href="#!">5</a>
-            </li>
-            <li className="waves-effect">
-              <a href="#!">
-                <i className="material-icons">chevron_right</i>
-              </a>
-            </li>
-          </ul>
+          <Pagination
+           className={this.state.businessPagination}
+           key={Date.now()} items={Math.ceil(businessesCount / 10) || 0 }
+            activePage={this.state.currentPage} maxButtons={5}
+            onSelect = {this.onChangePage}
+             />
+          <Pagination
+           className={this.state.searchPagination}
+           key={Date.now() + 1} items={Math.ceil(businessesCount / 10) || 0 }
+            activePage={this.state.searchCurrentPage} maxButtons={5}
+            onSelect = {this.onSearchChangePage}
+             />
         </div>;
     }
 }

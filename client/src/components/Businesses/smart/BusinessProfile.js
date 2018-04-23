@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, Modal } from 'react-materialize';
+import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import alertify from 'alertifyjs';
 import Review from '../../Review/presentational/Review';
 import Errors from '../../Messages/presentational/Errors';
@@ -18,8 +18,11 @@ export default class BusinessProfile extends React.Component {
     errors: {
       message: null
     },
+    info: true,
+    reviews: false,
     reviewId: null,
-    reviewResponses: []
+    reviewResponses: [],
+    currentPage: 1
   }
   /**
     * Creates a React Component
@@ -29,8 +32,19 @@ export default class BusinessProfile extends React.Component {
     */
   componentWillMount() {
     this.props.fetchBusiness(this.props.match.params.id);
-    this.props.fetchReviews(this.props.match.params.id);
+    this.props.fetchReviews(this.props.match.params.id, this.state.currentPage);
   }
+
+  /**
+    * Creates a React Component
+    * @param {object} pageNumber the register business page
+    * @return {jsx} renders the register business page
+    * @memberof React Component
+    */
+    onPageChange = (pageNumber) => {
+      this.props.fetchReviews(this.props.match.params.id, pageNumber)
+        .then(() => this.setState({ currentPage: pageNumber, info: false, reviews: true }));
+    }
 
   /**
   * Creates a React Component
@@ -80,7 +94,7 @@ export default class BusinessProfile extends React.Component {
     * @memberof React Component
     */
   render() {
-    const { business } = this.props.businessProfile;
+    const { business, reviewsCount } = this.props.businessProfile;
     const { errors } = this.state;
     return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
@@ -91,7 +105,7 @@ export default class BusinessProfile extends React.Component {
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
-                  <Tab title="Information" active className="blue-text lighten-1">
+                  <Tab title="Information" active={this.state.info} className="blue-text lighten-1">
                     <div id="businessInfo" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
@@ -196,7 +210,7 @@ export default class BusinessProfile extends React.Component {
                       </ul>
                     </div>
                   </Tab>
-                  <Tab title="Reviews" className="blue-text lighten-1">
+                  <Tab title="Reviews" active={this.state.reviews} className="blue-text lighten-1">
                     <div id="businessReviews" className="col s12 m12 l12">
                       <div className="card">
                         <div className="card-content">
@@ -247,7 +261,8 @@ export default class BusinessProfile extends React.Component {
                             <ul>
                               {this.props.businessProfile.reviews.length > 0 ?
                                this.props.businessProfile.reviews.map((review, i) => (
-                                    <Review key={review.id} review={review}>
+                                  <div key={review.id}>
+                                    <Review review={review}>
                                       <div className="align-right">
                                         <a
                                           className="blue-text"
@@ -274,10 +289,17 @@ export default class BusinessProfile extends React.Component {
                                         </a>
                                       </div>
                                     </Review>
+                                    </div>
                                   )) : <li className="blue-text">
                                   NO REVIEWS
                                 </li>}
                             </ul>
+                            <br/>
+                            <Pagination
+                             key={Date.now()}
+                              items={Math.ceil(reviewsCount / 10) || 0}
+                              activePage={this.state.currentPage} maxButtons={5}
+                              onSelect={this.onPageChange} />
                           </div>
                         </div>
                       </div>

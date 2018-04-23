@@ -3,6 +3,7 @@ import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_REVIEWS, FETCH_BUSINESS_REVIEWS_FA
 const initialState = {
   business: {},
   reviews: [],
+  reviewsCount: 0,
   reviewSubmitted: false
 };
 
@@ -19,10 +20,10 @@ function businessProfile(state = initialState, action) {
       return { ...state, business: action.business };
 
     case FETCH_BUSINESS_REVIEWS:
-      return { ...state, reviews: action.reviews };
+      return { ...state, reviews: action.reviews, reviewsCount: action.reviewsCount };
 
     case FETCH_BUSINESS_REVIEWS_FAILED:
-      return { ...state, reviews: [] };
+      return { ...state, reviews: [], reviewsCount: 0 };
 
     case POST_REVIEW:
       return { ...state, reviewSubmitted: true };
