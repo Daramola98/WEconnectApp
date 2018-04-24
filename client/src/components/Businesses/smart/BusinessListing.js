@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import { Input, Pagination, PaginationButton } from 'react-materialize';
 import Business from '../presentational/Business';
 
-/**
-    * Takes a pageNumber and updates the state of the Business listing Component
-    * @param {number} pageNumber number of the current page
-    * @param {string} propertyToUpdate number of the current page
-    *
-    * @return {func} function to update the state of the Business listing Component
-    */
-function setCurrentPage(pageNumber, propertyToUpdate) {
-  return (previousState, currentProps) => ({ ...previousState, propertyToUpdate: pageNumber });
-}
+// /**
+//     * Takes a pageNumber and updates the state of the Business listing Component
+//     * @param {number} pageNumber number of the current page
+//     * @param {string} propertyToUpdate property to update in state
+//     *
+//     * @return {func} function to update the state of the Business listing Component
+//     */
+// function setCurrentPage(pageNumber, propertyToUpdate) {
+//   return (previousState, currentProps) => ({ ...previousState, propertyToUpdate: pageNumber });
+// }
 
 /**
  * Class Representing a BusinessListing React Component
@@ -112,7 +112,7 @@ export default class BusinessListing extends React.Component {
     */
     onChangePage = (pageNumber) => {
       this.props.fetchBusinesses(pageNumber)
-        .then(() => this.setState(setCurrentPage(pageNumber, 'currentPage')));
+        .then(() => this.setState({ currentPage: pageNumber }));
     }
 
   /**
@@ -127,7 +127,7 @@ export default class BusinessListing extends React.Component {
         this.state.searchBy,
         this.state.advancedSearch, pageNumber
       )
-        .then(() => this.setState(setCurrentPage(pageNumber, 'searchCurrentPage')));
+        .then(() => this.setState({ searchCurrentPage: pageNumber }));
     }
 
   /**
