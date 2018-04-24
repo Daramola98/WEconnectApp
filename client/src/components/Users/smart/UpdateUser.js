@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
 import alertify from 'alertifyjs';
 import Errors from '../../Messages/presentational/Errors';
 
 /**
- *
+ * Class Representing React Component UpdateUser
  *@class UpdateUser
  *@classdesc creates a React component- UpdateUser
  */
@@ -26,7 +25,7 @@ export default class UpdateUser extends React.Component {
   }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - Redirects unauthenticated user to the login page
    *
    * @return {void} no return or void
    */
@@ -37,10 +36,11 @@ export default class UpdateUser extends React.Component {
   }
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for UpdateUser form fields
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the UpdateUser component
+    * @memberof UpdateUser Component
     */
     onChange = e =>
       this.setState({
@@ -50,9 +50,9 @@ export default class UpdateUser extends React.Component {
 
   /**
     * Handles Update Form Submission
-    * @param {object} e the updateUser page
-    * @return {jsx} renders the updateUser page
-    * @memberof React Component
+    * @param {object} e the event object
+    * @return {null} updates the state of the updateUser component
+    * @memberof UpdateUser Component
     */
     handleUpdateSubmit(e) {
       e.preventDefault();
@@ -95,9 +95,9 @@ export default class UpdateUser extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} renders the update user page
-    * @memberof React Component
+    * Renders the UpdateUser Component
+    * @return {jsx} jsx element to render
+    * @memberof UpdateUser Component
     */
     render() {
       const { errors } = this.state;
@@ -189,7 +189,6 @@ export default class UpdateUser extends React.Component {
                     </div>
                   </div>
                 </form>
-                <NotificationContainer/>
               </div>
             </div>
           </div>

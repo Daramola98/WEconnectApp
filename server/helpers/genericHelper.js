@@ -42,10 +42,11 @@ export const handleValidationErrors = (errors, res) => {
 };
 
 /**
-   * Filter businesses in the database by the provided location and category
-   * @param {object} pageNumber - The request object
-   * @param {object} offset - The response object
-   * @return {object} res - The response to the client
+   * Sets up offset for pagination
+   * @param {number} pageNumber - pageNumber from the request
+   * @param {number} offset - how many rows to skip
+   *
+   * @return {number} offset - The response to the client
    * @memberof BusinessHelper
    */
 export const listByPages = (pageNumber = 0, offset = 0) => {

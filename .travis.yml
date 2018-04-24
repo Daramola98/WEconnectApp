@@ -4,6 +4,7 @@ node_js:
 env:
   CODECLIMATE_REPO_TOKEN: 9de0431ee41158f3a57ecffd9f38de7d6e7482e590b08fa2acdb2cd0923f419d
   JWT_KEY: secret
+  ADMIN_CREDENTIAL: weconnect@admin.com
 cache:
   directories:
     - "node_modules"

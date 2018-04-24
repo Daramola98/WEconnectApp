@@ -1,4 +1,3 @@
-// import businesses from '../models/businesses';
 import { checkForWhiteSpace } from '../helpers/genericHelper';
 
 /**

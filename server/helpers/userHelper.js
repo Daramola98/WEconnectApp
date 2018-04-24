@@ -5,7 +5,7 @@ const { User } = db;
 
 export default {
   /**
-   * Filter businesses in the database by the provided location
+   * Checks if a user with the same Email already exists
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @param {object} next - callback function to move to next middleware

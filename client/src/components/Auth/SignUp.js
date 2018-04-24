@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { NotificationContainer, NotificationManager } from 'react-notifications';
 import alertify from 'alertifyjs';
 import Errors from '../Messages/presentational/Errors';
 
 /**
- *
+ * A class to represent the React SignUp Component
  *@class SignUp
  *@classdesc creates a React component- SignUp
  */
@@ -29,7 +28,7 @@ export default class SignUp extends React.Component {
     }
 
     /**
-   * @description - redirect registered user to all-budiness page
+   * @description - Redirects authenticated users to the user profile page
    *
    * @return {void} no return or void
    */
@@ -38,22 +37,26 @@ export default class SignUp extends React.Component {
         this.props.history.push('/userProfile');
       }
     }
+
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for signup form fields
+    * @param {object} e the event object
+    *
+    * @return {func} updates the state of the signup component
+    * @memberof SignUp Component
     */
     onChange = e =>
       this.setState({
         ...this.state,
         user: { ...this.state.user, [e.target.name]: e.target.value }
       });
+
   /**
     * Handles SignUp Form Submission
-    * @param {object} e the signup page
-    * @return {jsx} renders the signup page
-    * @memberof React Component
+    * @param {object} e the event object
+    *
+    * @return {null} user profile component if successful or returns error message
+    * @memberof SignUp Component
     */
     handleSignUpSubmit(e) {
       e.preventDefault();
@@ -81,10 +84,9 @@ export default class SignUp extends React.Component {
       }
       this.props.signUp(userDetails)
         .then(() => {
-          // NotificationManager.success('Registration Successful', 'Successful');
           alertify.set('notifier', 'position', 'top-right');
           alertify.success('Registration Successful');
-          setTimeout(() => this.props.history.push('/userProfile'), 4000);
+          setTimeout(() => this.props.history.push('/userProfile'), 2000);
         })
         .catch((error) => {
           window.scroll(0, 0);
@@ -102,9 +104,9 @@ export default class SignUp extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} renders the signup page
-    * @memberof React Component
+    * Renders the SignUp Component
+    * @return {jsx} jsx element to render
+    * @memberof SignUp Component
     */
     render() {
       const { errors } = this.state;
@@ -215,7 +217,6 @@ export default class SignUp extends React.Component {
                     </div>
                   </div>
                 </form>
-                <NotificationContainer/>
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 
 /**
- *
+ * A class to represent the React Login Component
  *@class Login
  *@classdesc creates a React component- Login
  */
@@ -16,7 +16,7 @@ export default class Login extends React.Component {
     }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - Redirects authenticated users to the user profile page
    *
    * @return {void} no return or void
    */
@@ -27,10 +27,11 @@ export default class Login extends React.Component {
     }
 
     /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for login form fields
+    * @param {object} e the event object
+    *
+    * @return {func} updates the state of the login component
+    * @memberof Login Component
     */
     onChange = e =>
       this.setState({
@@ -39,10 +40,11 @@ export default class Login extends React.Component {
       });
 
     /**
-      * Creates a React Component
-      * @param {object} e message with the business created or error message
-      * @return {jsx} Success message with the business created or error message
-      * @memberof React Component
+      * onSubmit Event handler callback for login form
+      * @param {object} e The event object
+      *
+      * @return {null}  user profile component if successful or returns error message
+      * @memberof Login Component
       */
     onSubmit = (e) => {
       e.preventDefault();
@@ -57,9 +59,9 @@ export default class Login extends React.Component {
     }
 
   /**
-    * Creates a React Component
-    * @return {jsx} Success message with the business created or error message
-    * @memberof React Component
+    * Renders the Login Component
+    * @return {jsx} jsx element to render
+    * @memberof Login Component
     */
     render() {
       const { message } = this.state;

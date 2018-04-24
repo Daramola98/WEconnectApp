@@ -15,8 +15,8 @@ import serverErrorMessage from '../messages/serverMessage';
 
 /**
  *
- *@class Business
- *@classdesc creates a Business Class
+ *@class Businesses
+ *@classdesc creates a BusinessController Class
  */
 export default class Businesses {
   /**

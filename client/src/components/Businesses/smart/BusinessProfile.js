@@ -5,7 +5,7 @@ import Review from '../../Review/presentational/Review';
 import Errors from '../../Messages/presentational/Errors';
 
 /**
- *
+ * Class Representing React Component BusinessProfile
  *@class BusinessProfile
  *@classdesc creates a React component- BusinessProfile
  *@param {object} e event object
@@ -24,22 +24,23 @@ export default class BusinessProfile extends React.Component {
     reviewResponses: [],
     currentPage: 1
   }
+
   /**
-    * Creates a React Component
-    * @param {object} props the business profile page
-    * @return {jsx} renders the business profile page
-    * @memberof React Component
-    */
+   * @description - Dispatches redux actions to fetch a business and the business reviews
+   *
+   * @return {void} no return or void
+   */
   componentWillMount() {
     this.props.fetchBusiness(this.props.match.params.id);
     this.props.fetchReviews(this.props.match.params.id, this.state.currentPage);
   }
 
   /**
-    * Creates a React Component
-    * @param {object} pageNumber the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onSelect props callback for pagination component
+    * @param {number} pageNumber the page number
+    *
+    * @return {null} updates the state of the BusinessProfile component
+    * @memberof BusinessProfile Component
     */
     onPageChange = (pageNumber) => {
       this.props.fetchReviews(this.props.match.params.id, pageNumber)
@@ -47,17 +48,25 @@ export default class BusinessProfile extends React.Component {
     }
 
   /**
-  * Creates a React Component
-  * @param {object} e the register business page
-  * @return {jsx} renders the register business page
-  * @memberof React Component
-  */
+    * onChange Event handler callback for review response input field
+    * @param {object} e the event object
+    *
+    * @return {null} updates the state of the BusinessProfile component
+    * @memberof BusinessProfile Component
+    */
   onChange = e =>
     this.setState({
       ...this.state,
       response: { ...this.state.response, [e.target.name]: e.target.value }
     });
 
+  /**
+      * onSubmit Event handler callback for review form
+      * @param {object} e The event object
+      *
+      * @return {null}  Review submitted or returns error message
+      * @memberof BusinessProfile Component
+      */
   onSubmit = (e) => {
     e.preventDefault();
     if (!this.props.user.authenticated) {
@@ -88,10 +97,11 @@ export default class BusinessProfile extends React.Component {
         }
       });
   }
+
   /**
-    * Creates a React Component
-    * @return {jsx} renders the business profile page
-    * @memberof React Component
+    * Renders the BusinessProfile Component
+    * @return {jsx} jsx element to render
+    * @memberof BusinessProfile Component
     */
   render() {
     const { business, reviewsCount } = this.props.businessProfile;

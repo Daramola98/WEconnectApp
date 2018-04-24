@@ -3,16 +3,16 @@ import GuestNavBar from '../presentational/GuestNavBar';
 import UserNavBar from '../presentational/UserNavBar';
 
 /**
- *
+ * Class Representing React Component Header
  *@class Header
  *@classdesc creates a React component- Header
  */
 export default class Header extends React.Component {
   /**
-   * Creates a React Component
-   * @return {jsx} Success message with the business created or error message
-   * @memberof React Component
-   */
+    * Renders the Header Component
+    * @return {jsx} jsx element to render
+    * @memberof Header Component
+    */
   render() {
     const { firstname, email } = this.props.usersReducer.user;
 

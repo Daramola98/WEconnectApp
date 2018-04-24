@@ -5,16 +5,15 @@ import alertify from 'alertifyjs';
 import Business from '../../Businesses/presentational/Business';
 
 /**
- *
- *@class Header
- *@classdesc creates a React component- Header
+ * Class Representing React Component UserProfile
+ *@class UserProfile
+ *@classdesc creates a React component- UserProfile
  */
 export default class UserProfile extends React.Component {
   /**
-    * Creates a React Component
-    * @param {object} props message with the business created or error message
-    * @return {null} Success message with the business created or error message
-    * @memberof React Component
+    * @param {object} props props from parent class
+    * @return {null} creates state and initalizes class variables
+    * @memberof UserProfile Component
     */
   constructor(props) {
     super(props);
@@ -29,7 +28,7 @@ export default class UserProfile extends React.Component {
   }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - redirect unauthenticated user to the login page
    *
    * @return {void} no return or void
    */
@@ -40,7 +39,7 @@ export default class UserProfile extends React.Component {
   }
 
   /**
-   * @description - redirect registered user to all-budiness page
+   * @description - dispatches redux action to fetch users businesses
    *
    * @return {void} no return or void
    */
@@ -71,13 +70,13 @@ export default class UserProfile extends React.Component {
   //    };
 
   /**
-    * Creates a React Component
-    * @param {object} e the register business page
-    * @param {string} searchValue the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
-    */
-     onSearchSubmit = (e) => {
+      * onChange Event handler callback for filter businesses input
+      * @param {object} e The event object
+      *
+      * @return {null}  Updates the component state
+      * @memberof UserProfile Component
+      */
+     onSearchChange = (e) => {
        e.preventDefault();
        this.setState({
          search: e.target.value, info: false, businesses: true, searchFocus: true
@@ -85,10 +84,11 @@ export default class UserProfile extends React.Component {
      };
 
   /**
-    * Creates a React Component
-    * @param {object} pageNumber the register business page
-    * @return {jsx} renders the register business page
-    * @memberof React Component
+    * onChange Event handler callback for pagination component
+    * @param {object} pageNumber the page number
+    *
+    * @return {null} updates the state of the UserProfile component
+    * @memberof UserProfile Component
     */
     onPageChange = (pageNumber) => {
       this.props.fetchUserBusinesses(pageNumber)
@@ -96,10 +96,10 @@ export default class UserProfile extends React.Component {
     }
 
   /**
-       * Creates a React Component
-       * @return {jsx} Success message with the business created or error message
-       * @memberof React Component
-       */
+    * Renders the UserProfile Component
+    * @return {jsx} jsx element to render
+    * @memberof UserProfile Component
+    */
     render() {
       const {
         firstname, lastname, username, email, telephoneNumber, homeNumber
@@ -174,7 +174,7 @@ export default class UserProfile extends React.Component {
                   <Tab title="Businesses" active={this.state.businesses}>
                     <form className="col s8 l8">
                       <input
-                       type="text" ref="search" placeholder="Filter Businesses By Name" value={this.state.search} autoFocus={this.state.searchFocus} onChange={this.onSearchSubmit} required/>
+                       type="text" ref="search" placeholder="Filter Businesses By Name" value={this.state.search} autoFocus={this.state.searchFocus} onChange={this.onSearchChange} required/>
                     </form>
                     <div id="businesses" className="col s12 m12 l12 ">
                       <table className="bordered highlight responsive-table centered center">
