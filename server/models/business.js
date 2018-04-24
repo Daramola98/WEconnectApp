@@ -16,7 +16,7 @@ const business = (sequelize, DataTypes) => {
       },
       validate: {
         len: {
-          args: [5, 50],
+          args: [3, 50],
           msg: businessNameErrorMessage
         },
         notEmpty: {

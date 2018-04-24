@@ -151,7 +151,7 @@ export default class Users {
         }
         return user
           .destroy()
-          .then(() => res.status(200).json({ message: 'User deleted' }))
+          .then(() => res.status(200).json({ message: 'User Deleted' }))
           .catch(err => res.status(500).json(serverErrorMessage.message));
       })
       .catch((err) => {

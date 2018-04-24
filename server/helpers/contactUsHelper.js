@@ -6,11 +6,10 @@ import { handleInputFormat, handleValidationErrors } from '../helpers/genericHel
 dotenv.config();
 
 /**
-   * Filter businesses in the database by the provided location and category
+   * Adds contact message to the contact database
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @return {object} res - The response to the client
-   * @memberof BusinessHelper
    */
 export const addContactInfo = (req, res) => {
   handleInputFormat(req);
@@ -21,7 +20,7 @@ export const addContactInfo = (req, res) => {
     message: req.body.message
   };
   return ContactUs.create(contactInfo)
-    .then(result => res.status(200).json(result))
+    .then(result => res.status(201).json({ message: 'Submitted', result }))
     .catch((err) => {
       if (err.errors) {
         handleValidationErrors(err.errors, res);
@@ -30,19 +29,24 @@ export const addContactInfo = (req, res) => {
       }
     });
 };
+
 /**
-   * Filter businesses in the database by the provided location and category
+   * Gets a list of contactUs messages in the database
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @return {object} res - The response to the client
-   * @memberof BusinessHelper
    */
 export const getContactUsMessages = (req, res) => {
   if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
     return res.status(403).json({ message: 'You are not allowed to perform this operation' });
   }
   return ContactUs.findAll()
-    .then(result => res.status(200).json(result))
+    .then((result) => {
+      if (result.length < 1) {
+        return res.status(404).json({ message: 'No messages' });
+      }
+      res.status(200).json(result);
+    })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };
 

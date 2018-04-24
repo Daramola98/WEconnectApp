@@ -6,7 +6,6 @@ import db, { User } from '../../models';
 import { userDetails, userDetails1 } from '../testData/userData';
 
 const { expect } = chai;
-// const { User } = db;
 chai.use(chaiHttp);
 let authToken1;
 let userToken;

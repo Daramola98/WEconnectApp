@@ -3,7 +3,6 @@ import UserProfile from '../components/Users/smart/UserProfile';
 import { isLoggedIn, logout } from '../store/actions/auth';
 import { getUserBusinesses, fetchUserBusinessesFailed } from '../store/actions/users';
 import { deleteBusiness } from '../store/actions/businesses';
-import usersReducer from '../store/reducers';
 
 const mapStateToProps = state => ({
   usersReducer: state.usersReducers

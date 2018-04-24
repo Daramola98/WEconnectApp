@@ -144,7 +144,25 @@ export const findBusinessByLocationAndCategory = (req, res, offset) => {
 };
 
 /**
-   * Filter businesses in the database by the provided location and category
+   * Add Business location to the location list in the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const addBusinessLocation = (req, res) => {
+  const businessLocation = req.body.location.toUpperCase();
+  if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
+    return res.status(403).json({ message: 'You are not allowed to perform this operation' });
+  }
+  return sequelize
+    .query(`ALTER TYPE public."enum_Businesses_location" ADD VALUE '${businessLocation}'`, { type: sequelize.QueryTypes.RAW })
+    .then(location => res.status(200).json({ message: 'Location added successfully' }))
+    .catch(err => res.status(500).json(serverErrorMessage.message));
+};
+
+/**
+   * Add Business category to the category list in the database
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @return {object} res - The response to the client
@@ -162,7 +180,7 @@ export const addBusinessCategory = (req, res) => {
 };
 
 /**
-   * Filter businesses in the database by the provided location and category
+   * Get a list of business categories in the database
    * @param {object} req - The request object
    * @param {object} res - The response object
    * @return {object} res - The response to the client

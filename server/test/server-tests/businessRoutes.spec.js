@@ -6,8 +6,6 @@ import db, { User, Business, BusinessReview } from '../../models/index';
 import { userDetails, userDetails1 } from '../testData/userData';
 import { businessDetails, businessDetails1, businessDetails2 } from '../testData/businessData';
 
-// const { expect } = chai;
-// const { User, Business, BusinessReview } = db;
 chai.use(chaiHttp);
 const baseEndpoint = '/api/v1/businesses';
 let authToken;
@@ -222,6 +220,16 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
+    it('should get all business in the businesses table in page number 2', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}?pageNumber=2`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('No Businesses');
+          done();
+        });
+    });
+
     it('should get all businesses registered by a user', (done) => {
       chai.request(app)
         .get(`${baseEndpoint}/user`)
@@ -232,6 +240,63 @@ describe(`${baseEndpoint}`, () => {
           expect(res.body.businesses[0]).to.have.property('id');
           expect(res.body.businesses[0].telephoneNumber).to.equal('07066445523');
           expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
+    });
+
+    it('Gets a list of contactUs messages', (done) => {
+      chai
+        .request(app)
+        .get('/api/v1/admin/contactUs')
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+    it('Doesnt Allow user to add a business category', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/admin/businessCategory')
+        .set('authorization', authToken)
+        .send({ category: 'Medical' })
+        .end((err, res) => {
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+    it('Doesnt Allow user to add a business location', (done) => {
+      chai
+        .request(app)
+        .post('/api/v1/admin/businessLocation')
+        .set('authorization', authToken)
+        .send({ location: 'Ibadan' })
+        .end((err, res) => {
+          expect(res.status).to.equal(403);
+          done();
+        });
+    });
+
+    it('should get all business with the specified name when a name query is passed', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}?name=Clash`)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.businesses[0].name).to.equal('Clash of clans');
+          expect(res.body.businesses[0]).to.have.property('id');
+          expect(res.body.businesses[0].location).to.equal('LAGOS');
+          expect(res.body.businesses[0].email).to.equal('damilolaajiboye@live.com');
+          done();
+        });
+    });
+
+    it('returns a message when the specified name is not found', (done) => {
+      chai.request(app)
+        .get(`${baseEndpoint}?name=Zebra`)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
           done();
         });
     });

@@ -21,8 +21,8 @@ const compiler = webpack(config);
 
 // EXPRESS MIDDLEWARES
 app.use(express.static(path.join(__dirname, './client/public/images')));
-app.use(webpackDevMiddleware(compiler));
-app.use(webpackHotMiddleware(compiler));
+// app.use(webpackDevMiddleware(compiler));
+// app.use(webpackHotMiddleware(compiler));
 
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
