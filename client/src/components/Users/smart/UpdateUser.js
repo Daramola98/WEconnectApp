@@ -147,7 +147,7 @@ export default class UpdateUser extends React.Component {
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">account_circle</i>
                       <label htmlFor="username">Username</label>
-                      <input type="text" value={username} onChange={this.onChange} pattern="[A-Za-z0-9]*$" name="username" title="should contain only alphanumeric characters" minLength="3" maxLength="50" className="validate" required />
+                      <input type="text" value={username} onChange={this.onChange} pattern="[A-Za-z0-9]*$" name="username" title="should contain only alphanumeric characters" minLength="3" maxLength="50" className="validate" />
                     </div>
                   </div>
                   <div className="row">

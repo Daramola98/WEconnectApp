@@ -11,6 +11,7 @@
     "build:client": "webpack --mode development",
     "build:clientProd": "webpack --mode production",
     "db-migrate": "sequelize db:migrate",
+    "test:client": "jest --coverage",
     "test-migrate": "sequelize db:migrate:undo:all --env travisTest && sequelize db:migrate --env travisTest",
     "test": "cross-env NODE_ENV=travisTest nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
     "test:dev": "cross-env NODE_ENV=test nyc --reporter=lcov  --reporter=text mocha server/test/server-tests --compilers js:babel-register --require babel-polyfill --timeout 30000 --recursive --exit",
@@ -31,11 +32,19 @@
   "bugs": {
     "url": "https://github.com/Daramola98/WEconnectApp/issues"
   },
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/client/src/tests/setup.js"
+    ],
+    "roots":["<rootDir>/client/src/"]
+  },
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
@@ -49,6 +58,8 @@
     "coveralls": "^3.0.0",
     "css-loader": "^0.28.11",
     "dotenv": "^5.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-loader": "^2.0.0",
@@ -58,10 +69,12 @@
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.1.0",
+    "jest": "^22.4.3",
     "mini-css-extract-plugin": "^0.2.0",
     "mocha": "^5.0.5",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^11.6.0",
+    "react-test-renderer": "^16.3.2",
     "sequelize-cli": "^4.0.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.5.0",
@@ -79,6 +92,8 @@
     "cors": "^2.8.4",
     "cross-env": "^5.1.4",
     "dotenv": "^5.0.1",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "express": "^4.16.3",
     "express-validator": "^5.0.3",
     "jquery": "^3.3.1",

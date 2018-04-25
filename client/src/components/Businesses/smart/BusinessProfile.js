@@ -212,7 +212,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Owner</h5>
                           </span>
                           <p>
-                            <a href="" className="waves-effect waves-light btn blue lighten-1">
+                            <a className="waves-effect waves-light btn blue lighten-1">
                               {business.businessOwner}
                             </a>
                           </p>
@@ -277,7 +277,11 @@ export default class BusinessProfile extends React.Component {
                                         <a
                                           className="blue-text"
                                           onClick={() => {
-                                            this.setState({ reviewResponses: review.responses });
+                                            this.setState({
+                                            reviewResponses: review.responses,
+                                            info: false,
+                                            reviews: true
+                                                });
                                             $('#prevReplies').modal('open');
                                           }}
                                         >

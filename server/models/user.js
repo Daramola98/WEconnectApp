@@ -62,7 +62,9 @@ const user = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        msg: 'Email Already in Use'
+      },
       validate: {
         notEmpty: {
           msg: 'Email is required'
