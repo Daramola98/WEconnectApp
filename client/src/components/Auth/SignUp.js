@@ -64,13 +64,32 @@ export default class SignUp extends React.Component {
     * @memberof SignUp Component
     */
   render() {
+    const { errors } = this.state;
     return (<div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
               <div className="card-action blue lighten-1 white-text center">
                 <h3>Sign Up to WEconnect</h3>
               </div>
-             <SignUpForm submit={this.onSubmit} errors={this.state.errors} />
+              <div className="card-content">
+              {errors.message ? <ul className="collection with-header">
+                  <li key="header" className="collection-header">
+                    <h4 className="red-text">Something Went Wrong</h4>
+                  </li>
+                  {errors.message.map((error, i) => (
+                    <Errors key={`error${i}`} message={error} index={i} />
+                  ))}
+                </ul> : null}
+              {errors.conflict ? <ul className="collection with-header">
+                  <li key="header" className="collection-header">
+                    <h4 className="red-text">Something Went Wrong</h4>
+                  </li>
+                  <li key="conflict" className="collection-item">
+                    <span className="red-text">{errors.conflict}</span>
+                  </li>
+                </ul> : null}
+              <SignUpForm submit={this.onSubmit} />
+            </div>
             </div>
           </div>
         </div>);

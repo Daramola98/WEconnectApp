@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Input, Pagination, PaginationButton } from 'react-materialize';
-import Business from '../presentational/Business';
+import { Input } from 'react-materialize';
 
 /**
  * Class Representing a BusinessListing React Component
@@ -16,31 +15,11 @@ export default class BusinessListing extends React.Component {
     */
   constructor(props) {
     super(props);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
-      search: '',
       searchBy: 'name',
       advancedSearch: '',
-      location: 'null',
-      category: 'null',
-      currentPage: 1,
-      searchCurrentPage: 1,
-      searchPagination: 'hide',
-      businessPagination: ''
     };
-    this.searchBy = '';
-    this.advancedSearch = '';
   }
-
-
-    static defaultProps = {
-      locations: [
-        'ABIA', 'ABUJA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
-        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'GOMBE', 'IMO', 'JIGAWA',
-        'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
-        'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
-      ]
-    }
 
   /**
     * onChange Event handler callback for Advanced Search form field
@@ -53,16 +32,6 @@ export default class BusinessListing extends React.Component {
       this.setState({ advancedSearch: e.target.value });
 
   /**
-    * onChange Event handler callback for Filter Business Search field
-    * @param {object} e the event object
-    *
-    * @return {null} updates the state of the BusinessListing component
-    * @memberof BusinessListing Component
-    */
-    onSearchChange = e =>
-      this.setState({ search: e.target.value });
-
-  /**
     * onChange Event handler callback for Advanced search select field
     * @param {object} e the event object
     *
@@ -71,38 +40,6 @@ export default class BusinessListing extends React.Component {
     */
     onSearchByChange = e =>
       this.setState({ searchBy: e.target.value });
-
-  /**
-    * onChange Event handler callback for location filter
-    * @param {object} e the event object
-    *
-    * @return {null} updates the state of the BusinessListing component
-    * @memberof BusinessListing Component
-    */
-    onLocationChange = e =>
-      this.setState({ location: e.target.value });
-
-  /**
-    * onChange Event handler callback for location filter
-    * @param {object} e the event object
-    *
-    * @return {null} updates the state of the BusinessListing component
-    * @memberof BusinessListing Component
-    */
-    onCategoryChange = e =>
-      this.setState({ category: e.target.value });
-
-  /**
-    * onChange Event handler callback for pagination component
-    * @param {object} pageNumber the page number
-    *
-    * @return {null} updates the state of the BusinessListing component
-    * @memberof BusinessListing Component
-    */
-    onChangePage = (pageNumber) => {
-      this.props.fetchBusinesses(pageNumber)
-        .then(() => this.setState({ currentPage: pageNumber }));
-    }
 
   /**
     * onChange Event handler callback for pagination component

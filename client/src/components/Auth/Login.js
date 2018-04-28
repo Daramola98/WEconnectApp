@@ -47,14 +47,23 @@ export default class Login extends React.Component {
     * @memberof Login Component
     */
     render() {
+      const { message } = this.state;
       return (<div className="row container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
               <div className="card-action blue lighten-1 white-text center">
                 <h3>Login to WEconnect</h3>
               </div>
-              <LoginForm submit={this.onSubmit} message={this.state.message} />
-              <NotificationContainer/>
+              <div className="card-content">
+                {message ? <ul className="collection with-header">
+                    <li key="header" className="collection-header">
+                      <h4 className="red-text">Something Went Wrong</h4>
+                    </li>
+                    <li key="error" className="collection-item"><span className="red-text">{message}</span></li>
+                  </ul> : null}
+              <LoginForm submit={this.onSubmit} />
+            </div>
+            <NotificationContainer/>
             </div>
           </div>
     </div>);

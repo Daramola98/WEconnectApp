@@ -3,6 +3,8 @@ import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import alertify from 'alertifyjs';
 import Review from '../../Review/presentational/Review';
 import Errors from '../../Messages/presentational/Errors';
+import BusinessReviewForm from '../../Forms/BusinessReviewForm';
+import ReviewResponseForm from '../../Forms/ReviewResponseForm';
 
 /**
  * Class Representing React Component BusinessProfile
@@ -62,20 +64,18 @@ export default class BusinessProfile extends React.Component {
 
   /**
       * onSubmit Event handler callback for review form
-      * @param {object} e The event object
+      * @param {object} review The event object
       *
       * @return {null}  Review submitted or returns error message
       * @memberof BusinessProfile Component
       */
-  onSubmit = (e) => {
-    e.preventDefault();
+  onSubmitReview = (review) => {
     if (!this.props.user.authenticated) {
       alertify.set('notifier', 'position', 'top-right');
       alertify.warning('You need to be logged in to post a review');
       setTimeout(() => this.props.history.push('/login'), 2000);
     }
-    const review = this.refs.review.value;
-    this.props.postReview(this.props.match.params.id, { review })
+    this.props.postReview(this.props.match.params.id, review)
       .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Review Submitted');
@@ -92,9 +92,36 @@ export default class BusinessProfile extends React.Component {
         if (error) {
           this.setState({
             errors:
-             { ...this.state.errors, message: error.response.data.validationErrors }
+             { ...this.state.errors, message: error.response.data.validationErrors },
+            info: false,
+            reviews: true
           });
         }
+      });
+  }
+
+  /**
+      * onSubmit Event handler callback for review response form
+      * @param {object} response The event object
+      *
+      * @return {null}  Response submitted or returns error message
+      * @memberof BusinessProfile Component
+      */
+  onSubmitResponse = (response) => {
+    if (!this.props.user.authenticated) {
+      alertify.set('notifier', 'position', 'top-right');
+      alertify.warning('You need to be logged in to post a review');
+      setTimeout(() => this.props.history.push('/login'), 2000);
+    }
+    this.props
+      .postReviewResponse(
+        this.props.match.params.id,
+        this.state.reviewId, response
+      )
+      .then(() => {
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success('Response Submitted');
+        setTimeout(() => window.location.reload(), 2000);
       });
   }
 
@@ -238,82 +265,67 @@ export default class BusinessProfile extends React.Component {
                                 />
                               ))}
                             </ul> : null}
-                          <form onSubmit={this.onSubmit}>
-                            <div className="row">
-                              <div className="input-field col s12 m12 l12">
-                                <i className="material-icons prefix">
-                                  feedback
-                                </i>
-                                <textarea ref="review" className="materialize-textarea" id="review" />
-                                <label htmlFor="review">
-                                  Give Feedback about Business
-                                </label>
-                              </div>
-                            </div>
-                            <div className="form-field">
-                              <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
-                                POST REVIEW
-                              </button>
-                            </div>
-                          </form>
+                          <BusinessReviewForm submit={this.onSubmitReview} />
                         </div>
-                      </div>
-                      <div className="card">
-                        <div className="card-content">
-                          <div>
-                            <h5>
-                              <span className="blue-text text-lighten-1">
-                                Previous Reviews
-                              </span>
-                            </h5>
-                          </div>
-                          <div>
-                            <ul>
-                              {this.props.businessProfile.reviews.length > 0 ?
-                               this.props.businessProfile.reviews.map((review, i) => (
-                                  <div key={review.id}>
-                                    <Review review={review}>
-                                      <div className="align-right">
-                                        <a
-                                          className="blue-text"
-                                          onClick={() => {
-                                            this.setState({
-                                            reviewResponses: review.responses,
-                                            info: false,
-                                            reviews: true
+                        <div className="card">
+                          <div className="card-content">
+                            <div>
+                              <h5>
+                                <span className="blue-text text-lighten-1">
+                                  Previous Reviews
+                                </span>
+                              </h5>
+                            </div>
+                            <div>
+                              <ul>
+                                {this.props.businessProfile.reviews.length > 0 ?
+                                 this.props.businessProfile.reviews.map((review, i) => (
+                                      <div key={review.id}>
+                                        <Review review={review}>
+                                          <div className="align-right">
+                                            <a
+                                              className="blue-text"
+                                              onClick={() => {
+                                                this.setState({
+                                                  reviewResponses:
+                                                    review.responses,
+                                                  info: false,
+                                                  reviews: true
                                                 });
-                                            $('#prevReplies').modal('open');
-                                          }}
-                                        >
-                                          <span className="new badge blue">
-                                            {review.responses.length}
-                                          </span>
-                                          <u>View Previous Replies</u>
-                                        </a>
+                                                $('#prevReplies').modal('open');
+                                              }}
+                                            >
+                                              <span className="new badge blue">
+                                                {review.responses.length}
+                                              </span>
+                                              <u>View Previous Replies</u>
+                                            </a>
+                                          </div>
+                                          <div className="align-right">
+                                            <a
+                                              className="blue-text"
+                                              onClick={() => {
+                                                this.setState({
+                                                  reviewId: review.id
+                                                });
+                                                $('#replyReview').modal('open');
+                                              }}
+                                            >
+                                              <u>Reply</u>
+                                            </a>
+                                          </div>
+                                        </Review>
                                       </div>
-                                      <div className="align-right">
-                                        <a
-                                          className="blue-text"
-                                          onClick={() => {
-                                            this.setState({ reviewId: review.id });
-                                            $('#replyReview').modal('open');
-                                          }}
-                                        >
-                                          <u>Reply</u>
-                                        </a>
-                                      </div>
-                                    </Review>
-                                    </div>
-                                  )) : <li className="blue-text">
-                                  NO REVIEWS
-                                </li>}
-                            </ul>
-                            <br/>
-                            <Pagination
-                             key={Date.now()}
-                              items={Math.ceil(reviewsCount / 10) || 0}
-                              activePage={this.state.currentPage} maxButtons={5}
-                              onSelect={this.onPageChange} />
+                                    )) : <li className="blue-text">
+                                    NO REVIEWS
+                                  </li>}
+                              </ul>
+                              <br />
+                              <Pagination
+                               key={Date.now()} items={Math.ceil(reviewsCount / 10) || 0}
+                               activePage={this.state.currentPage}
+                               maxButtons={5} onSelect={this.onPageChange} />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -321,36 +333,17 @@ export default class BusinessProfile extends React.Component {
                   </Tab>
                 </Tabs>
                 <Modal id="replyReview" header={'REPLY TO REVIEW'}>
-                  <form onSubmit={(e) => {
-                      e.preventDefault();
-                      if (!this.props.user.authenticated) {
-                        alertify.set('notifier', 'position', 'top-right');
-                        alertify.warning('You need to be logged in to post a review');
-                        setTimeout(() => this.props.history.push('/login'), 2000);
-                      }
-                      this.props
-                      .postReviewResponse(
-                        this.props.match.params.id,
-                         this.state.reviewId, this.state.response
-                        )
-                      .then(() => {
-                        alertify.set('notifier', 'position', 'top-right');
-                        alertify.success('Response Submitted');
-                        setTimeout(() => window.location.reload(), 2000);
-                      });
-                      }}>
-                    <input type="text" name="message" minLength="2" value={this.state.response.message} onChange={this.onChange} required />
-                    <button type="submit">SUBMIT</button>
-                  </form>
+                  <ReviewResponseForm submit={this.onSubmitResponse} />
                 </Modal>
                 <Modal id="prevReplies" header={'PREVIOUS REPLIES'}>
                   <ul className="collection">
-                    {this.state.reviewResponses.length > 0 ? this.state.reviewResponses.map((response, i) => <li key={response.id} className="collection-item">
-                    <span>{response.reviewer}</span>
-                    <p>
-                      {response.message}
-                    </p>
-                    </li>) : <li>NO REPLIES</li>}
+                    {this.state.reviewResponses.length > 0 ?
+                     this.state.reviewResponses.map((response, i) => (
+                          <li key={response.id} className="collection-item">
+                            <span>{response.reviewer}</span>
+                            <p>{response.message}</p>
+                          </li>
+                        )) : <li>NO REPLIES</li>}
                   </ul>
                 </Modal>
               </div>
