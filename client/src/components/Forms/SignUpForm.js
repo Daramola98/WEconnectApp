@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/presentational/Errors';
+import PropTypes from 'prop-types';
 
 /**
  * A class to represent the React SignUpForm Component
@@ -21,8 +21,6 @@ export default class SignUpForm extends React.Component {
         homeNumber: '',
       },
       errors: {
-        message: null,
-        conflict: null,
         confirmPassError: null
       }
     }
@@ -165,3 +163,7 @@ export default class SignUpForm extends React.Component {
         </div>;
     }
 }
+
+SignUpForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+};

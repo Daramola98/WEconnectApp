@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/presentational/Errors';
+import PropTypes from 'prop-types';
 
 /**
  * Class Representing React Component UpdateUserForm
@@ -125,3 +125,7 @@ export default class UpdateUserForm extends React.Component {
     </div>);
     }
 }
+
+UpdateUserForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+};

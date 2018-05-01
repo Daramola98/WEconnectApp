@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import LoginForm from '../Forms/LoginForm';
 
@@ -69,3 +70,9 @@ export default class Login extends React.Component {
     </div>);
     }
 }
+
+Login.propTypes = {
+  usersReducer: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+};

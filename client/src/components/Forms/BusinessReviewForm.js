@@ -1,6 +1,7 @@
 import React from 'react';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/presentational/Errors';
+import PropTypes from 'prop-types';
+
 
 /**
  * Class Representing React Component BusinessReviewForm
@@ -52,7 +53,7 @@ export default class BusinessReviewForm extends React.Component {
             <div className="row">
               <div className="input-field col s12 m12 l12">
                 <i className="material-icons prefix">feedback</i>
-                <textarea value={review} className="materialize-textarea" id="review" name="review" onChange={this.onChange} />
+                <textarea value={review} className="materialize-textarea" id="review" name="review" onChange={this.onChange} required />
                 <label htmlFor="review">Give Feedback about Business</label>
               </div>
             </div>
@@ -65,3 +66,7 @@ export default class BusinessReviewForm extends React.Component {
 </div>);
   }
 }
+
+BusinessReviewForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+};

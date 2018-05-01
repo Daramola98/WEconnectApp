@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
-import Errors from '../../Messages/presentational/Errors';
+import PropTypes from 'prop-types';
+import Errors from '../../Messages/presentational/FormErrors';
 import UpdateUserForm from '../../Forms/UpdateUserForm';
 
 /**
@@ -79,19 +80,7 @@ export default class UpdateUser extends React.Component {
                 <h3>Edit Profile</h3>
               </div>
               <div className="card-content">
-                {errors.message ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  {errors.message.map((error, i) =>
-                  <Errors key ={`error${i}`} message={error} index={i}/>)}
-                 </ul> : null }
-                {errors.conflict ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  <li key="conflict" className="collection-item"><span className="red-text">{errors.conflict}</span></li>
-                 </ul> : null }
+                <FormErrors errors={errors} />
                 <UpdateUserForm submit={this.onSubmit}/>
               </div>
             </div>
@@ -99,3 +88,9 @@ export default class UpdateUser extends React.Component {
         </div>;
     }
 }
+
+UpdateUser.propTypes = {
+  usersReducer: PropTypes.object.isRequired,
+  updateUser: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+};

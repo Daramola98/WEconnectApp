@@ -63,7 +63,7 @@ export const createBusiness = businessDetails => dispatch =>
     });
 
 export const updateBusiness = (businessId, businessDetails) => dispatch =>
-  axios.put(`api/v1/businesses/${businessId}`, businessDetails)
+  axios.put(`/api/v1/businesses/${businessId}`, businessDetails)
     .then((response) => {
       dispatch(updatesBusiness());
     });
@@ -75,7 +75,7 @@ export const deleteBusiness = businessId => dispatch =>
     });
 
 export const fetchBusiness = businessId => dispatch =>
-  axios.get(`api/v1/businesses/${businessId}`)
+  axios.get(`/api/v1/businesses/${businessId}`)
     .then((response) => {
       dispatch(setBusinessProfile(response.data.business));
     })

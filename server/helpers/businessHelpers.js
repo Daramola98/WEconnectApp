@@ -162,6 +162,24 @@ export const addBusinessLocation = (req, res) => {
 };
 
 /**
+   * Add Business location to the location list in the database
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} res - The response to the client
+   * @memberof BusinessHelper
+   */
+export const removeEmailUnique = (req, res) => {
+  const businessLocation = req.body.location.toUpperCase();
+  if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
+    return res.status(403).json({ message: 'You are not allowed to perform this operation' });
+  }
+  return sequelize
+    .query('ALTER TABLE ONLY public."ContactUs" DROP CONSTRAINT "ContactUs_email_key"', { type: sequelize.QueryTypes.RAW })
+    .then(location => res.status(200).json({ message: 'Email Unique Removed' }))
+    .catch(err => res.status(500).json(serverErrorMessage.message));
+};
+
+/**
    * Add Business category to the category list in the database
    * @param {object} req - The request object
    * @param {object} res - The response object

@@ -20,19 +20,19 @@ export const fetchBusinessReviewsFailed = () => ({
 });
 
 export const postReview = (businessId, review) => dispatch =>
-  axios.post(`api/v1/businesses/${businessId}/reviews`, review)
+  axios.post(`/api/v1/businesses/${businessId}/reviews`, review)
     .then((response) => {
       dispatch(postsReview());
     });
 
 export const postReviewResponse = (businessId, reviewId, review) => dispatch =>
-  axios.post(`api/v1/businesses/${businessId}/reviews/${reviewId}`, review)
+  axios.post(`/api/v1/businesses/${businessId}/reviews/${reviewId}`, review)
     .then((response) => {
       dispatch(postsReviewResponse());
     });
 
 export const fetchReviews = (businessId, pageNumber) => dispatch =>
-  axios.get(`api/v1/businesses/${businessId}/reviews?pageNumber=${pageNumber}`)
+  axios.get(`/api/v1/businesses/${businessId}/reviews?pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch(fetchBusinessReviews(response.data.reviews, response.data.reviewsCount));
     })

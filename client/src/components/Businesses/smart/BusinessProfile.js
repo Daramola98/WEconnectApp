@@ -1,8 +1,9 @@
 import React from 'react';
 import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import alertify from 'alertifyjs';
+import PropTypes from 'prop-types';
 import Review from '../../Review/presentational/Review';
-import Errors from '../../Messages/presentational/Errors';
+import FormErrors from '../../Messages/presentational/FormErrors';
 import BusinessReviewForm from '../../Forms/BusinessReviewForm';
 import ReviewResponseForm from '../../Forms/ReviewResponseForm';
 
@@ -251,20 +252,7 @@ export default class BusinessProfile extends React.Component {
                     <div id="businessReviews" className="col s12 m12 l12">
                       <div className="card">
                         <div className="card-content">
-                          {errors.message ? <ul className="collection with-header">
-                              <li key="header" className="collection-header">
-                                <h4 className="red-text">
-                                  Something Went Wrong
-                                </h4>
-                              </li>
-                              {errors.message.map((error, i) => (
-                                <Errors
-                                  key={`error${i}`}
-                                  message={error}
-                                  index={i}
-                                />
-                              ))}
-                            </ul> : null}
+                          <FormErrors errors={errors} />
                           <BusinessReviewForm submit={this.onSubmitReview} />
                         </div>
                         <div className="card">
@@ -353,3 +341,14 @@ export default class BusinessProfile extends React.Component {
       </div>;
   }
 }
+
+BusinessProfile.propTypes = {
+  fetchBusiness: PropTypes.func.isRequired,
+  fetchReviews: PropTypes.func.isRequired,
+  businessProfile: PropTypes.object.isRequired,
+  postReview: PropTypes.func.isRequired,
+  postReviewResponse: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+};
+

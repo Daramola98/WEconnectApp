@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * A class to represent the React LoginForm Component
@@ -45,7 +46,7 @@ export default class LoginForm extends React.Component {
     */
     render() {
       const { email, password } = this.state.credentials;
-      return <div className="row">
+      return (
           <form onSubmit={this.onSubmit}>
             <div className="form-field">
               <label htmlFor="username">Email</label>
@@ -65,7 +66,10 @@ export default class LoginForm extends React.Component {
                 Login
               </button>
             </div>
-          </form>
-        </div>;
+      </form>);
     }
 }
+
+LoginForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+};

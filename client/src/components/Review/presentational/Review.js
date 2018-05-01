@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const Review = props => (
   <li>
@@ -14,3 +15,8 @@ const Review = props => (
 );
 
 export default Review;
+
+Review.propTypes = {
+  review: PropTypes.object.isRequired,
+};
+

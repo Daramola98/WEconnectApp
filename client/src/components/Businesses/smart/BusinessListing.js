@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Input, Pagination, PaginationButton } from 'react-materialize';
+import PropTypes from 'prop-types';
 import Business from '../presentational/Business';
 
 /**
@@ -151,7 +152,7 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     render() {
-      const { data, setBusinessProfile } = this.props;
+      const { data } = this.props;
       const businessCategories = data.categories;
       const { businessesCount } = this.props.data;
       const categoryOptions = businessCategories !== undefined ?
@@ -278,3 +279,11 @@ export default class BusinessListing extends React.Component {
         </div>;
     }
 }
+
+BusinessListing.propTypes = {
+  data: PropTypes.object.isRequired,
+  locations: PropTypes.array.isRequired,
+  searchBusiness: PropTypes.func.isRequired,
+  fetchBusinesses: PropTypes.func.isRequired,
+  fetchCategories: PropTypes.func.isRequired,
+};

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/presentational/Errors';
+import FormErrors from '../Messages/presentational/FormErrors';
 import SignUpForm from '../Forms/SignUpForm';
 
 /**
@@ -72,22 +73,7 @@ export default class SignUp extends React.Component {
                 <h3>Sign Up to WEconnect</h3>
               </div>
               <div className="card-content">
-              {errors.message ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  {errors.message.map((error, i) => (
-                    <Errors key={`error${i}`} message={error} index={i} />
-                  ))}
-                </ul> : null}
-              {errors.conflict ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  <li key="conflict" className="collection-item">
-                    <span className="red-text">{errors.conflict}</span>
-                  </li>
-                </ul> : null}
+              <FormErrors errors={errors} />
               <SignUpForm submit={this.onSubmit} />
             </div>
             </div>
@@ -95,3 +81,9 @@ export default class SignUp extends React.Component {
         </div>);
   }
 }
+
+SignUp.propTypes = {
+  usersReducer: PropTypes.object.isRequired,
+  signUp: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
+};

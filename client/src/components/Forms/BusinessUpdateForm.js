@@ -2,7 +2,8 @@ import React from 'react';
 import { Input } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
-import Errors from '../Messages/presentational/Errors';
+import PropTypes from 'prop-types';
+
 
 /**
  * Class Representing React Component BusinessUpdateForm
@@ -72,9 +73,7 @@ export default class BusinessUpdateForm extends React.Component {
     * @memberof BusinessUpdateForm Component
     */
     render() {
-      const { businesses } = this.props;
-
-      const businessCategories = businesses.categories;
+      const businessCategories = this.props.categories;
 
       const categoryOptions = businessCategories !== undefined ?
         Array.from(businessCategories).map(category =>
@@ -176,3 +175,9 @@ export default class BusinessUpdateForm extends React.Component {
             </div>);
     }
 }
+
+BusinessUpdateForm.propTypes = {
+  categories: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
+  submit: PropTypes.func.isRequired,
+};

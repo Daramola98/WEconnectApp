@@ -1,6 +1,8 @@
 import React from 'react';
 import alertify from 'alertifyjs';
+import PropTypes from 'prop-types';
 import RegisterBusinessForm from '../../Forms/RegisterBusinessForm';
+import FormErrors from '../../Messages/presentational/FormErrors';
 
 
 /**
@@ -87,8 +89,7 @@ export default class RegisterBusiness extends React.Component {
     */
   render() {
     const { errors } = this.state;
-    const { businesses } = this.props;
-    const businessCategories = businesses.categories;
+    const { categories } = this.props.businesses;
     return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
@@ -96,23 +97,8 @@ export default class RegisterBusiness extends React.Component {
               <h3>Register a Business</h3>
             </div>
             <div className="card-content">
-              {errors.message ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  {errors.message.map((error, i) => (
-                    <Errors key={`error${i}`} message={error} index={i} />
-                  ))}
-                </ul> : null}
-              {errors.conflict ? <ul className="collection with-header">
-                  <li key="header" className="collection-header">
-                    <h4 className="red-text">Something Went Wrong</h4>
-                  </li>
-                  <li key="conflict" className="collection-item">
-                    <span className="red-text">{errors.conflict}</span>
-                  </li>
-                </ul> : null}
-              <RegisterBusinessForm businesses={businesses} submit={this.onSubmit} />
+              <FormErrors errors={errors} />
+              <RegisterBusinessForm categories={categories} submit={this.onSubmit} />
             </div>
           </div>
         </div>
@@ -120,3 +106,11 @@ export default class RegisterBusiness extends React.Component {
   }
 }
 
+RegisterBusiness.propTypes = {
+  fetchCategories: PropTypes.func.isRequired,
+  registerBusiness: PropTypes.func.isRequired,
+  locations: PropTypes.array.isRequired,
+  businesses: PropTypes.object.isRequired,
+  usersReducer: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+};
