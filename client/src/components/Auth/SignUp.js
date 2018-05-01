@@ -85,5 +85,5 @@ export default class SignUp extends React.Component {
 SignUp.propTypes = {
   usersReducer: PropTypes.object.isRequired,
   signUp: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };

@@ -8,7 +8,12 @@ module.exports = {
     },
     userId: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
     },
     reviewer: {
       type: Sequelize.STRING,

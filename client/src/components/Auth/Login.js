@@ -74,5 +74,5 @@ export default class Login extends React.Component {
 Login.propTypes = {
   usersReducer: PropTypes.object.isRequired,
   login: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };

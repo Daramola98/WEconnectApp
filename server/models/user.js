@@ -137,6 +137,16 @@ const user = (sequelize, DataTypes) => {
       foreignKey: 'userId',
       as: 'businesses'
     });
+
+    User.hasMany(models.BusinessReview, {
+      foreignKey: 'reviewerId',
+      as: 'reviews'
+    });
+
+    User.hasMany(models.reviewresponse, {
+      foreignKey: 'userId',
+      as: 'reviewResponse'
+    });
   };
   return User;
 };

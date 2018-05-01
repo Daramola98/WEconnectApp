@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false
-    },
     reviewer: {
       type: DataTypes.STRING,
       allowNull: false
@@ -31,6 +27,11 @@ module.exports = (sequelize, DataTypes) => {
   reviewresponse.associate = (models) => {
     reviewresponse.belongsTo(models.BusinessReview, {
       foreignKey: 'reviewId',
+      onDelete: 'CASCADE'
+    });
+
+    reviewresponse.belongsTo(models.User, {
+      foreignKey: 'userId',
       onDelete: 'CASCADE'
     });
   };
