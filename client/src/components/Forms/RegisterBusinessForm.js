@@ -112,7 +112,7 @@ export default class RegisterBusinessForm extends React.Component {
           </div>
           <div className="row">
             <div className="input-field col s12 m6 l6">
-              <Input type="select" name="location" value={business.location} onChange={this.onChange} required>
+              <Input type="select" id="location" name="location" value={business.location} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Location
                 </option>
@@ -121,7 +121,7 @@ export default class RegisterBusinessForm extends React.Component {
               {/* <label>Location</label> */}
             </div>
             <div className="input-field col s12 m6 l6">
-              <Input type="select" name="category" value={business.category} onChange={this.onChange} required>
+              <Input type="select" id="category" name="category" value={business.category} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Category
                 </option>
@@ -187,5 +187,6 @@ export default class RegisterBusinessForm extends React.Component {
 
 RegisterBusinessForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
 };
 

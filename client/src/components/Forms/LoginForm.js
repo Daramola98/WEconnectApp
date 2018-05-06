@@ -50,11 +50,11 @@ export default class LoginForm extends React.Component {
           <form onSubmit={this.onSubmit}>
             <div className="form-field">
               <label htmlFor="username">Email</label>
-              <input type="email" name="email" value={email} onChange={this.onChange} className="validate" required />
+              <input type="email" id="email" name="email" value={email} onChange={this.onChange} className="validate" required />
             </div>
             <div className="form-field">
               <label htmlFor="password">Password</label>
-              <input type="password" name="password" value={password} onChange={this.onChange} className="validate" required />
+              <input type="password" id="password" name="password" value={password} onChange={this.onChange} className="validate" required />
             </div>
             <div className="form-field">
               <input type="checkbox" name="remember" />

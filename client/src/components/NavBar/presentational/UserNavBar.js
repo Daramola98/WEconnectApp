@@ -31,7 +31,7 @@ const UserNavBar = props => (
                   </li>
                   <NavItem divider />
                   <li>
-                    <Link to="/" onClick={() => props.logout()}>
+                    <Link id="logout1" to="/" onClick={() => props.logout()}>
                       Logout
                     </Link>
                   </li>
@@ -42,7 +42,7 @@ const UserNavBar = props => (
               <Link to="/businessListing">Business Listing</Link>
             </li>
             <li>
-              <Link to="/" onClick={() => props.logout()}>
+              <Link id="logout2" to="/" onClick={() => props.logout()}>
                 Logout
               </Link>
             </li>
@@ -81,7 +81,7 @@ const UserNavBar = props => (
               </li>
               <SideNavItem divider />
               <li>
-                <Link to="/" onClick={() => props.logout()}>
+                <Link id="logout3" to="/" onClick={() => props.logout()}>
                   Logout
                 </Link>
               </li>
