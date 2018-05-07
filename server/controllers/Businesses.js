@@ -1,4 +1,4 @@
-import { Business, BusinessReview, reviewresponse } from '../models';
+import { User, Business, BusinessReview, reviewresponse } from '../models';
 import { handleInputFormat, handleValidationErrors, listByPages } from '../helpers/genericHelper';
 import { findBusinessByCategory, findBusinessByLocation, findBusinessByLocationAndCategory, findBusinessByName } from '../helpers/businessHelpers';
 import {
@@ -364,7 +364,7 @@ export default class Businesses {
               }
               return res.status(404).json({ message: 'No review added' });
             })
-            .catch(err => res.status(500).json(serverErrorMessage.message));
+            .catch(err => res.status(500).json(err));
         }
         res.status(404).json({ message: 'Business does not exist, Enter id for existing business' });
       });

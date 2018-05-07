@@ -2,7 +2,9 @@ import React from 'react';
 import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
+import PropTypes from 'prop-types';
 import Business from '../../Businesses/presentational/Business';
+import FilterBusiness from '../../Forms/FilterBusiness';
 
 /**
  * Class Representing React Component UserProfile
@@ -22,7 +24,6 @@ export default class UserProfile extends React.Component {
       search: '',
       info: true,
       businesses: false,
-      searchFocus: '',
       currentPage: 1
     };
   }
@@ -71,15 +72,14 @@ export default class UserProfile extends React.Component {
 
   /**
       * onChange Event handler callback for filter businesses input
-      * @param {object} e The event object
+      * @param {string} searchText The event object
       *
       * @return {null}  Updates the component state
       * @memberof UserProfile Component
       */
-     onSearchChange = (e) => {
-       e.preventDefault();
+     onSearchChange = (searchText) => {
        this.setState({
-         search: e.target.value, info: false, businesses: true, searchFocus: true
+         search: searchText, info: false, businesses: true
        });
      };
 
@@ -106,7 +106,6 @@ export default class UserProfile extends React.Component {
       } = this.props.usersReducer.user;
 
       let businessId;
-      let searchValue;
       const { businessesCount } = this.props.usersReducer;
       const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
@@ -172,10 +171,10 @@ export default class UserProfile extends React.Component {
                     </div>
                   </Tab>
                   <Tab title="Businesses" active={this.state.businesses}>
-                    <form className="col s8 l8">
-                      <input
-                       type="text" ref="search" placeholder="Filter Businesses By Name" value={this.state.search} autoFocus={this.state.searchFocus} onChange={this.onSearchChange} required/>
-                    </form>
+                    <div className="col s8 l8">
+                      <FilterBusiness
+                       search={this.state.search} onSearchChange={this.onSearchChange}/>
+                    </div>
                     <div id="businesses" className="col s12 m12 l12 ">
                       <table className="bordered highlight responsive-table centered center">
                         <thead>
@@ -192,7 +191,7 @@ export default class UserProfile extends React.Component {
                                 <Business business={business} key={i}>
                                   <td key={'update'}>
                                     <Link
-                                      to={`/updateBusiness${business.id}`}
+                                      to={`/updateBusiness/${business.id}`}
                                     >
                                       UPDATE
                                     </Link>
@@ -259,3 +258,12 @@ export default class UserProfile extends React.Component {
       </div>;
     }
 }
+
+UserProfile.propTypes = {
+  fetchUserBusinesses: PropTypes.func.isRequired,
+  fetchUserBusinessesFailed: PropTypes.func.isRequired,
+  usersReducer: PropTypes.object.isRequired,
+  deleteBusiness: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
+};
+

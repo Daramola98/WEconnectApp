@@ -17,7 +17,6 @@ const businessReview = (sequelize, DataTypes) => {
     review: {
       type: DataTypes.TEXT,
       allowNull: false,
-      unique: false,
       validate: {
         notEmpty: {
           msg: 'Business review is required'
@@ -39,6 +38,11 @@ const businessReview = (sequelize, DataTypes) => {
 
     BusinessReview.belongsTo(models.Business, {
       foreignKey: 'businessId',
+      onDelete: 'CASCADE'
+    });
+
+    BusinessReview.belongsTo(models.User, {
+      foreignKey: 'reviewerId',
       onDelete: 'CASCADE'
     });
   };

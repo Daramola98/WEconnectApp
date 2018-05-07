@@ -8,7 +8,12 @@ module.exports = {
     },
     reviewerId: {
       type: Sequelize.UUID,
-      allowNull: false
+      allowNull: false,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
     },
     reviewer: {
       type: Sequelize.STRING,
@@ -17,7 +22,6 @@ module.exports = {
     review: {
       allowNull: false,
       type: Sequelize.TEXT,
-      unique: true
     },
     businessId: {
       type: Sequelize.UUID,

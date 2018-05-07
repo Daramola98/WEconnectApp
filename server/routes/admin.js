@@ -4,7 +4,7 @@ import modelValidator from '../helpers/modelValidator';
 import contactUsValidation from '../validations/contactUsValidation';
 import isAuthorized from '../middlewares/isAuthorized';
 import { userIdCheck } from '../middlewares/validationHelper';
-import { addBusinessCategory, listBusinessCategories, addBusinessLocation } from '../helpers/businessHelpers';
+import { addBusinessCategory, listBusinessCategories, addBusinessLocation, removeEmailUnique } from '../helpers/businessHelpers';
 import { addContactInfo, getContactUsMessages } from '../helpers/contactUsHelper';
 
 const router = express.Router();

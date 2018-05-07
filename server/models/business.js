@@ -98,7 +98,9 @@ const business = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        msg: 'Email already in use'
+      },
       validate: {
         notEmpty: {
           msg: 'Email is required'

@@ -28,9 +28,6 @@ export default class Header extends React.Component {
            : <GuestNavBar/>}
         </div>
     </header>
-    <main className="container">
-        {this.props.children}
-    </main>
     </div>
     );
   }

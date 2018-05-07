@@ -62,7 +62,9 @@ const user = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: {
+        msg: 'Email Already in Use'
+      },
       validate: {
         notEmpty: {
           msg: 'Email is required'
@@ -134,6 +136,16 @@ const user = (sequelize, DataTypes) => {
     User.hasMany(models.Business, {
       foreignKey: 'userId',
       as: 'businesses'
+    });
+
+    User.hasMany(models.BusinessReview, {
+      foreignKey: 'reviewerId',
+      as: 'reviews'
+    });
+
+    User.hasMany(models.reviewresponse, {
+      foreignKey: 'userId',
+      as: 'reviewResponse'
     });
   };
   return User;

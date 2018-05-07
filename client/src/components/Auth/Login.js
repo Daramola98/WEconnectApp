@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import LoginForm from '../Forms/LoginForm';
 
 /**
  * A class to represent the React Login Component
@@ -8,10 +10,6 @@ import { NotificationContainer, NotificationManager } from 'react-notifications'
  */
 export default class Login extends React.Component {
     state = {
-      credentials: {
-        email: '',
-        password: ''
-      },
       message: null
     }
 
@@ -27,28 +25,14 @@ export default class Login extends React.Component {
     }
 
     /**
-    * onChange Event handler callback for login form fields
-    * @param {object} e the event object
-    *
-    * @return {func} updates the state of the login component
-    * @memberof Login Component
-    */
-    onChange = e =>
-      this.setState({
-        ...this.state,
-        credentials: { ...this.state.credentials, [e.target.name]: e.target.value }
-      });
-
-    /**
       * onSubmit Event handler callback for login form
-      * @param {object} e The event object
+      * @param {object} credentials The event object
       *
       * @return {null}  user profile component if successful or returns error message
       * @memberof Login Component
       */
-    onSubmit = (e) => {
-      e.preventDefault();
-      this.props.login(this.state.credentials)
+    onSubmit = (credentials) => {
+      this.props.login(credentials)
         .then(() => {
           NotificationManager.success('Login Successful Welcome Back!!', 'Successful');
           setTimeout(() => this.props.history.push('/userProfile'), 2000);
@@ -65,8 +49,7 @@ export default class Login extends React.Component {
     */
     render() {
       const { message } = this.state;
-      const { email, password } = this.state.credentials;
-      return <div className="row container">
+      return (<div className="row container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
               <div className="card-action blue lighten-1 white-text center">
@@ -79,30 +62,17 @@ export default class Login extends React.Component {
                     </li>
                     <li key="error" className="collection-item"><span className="red-text">{message}</span></li>
                   </ul> : null}
-                <form onSubmit={this.onSubmit}>
-                  <div className="form-field">
-                    <label htmlFor="username">Email</label>
-                    <input type="email" name="email" value={email} onChange={this.onChange} className="validate" required />
-                  </div>
-                  <div className="form-field">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" name="password" value={password} onChange={this.onChange} className="validate" required />
-                  </div>
-                  <div className="form-field">
-                    <input type="checkbox" name="remember" />
-                    <label htmlFor="remember">Remember Me</label>
-                  </div>
-                  <br />
-                  <div className="form-field">
-                    <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
-                      Login
-                    </button>
-                  </div>
-                </form>
-                <NotificationContainer/>
-              </div>
+              <LoginForm submit={this.onSubmit} />
+            </div>
+            <NotificationContainer/>
             </div>
           </div>
-        </div>;
+    </div>);
     }
 }
+
+Login.propTypes = {
+  usersReducer: PropTypes.object.isRequired,
+  login: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};

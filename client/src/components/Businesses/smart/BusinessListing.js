@@ -1,18 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Input, Pagination, PaginationButton } from 'react-materialize';
+import PropTypes from 'prop-types';
 import Business from '../presentational/Business';
-
-// /**
-//     * Takes a pageNumber and updates the state of the Business listing Component
-//     * @param {number} pageNumber number of the current page
-//     * @param {string} propertyToUpdate property to update in state
-//     *
-//     * @return {func} function to update the state of the Business listing Component
-//     */
-// function setCurrentPage(pageNumber, propertyToUpdate) {
-//   return (previousState, currentProps) => ({ ...previousState, propertyToUpdate: pageNumber });
-// }
 
 /**
  * Class Representing a BusinessListing React Component
@@ -46,8 +36,8 @@ export default class BusinessListing extends React.Component {
 
     static defaultProps = {
       locations: [
-        'ABIA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
-        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'ABUJA', 'GOMBE', 'IMO', 'JIGAWA',
+        'ABIA', 'ABUJA', 'ADAMAWA', 'AKWA IBOM', 'ANAMBRA', 'BAUCHI', 'BAYELSA', 'BENUE', 'BORNO',
+        'CROSS RIVER', 'DELTA', 'EBONYI', 'EDO', 'EKITI', 'ENUGU', 'GOMBE', 'IMO', 'JIGAWA',
         'KADUNA', 'KANO', 'KATSINA', 'KEBBI', 'KOGI', 'KWARA', 'LAGOS', 'NASSARAWA', 'NIGER', 'OGUN', 'ONDO',
         'OSUN', 'OYO', 'PLATEAU', 'RIVERS', 'SOKOTO', 'TARABA', 'YOBE', 'ZAMFARA'
       ]
@@ -162,7 +152,7 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     render() {
-      const { data, setBusinessProfile } = this.props;
+      const { data } = this.props;
       const businessCategories = data.categories;
       const { businessesCount } = this.props.data;
       const categoryOptions = businessCategories !== undefined ?
@@ -289,3 +279,11 @@ export default class BusinessListing extends React.Component {
         </div>;
     }
 }
+
+BusinessListing.propTypes = {
+  data: PropTypes.object.isRequired,
+  locations: PropTypes.array.isRequired,
+  searchBusiness: PropTypes.func.isRequired,
+  fetchBusinesses: PropTypes.func.isRequired,
+  fetchCategories: PropTypes.func.isRequired,
+};
