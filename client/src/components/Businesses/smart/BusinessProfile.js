@@ -1,5 +1,6 @@
 import React from 'react';
 import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
+import moment from 'moment';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
 import Review from '../../Review/presentational/Review';
@@ -52,15 +53,15 @@ export default class BusinessProfile extends React.Component {
 
   /**
     * onChange Event handler callback for review response input field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessProfile component
     * @memberof BusinessProfile Component
     */
-  onChange = e =>
+  onChange = event =>
     this.setState({
       ...this.state,
-      response: { ...this.state.response, [e.target.name]: e.target.value }
+      response: { ...this.state.response, [event.target.name]: event.target.value }
     });
 
   /**
@@ -80,7 +81,13 @@ export default class BusinessProfile extends React.Component {
       .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Review Submitted');
-        setTimeout(() => window.location.reload(), 2000);
+        // setTimeout(() => window.location.reload(), 2000);
+        this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
+          .then(() => {
+            this.setState({
+              reviews: true, info: false
+            });
+          });
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -294,7 +301,9 @@ export default class BusinessProfile extends React.Component {
                                               className="blue-text"
                                               onClick={() => {
                                                 this.setState({
-                                                  reviewId: review.id
+                                                  reviewId: review.id,
+                                                  info: false,
+                                                  reviews: true
                                                 });
                                                 $('#replyReview').modal('open');
                                               }}
@@ -323,13 +332,15 @@ export default class BusinessProfile extends React.Component {
                 <Modal id="replyReview" header={'REPLY TO REVIEW'}>
                   <ReviewResponseForm submit={this.onSubmitResponse} />
                 </Modal>
-                <Modal id="prevReplies" header={'PREVIOUS REPLIES'}>
+                <Modal id="prevReplies" header={<span className="blue-text ligthen-1">PREVIOUS REPLIES</span>}>
                   <ul className="collection">
                     {this.state.reviewResponses.length > 0 ?
                      this.state.reviewResponses.map((response, i) => (
                           <li key={response.id} className="collection-item">
-                            <span>{response.reviewer}</span>
+                            <span className="blue-text ligthen-1">{response.reviewer}</span>
                             <p>{response.message}</p>
+                            <p><span className="timestamp align-right">{moment(response.createdAt).calendar()}</span></p>
+                            <br/>
                           </li>
                         )) : <li>NO REPLIES</li>}
                   </ul>

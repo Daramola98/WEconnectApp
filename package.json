@@ -37,7 +37,9 @@
     "setupFiles": [
       "<rootDir>/client/src/tests/setup.js"
     ],
-    "roots":["<rootDir>/client/src/"]
+    "roots": [
+      "<rootDir>/client/src/"
+    ]
   },
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",
   "devDependencies": {
@@ -101,6 +103,7 @@
     "jwt-decode": "^2.2.0",
     "less-loader": "^4.1.0",
     "materialize-css": "^1.0.0-beta",
+    "moment": "^2.22.1",
     "node-sass": "^4.8.3",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",

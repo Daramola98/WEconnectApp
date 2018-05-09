@@ -6,7 +6,7 @@ import alertify from 'alertifyjs';
  * Class Representing React Component ReviewResponseForm
  *@class ReviewResponseForm
  *@classdesc creates a React component- ReviewResponseForm
- *@param {object} e event object
+ *@param {object} event The event object
  */
 export default class ReviewResponseForm extends React.Component {
   state = {
@@ -17,19 +17,19 @@ export default class ReviewResponseForm extends React.Component {
 
   /**
     * onChange Event handler callback for review response input field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the ReviewResponseForm component
     * @memberof ReviewResponseForm Component
     */
-  onChange = e =>
+  onChange = event =>
     this.setState({
       ...this.state,
-      response: { ...this.state.response, [e.target.name]: e.target.value }
+      response: { ...this.state.response, [event.target.name]: event.target.value }
     });
 
-  onSubmit = (e) => {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault();
     this.props.submit(this.state.response);
   }
 

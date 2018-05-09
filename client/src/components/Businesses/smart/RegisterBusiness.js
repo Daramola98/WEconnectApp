@@ -109,7 +109,6 @@ export default class RegisterBusiness extends React.Component {
 RegisterBusiness.propTypes = {
   fetchCategories: PropTypes.func.isRequired,
   registerBusiness: PropTypes.func.isRequired,
-  locations: PropTypes.array.isRequired,
   businesses: PropTypes.object.isRequired,
   usersReducer: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,

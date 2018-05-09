@@ -45,53 +45,53 @@ export default class BusinessListing extends React.Component {
 
   /**
     * onChange Event handler callback for Advanced Search form field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onAdvancedSearchChange = e =>
-      this.setState({ advancedSearch: e.target.value });
+    onAdvancedSearchChange = event =>
+      this.setState({ advancedSearch: event.target.value });
 
   /**
     * onChange Event handler callback for Filter Business Search field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onSearchChange = e =>
-      this.setState({ search: e.target.value });
+    onSearchChange = event =>
+      this.setState({ search: event.target.value });
 
   /**
     * onChange Event handler callback for Advanced search select field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onSearchByChange = e =>
-      this.setState({ searchBy: e.target.value });
+    onSearchByChange = event =>
+      this.setState({ searchBy: event.target.value });
 
   /**
     * onChange Event handler callback for location filter
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onLocationChange = e =>
-      this.setState({ location: e.target.value });
+    onLocationChange = event =>
+      this.setState({ location: event.target.value });
 
   /**
     * onChange Event handler callback for location filter
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onCategoryChange = e =>
-      this.setState({ category: e.target.value });
+    onCategoryChange = event =>
+      this.setState({ category: event.target.value });
 
   /**
     * onChange Event handler callback for pagination component
@@ -122,13 +122,13 @@ export default class BusinessListing extends React.Component {
 
   /**
     * Handles Search Form Submission
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} result of the search
     * @memberof BusinessListing Component
     */
-    handleSearchSubmit = (e) => {
-      e.preventDefault();
+    handleSearchSubmit = (event) => {
+      event.preventDefault();
       this.setState({ businessPagination: 'hide', searchPagination: '' });
       this.props.searchBusiness(
         this.state.searchBy,
@@ -152,16 +152,16 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     render() {
-      const { data } = this.props;
-      const businessCategories = data.categories;
-      const { businessesCount } = this.props.data;
+      const { businesses } = this.props;
+      const businessCategories = businesses.categories;
+      const { businessesCount } = this.props.businesses;
       const categoryOptions = businessCategories !== undefined ?
         Array.from(businessCategories).map(category =>
         <option key={category} value={category}>{category}</option>) : null;
 
       const locationOptions = this.props.locations.map(location =>
         <option key={location} value={location}>{location}</option>);
-      let filteredBusinesses = data.businesses;
+      let filteredBusinesses = businesses.businesses;
       if (filteredBusinesses.length > 0) {
         filteredBusinesses = filteredBusinesses
           .filter(business =>
@@ -169,20 +169,20 @@ export default class BusinessListing extends React.Component {
       }
 
       if (this.state.location !== 'null' && this.state.category !== 'null') {
-        filteredBusinesses = data.businesses
+        filteredBusinesses = businesses.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1
              && business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
 
       if (this.state.location !== 'null' && this.state.category === 'null') {
-        filteredBusinesses = data.businesses
+        filteredBusinesses = businesses.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1);
       }
 
       if (this.state.location === 'null' && this.state.category !== 'null') {
-        filteredBusinesses = data.businesses
+        filteredBusinesses = businesses.businesses
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
@@ -236,8 +236,8 @@ export default class BusinessListing extends React.Component {
                   </div>
                 </div>
               <div className="center">
-                <a className="btn blue lighten-1" onClick={(e) => {
-                    e.preventDefault();
+                <a className="btn blue lighten-1" onClick={(event) => {
+                    event.preventDefault();
                     this.setState({ location: 'null', category: 'null' });
                   }}>
                   Reset Filters
@@ -281,7 +281,7 @@ export default class BusinessListing extends React.Component {
 }
 
 BusinessListing.propTypes = {
-  data: PropTypes.object.isRequired,
+  businesses: PropTypes.object.isRequired,
   locations: PropTypes.array.isRequired,
   searchBusiness: PropTypes.func.isRequired,
   fetchBusinesses: PropTypes.func.isRequired,

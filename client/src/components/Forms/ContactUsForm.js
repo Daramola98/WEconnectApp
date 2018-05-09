@@ -20,26 +20,26 @@ export default class ContactUs extends React.Component {
 
   /**
     * onChange Event handler callback for ContactUs form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the ContactUs component
     * @memberof ContactUs Component
     */
-    onChange = e =>
+    onChange = event =>
       this.setState({
         ...this.state,
-        contactInfo: { ...this.state.contactInfo, [e.target.name]: e.target.value }
+        contactInfo: { ...this.state.contactInfo, [event.target.name]: event.target.value }
       });
 
     /**
       * onSubmit Event handler callback for ContactUs form
-      * @param {object} e The event object
+      * @param {object} event The event object
       *
       * @return {null}  Message Submitted message or returns error message
       * @memberof ContactUs Component
       */
-    handleContactUsSubmit = (e) => {
-      e.preventDefault();
+    handleContactUsSubmit = (event) => {
+      event.preventDefault();
       this.props.submit(this.state.contactInfo);
     }
 

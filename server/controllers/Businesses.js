@@ -351,6 +351,9 @@ export default class Businesses {
                 model: reviewresponse,
                 as: 'responses',
               }],
+              order: [
+                ['createdAt', 'ASC'],
+              ],
               where: {
                 businessId: req.params.businessId
               }

@@ -101,7 +101,6 @@ export default class UpdateBusiness extends React.Component {
 UpdateBusiness.propTypes = {
   fetchCategories: PropTypes.func.isRequired,
   updateBusiness: PropTypes.func.isRequired,
-  locations: PropTypes.array.isRequired,
   businesses: PropTypes.object.isRequired,
   usersReducer: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,

@@ -16,26 +16,26 @@ export default class LoginForm extends React.Component {
 
     /**
     * onChange Event handler callback for login form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {func} updates the state of the loginForm component
     * @memberof LoginForm Component
     */
-    onChange = e =>
+    onChange = event =>
       this.setState({
         ...this.state,
-        credentials: { ...this.state.credentials, [e.target.name]: e.target.value }
+        credentials: { ...this.state.credentials, [event.target.name]: event.target.value }
       });
 
     /**
       * onSubmit Event handler callback for login form
-      * @param {object} e The event object
+      * @param {object} event The event object
       *
       * @return {null}  user profile component if successful or returns error message
       * @memberof LoginForm Component
       */
-    onSubmit = (e) => {
-      e.preventDefault();
+    onSubmit = (event) => {
+      event.preventDefault();
       this.props.submit(this.state.credentials);
     }
 

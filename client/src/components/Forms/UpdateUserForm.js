@@ -22,25 +22,25 @@ export default class UpdateUserForm extends React.Component {
 
   /**
     * onChange Event handler callback for UpdateUserForm form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the UpdateUserForm component
     * @memberof UpdateUserForm Component
     */
-    onChange = e =>
+    onChange = event =>
       this.setState({
         ...this.state,
-        user: { ...this.state.user, [e.target.name]: e.target.value }
+        user: { ...this.state.user, [event.target.name]: event.target.value }
       });
 
   /**
     * Handles Update Form Submission
-    * @param {object} e the event object
+    * @param {object} event the event object
     * @return {null} updates the state of the UpdateUserForm component
     * @memberof UpdateUserForm Component
     */
-    handleUpdateSubmit(e) {
-      e.preventDefault();
+    handleUpdateSubmit(event) {
+      event.preventDefault();
       const userDetails = {};
       const userKeys = Object.keys(this.state.user);
 

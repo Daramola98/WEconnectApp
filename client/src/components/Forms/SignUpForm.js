@@ -27,26 +27,26 @@ export default class SignUpForm extends React.Component {
 
   /**
     * onChange Event handler callback for SignUpForm form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {func} updates the state of the SignUpForm component
     * @memberof SignUpForm Component
     */
-    onChange = e =>
+    onChange = event =>
       this.setState({
         ...this.state,
-        user: { ...this.state.user, [e.target.name]: e.target.value }
+        user: { ...this.state.user, [event.target.name]: event.target.value }
       });
 
   /**
     * Handles SignUpForm Form Submission
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} user profile component if successful or returns error message
     * @memberof SignUpForm Component
     */
-    handleSignUpSubmit = (e) => {
-      e.preventDefault();
+    handleSignUpSubmit = (event) => {
+      event.preventDefault();
       if (this.state.user.confirmPassword !== this.state.user.password) {
         return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
       }

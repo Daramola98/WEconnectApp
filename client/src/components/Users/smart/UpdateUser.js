@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import Errors from '../../Messages/presentational/FormErrors';
+import FormErrors from '../../Messages/presentational/FormErrors';
 import UpdateUserForm from '../../Forms/UpdateUserForm';
 
 /**
@@ -92,5 +92,5 @@ export default class UpdateUser extends React.Component {
 UpdateUser.propTypes = {
   usersReducer: PropTypes.object.isRequired,
   updateUser: PropTypes.func.isRequired,
-  history: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };

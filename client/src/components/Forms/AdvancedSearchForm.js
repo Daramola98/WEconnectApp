@@ -23,23 +23,23 @@ export default class BusinessListing extends React.Component {
 
   /**
     * onChange Event handler callback for Advanced Search form field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onAdvancedSearchChange = e =>
-      this.setState({ advancedSearch: e.target.value });
+    onAdvancedSearchChange = event =>
+      this.setState({ advancedSearch: event.target.value });
 
   /**
     * onChange Event handler callback for Advanced search select field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessListing component
     * @memberof BusinessListing Component
     */
-    onSearchByChange = e =>
-      this.setState({ searchBy: e.target.value });
+    onSearchByChange = event =>
+      this.setState({ searchBy: event.target.value });
 
   /**
     * onChange Event handler callback for pagination component
@@ -58,13 +58,13 @@ export default class BusinessListing extends React.Component {
 
   /**
     * Handles Search Form Submission
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} result of the search
     * @memberof BusinessListing Component
     */
-    handleSearchSubmit = (e) => {
-      e.preventDefault();
+    handleSearchSubmit = (event) => {
+      event.preventDefault();
       this.setState({ businessPagination: 'hide', searchPagination: '' });
       this.props.searchBusiness(
         this.state.searchBy,

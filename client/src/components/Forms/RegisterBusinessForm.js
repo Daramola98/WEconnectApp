@@ -44,26 +44,26 @@ export default class RegisterBusinessForm extends React.Component {
 
   /**
     * onChange Event handler callback for RegisterBusiness form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the RegisterBusinessForm component
     * @memberof RegisterBusinessForm Component
     */
-  onChange = e =>
+  onChange = event =>
     this.setState({
       ...this.state,
-      business: { ...this.state.business, [e.target.name]: e.target.value }
+      business: { ...this.state.business, [event.target.name]: event.target.value }
     });
 
   /**
       * onSubmit Event handler callback for RegisterBusiness form
-      * @param {object} e The event object
+      * @param {object} event The event object
       *
       * @return {null}  Business Registered message or returns error message
       * @memberof RegisterBusinessForm Component
       */
-  handleRegisterBusinessSubmit = (e) => {
-    e.preventDefault();
+  handleRegisterBusinessSubmit = (event) => {
+    event.preventDefault();
     if (this.state.business.category === 'null' || this.state.business.location === 'null') {
       alertify.set('notifier', 'position', 'top-right');
       return alertify.error('Business Location and Category are required');

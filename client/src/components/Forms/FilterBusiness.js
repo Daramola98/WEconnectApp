@@ -19,13 +19,13 @@ import PropTypes from 'prop-types';
 class FilterBusiness extends Component {
   /**
     * onChange Event handler callback for FilterBusiness form fields
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the FilterBusiness component
     * @memberof FilterBusiness Component
     */
-  onChange = (e) => {
-    this.props.onSearchChange(e.target.value);
+  onChange = (event) => {
+    this.props.onSearchChange(event.target.value);
   }
   /**
     * Renders the FilterBusiness Component

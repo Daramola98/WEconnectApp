@@ -3,7 +3,7 @@ import BusinessListing from '../components/Businesses/smart/BusinessListing';
 import { fetchBusinesses, searchBusiness, fetchCategories } from '../store/actions/businesses';
 
 const mapStateToProps = state => ({
-  data: state.businessesReducer
+  businesses: state.businessesReducer
 });
 
 const mapDispatchToProps = dispatch => ({

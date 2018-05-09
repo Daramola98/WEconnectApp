@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
  * Class Representing React Component BusinessReviewForm
  *@class BusinessReviewForm
  *@classdesc creates a React component- BusinessReviewForm
- *@param {object} e event object
  */
 export default class BusinessReviewForm extends React.Component {
   state = {
@@ -18,26 +17,26 @@ export default class BusinessReviewForm extends React.Component {
 
   /**
     * onChange Event handler callback for review response input field
-    * @param {object} e the event object
+    * @param {object} event the event object
     *
     * @return {null} updates the state of the BusinessReviewForm component
     * @memberof BusinessReviewForm Component
     */
-  onChange = e =>
+  onChange = event =>
     this.setState({
       ...this.state,
-      reviewDetails: { ...this.state.reviewDetails, [e.target.name]: e.target.value }
+      reviewDetails: { ...this.state.reviewDetails, [event.target.name]: event.target.value }
     });
 
   /**
       * onSubmit Event handler callback for review form
-      * @param {object} e The event object
+      * @param {object} event The event object
       *
       * @return {null}  Review submitted or returns error message
       * @memberof BusinessReviewForm Component
       */
-  onSubmit = (e) => {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault();
     this.props.submit(this.state.reviewDetails);
   }
 
