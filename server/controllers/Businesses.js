@@ -33,7 +33,7 @@ export default class Businesses {
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
-      businessImage: req.file.path,
+      businessImage: req.file ? req.file.path : null,
       email: req.body.email,
       telephoneNumber: req.body.telephoneNumber,
       homeNumber: req.body.homeNumber,
