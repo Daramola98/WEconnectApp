@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Input } from 'react-materialize';
+import { Input, Row } from 'react-materialize';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
 
@@ -25,6 +25,7 @@ export default class RegisterBusinessForm extends React.Component {
         category: 'null',
         address: '',
         email: '',
+        businessImage: null,
         description: '',
         telephoneNumber: '',
         homeNumber: ''
@@ -56,6 +57,19 @@ export default class RegisterBusinessForm extends React.Component {
     });
 
   /**
+    * onChange Event handler callback for RegisterBusiness business Image form field
+    * @param {object} event the event object
+    *
+    * @return {null} updates the state of the RegisterBusinessForm component
+    * @memberof RegisterBusinessForm Component
+    */
+  onFileChange = event =>
+    this.setState({
+      ...this.state,
+      business: { ...this.state.business, businessImage: event.target.files[0] }
+    });
+
+  /**
       * onSubmit Event handler callback for RegisterBusiness form
       * @param {object} event The event object
       *
@@ -68,6 +82,7 @@ export default class RegisterBusinessForm extends React.Component {
       alertify.set('notifier', 'position', 'top-right');
       return alertify.error('Business Location and Category are required');
     }
+    const registerBusinessData = new FormData();
     const businessDetails = {
       name: this.state.business.name,
       location: this.state.business.location,
@@ -81,7 +96,11 @@ export default class RegisterBusinessForm extends React.Component {
     if (this.state.business.homeNumber.length > 1) {
       businessDetails.homeNumber = this.state.business.homeNumber;
     }
-    this.props.submit(businessDetails);
+    const businessDetailsKeys = Object.keys(businessDetails);
+    businessDetailsKeys.forEach((key) => {
+      registerBusinessData.append(key, businessDetails[key]);
+    });
+    this.props.submit(registerBusinessData);
   }
 
   /**
@@ -111,8 +130,9 @@ export default class RegisterBusinessForm extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="input-field col s12 m6 l6">
-              <Input type="select" id="location" name="location" value={business.location} onChange={this.onChange} required>
+            <Row>
+            <div className="input-field col s12 m12 l12">
+              <Input s={12} type="select" id="location" name="location" icon="location_on" value={business.location} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Location
                 </option>
@@ -120,8 +140,8 @@ export default class RegisterBusinessForm extends React.Component {
               </Input>
               {/* <label>Location</label> */}
             </div>
-            <div className="input-field col s12 m6 l6">
-              <Input type="select" id="category" name="category" value={business.category} onChange={this.onChange} required>
+            <div className="input-field col s12 m12 l12">
+              <Input s={12} type="select" id="category" name="category" icon="business_center" value={business.category} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Category
                 </option>
@@ -131,38 +151,47 @@ export default class RegisterBusinessForm extends React.Component {
               </Input>
               {/* <label>Category</label> */}
             </div>
+            </Row>
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">email</i>
               <label htmlFor="email">Contact Email Address</label>
-              <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={business.email} onChange={this.onChange} placeholder="johndoe@gmail.com" ref="email" className="validate" required />
+              <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={business.email} onChange={this.onChange} className="validate" required />
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">location_on</i>
               <label htmlFor="address">Business Address</label>
-              <input type="text" id="address" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} placeholder="Enter Business Address" ref="address" className="validate" required />
+              <input type="text" id="address" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" required />
+            </div>
+          </div>
+          <div style={{ marginLeft: '15px' }}><h5>Upload Business Image here</h5></div>
+          <div className="row">
+            <div className="input-field col s12">
+              <i className="material-icons prefix">image</i>
+              <input type="file" id="businessImage" name="businessImage" accept="image/jpeg,image/png" onChange={this.onFileChange} className="validate" />
+              <p style={{ marginLeft: '45px', marginTop: '10px' }}>Max file Size is 3MB</p>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l6">
               <i className="material-icons prefix">phone</i>
               <label htmlFor="telephoneNumber">Telephone Number</label>
-              <input type="text" id="telephoneNumber" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.telephoneNumber} onChange={this.onChange} ref="telephoneNumber" className="validate" required />
+              <input type="text" id="telephoneNumber" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.telephoneNumber} onChange={this.onChange} className="validate" required />
             </div>
             <div className="input-field col s12 m12 l6">
               <i className="material-icons prefix">phone</i>
               <label htmlFor="homeNumber">Home Number</label>
 
-              <input type="text" id="homeNumber" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.homeNumber} onChange={this.onChange} ref="homeNumber" className="validate" />
+              <input type="text" id="homeNumber" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.homeNumber} onChange={this.onChange} className="validate" />
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">mode_edit</i>
-              <textarea name="description" id="description" value={business.description} minLength="20" maxLength="500" onChange={this.onChange} className="materialize-textarea" ref="description" required />
+              <textarea name="description" id="description" value={business.description} minLength="20" maxLength="500" onChange={this.onChange} className="materialize-textarea" required />
               <label htmlFor="description">Business Description</label>
             </div>
           </div>

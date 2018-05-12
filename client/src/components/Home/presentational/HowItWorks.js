@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HowItWorks = props => (
         <div className="container">
@@ -17,9 +18,9 @@ const HowItWorks = props => (
                     To Get Started
                 </p>
                 <ol>
-                  <li>Create an Account <a href="signUp.html">here</a></li>
+                  <li>Create an Account <Link to="/signUp">here</Link></li>
                   if you already have an account move to step 2
-                  <li>Login to your account <a href="login.html">here</a></li>
+                  <li>Login to your account <Link to="/login">here</Link></li>
                   <li>Register a Business</li>
                   <li>Find Businesses</li>
                   <li>Review Businesses</li>

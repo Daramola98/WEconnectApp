@@ -125,7 +125,7 @@ export default class SignUpForm extends React.Component {
               <div className="input-field col s12 m12 l12">
                 <i className="material-icons prefix">email</i>
                 <label htmlFor="email">Email Address</label>
-                <input type="email" id="email" value={email} onChange={this.onChange} pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="johndoe@gmail.com" name="email" className="validate" required />
+                <input type="email" id="email" value={email} onChange={this.onChange} pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" name="email" className="validate" required />
               </div>
             </div>
             <div className="row">

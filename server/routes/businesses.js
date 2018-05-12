@@ -2,6 +2,8 @@ import express from 'express';
 import Businesses from '../controllers/Businesses';
 import { businessIdCheck, businessQueryCheck } from '../middlewares/validationHelper';
 import isAuthorized from '../middlewares/isAuthorized';
+import upload from '../middlewares/fileUpload';
+import isValidFile from '../middlewares/isValidFile';
 import modelValidator from '../helpers/modelValidator';
 import { businessValidation, businessExists, businessUpdateValidation } from '../validations/businessValidation';
 import reviewValidation from '../validations/reviewValidation';
@@ -9,7 +11,7 @@ import reviewResponseValidation from '../validations/reviewResponseValidation';
 
 const router = express.Router();
 
-router.post('/', isAuthorized, modelValidator(businessValidation), businessExists, Businesses.createBusiness);
+router.post('/', isAuthorized, isValidFile, modelValidator(businessValidation), businessExists, Businesses.createBusiness);
 
 router.get('/', businessQueryCheck, Businesses.listBusinesses);
 
@@ -21,6 +23,7 @@ router.put(
   '/:businessId',
   isAuthorized,
   businessIdCheck,
+  isValidFile,
   modelValidator(businessUpdateValidation),
   businessExists, Businesses.updateBusiness
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Input, Pagination, PaginationButton } from 'react-materialize';
+import Loader from 'react-loader';
+import { Input, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
 import PropTypes from 'prop-types';
 import Business from '../presentational/Business';
 
@@ -22,6 +23,7 @@ export default class BusinessListing extends React.Component {
       search: '',
       searchBy: 'name',
       advancedSearch: '',
+      loader: true,
       location: 'null',
       category: 'null',
       currentPage: 1,
@@ -186,14 +188,15 @@ export default class BusinessListing extends React.Component {
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
-      return <div className="container">
-          <div className="row">
-            <div className="col s12 offset-m2 m8 offset-l2 l8">
+      return <div className="">
+      <div className="row">
+          <div id="searchbusiness" className="col s6">
+            <div className="row">
               <form onSubmit={this.handleSearchSubmit}>
-                <span className="col s12 l6 radio-btn">
+                <span className="col s12 l4 radio-btn">
                 <input type="text" placeholder={`Search for Business By ${this.state.searchBy}`} name="advancedSearch" value={this.state.advancedSearch} onChange={this.onAdvancedSearchChange} required/>
                 </span>
-                <span className="col s12 l4">
+                <span className="col s12 m6 l4">
                 <Input name="searchBy" type="select" value={this.state.searchBy} onChange={this.onSearchByChange} >
                   <option value="name">
                     Search By Name
@@ -206,47 +209,50 @@ export default class BusinessListing extends React.Component {
                   </option>
                 </Input>
                 </span>
-                <span className="adSearch"><button type="submit" className="adSearch waves-effect waves-light btn blue ligthen-1">SEARCH</button></span>
+                <span className="col s12 m6 l4"><button type="submit" className="radio-btn waves-effect waves-light btn blue ligthen-1">SEARCH</button></span>
               </form>
-                <div className="input-field">
-                  <span className="col s8 l8">
-                    <i className="material-icons prefix">search</i>
-                    <input type="text" name="search" value={this.state.search} onChange={this.onSearchChange} />
-                    <label htmlFor="search">Filter Businesses</label>
-                  </span>
-                </div>
-                <div className="row">
-                  <div className="input-field col l5">
-                    <Input type="select" value={this.state.location} onChange={this.onLocationChange}>
-                      <option value="null" disabled>
-                        Filter By Location
-                      </option>
-                      {locationOptions}
-                    </Input>
-                  </div>
-                  <div className="input-field col l5">
-                    <Input type="select" value={this.state.category} onChange={this.onCategoryChange}>
-                      <option value="null" disabled>
-                        Filter By Category
-                      </option>
-                      {businessCategories.length > 0 ? categoryOptions : <option value="loading" disabled>
-                        Loading...
-                      </option> }
-                    </Input>
-                  </div>
-                </div>
-              <div className="center">
-                <a className="btn blue lighten-1" onClick={(event) => {
-                    event.preventDefault();
-                    this.setState({ location: 'null', category: 'null' });
-                  }}>
-                  Reset Filters
-                </a>
               </div>
             </div>
+            <div id="filterbusiness" className="col s6">
+          <div>
+          <input type="text" name="search" value={this.state.search} placeholder="Filter Businesses by Name" onChange={this.onSearchChange} />
           </div>
-          <div id="businessTable">
-            <table id="businessListing" className="bordered highlight centered">
+          <div className="">
+            <Input type="select" value={this.state.location} onChange={this.onLocationChange}>
+              <option value="null" disabled>
+                Filter By Location
+                      </option>
+              {locationOptions}
+            </Input>
+          </div>
+          <div className="">
+            <Input type="select" value={this.state.category} onChange={this.onCategoryChange}>
+              <option value="null" disabled>
+                Filter By Category
+              </option>
+              {businessCategories.length > 0 ? categoryOptions : <option value="loading" disabled>
+                Loading...
+              </option>}
+            </Input>
+          </div>
+          <div className="">
+            <a className="btn radio-btn blue lighten-1" onClick={(event) => {
+              event.preventDefault();
+              this.setState({ location: 'null', category: 'null' });
+            }}>
+              Reset Filters
+                </a>
+          </div>
+        </div>
+          </div>
+          <hr/>
+          <div id="businessTable" className="row">
+          {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
+                  <Business business={business} key={i} />
+                )) : <div>
+                  <h1>NO BUSINESSES</h1>
+                </div>}
+            {/* <table id="businessListing" className="bordered highlight centered">
               <thead>
                 <tr>
                   <th>Business Name</th>
@@ -262,7 +268,7 @@ export default class BusinessListing extends React.Component {
                   <td colSpan="3">NO BUSINESSES</td>
                 </tr>}
               </tbody>
-            </table>
+            </table> */}
           </div>
           <Pagination
            className={this.state.businessPagination}

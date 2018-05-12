@@ -11,6 +11,11 @@ module.exports = {
       allowNull: false,
       unique: true
     },
+    businessImage: {
+      type: Sequelize.STRING,
+      allowNull: true,
+      unique: true
+    },
     location: {
       type: Sequelize.ENUM,
       values: ['ABIA',

@@ -51,7 +51,7 @@ export const fetchBusinesses = (pageNumber = 0) => dispatch =>
     .catch(error => dispatch(fetchBusinessesFailed));
 
 export const fetchCategories = () => dispatch =>
-  axios.get('api/v1/admin/businessCategory')
+  axios.get('/api/v1/admin/businessCategory')
     .then((response) => {
       dispatch(fetchesCategories(response.data));
     });

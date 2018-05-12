@@ -12,6 +12,8 @@ import {
   businessReviewMessage
 } from '../messages/businessMessages';
 import serverErrorMessage from '../messages/serverMessage';
+import upload from '../middlewares/fileUpload';
+
 
 /**
  *
@@ -31,6 +33,7 @@ export default class Businesses {
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
+      businessImage: req.file ? req.file.path : null,
       email: req.body.email,
       telephoneNumber: req.body.telephoneNumber,
       homeNumber: req.body.homeNumber,
@@ -46,6 +49,7 @@ export default class Businesses {
         const createdBusinessDetails = {
           id: business.id,
           name: business.name,
+          businessImage: business.businessImage,
           category: business.category,
           email: business.email,
           telephoneNumber: business.telephoneNumber,
@@ -62,7 +66,7 @@ export default class Businesses {
         if (err.errors) {
           handleValidationErrors(err.errors, res);
         } else {
-          return res.status(500).json(serverErrorMessage.message);
+          return res.status(500).json(err);
         }
       });
   }
@@ -178,13 +182,19 @@ export default class Businesses {
         }
 
         handleInputFormat(req);
-
+        const businessDetails = req.file ?
+          { ...req.body, businessImage: req.file.path } :
+          { ...req.body, businessImage: business.businessImage };
         return business
-          .update(req.body, { fields: Object.keys(req.body) })
+          .update(
+            businessDetails,
+            { fields: Object.keys(businessDetails) }
+          )
           .then((updatedBusiness) => {
             const updatedBusinessDetails = {
               name: updatedBusiness.name,
               category: updatedBusiness.category,
+              businessImage: updatedBusiness.businessImage,
               email: updatedBusiness.email,
               telephoneNumber: updatedBusiness.telephoneNumber,
               homeNumber: updatedBusiness.homeNumber,

@@ -176,40 +176,25 @@ export default class UserProfile extends React.Component {
                        search={this.state.search} onSearchChange={this.onSearchChange}/>
                     </div>
                     <div id="businesses" className="col s12 m12 l12 ">
-                      <table className="bordered highlight responsive-table centered center">
-                        <thead>
-                          <tr>
-                            <th>Business Name</th>
-                            <th>Category</th>
-                            <th>Location</th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
                           {filterBusinesses.length > 0 ?
                            filterBusinesses.map((business, i) => (
                                 <Business business={business} key={i}>
-                                  <td key={'update'}>
                                     <Link
+                                     className="blue-text"
                                       to={`/updateBusiness/${business.id}`}
                                     >
                                       UPDATE
                                     </Link>
-                                  </td>
-                                  <td key={'delete'}>
-                                    <a className="waves-effect waves-light btn-small" onClick={() => {
+                                    <a className="waves-effect blue-text waves-light btn-small" onClick={() => {
                                       businessId = business.id;
                                       $('#deleteBusiness').modal('open');
                                     }}>
                                       DELETE
                                     </a>
-                                  </td>
                                 </Business>
-                              )) : <tr>
-                              <td colSpan="3">No Businesses !!</td>
-                            </tr>}
-                        </tbody>
-                      </table>
+                              )) : <div>
+                              <h1>No Businesses !!</h1>
+                            </div>}
                       <br/><br/>
                       <Pagination
                        key={Date.now()}

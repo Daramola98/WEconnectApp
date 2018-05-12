@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from 'react-materialize';
+import { Input, Row } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
@@ -26,6 +26,7 @@ export default class BusinessUpdateForm extends React.Component {
         location: 'null',
         category: 'null',
         address: '',
+        businessImage: null,
         email: '',
         description: '',
         telephoneNumber: '',
@@ -46,6 +47,19 @@ export default class BusinessUpdateForm extends React.Component {
         business: { ...this.state.business, [event.target.name]: event.target.value }
       });
 
+      /**
+    * onChange Event handler callback for RegisterBusiness business Image form field
+    * @param {object} event the event object
+    *
+    * @return {null} updates the state of the RegisterBusinessForm component
+    * @memberof RegisterBusinessForm Component
+    */
+  onFileChange = event =>
+    this.setState({
+      ...this.state,
+      business: { ...this.state.business, businessImage: event.target.files[0] }
+    });
+
     /**
       * onSubmit Event handler callback for BusinessUpdateForm form
       * @param {object} event The event object
@@ -56,15 +70,20 @@ export default class BusinessUpdateForm extends React.Component {
     handleUpdateSubmit = (event) => {
       event.preventDefault();
       const businessDetails = {};
+      const updateBusinessData = new FormData();
       const businessKeys = Object.keys(this.state.business);
 
       for (let i = 0; i < businessKeys.length; i += 1) {
         const key = businessKeys[i];
-        if (this.state.business[key].length > 1 && this.state.business[key] !== 'null') {
+        if (this.state.business[key] !== '' && this.state.business[key] !== 'null') {
           businessDetails[key] = this.state.business[key];
         }
       }
-      this.props.submit(businessDetails);
+      const businessDetailsKeys = Object.keys(businessDetails);
+      businessDetailsKeys.forEach((key) => {
+        updateBusinessData.append(key, businessDetails[key]);
+      });
+      this.props.submit(updateBusinessData);
     }
 
   /**
@@ -73,8 +92,8 @@ export default class BusinessUpdateForm extends React.Component {
     * @memberof BusinessUpdateForm Component
     */
     render() {
-      const businessCategories = this.props.categories;
-
+      const { categories } = this.props;
+      const businessCategories = categories;
       const categoryOptions = businessCategories !== undefined ?
         Array.from(businessCategories).map(category =>
         <option key={category} value={category}>{category}</option>) : null;
@@ -96,8 +115,9 @@ export default class BusinessUpdateForm extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="input-field col s12 m6 l6">
-                      <Input type="select" id="location" name="location" value={business.location} onChange={this.onChange} >
+                    <Row>
+                    <div className="input-field col s12">
+                      <Input s={12} type="select" id="location" name="location" icon="location_on" value={business.location} onChange={this.onChange} >
                         <option value="null" disabled>
                           Choose your location
                         </option>
@@ -105,8 +125,8 @@ export default class BusinessUpdateForm extends React.Component {
                       </Input>
                       {/* <label>Location</label> */}
                     </div>
-                    <div className="input-field col s12 m6 l6">
-                      <Input type="select" id="category" name="category" value={business.category} onChange={this.onChange} >
+                    <div className="input-field col s12">
+                      <Input s={12} type="select" id="category" name="category" icon="business_center" value={business.category} onChange={this.onChange} >
                         <option value="null" disabled>
                           Choose your category
                         </option>
@@ -116,19 +136,28 @@ export default class BusinessUpdateForm extends React.Component {
                       </Input>
                       {/* <label>Category</label> */}
                     </div>
+                    </Row>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">email</i>
                       <label htmlFor="email">Contact Email Address</label>
-                      <input type="email" id="email" placeholder="johndoe@gmail.com" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={business.email} onChange={this.onChange} className="validate" />
+                      <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={business.email} onChange={this.onChange} className="validate" />
+                    </div>
+                  </div>
+                  <div style={{ marginLeft: '15px' }}><h5>Upload Business Image here</h5></div>
+                  <div className="row">
+                    <div className="input-field col s12">
+                      <i className="material-icons prefix">image</i>
+                      <input type="file" id="businessImage" name="businessImage" onChange={this.onFileChange} accept="image/jpeg,image/png" className="validate" />
+                      <p style={{ marginLeft: '45px', marginTop: '10px' }}>Max file Size is 3MB</p>
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">location_on</i>
                       <label htmlFor="address">Business Address</label>
-                      <input type="text" id="address" placeholder="Enter Business Address" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" />
+                      <input type="text" id="address" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" />
                     </div>
                   </div>
                   <div className="row">

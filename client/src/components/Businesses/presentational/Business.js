@@ -3,13 +3,25 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const Business = props => (
-    <tr>
-        <td>{props.business.name}</td>
-        <td>{props.business.category}</td>
-        <td>{props.business.location}</td>
-        <td key={props.business.id}><Link to={`/businessProfile/${props.business.id}`}>View</Link></td>
-        {props.children}
-    </tr>
+  // <div className="business">
+  // <div className="col s12 m4">
+      <div className="card medium business">
+        <div className="card-image">
+          <img className="responsive" src={props.business.businessImage} alt="business" />
+          <span className="card-title"></span>
+        </div>
+        <div className="card-content">
+          <p>Business Name: {props.business.name} </p>
+          <p>Location: {props.business.location} </p>
+          <p>Category: {props.business.category} </p>
+        </div>
+        <div className="card-action">
+          <Link className="blue-text" to={`/businessProfile/${props.business.id}`}>View</Link>
+          {props.children}
+        </div>
+      </div>
+  // </div>
+  // </div>
 );
 
 export default Business;
@@ -22,3 +34,4 @@ Business.propTypes = {
     location: PropTypes.string.isRequired,
   }).isRequired,
 };
+

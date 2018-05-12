@@ -32,6 +32,11 @@ const business = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    businessImage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true
+    },
     location: {
       type: DataTypes.ENUM,
       values: ['ABIA',
