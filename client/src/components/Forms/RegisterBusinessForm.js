@@ -87,6 +87,7 @@ export default class RegisterBusinessForm extends React.Component {
       name: this.state.business.name,
       location: this.state.business.location,
       category: this.state.business.category,
+      businessImage: this.state.business.businessImage,
       description: this.state.business.description,
       address: this.state.business.address,
       email: this.state.business.email,
