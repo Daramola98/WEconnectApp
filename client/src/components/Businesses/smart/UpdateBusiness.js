@@ -49,7 +49,7 @@ export default class UpdateBusiness extends React.Component {
         .then((response) => {
           alertify.set('notifier', 'position', 'top-right');
           alertify.success('Business Updated Successfully');
-          setTimeout(() => this.props.history.push(`/businessProfile${this.props.match.params.id}`), 2000);
+          setTimeout(() => this.props.history.push(`/businessProfile/${this.props.match.params.id}`), 2000);
         })
         .catch((error) => {
           if (error.response.status === 401) {

@@ -147,6 +147,10 @@ export default class BusinessProfile extends React.Component {
             <div className="card-action blue lighten-1 white-text center">
               <h3>Business Profile</h3>
             </div>
+          <div className="card-image">
+            <img className="responsive" src={`/${business.businessImage}`} alt="business" />
+            <span className="card-title"></span>
+          </div>
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">

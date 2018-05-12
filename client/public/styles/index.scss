@@ -52,6 +52,17 @@ li.active {
 .home-card .card-content p {
     height: 154px
 }
+.business {
+    display: inline-block;
+    margin-right: 15px;
+}
+.card.medium {
+    height: 400px;
+    width: 300px;
+}
+.card-image img {
+    height: 300px;
+}
 .reviewerId {
     margin-left: 15px
 }
@@ -60,3 +71,6 @@ li.active {
     top: 100%;
     left: 100%;
 }
+// ul.pagination {
+//     margin-left: 300px;
+// }

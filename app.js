@@ -4,6 +4,7 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import dotenv from 'dotenv';
+import multer from 'multer';
 import validator from 'express-validator';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -20,7 +21,8 @@ const app = express();
 const compiler = webpack(config);
 
 // EXPRESS MIDDLEWARES
-app.use(express.static(path.join(__dirname, './client/public/images')));
+app.use('/images', express.static(path.join(__dirname, './client/public/images')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(webpackDevMiddleware(compiler));
 app.use(webpackHotMiddleware(compiler));
 
