@@ -25,7 +25,6 @@ const isValidFile = (req, res, next) => {
     let businessImageUrl;
     if (req.file) {
       cloudinary.v2.uploader.upload(req.file.path, (error, result) => {
-        console.log(result);
         businessImageUrl = result.secure_url;
         req.businessImage = businessImageUrl;
         next(err);
