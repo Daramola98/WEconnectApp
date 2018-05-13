@@ -129,7 +129,14 @@ export default class BusinessProfile extends React.Component {
       .then(() => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Response Submitted');
-        setTimeout(() => window.location.reload(), 2000);
+        $('#replyReview').modal('close');
+        // setTimeout(() => window.location.reload(), 2000);
+        this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
+          .then(() => {
+            this.setState({
+              reviews: true, info: false
+            });
+          });
       });
   }
 
