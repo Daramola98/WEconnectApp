@@ -1,5 +1,14 @@
+import cloudinary from 'cloudinary';
+import dotenv from 'dotenv';
 import uploads from './fileUpload';
 
+dotenv.config();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 /**
    * Checks for Authentication before processing protected routes
    * @param {object} req - The request object
@@ -13,7 +22,16 @@ const isValidFile = (req, res, next) => {
     if (err) {
       return res.status(400).json({ validationErrors: ['File format should be jpeg or png and lower than 3MB'] });
     }
-    next(err);
+    let businessImageUrl;
+    if (req.file) {
+      cloudinary.v2.uploader.upload(req.file.path, (error, result) => {
+        businessImageUrl = result.secure_url;
+        req.businessImage = businessImageUrl;
+        next(err);
+      });
+    } else {
+      next(err);
+    }
   });
 };
 

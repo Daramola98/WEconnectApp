@@ -14,7 +14,6 @@ import {
 import serverErrorMessage from '../messages/serverMessage';
 import upload from '../middlewares/fileUpload';
 
-
 /**
  *
  *@class Businesses
@@ -33,7 +32,7 @@ export default class Businesses {
     const businessDetails = {
       name: req.body.name,
       category: req.body.category,
-      businessImage: req.file ? req.file.path : null,
+      businessImage: req.file ? req.businessImage : null,
       email: req.body.email,
       telephoneNumber: req.body.telephoneNumber,
       homeNumber: req.body.homeNumber,
@@ -183,7 +182,7 @@ export default class Businesses {
 
         handleInputFormat(req);
         const businessDetails = req.file ?
-          { ...req.body, businessImage: req.file.path } :
+          { ...req.body, businessImage: req.businessImage } :
           { ...req.body, businessImage: business.businessImage };
         return business
           .update(
