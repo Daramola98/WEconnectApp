@@ -155,7 +155,7 @@ export default class BusinessProfile extends React.Component {
               <h3>Business Profile</h3>
             </div>
           <div className="card-image">
-            <img className="responsive" src={`/${business.businessImage}`} alt="business" />
+            <img className="responsive" src={business.businessImage} alt="business" />
             <span className="card-title"></span>
           </div>
             <div className="card-content">
