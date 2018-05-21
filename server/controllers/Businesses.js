@@ -117,7 +117,14 @@ export default class Businesses {
       .findOne({
         where: {
           id: req.params.businessId
-        }
+        },
+        include: [
+          {
+            model: User,
+            as: 'user',
+            attributes: ['username']
+          }
+        ]
       })
       .then((business) => {
         if (business) {
@@ -125,7 +132,7 @@ export default class Businesses {
         }
         res.status(404).json(businessNotFoundMessage);
       })
-      .catch(err => res.status(500).json(serverErrorMessage.message));
+      .catch(() => res.status(500).json(serverErrorMessage.message));
   }
 
   /**
@@ -199,7 +206,7 @@ export default class Businesses {
               homeNumber: updatedBusiness.homeNumber,
               location: updatedBusiness.location,
               address: updatedBusiness.address,
-              businessAddedBy: updatedBusiness.businessOwner,
+              businessAddedBy: updatedBusiness.user.username,
               description: updatedBusiness.description
             };
             res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
@@ -359,7 +366,17 @@ export default class Businesses {
               include: [{
                 model: reviewresponse,
                 as: 'responses',
-              }],
+                include: [{
+                  model: User,
+                  as: 'user'
+                }]
+              },
+              {
+                model: User,
+                as: 'user',
+                attributes: ['username']
+              }
+              ],
               order: [
                 ['createdAt', 'ASC'],
               ],

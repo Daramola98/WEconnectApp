@@ -19,7 +19,6 @@ export default class UserProfile extends React.Component {
     */
   constructor(props) {
     super(props);
-    this.componentWillMount = this.componentWillMount.bind(this);
     this.state = {
       search: '',
       info: true,
@@ -34,7 +33,7 @@ export default class UserProfile extends React.Component {
    * @return {void} no return or void
    */
   componentWillMount() {
-    if (this.props.usersReducer.authenticated !== true) {
+    if (!this.props.usersReducer.authenticated) {
       this.props.history.push('/login');
     }
   }
@@ -47,7 +46,7 @@ export default class UserProfile extends React.Component {
   componentDidMount() {
     this.props.fetchUserBusinesses(this.state.currentPage)
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response.status === 401 && this.props.usersReducer.authenticated) {
           alertify.set('notifier', 'position', 'top-right');
           alertify.warning('Session Expired Login again');
           this.props.logout();
@@ -57,18 +56,6 @@ export default class UserProfile extends React.Component {
         }
       });
   }
-
-  // /**
-  //   * Creates a React Component
-  //   * @param {object} e the register business page
-  //   * @param {string} searchValue the register business page
-  //   * @return {jsx} renders the register business page
-  //   * @memberof React Component
-  //   */
-  //    onSearchSubmit = (e) => {
-  //      e.preventDefault();
-  //      this.setState({ search: this.refs.search.value });
-  //    };
 
   /**
       * onChange Event handler callback for filter businesses input
@@ -110,8 +97,9 @@ export default class UserProfile extends React.Component {
       const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
 
-      return <div className="row container">
-        <div className="col s12 m8 offset-m2 l8 offset-l2">
+      return (
+      <div className="row container">
+         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue lighten-1 white-text center">
               <h3>My Profile</h3>
@@ -213,7 +201,9 @@ export default class UserProfile extends React.Component {
                             .then(() => {
                               alertify.set('notifier', 'position', 'top-right');
                               alertify.success('Business Deleted');
-                              setTimeout(() => window.location.reload(), 2000);
+                              $('#deleteBusiness').modal('close');
+                              this.props.fetchUserBusinesses(this.state.currentPage)
+                              .then(() => this.setState({ info: false, businesses: true }));
                             })
                             .catch((error) => {
                               if (error.response.status === 401) {
@@ -240,7 +230,7 @@ export default class UserProfile extends React.Component {
             </div>
           </div>
         </div>
-      </div>;
+                  </div>);
     }
 }
 

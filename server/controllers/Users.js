@@ -193,7 +193,14 @@ export default class Users {
             telephoneNumber: updatedUser.telephoneNumber,
             homeNumber: updatedUser.homeNumber
           };
-          res.status(200).json({ message: 'User Updated successfully', updatedUserDetails });
+          const token = jwt.sign(
+            updatedUserDetails
+            , process.env.JWT_KEY,
+            {
+              expiresIn: '6hr'
+            }
+          );
+          res.status(200).json({ message: 'User Updated successfully', updatedUserDetails, token });
         })
         .catch((err) => {
           if (err.errors) {

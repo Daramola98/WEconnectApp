@@ -43,6 +43,7 @@ const businessReview = (sequelize, DataTypes) => {
 
     BusinessReview.belongsTo(models.User, {
       foreignKey: 'reviewerId',
+      as: 'user',
       onDelete: 'CASCADE'
     });
   };

@@ -46,6 +46,9 @@ li.active {
 .radio-btn {
     margin-top: 15px
 }
+.loginForm {
+    margin-top: 100px
+}
 .confirmDelete, .replyReview {
     margin-right: 15px
 }
@@ -68,9 +71,13 @@ li.active {
 }
 .loader {
     position: fixed;
-    top: 100%;
-    left: 100%;
-}
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    z-index: 9999;
+  }
 // ul.pagination {
 //     margin-left: 300px;
 // }

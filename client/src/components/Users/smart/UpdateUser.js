@@ -40,9 +40,7 @@ export default class UpdateUser extends React.Component {
         .then(() => {
           alertify.set('notifier', 'position', 'top-right');
           alertify.success('Updated Successfully');
-          alertify.warning('Redirecting to login page!, You need to login to view changes made');
-          this.props.logout();
-          setTimeout(() => this.props.history.push('/login'), 4000);
+          setTimeout(() => this.props.history.push('/userProfile'), 1000);
         })
         .catch((error) => {
           if (error.response.status === 401) {

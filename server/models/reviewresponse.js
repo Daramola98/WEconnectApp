@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
 
     reviewresponse.belongsTo(models.User, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      as: 'user'
     });
   };
   return reviewresponse;

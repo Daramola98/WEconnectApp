@@ -259,7 +259,7 @@ export default class BusinessProfile extends React.Component {
                           </span>
                           <p>
                             <a className="waves-effect waves-light btn blue lighten-1">
-                              {business.businessOwner}
+                              {business.user ? business.user.username : null}
                             </a>
                           </p>
                         </li>
@@ -348,7 +348,7 @@ export default class BusinessProfile extends React.Component {
                     {this.state.reviewResponses.length > 0 ?
                      this.state.reviewResponses.map((response, i) => (
                           <li key={response.id} className="collection-item">
-                            <span className="blue-text ligthen-1">{response.reviewer}</span>
+                            <span className="blue-text ligthen-1">{response.user.username}</span>
                             <p>{response.message}</p>
                             <p><span className="timestamp align-right">{moment(response.createdAt).calendar()}</span></p>
                             <br/>

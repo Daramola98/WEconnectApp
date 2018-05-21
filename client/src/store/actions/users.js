@@ -46,6 +46,9 @@ export const signUp = userDetails => dispatch =>
 export const updateUser = userDetails => dispatch =>
   axios.put('api/v1/auth/user', userDetails)
     .then((response) => {
+      const { token } = response.data;
+      localStorage.setItem('weConnectToken', token);
+      setAuthorizationHeader(token);
       dispatch(updatesUser(response.data.updatedUserDetails));
     });
 

@@ -187,7 +187,8 @@ const business = (sequelize, DataTypes) => {
     });
     Business.belongsTo(models.User, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      as: 'user'
     });
   };
   return Business;

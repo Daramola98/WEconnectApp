@@ -4,6 +4,7 @@ import Loader from 'react-loader';
 import { Input, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
 import PropTypes from 'prop-types';
 import Business from '../presentational/Business';
+import spinner from '../../../../public/images/loader.gif';
 
 /**
  * Class Representing a BusinessListing React Component
@@ -23,7 +24,7 @@ export default class BusinessListing extends React.Component {
       search: '',
       searchBy: 'name',
       advancedSearch: '',
-      loader: true,
+      loader: 'show',
       location: 'null',
       category: 'null',
       currentPage: 1,
@@ -144,7 +145,8 @@ export default class BusinessListing extends React.Component {
    * @return {void} no return or void
    */
     componentDidMount() {
-      this.props.fetchBusinesses(this.state.currentPage);
+      this.props.fetchBusinesses(this.state.currentPage)
+        .then(() => this.setState({ loader: 'hide' }));
       this.props.fetchCategories();
     }
 
@@ -188,6 +190,27 @@ export default class BusinessListing extends React.Component {
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
+      const options = {
+        lines: 13,
+        length: 20,
+        width: 10,
+        radius: 30,
+        scale: 1.00,
+        corners: 1,
+        color: '#000',
+        opacity: 0.25,
+        rotate: 0,
+        direction: 1,
+        speed: 1,
+        trail: 60,
+        fps: 20,
+        zIndex: 2e9,
+        top: '50%',
+        left: '50%',
+        shadow: false,
+        hwaccel: false,
+        position: 'absolute'
+      };
       return <div className="">
       <div className="row">
           <div id="searchbusiness" className="col s6">
@@ -247,11 +270,16 @@ export default class BusinessListing extends React.Component {
           </div>
           <hr/>
           <div id="businessTable" className="row">
+          <div>
+            <img className={this.state.loader} src={spinner} />
+          </div>
+          <div className={!this.state.loader}>
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
                   <h1>NO BUSINESSES</h1>
                 </div>}
+          </div>
             {/* <table id="businessListing" className="bordered highlight centered">
               <thead>
                 <tr>
