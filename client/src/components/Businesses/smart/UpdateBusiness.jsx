@@ -1,8 +1,8 @@
 import React from 'react';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import BusinessUpdateForm from '../../Forms/BusinessUpdateForm';
-import FormErrors from '../../Messages/presentational/FormErrors';
+import BusinessUpdateForm from '../../Forms/BusinessUpdateForm.jsx';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
 
 /**
  * Class Representing React Component UpdateBusiness

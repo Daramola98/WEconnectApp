@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Loader from 'react-loader';
 import { Input, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
 import PropTypes from 'prop-types';
-import Business from '../presentational/Business';
+import Business from '../presentational/Business.jsx';
 import spinner from '../../../../public/images/loader.gif';
 
 /**
@@ -273,7 +273,7 @@ export default class BusinessListing extends React.Component {
           <div>
             <img className={this.state.loader} src={spinner} />
           </div>
-          <div className={!this.state.loader}>
+          <div className={this.state.loader === 'show' ? 'hide' : 'show'}>
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import LoginForm from '../Forms/LoginForm';
+import LoginForm from '../Forms/LoginForm.jsx';
 
 /**
  * A class to represent the React Login Component

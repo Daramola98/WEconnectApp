@@ -11,9 +11,7 @@ import WeConnectStore from './src/store/store';
 import { userLoggedIn } from './src/store/actions/auth';
 import setAuthorizationHeader from './src/utils/setAuthorizationHeader';
 
-import NotFound from './src/components/General/NotFound';
-
-import App from './src/components/App';
+import App from './src/components/App.jsx';
 
 import style from './public/styles/index.scss';
 

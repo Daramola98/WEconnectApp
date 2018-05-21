@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const Review = props => (
   <li>
     <i className="material-icons prefix">account_circle</i>
-      <span className="blue-text reviewerId">{props.review.user.username}</span>
+      <span className="blue-text reviewerId">{props.review.reviewer.username}</span>
     <p>
       {props.review.review} <span className="timestamp align-right">{moment(props.review.createdAt).calendar()}</span>
     </p>

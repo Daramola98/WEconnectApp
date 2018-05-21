@@ -8,14 +8,3 @@ export const businessReviewMessage = 'Business Review Added';
 export const reviewFoundMessage = 'Reviews have been found';
 export const businessRegisterMessage = 'Business has been registered successfully';
 
-// export default {
-//   businessDeletedMessage,
-//   businessesFoundMessage,
-//   businessNotFoundInCategoryMessage,
-//   businessNotFoundInLocationMessage,
-//   businessNotFoundMessage,
-//   businessReviewMessage,
-//   reviewFoundMessage,
-//   businessFoundMessage,
-//   businessRegisterMessage
-// };

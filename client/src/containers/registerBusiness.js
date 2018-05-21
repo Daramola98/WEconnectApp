@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import RegisterBusiness from '../components/Businesses/smart/RegisterBusiness';
+import RegisterBusiness from '../components/Businesses/smart/RegisterBusiness.jsx';
 import { createBusiness, fetchCategories } from '../store/actions/businesses';
 import { logout } from '../store/actions/auth';
 

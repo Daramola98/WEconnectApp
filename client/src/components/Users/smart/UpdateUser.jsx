@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import FormErrors from '../../Messages/presentational/FormErrors';
-import UpdateUserForm from '../../Forms/UpdateUserForm';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
+import UpdateUserForm from '../../Forms/UpdateUserForm.jsx';
 
 /**
  * Class Representing React Component UpdateUser

@@ -1,6 +1,6 @@
 import React from 'react';
-import GuestNavBar from '../presentational/GuestNavBar';
-import UserNavBar from '../presentational/UserNavBar';
+import GuestNavBar from '../presentational/GuestNavBar.jsx';
+import UserNavBar from '../presentational/UserNavBar.jsx';
 
 /**
  * Class Representing React Component Header

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UserProfile from '../components/Users/smart/UserProfile';
+import UserProfile from '../components/Users/smart/UserProfile.jsx';
 import { isLoggedIn, logout } from '../store/actions/auth';
 import { getUserBusinesses, fetchUserBusinessesFailed } from '../store/actions/users';
 import { deleteBusiness } from '../store/actions/businesses';

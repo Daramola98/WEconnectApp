@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Header from '../components/NavBar/smart/Header';
+import Header from '../components/NavBar/smart/Header.jsx';
 import { logout } from '../store/actions/auth';
 
 const mapStateToProps = state => ({

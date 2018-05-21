@@ -3,10 +3,10 @@ import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import moment from 'moment';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import Review from '../../Review/presentational/Review';
-import FormErrors from '../../Messages/presentational/FormErrors';
-import BusinessReviewForm from '../../Forms/BusinessReviewForm';
-import ReviewResponseForm from '../../Forms/ReviewResponseForm';
+import Review from '../../Review/presentational/Review.jsx';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
+import BusinessReviewForm from '../../Forms/BusinessReviewForm.jsx';
+import ReviewResponseForm from '../../Forms/ReviewResponseForm.jsx';
 
 /**
  * Class Representing React Component BusinessProfile
@@ -259,7 +259,7 @@ export default class BusinessProfile extends React.Component {
                           </span>
                           <p>
                             <a className="waves-effect waves-light btn blue lighten-1">
-                              {business.user ? business.user.username : null}
+                              {business.businessOwner ? business.businessOwner.username : null}
                             </a>
                           </p>
                         </li>
@@ -348,7 +348,7 @@ export default class BusinessProfile extends React.Component {
                     {this.state.reviewResponses.length > 0 ?
                      this.state.reviewResponses.map((response, i) => (
                           <li key={response.id} className="collection-item">
-                            <span className="blue-text ligthen-1">{response.user.username}</span>
+                            <span className="blue-text ligthen-1">{response.reviewer.username}</span>
                             <p>{response.message}</p>
                             <p><span className="timestamp align-right">{moment(response.createdAt).calendar()}</span></p>
                             <br/>

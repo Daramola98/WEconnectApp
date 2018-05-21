@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import alertify from 'alertifyjs';
-import FormErrors from '../Messages/presentational/FormErrors';
-import SignUpForm from '../Forms/SignUpForm';
+import FormErrors from '../Messages/presentational/FormErrors.jsx';
+import SignUpForm from '../Forms/SignUpForm.jsx';
 
 /**
  * A class to represent the React SignUp Component

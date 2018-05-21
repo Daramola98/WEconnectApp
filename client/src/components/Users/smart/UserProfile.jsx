@@ -3,8 +3,8 @@ import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import Business from '../../Businesses/presentational/Business';
-import FilterBusiness from '../../Forms/FilterBusiness';
+import Business from '../../Businesses/presentational/Business.jsx';
+import FilterBusiness from '../../Forms/FilterBusiness.jsx';
 
 /**
  * Class Representing React Component UserProfile
