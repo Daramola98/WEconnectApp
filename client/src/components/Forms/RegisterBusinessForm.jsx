@@ -30,6 +30,8 @@ export default class RegisterBusinessForm extends React.Component {
         telephoneNumber: '',
         homeNumber: ''
       },
+      imagePreviewUrl: '',
+      submitClicked: false
     };
   }
 
@@ -63,11 +65,19 @@ export default class RegisterBusinessForm extends React.Component {
     * @return {null} updates the state of the RegisterBusinessForm component
     * @memberof RegisterBusinessForm Component
     */
-  onFileChange = event =>
-    this.setState({
-      ...this.state,
-      business: { ...this.state.business, businessImage: event.target.files[0] }
-    });
+  onFileChange = (event) => {
+    const reader = new FileReader();
+    const file = event.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        ...this.state,
+        business: { ...this.state.business, businessImage: file },
+        imagePreviewUrl: reader.result
+      });
+    };
+    reader.readAsDataURL(file);
+  }
 
   /**
       * onSubmit Event handler callback for RegisterBusiness form
@@ -121,6 +131,13 @@ export default class RegisterBusinessForm extends React.Component {
 
     const { business } = this.state;
 
+    const { imagePreviewUrl } = this.state;
+    let imagePreview = null;
+    if (imagePreviewUrl) {
+      imagePreview = (<img className="responsive preview" src={imagePreviewUrl} />);
+    } else {
+      imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+    }
     return <div className="row">
         <form onSubmit={this.handleRegisterBusinessSubmit}>
           <div className="row">
@@ -175,6 +192,9 @@ export default class RegisterBusinessForm extends React.Component {
               <input type="file" id="businessImage" name="businessImage" accept="image/jpeg,image/png" onChange={this.onFileChange} className="validate" />
               <p style={{ marginLeft: '45px', marginTop: '10px' }}>Max file Size is 3MB</p>
             </div>
+          </div>
+          <div className="imgPreview">
+            {imagePreview}
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l6">

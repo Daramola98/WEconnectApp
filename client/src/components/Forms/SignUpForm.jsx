@@ -20,6 +20,7 @@ export default class SignUpForm extends React.Component {
         telephoneNumber: '',
         homeNumber: '',
       },
+      submitClicked: false,
       errors: {
         confirmPassError: null
       }

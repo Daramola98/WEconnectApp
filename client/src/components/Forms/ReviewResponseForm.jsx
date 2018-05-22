@@ -13,6 +13,7 @@ export default class ReviewResponseForm extends React.Component {
     response: {
       message: ''
     },
+    submitClicked: false
   }
 
   /**

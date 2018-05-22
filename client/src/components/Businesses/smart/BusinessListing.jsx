@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Loader from 'react-loader';
 import { Input, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
 import PropTypes from 'prop-types';
 import Business from '../presentational/Business.jsx';
-import spinner from '../../../../public/images/loader.gif';
+import Loader from '../../General/Loader.jsx';
 
 /**
  * Class Representing a BusinessListing React Component
@@ -24,7 +23,7 @@ export default class BusinessListing extends React.Component {
       search: '',
       searchBy: 'name',
       advancedSearch: '',
-      loader: 'show',
+      loader: 'false',
       location: 'null',
       category: 'null',
       currentPage: 1,
@@ -145,8 +144,9 @@ export default class BusinessListing extends React.Component {
    * @return {void} no return or void
    */
     componentDidMount() {
+      this.setState({ loader: true });
       this.props.fetchBusinesses(this.state.currentPage)
-        .then(() => this.setState({ loader: 'hide' }));
+        .then(() => this.setState({ loader: false }));
       this.props.fetchCategories();
     }
 
@@ -190,27 +190,27 @@ export default class BusinessListing extends React.Component {
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
-      const options = {
-        lines: 13,
-        length: 20,
-        width: 10,
-        radius: 30,
-        scale: 1.00,
-        corners: 1,
-        color: '#000',
-        opacity: 0.25,
-        rotate: 0,
-        direction: 1,
-        speed: 1,
-        trail: 60,
-        fps: 20,
-        zIndex: 2e9,
-        top: '50%',
-        left: '50%',
-        shadow: false,
-        hwaccel: false,
-        position: 'absolute'
-      };
+      // const options = {
+      //   lines: 13,
+      //   length: 20,
+      //   width: 10,
+      //   radius: 30,
+      //   scale: 1.00,
+      //   corners: 1,
+      //   color: '#000',
+      //   opacity: 0.25,
+      //   rotate: 0,
+      //   direction: 1,
+      //   speed: 1,
+      //   trail: 60,
+      //   fps: 20,
+      //   zIndex: 2e9,
+      //   top: '50%',
+      //   left: '50%',
+      //   shadow: false,
+      //   hwaccel: false,
+      //   position: 'absolute'
+      // };
       return <div className="">
       <div className="row">
           <div id="searchbusiness" className="col s6">
@@ -269,34 +269,13 @@ export default class BusinessListing extends React.Component {
         </div>
           </div>
           <hr/>
-          <div id="businessTable" className="row">
-          <div>
-            <img className={this.state.loader} src={spinner} />
-          </div>
-          <div className={this.state.loader === 'show' ? 'hide' : 'show'}>
+          {this.state.loader ? <Loader size={'100px'}/> : <div>
+            <div id="businessTable" className="row">
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
                   <h1>NO BUSINESSES</h1>
                 </div>}
-          </div>
-            {/* <table id="businessListing" className="bordered highlight centered">
-              <thead>
-                <tr>
-                  <th>Business Name</th>
-                  <th>Business Category</th>
-                  <th>Location</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
-                  <Business business={business} key={i} />
-                )) : <tr>
-                  <td colSpan="3">NO BUSINESSES</td>
-                </tr>}
-              </tbody>
-            </table> */}
           </div>
           <Pagination
            className={this.state.businessPagination}
@@ -310,6 +289,7 @@ export default class BusinessListing extends React.Component {
             activePage={this.state.searchCurrentPage} maxButtons={5}
             onSelect = {this.onSearchChangePage}
              />
+            </div> }
         </div>;
     }
 }

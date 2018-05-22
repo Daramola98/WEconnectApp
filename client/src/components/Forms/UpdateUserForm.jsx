@@ -18,6 +18,7 @@ export default class UpdateUserForm extends React.Component {
       telephoneNumber: '',
       homeNumber: ''
     },
+    submitClicked: false
   }
 
   /**

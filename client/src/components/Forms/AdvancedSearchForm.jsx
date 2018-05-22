@@ -18,6 +18,7 @@ export default class BusinessListing extends React.Component {
     this.state = {
       searchBy: 'name',
       advancedSearch: '',
+      submitClicked: false
     };
   }
 
@@ -65,6 +66,7 @@ export default class BusinessListing extends React.Component {
     */
     handleSearchSubmit = (event) => {
       event.preventDefault();
+
       this.setState({ businessPagination: 'hide', searchPagination: '' });
       this.props.searchBusiness(
         this.state.searchBy,
