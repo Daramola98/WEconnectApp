@@ -12,7 +12,8 @@ export default class BusinessReviewForm extends React.Component {
   state = {
     reviewDetails: {
       review: ''
-    }
+    },
+    submitClicked: false
   }
 
   /**

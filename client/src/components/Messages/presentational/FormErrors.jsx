@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Errors from './Errors';
+import Errors from './Errors.jsx';
 
 const FormErrors = props => (
     <div>

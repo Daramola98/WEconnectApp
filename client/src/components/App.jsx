@@ -11,11 +11,11 @@ import UpdateBusiness from '../containers/updateBusiness';
 import UpdateUser from '../containers/updateUser';
 import ContactUs from '../containers/contactUs';
 
-import AboutUs from '../components/Home/presentational/AboutUs';
-import HowItWorks from '../components/Home/presentational/HowItWorks';
-import Home from '../components/Home/presentational/Home';
-import Footer from '../components/General/Footer';
-import NotFound from '../components/General/NotFound';
+import AboutUs from '../components/Home/presentational/AboutUs.jsx';
+import HowItWorks from '../components/Home/presentational/HowItWorks.jsx';
+import Home from '../components/Home/presentational/Home.jsx';
+import Footer from '../components/General/Footer.jsx';
+import NotFound from '../components/General/NotFound.jsx';
 
 /**
  *

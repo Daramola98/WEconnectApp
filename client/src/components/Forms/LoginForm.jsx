@@ -11,7 +11,8 @@ export default class LoginForm extends React.Component {
       credentials: {
         email: '',
         password: ''
-      }
+      },
+      submitClicked: false
     }
 
     /**

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ContactUs from '../components/Home/smart/ContactUs';
+import ContactUs from '../components/Home/smart/ContactUs.jsx';
 import { postContactUs } from '../store/actions/users';
 
 const mapDispatchToProps = dispatch => ({

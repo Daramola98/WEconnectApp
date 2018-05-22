@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import UpdateBusiness from '../components/Businesses/smart/UpdateBusiness';
+import UpdateBusiness from '../components/Businesses/smart/UpdateBusiness.jsx';
 import { updateBusiness, fetchCategories } from '../store/actions/businesses';
 import { logout } from '../store/actions/auth';
 

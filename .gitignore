@@ -3,3 +3,4 @@
 /coverage
 .env
 /client/node_modules
+/uploads

@@ -32,6 +32,8 @@ export default class BusinessUpdateForm extends React.Component {
         telephoneNumber: '',
         homeNumber: ''
       },
+      imagePreviewUrl: '',
+      submitClicked: false
     }
 
   /**
@@ -54,11 +56,19 @@ export default class BusinessUpdateForm extends React.Component {
     * @return {null} updates the state of the RegisterBusinessForm component
     * @memberof RegisterBusinessForm Component
     */
-  onFileChange = event =>
-    this.setState({
-      ...this.state,
-      business: { ...this.state.business, businessImage: event.target.files[0] }
-    });
+   onFileChange = (event) => {
+     const reader = new FileReader();
+     const file = event.target.files[0];
+
+     reader.onloadend = () => {
+       this.setState({
+         ...this.state,
+         business: { ...this.state.business, businessImage: file },
+         imagePreviewUrl: reader.result
+       });
+     };
+     reader.readAsDataURL(file);
+   }
 
     /**
       * onSubmit Event handler callback for BusinessUpdateForm form
@@ -69,6 +79,7 @@ export default class BusinessUpdateForm extends React.Component {
       */
     handleUpdateSubmit = (event) => {
       event.preventDefault();
+      // this.setState({ ...this.state, submitClicked: true });
       const businessDetails = {};
       const updateBusinessData = new FormData();
       const businessKeys = Object.keys(this.state.business);
@@ -103,6 +114,13 @@ export default class BusinessUpdateForm extends React.Component {
 
       const { business } = this.state;
 
+      const { imagePreviewUrl } = this.state;
+      let imagePreview = null;
+      if (imagePreviewUrl) {
+        imagePreview = (<img className="responsive preview" src={imagePreviewUrl} />);
+      } else {
+        imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+      }
       return (<div className="row">
                 <form onSubmit={this.handleUpdateSubmit}>
                   <div className="row">
@@ -153,6 +171,9 @@ export default class BusinessUpdateForm extends React.Component {
                       <p style={{ marginLeft: '45px', marginTop: '10px' }}>Max file Size is 3MB</p>
                     </div>
                   </div>
+                  <div className="imgPreview">
+                    {imagePreview}
+                  </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">location_on</i>
@@ -186,7 +207,7 @@ export default class BusinessUpdateForm extends React.Component {
                   </div>
                   <br />
                   <div className="input-field">
-                    <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
+                    <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" disabled={this.state.submitClicked} onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
                       UPDATE BUSINESS DETAILS
                     </button>
                   </div>

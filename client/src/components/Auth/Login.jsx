@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
-import LoginForm from '../Forms/LoginForm';
+import LoginForm from '../Forms/LoginForm.jsx';
 
 /**
  * A class to represent the React Login Component
@@ -49,7 +49,7 @@ export default class Login extends React.Component {
     */
     render() {
       const { message } = this.state;
-      return (<div className="row container">
+      return (<div className="row loginForm container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
               <div className="card-action blue lighten-1 white-text center">

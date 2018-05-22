@@ -39,7 +39,6 @@ export default class Businesses {
       location: req.body.location,
       address: req.body.address,
       userId: req.userData.userId,
-      businessOwner: req.userData.username,
       description: req.body.description
     };
     return Business
@@ -55,7 +54,6 @@ export default class Businesses {
           homeNumber: business.homeNumber,
           location: business.location,
           address: business.address,
-          businessAddedBy: business.businessOwner,
           description: business.description
         };
         res.status(201)
@@ -117,7 +115,14 @@ export default class Businesses {
       .findOne({
         where: {
           id: req.params.businessId
-        }
+        },
+        include: [
+          {
+            model: User,
+            as: 'businessOwner',
+            attributes: ['username']
+          }
+        ]
       })
       .then((business) => {
         if (business) {
@@ -125,7 +130,7 @@ export default class Businesses {
         }
         res.status(404).json(businessNotFoundMessage);
       })
-      .catch(err => res.status(500).json(serverErrorMessage.message));
+      .catch(() => res.status(500).json(serverErrorMessage.message));
   }
 
   /**
@@ -169,7 +174,12 @@ export default class Businesses {
       .findOne({
         where: {
           id: req.params.businessId
-        }
+        },
+        include: [{
+          model: User,
+          as: 'businessOwner',
+          attributes: ['username']
+        }]
       })
       .then((business) => {
         if (!business) {
@@ -199,7 +209,7 @@ export default class Businesses {
               homeNumber: updatedBusiness.homeNumber,
               location: updatedBusiness.location,
               address: updatedBusiness.address,
-              businessAddedBy: updatedBusiness.businessOwner,
+              businessAddedBy: updatedBusiness.businessOwner.username,
               description: updatedBusiness.description
             };
             res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
@@ -257,7 +267,6 @@ export default class Businesses {
     const businessReviewDetails = {
       reviewerId: req.userData.userId,
       review: req.body.review,
-      reviewer: req.userData.username,
       businessId: req.params.businessId
     };
     return Business
@@ -306,7 +315,6 @@ export default class Businesses {
     const businessReviewResponse = {
       userId: req.userData.userId,
       message: req.body.message,
-      reviewer: req.userData.username,
       reviewId: req.params.reviewId
     };
     return BusinessReview
@@ -359,7 +367,18 @@ export default class Businesses {
               include: [{
                 model: reviewresponse,
                 as: 'responses',
-              }],
+                include: [{
+                  model: User,
+                  as: 'reviewer',
+                  attributes: ['username']
+                }]
+              },
+              {
+                model: User,
+                as: 'reviewer',
+                attributes: ['username']
+              }
+              ],
               order: [
                 ['createdAt', 'ASC'],
               ],

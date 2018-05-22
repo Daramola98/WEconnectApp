@@ -1,8 +1,8 @@
 import React from 'react';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import FormErrors from '../../Messages/presentational/FormErrors';
-import ContactUsForm from '../../Forms/ContactUsForm';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
+import ContactUsForm from '../../Forms/ContactUsForm.jsx';
 
 /**
  * Class Representing React Component ContactUs

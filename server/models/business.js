@@ -28,10 +28,6 @@ const business = (sequelize, DataTypes) => {
         // }
       }
     },
-    businessOwner: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     businessImage: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -187,7 +183,8 @@ const business = (sequelize, DataTypes) => {
     });
     Business.belongsTo(models.User, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      as: 'businessOwner'
     });
   };
   return Business;

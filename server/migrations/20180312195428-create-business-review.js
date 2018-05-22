@@ -15,10 +15,6 @@ module.exports = {
         key: 'id'
       }
     },
-    reviewer: {
-      type: Sequelize.STRING,
-      allowNull: false
-    },
     review: {
       allowNull: false,
       type: Sequelize.TEXT,

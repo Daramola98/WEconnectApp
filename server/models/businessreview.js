@@ -10,10 +10,6 @@ const businessReview = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       allowNull: false
     },
-    reviewer: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     review: {
       type: DataTypes.TEXT,
       allowNull: false,
@@ -43,6 +39,7 @@ const businessReview = (sequelize, DataTypes) => {
 
     BusinessReview.belongsTo(models.User, {
       foreignKey: 'reviewerId',
+      as: 'reviewer',
       onDelete: 'CASCADE'
     });
   };

@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import FormErrors from '../../Messages/presentational/FormErrors';
-import UpdateUserForm from '../../Forms/UpdateUserForm';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
+import UpdateUserForm from '../../Forms/UpdateUserForm.jsx';
 
 /**
  * Class Representing React Component UpdateUser
@@ -40,9 +40,7 @@ export default class UpdateUser extends React.Component {
         .then(() => {
           alertify.set('notifier', 'position', 'top-right');
           alertify.success('Updated Successfully');
-          alertify.warning('Redirecting to login page!, You need to login to view changes made');
-          this.props.logout();
-          setTimeout(() => this.props.history.push('/login'), 4000);
+          setTimeout(() => this.props.history.push('/userProfile'), 1000);
         })
         .catch((error) => {
           if (error.response.status === 401) {

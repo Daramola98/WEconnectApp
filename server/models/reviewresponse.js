@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
-    reviewer: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
     message: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -32,7 +28,8 @@ module.exports = (sequelize, DataTypes) => {
 
     reviewresponse.belongsTo(models.User, {
       foreignKey: 'userId',
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
+      as: 'reviewer'
     });
   };
   return reviewresponse;

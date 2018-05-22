@@ -16,6 +16,7 @@ export default class ContactUs extends React.Component {
         email: '',
         message: '',
       },
+      submitClicked: false
     }
 
   /**

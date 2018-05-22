@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HomeImageSlider from './HomeImageSlider';
+import HomeImageSlider from './HomeImageSlider.jsx';
 
 const Home = props => (
         <main>

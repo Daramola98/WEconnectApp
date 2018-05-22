@@ -1,8 +1,8 @@
 import React from 'react';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
-import RegisterBusinessForm from '../../Forms/RegisterBusinessForm';
-import FormErrors from '../../Messages/presentational/FormErrors';
+import RegisterBusinessForm from '../../Forms/RegisterBusinessForm.jsx';
+import FormErrors from '../../Messages/presentational/FormErrors.jsx';
 
 
 /**

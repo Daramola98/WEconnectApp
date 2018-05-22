@@ -1,3 +1,7 @@
+$break-small: 320px;
+$break-medium: 680px;
+$break-large: 1200px;
+
 .wrapper {
     display: flex;
     min-height: 100vh;
@@ -46,6 +50,9 @@ li.active {
 .radio-btn {
     margin-top: 15px
 }
+.loginForm {
+    margin-top: 50px
+}
 .confirmDelete, .replyReview {
     margin-right: 15px
 }
@@ -68,9 +75,53 @@ li.active {
 }
 .loader {
     position: fixed;
-    top: 100%;
-    left: 100%;
-}
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    z-index: 9999;
+  }
+  .imgPreview {
+    text-align: center;
+    margin-left: 5px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 300px;
+    @media (min-width: 1200px) { 
+        width: 500px;
+     }
+/* Portrait tablet to landscape and desktop */
+    @media (min-width: 768px) and (max-width: 979px) {
+        width: 300px; 
+    }
+
+/* Landscape phone to portrait tablet */
+    @media (max-width: 767px) {
+        width: 250px; 
+    }
+
+/* Landscape phones and down */
+    @media (max-width: 480px) { 
+        margin-left: 0px;
+        width: 250px;
+    }
+    @media (max-width: 320px) { 
+        margin-left: 0px;
+        width: 250px;
+    }
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 5px solid white;
+    border-bottom: 5px solid white;
+  }
+  .preview {
+      height: 300px;
+      @media (max-width: 360px) { 
+        width: 250px;
+    }
+      width: 300px
+  }
 // ul.pagination {
 //     margin-left: 300px;
 // }
