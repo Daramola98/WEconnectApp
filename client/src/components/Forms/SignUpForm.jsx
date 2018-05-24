@@ -146,7 +146,7 @@ export default class SignUpForm extends React.Component {
 
             <br />
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" style={{ width: `${100}%` }}>
                 CREATE ACCOUNT
               </button>
             </div>

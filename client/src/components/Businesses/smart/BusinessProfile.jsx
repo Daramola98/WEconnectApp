@@ -151,7 +151,7 @@ export default class BusinessProfile extends React.Component {
     return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
-            <div className="card-action blue lighten-1 white-text center">
+            <div className="card-action blue-grey darken-2 white-text center">
               <h3>Business Profile</h3>
             </div>
           <div className="card-image">
@@ -165,7 +165,7 @@ export default class BusinessProfile extends React.Component {
                     <div id="businessInfo" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             business_center
                           </i>
                           <span className="title">
@@ -176,7 +176,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             email
                           </i>
                           <span className="title">
@@ -187,7 +187,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             phone
                           </i>
                           <span className="title">
@@ -198,7 +198,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             phone
                           </i>
                           <span className="title">
@@ -209,7 +209,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             business
                           </i>
                           <span className="title">
@@ -220,7 +220,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             location_on
                           </i>
                           <span className="title">
@@ -231,7 +231,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             directions
                           </i>
                           <span className="title">
@@ -242,7 +242,7 @@ export default class BusinessProfile extends React.Component {
                           </p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             business_center
                           </i>
                           <span className="title">
@@ -251,14 +251,14 @@ export default class BusinessProfile extends React.Component {
                           <p>{business.description}</p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2">
                             business_center
                           </i>
                           <span className="title">
                             <h5>Business Owner</h5>
                           </span>
                           <p>
-                            <a className="waves-effect waves-light btn blue lighten-1">
+                            <a className="waves-effect waves-light btn blue-grey darken-2">
                               {business.businessOwner ? business.businessOwner.username : null}
                             </a>
                           </p>
@@ -277,20 +277,19 @@ export default class BusinessProfile extends React.Component {
                           <div className="card-content">
                             <div>
                               <h5>
-                                <span className="blue-text text-lighten-1">
+                                <span className="blue-grey-text darken-2">
                                   Previous Reviews
                                 </span>
                               </h5>
                             </div>
                             <div>
-                              <ul>
+                              <ul className="collection">
                                 {this.props.businessProfile.reviews.length > 0 ?
                                  this.props.businessProfile.reviews.map((review, i) => (
-                                      <div key={review.id}>
-                                        <Review review={review}>
+                                        <Review key={review.id} review={review}>
                                           <div className="align-right">
                                             <a
-                                              className="blue-text"
+                                              className="blue-grey-text darken-2"
                                               onClick={() => {
                                                 this.setState({
                                                   reviewResponses:
@@ -301,15 +300,15 @@ export default class BusinessProfile extends React.Component {
                                                 $('#prevReplies').modal('open');
                                               }}
                                             >
-                                              <span className="new badge blue">
-                                                {review.responses.length}
+                                              <span className="new badge blue-grey darken-2" data-badge-caption="new response(s)">
+                                               {review.responses.length}
                                               </span>
-                                              <u>View Previous Replies</u>
+                                              {/* <u>View Previous Replies</u> */}
                                             </a>
                                           </div>
                                           <div className="align-right">
                                             <a
-                                              className="blue-text"
+                                              className="blue-grey-text darken-2"
                                               onClick={() => {
                                                 this.setState({
                                                   reviewId: review.id,
@@ -323,14 +322,13 @@ export default class BusinessProfile extends React.Component {
                                             </a>
                                           </div>
                                         </Review>
-                                      </div>
-                                    )) : <li className="blue-text">
-                                    NO REVIEWS
+                                    )) : <li className="collection-item center blue-grey-text darken-2">
+                                    <h3>NO REVIEWS</h3>
                                   </li>}
                               </ul>
                               <br />
                               <Pagination
-                               key={Date.now()} items={Math.ceil(reviewsCount / 10) || 0}
+                               key={Date.now()} items={Math.ceil(reviewsCount / 12) || 0}
                                activePage={this.state.currentPage}
                                maxButtons={5} onSelect={this.onPageChange} />
                             </div>
@@ -343,12 +341,12 @@ export default class BusinessProfile extends React.Component {
                 <Modal id="replyReview" header={'REPLY TO REVIEW'}>
                   <ReviewResponseForm submit={this.onSubmitResponse} />
                 </Modal>
-                <Modal id="prevReplies" header={<span className="blue-text ligthen-1">PREVIOUS REPLIES</span>}>
+                <Modal id="prevReplies" header={<span className="blue-grey-text darken-2">PREVIOUS REPLIES</span>}>
                   <ul className="collection">
                     {this.state.reviewResponses.length > 0 ?
                      this.state.reviewResponses.map((response, i) => (
                           <li key={response.id} className="collection-item">
-                            <span className="blue-text ligthen-1">{response.reviewer.username}</span>
+                            <span className="blue-grey-text darken-2">{response.reviewer.username}</span>
                             <p>{response.message}</p>
                             <p><span className="timestamp align-right">{moment(response.createdAt).calendar()}</span></p>
                             <br/>

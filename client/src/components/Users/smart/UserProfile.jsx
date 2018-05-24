@@ -98,10 +98,10 @@ export default class UserProfile extends React.Component {
         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
 
       return (
-      <div className="row container">
+      <div className="row">
          <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
-            <div className="card-action blue lighten-1 white-text center">
+            <div className="card-action blue-grey darken-2 white-text center">
               <h3>My Profile</h3>
             </div>
             <div className="card-content">
@@ -111,7 +111,7 @@ export default class UserProfile extends React.Component {
                     <div id="personal_info" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2 ">
                             account_circle
                           </i>
                           <span className="title">
@@ -120,7 +120,7 @@ export default class UserProfile extends React.Component {
                           <p>{`${firstname} ${lastname}`}</p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2 ">
                             account_circle
                           </i>
                           <span className="title">
@@ -129,7 +129,7 @@ export default class UserProfile extends React.Component {
                           <p>{`${username}`}</p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2 ">
                             email
                           </i>
                           <span className="title">
@@ -138,7 +138,7 @@ export default class UserProfile extends React.Component {
                           <p>{email}</p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2 ">
                             phone
                           </i>
                           <span className="title">
@@ -147,7 +147,7 @@ export default class UserProfile extends React.Component {
                           <p>{telephoneNumber}</p>
                         </li>
                         <li className="collection-item avatar">
-                          <i className="material-icons circle blue lighten-1">
+                          <i className="material-icons circle blue-grey darken-2 ">
                             phone
                           </i>
                           <span className="title">
@@ -163,17 +163,17 @@ export default class UserProfile extends React.Component {
                       <FilterBusiness
                        search={this.state.search} onSearchChange={this.onSearchChange}/>
                     </div>
-                    <div id="businesses" className="col s12 m12 l12 ">
+                    <div id="businesses" className="col offset-l2 m12 s12 ">
                           {filterBusinesses.length > 0 ?
                            filterBusinesses.map((business, i) => (
                                 <Business business={business} key={i}>
                                     <Link
-                                     className="blue-text"
+                                     className="blue-grey-text"
                                       to={`/updateBusiness/${business.id}`}
                                     >
                                       UPDATE
                                     </Link>
-                                    <a className="waves-effect blue-text waves-light btn-small" onClick={() => {
+                                    <a className="waves-effect blue-grey-text darken-2  waves-light btn-small" onClick={() => {
                                       businessId = business.id;
                                       $('#deleteBusiness').modal('open');
                                     }}>

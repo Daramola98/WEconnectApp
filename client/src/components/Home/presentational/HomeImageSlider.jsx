@@ -8,7 +8,7 @@ const HomeImageSlider = props => (
     >
   </Slide>
   <Slide
-    src="https://t3.ftcdn.net/jpg/00/73/16/20/500_F_73162042_tnImPS73iJHMGRVUhRu0x6ZBD40MKhb4.jpg"
+    src="/images/tokyo-at-night.jpg"
     placement="left">
     <span className="black-text">Connect your business with our various users</span>
   </Slide>

@@ -35,17 +35,17 @@ class App extends React.Component {
       <div className="main">
       <Switch>
         <Route exact path='/' component={Home}/>
-        <Route path = '/aboutUs' component={AboutUs}/>
-        <Route path = '/businessListing' component={BusinessList}/>
-        <Route path = '/businessProfile/:id' component={BusinessProfile}/>
-        <Route path = '/userProfile' component={UserProfile}/>
-        <Route path = '/contactUs' component={ContactUs}/>
-        <Route path = '/howItWorks' component={HowItWorks}/>
-        <Route path = '/login' component={Login}/>
-        <Route path = '/signUp' component={SignUp}/>
-        <Route path = '/registerBusiness' component={RegisterBusiness}/>
-        <Route path = '/updateBusiness/:id' component={UpdateBusiness}/>
-        <Route path = '/updateUserProfile' component={UpdateUser}/>
+        <Route exact path = '/aboutUs' component={AboutUs}/>
+        <Route exact path = '/businessListing' component={BusinessList}/>
+        <Route exact path = '/businessProfile/:id' component={BusinessProfile}/>
+        <Route exact path = '/userProfile' component={UserProfile}/>
+        <Route exact path = '/contactUs' component={ContactUs}/>
+        <Route exact path = '/howItWorks' component={HowItWorks}/>
+        <Route exact path = '/login' component={Login}/>
+        <Route exact path = '/signUp' component={SignUp}/>
+        <Route exact path = '/registerBusiness' component={RegisterBusiness}/>
+        <Route exact path = '/updateBusiness/:id' component={UpdateBusiness}/>
+        <Route exact path = '/updateUserProfile' component={UpdateUser}/>
         <Route component={NotFound}/>
       </Switch>
     </div>

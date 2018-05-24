@@ -35,6 +35,7 @@ export default class UpdateBusiness extends React.Component {
    */
     componentDidMount() {
       this.props.fetchCategories();
+      this.props.fetchBusiness(this.props.match.params.id);
     }
 
     /**
@@ -80,16 +81,17 @@ export default class UpdateBusiness extends React.Component {
     */
     render() {
       const { categories } = this.props.businesses;
+      const { business } = this.props.businessProfile;
       const { errors } = this.state;
       return (<div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
+              <div className="card-action blue-grey darken-2 white-text center">
                 <h3>Update a Business</h3>
               </div>
               <div className="card-content">
               <FormErrors errors={errors} />
-              <BusinessUpdateForm
+              <BusinessUpdateForm business={business}
                categories={categories} submit={this.onSubmit}/>
             </div>
           </div>

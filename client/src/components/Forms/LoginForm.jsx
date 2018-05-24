@@ -63,7 +63,7 @@ export default class LoginForm extends React.Component {
             </div>
             <br />
             <div className="form-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-3" style={{ width: `${100}%` }}>
                 Login
               </button>
             </div>

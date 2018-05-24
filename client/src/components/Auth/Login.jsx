@@ -52,8 +52,8 @@ export default class Login extends React.Component {
       return (<div className="row loginForm container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
-                <h3>Login to WEconnect</h3>
+              <div className="card-action blue-grey darken-3 white-text center">
+                <h3>Login</h3>
               </div>
               <div className="card-content">
                 {message ? <ul className="collection with-header">

@@ -69,7 +69,7 @@ export default class SignUp extends React.Component {
     return (<div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
+              <div className="card-action blue-grey darken-2 white-text center">
                 <h3>Sign Up to WEconnect</h3>
               </div>
               <div className="card-content">

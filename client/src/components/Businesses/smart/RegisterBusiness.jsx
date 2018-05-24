@@ -54,6 +54,13 @@ export default class RegisterBusiness extends React.Component {
       * @memberof RegisterBusiness Component
       */
   onSubmit = (businessDetails) => {
+    this.setState({
+      errors:
+      {
+        message: null,
+        conflict: null
+      }
+    });
     this.props.registerBusiness(businessDetails)
       .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
@@ -96,7 +103,7 @@ export default class RegisterBusiness extends React.Component {
     return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
-            <div className="card-action blue lighten-1 white-text center">
+            <div className="card-action blue-grey darken-2  white-text center">
               <h3>Register a Business</h3>
             </div>
             <div className="card-content">

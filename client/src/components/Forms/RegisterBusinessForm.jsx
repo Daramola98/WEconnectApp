@@ -218,7 +218,7 @@ export default class RegisterBusinessForm extends React.Component {
           </div>
           <br />
           <div className="input-field">
-            <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
+            <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2 " style={{ width: `${100}%` }}>
               REGISTER BUSINESS
             </button>
           </div>
@@ -226,7 +226,7 @@ export default class RegisterBusinessForm extends React.Component {
           <div className="row">
             <div className="col s12 m12 l6 offset-l3 center">
               <h6>
-                <Link to="/userProfile">Go Back to Profile Page</Link>
+                <Link to="/userProfile" className="blue-grey-text darken-2 ">Go Back to Profile Page</Link>
               </h6>
             </div>
           </div>

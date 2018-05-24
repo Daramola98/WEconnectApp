@@ -32,7 +32,7 @@ export default class BusinessUpdateForm extends React.Component {
         telephoneNumber: '',
         homeNumber: ''
       },
-      imagePreviewUrl: '',
+      imagePreviewUrl: null,
       submitClicked: false
     }
 
@@ -97,6 +97,29 @@ export default class BusinessUpdateForm extends React.Component {
       this.props.submit(updateBusinessData);
     }
 
+    /**
+   * @description - dispatches the redux action to fetch business categories
+   *
+   * @param {object} nextProps
+   * @return {void} no return or void
+   */
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        ...this.state,
+        business: {
+          name: nextProps.business.name,
+          location: nextProps.business.location,
+          category: nextProps.business.category,
+          address: nextProps.business.address,
+          email: nextProps.business.email,
+          description: nextProps.business.description,
+          telephoneNumber: nextProps.business.telephoneNumber,
+          homeNumber: nextProps.business.homeNumber === null ? '' : nextProps.business.homeNumber
+        },
+        imagePreviewUrl: nextProps.business.businessImage
+      });
+    }
+
   /**
     * Renders the BusinessUpdateForm Component
     * @return {jsx} jsx element to render
@@ -113,7 +136,6 @@ export default class BusinessUpdateForm extends React.Component {
         <option key={location} value={location}>{location}</option>);
 
       const { business } = this.state;
-
       const { imagePreviewUrl } = this.state;
       let imagePreview = null;
       if (imagePreviewUrl) {
@@ -121,7 +143,7 @@ export default class BusinessUpdateForm extends React.Component {
       } else {
         imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
       }
-      return (<div className="row">
+      return (<div className="row ">
                 <form onSubmit={this.handleUpdateSubmit}>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
@@ -207,7 +229,7 @@ export default class BusinessUpdateForm extends React.Component {
                   </div>
                   <br />
                   <div className="input-field">
-                    <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" disabled={this.state.submitClicked} onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
+                    <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2 " disabled={this.state.submitClicked} onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
                       UPDATE BUSINESS DETAILS
                     </button>
                   </div>
@@ -215,7 +237,7 @@ export default class BusinessUpdateForm extends React.Component {
                   <div className="row">
                     <div className="col s12 m12 l6 offset-l3 center">
                       <h6>
-                        <Link to="/userProfile">
+                        <Link className="blue-grey-text darken-2 "to="/userProfile">
                           Go Back to Profile Page
                         </Link>
                       </h6>
