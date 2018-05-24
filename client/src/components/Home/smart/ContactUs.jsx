@@ -13,7 +13,8 @@ export default class ContactUs extends React.Component {
     state = {
       errors: {
         message: null
-      }
+      },
+      disableBtn: false
     }
 
     /**
@@ -24,6 +25,7 @@ export default class ContactUs extends React.Component {
       * @memberof ContactUs Component
       */
     onSubmit = (contactInfo) => {
+      this.setState({ disableBtn: true });
       this.props.postContactUs(contactInfo)
         .then(() => {
           alertify.set('notifier', 'position', 'top-right');

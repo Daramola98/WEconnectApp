@@ -220,7 +220,6 @@ export default class Users {
      * @memberof User
      */
   static loginUser(req, res) {
-    handleInputFormat(req);
     if (req.headers.authorization) {
       try {
         const token = req.headers.authorization.split(' ')[1];

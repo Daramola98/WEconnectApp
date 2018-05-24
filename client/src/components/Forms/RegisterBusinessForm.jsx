@@ -218,7 +218,7 @@ export default class RegisterBusinessForm extends React.Component {
           </div>
           <br />
           <div className="input-field">
-            <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2 " style={{ width: `${100}%` }}>
+            <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
               REGISTER BUSINESS
             </button>
           </div>

@@ -13,7 +13,6 @@ export default class BusinessReviewForm extends React.Component {
     reviewDetails: {
       review: ''
     },
-    submitClicked: false
   }
 
   /**
@@ -58,7 +57,7 @@ export default class BusinessReviewForm extends React.Component {
               </div>
             </div>
             <div className="form-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
                 POST REVIEW
               </button>
             </div>

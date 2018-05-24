@@ -32,8 +32,7 @@ export default class BusinessUpdateForm extends React.Component {
         telephoneNumber: '',
         homeNumber: ''
       },
-      imagePreviewUrl: null,
-      submitClicked: false
+      imagePreviewUrl: null
     }
 
   /**
@@ -229,7 +228,7 @@ export default class BusinessUpdateForm extends React.Component {
                   </div>
                   <br />
                   <div className="input-field">
-                    <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2 " disabled={this.state.submitClicked} onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
+                    <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2 " disabled={this.props.disableBtn} onClick={this.handleUpdateSubmit} style={{ width: `${100}%` }}>
                       UPDATE BUSINESS DETAILS
                     </button>
                   </div>

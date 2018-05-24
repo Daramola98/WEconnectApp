@@ -20,7 +20,6 @@ export default class SignUpForm extends React.Component {
         telephoneNumber: '',
         homeNumber: '',
       },
-      submitClicked: false,
       errors: {
         confirmPassError: null
       }
@@ -146,7 +145,7 @@ export default class SignUpForm extends React.Component {
 
             <br />
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
                 CREATE ACCOUNT
               </button>
             </div>
@@ -154,7 +153,7 @@ export default class SignUpForm extends React.Component {
             <div className="row">
               <div className="col s12 m12 l6 offset-l3 center">
                 <h6>
-                  <Link to="/login">
+                  <Link className="blue-grey-text darken-2" to="/login">
                     Already have an Account? Login here
                   </Link>
                 </h6>

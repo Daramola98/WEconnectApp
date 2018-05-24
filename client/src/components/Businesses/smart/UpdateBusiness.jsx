@@ -14,7 +14,8 @@ export default class UpdateBusiness extends React.Component {
       errors: {
         message: null,
         conflict: null
-      }
+      },
+      disableBtn: false
     }
 
   /**
@@ -46,6 +47,7 @@ export default class UpdateBusiness extends React.Component {
       * @memberof UpdateBusiness Component
       */
     onSubmit = (businessDetails) => {
+      this.setState({ disableBtn: true });
       this.props.updateBusiness(this.props.match.params.id, businessDetails)
         .then((response) => {
           alertify.set('notifier', 'position', 'top-right');
@@ -64,12 +66,14 @@ export default class UpdateBusiness extends React.Component {
           if (error && error.response.data.validationErrors) {
             return this.setState({
               errors:
-          { ...this.state.errors, message: error.response.data.validationErrors }
+          { ...this.state.errors, message: error.response.data.validationErrors },
+              disableBtn: false
             });
           }
           return this.setState({
             errors:
-        { ...this.state.errors, conflict: error.response.data.message }
+        { ...this.state.errors, conflict: error.response.data.message },
+            disableBtn: false
           });
         });
     }
@@ -92,7 +96,8 @@ export default class UpdateBusiness extends React.Component {
               <div className="card-content">
               <FormErrors errors={errors} />
               <BusinessUpdateForm business={business}
-               categories={categories} submit={this.onSubmit}/>
+               categories={categories} submit={this.onSubmit}
+               disableBtn={this.state.disableBtn}/>
             </div>
           </div>
         </div>

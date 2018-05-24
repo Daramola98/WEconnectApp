@@ -110,7 +110,7 @@ export default class UpdateUserForm extends React.Component {
 
             <br />
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
                 UPDATE USER DETAILS
               </button>
             </div>

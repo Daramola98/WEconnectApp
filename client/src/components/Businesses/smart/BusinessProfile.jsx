@@ -26,7 +26,8 @@ export default class BusinessProfile extends React.Component {
     reviews: false,
     reviewId: null,
     reviewResponses: [],
-    currentPage: 1
+    currentPage: 1,
+    disableBtn: false
   }
 
   /**
@@ -72,6 +73,7 @@ export default class BusinessProfile extends React.Component {
       * @memberof BusinessProfile Component
       */
   onSubmitReview = (review) => {
+    this.setState({ disableBtn: true });
     if (!this.props.user.authenticated) {
       alertify.set('notifier', 'position', 'top-right');
       alertify.warning('You need to be logged in to post a review');
@@ -85,7 +87,7 @@ export default class BusinessProfile extends React.Component {
         this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
           .then(() => {
             this.setState({
-              reviews: true, info: false
+              reviews: true, info: false, disableBtn: false
             });
           });
       })
@@ -102,7 +104,8 @@ export default class BusinessProfile extends React.Component {
             errors:
              { ...this.state.errors, message: error.response.data.validationErrors },
             info: false,
-            reviews: true
+            reviews: true,
+            disableBtn: false
           });
         }
       });
@@ -271,7 +274,8 @@ export default class BusinessProfile extends React.Component {
                       <div className="card">
                         <div className="card-content">
                           <FormErrors errors={errors} />
-                          <BusinessReviewForm submit={this.onSubmitReview} />
+                          <BusinessReviewForm
+                           submit={this.onSubmitReview} disableBtn={this.state.disableBtn} />
                         </div>
                         <div className="card">
                           <div className="card-content">
