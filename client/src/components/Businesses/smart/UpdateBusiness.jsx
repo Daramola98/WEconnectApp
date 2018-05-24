@@ -14,7 +14,8 @@ export default class UpdateBusiness extends React.Component {
       errors: {
         message: null,
         conflict: null
-      }
+      },
+      disableBtn: false
     }
 
   /**
@@ -35,6 +36,7 @@ export default class UpdateBusiness extends React.Component {
    */
     componentDidMount() {
       this.props.fetchCategories();
+      this.props.fetchBusiness(this.props.match.params.id);
     }
 
     /**
@@ -45,6 +47,7 @@ export default class UpdateBusiness extends React.Component {
       * @memberof UpdateBusiness Component
       */
     onSubmit = (businessDetails) => {
+      this.setState({ disableBtn: true });
       this.props.updateBusiness(this.props.match.params.id, businessDetails)
         .then((response) => {
           alertify.set('notifier', 'position', 'top-right');
@@ -63,12 +66,14 @@ export default class UpdateBusiness extends React.Component {
           if (error && error.response.data.validationErrors) {
             return this.setState({
               errors:
-          { ...this.state.errors, message: error.response.data.validationErrors }
+          { ...this.state.errors, message: error.response.data.validationErrors },
+              disableBtn: false
             });
           }
           return this.setState({
             errors:
-        { ...this.state.errors, conflict: error.response.data.message }
+        { ...this.state.errors, conflict: error.response.data.message },
+            disableBtn: false
           });
         });
     }
@@ -80,17 +85,19 @@ export default class UpdateBusiness extends React.Component {
     */
     render() {
       const { categories } = this.props.businesses;
+      const { business } = this.props.businessProfile;
       const { errors } = this.state;
       return (<div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
+              <div className="card-action blue-grey darken-2 white-text center">
                 <h3>Update a Business</h3>
               </div>
               <div className="card-content">
               <FormErrors errors={errors} />
-              <BusinessUpdateForm
-               categories={categories} submit={this.onSubmit}/>
+              <BusinessUpdateForm business={business}
+               categories={categories} submit={this.onSubmit}
+               disableBtn={this.state.disableBtn}/>
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AboutUs = props => (
-    <div className="container">
+    <div className="container white-text">
       <div className="center-align">
         <h4>About WECONNECT</h4>
       </div>

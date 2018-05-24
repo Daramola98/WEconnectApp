@@ -22,7 +22,8 @@ export default class RegisterBusiness extends React.Component {
       errors: {
         message: null,
         conflict: null
-      }
+      },
+      disableBtn: false
     };
   }
 
@@ -54,6 +55,14 @@ export default class RegisterBusiness extends React.Component {
       * @memberof RegisterBusiness Component
       */
   onSubmit = (businessDetails) => {
+    this.setState({
+      errors:
+      {
+        message: null,
+        conflict: null
+      },
+      disableBtn: true
+    });
     this.props.registerBusiness(businessDetails)
       .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
@@ -75,12 +84,14 @@ export default class RegisterBusiness extends React.Component {
         if (error && error.response.data.validationErrors) {
           return this.setState({
             errors:
-            { ...this.state.errors, message: error.response.data.validationErrors }
+            { ...this.state.errors, message: error.response.data.validationErrors },
+            disableBtn: false
           });
         }
         return this.setState({
           errors:
-          { ...this.state.errors, conflict: error.response.data.message }
+          { ...this.state.errors, conflict: error.response.data.message },
+          disableBtn: false
         });
       });
   }
@@ -96,12 +107,14 @@ export default class RegisterBusiness extends React.Component {
     return <div className="row container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
-            <div className="card-action blue lighten-1 white-text center">
+            <div className="card-action blue-grey darken-2  white-text center">
               <h3>Register a Business</h3>
             </div>
             <div className="card-content">
               <FormErrors errors={errors} />
-              <RegisterBusinessForm categories={categories} submit={this.onSubmit} />
+              <RegisterBusinessForm
+               categories={categories} submit={this.onSubmit}
+               disableBtn={this.state.disableBtn} />
             </div>
           </div>
         </div>

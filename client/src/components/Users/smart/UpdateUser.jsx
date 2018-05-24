@@ -15,7 +15,8 @@ export default class UpdateUser extends React.Component {
     errors: {
       message: null,
       conflict: null
-    }
+    },
+    disableBtn: false
   }
 
   /**
@@ -36,6 +37,7 @@ export default class UpdateUser extends React.Component {
     * @memberof UpdateUser Component
     */
     onSubmit = (userDetails) => {
+      this.setState({ disableBtn: true });
       this.props.updateUser(userDetails)
         .then(() => {
           alertify.set('notifier', 'position', 'top-right');
@@ -54,12 +56,14 @@ export default class UpdateUser extends React.Component {
           if (error && error.response.data.validationErrors) {
             return this.setState({
               errors:
-              { ...this.state.errors, message: error.response.data.validationErrors }
+              { ...this.state.errors, message: error.response.data.validationErrors },
+              disableBtn: false
             });
           }
           return this.setState({
             errors:
-             { ...this.state.errors, conflict: error.response.data.message }
+             { ...this.state.errors, conflict: error.response.data.message },
+            disableBtn: false
           });
         });
     }
@@ -74,7 +78,7 @@ export default class UpdateUser extends React.Component {
       return <div className="row container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
+              <div className="card-action blue-grey darken-2 white-text center">
                 <h3>Edit Profile</h3>
               </div>
               <div className="card-content">

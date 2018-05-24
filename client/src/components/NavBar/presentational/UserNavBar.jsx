@@ -4,7 +4,7 @@ import { SideNav, SideNavItem, Button, Navbar, Dropdown, NavItem } from 'react-m
 
 const UserNavBar = props => (
   <div>
-    <nav className="blue">
+    <nav className="blue-grey darken-3">
       <div className="nav-wrapper">
         <div className="">
           <Link to="/" className="brand-logo">

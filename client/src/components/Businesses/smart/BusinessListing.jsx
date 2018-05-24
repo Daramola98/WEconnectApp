@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Input, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
+import { Input, Row, Pagination, PaginationButton, SideNav, SideNavItem, Button } from 'react-materialize';
 import PropTypes from 'prop-types';
 import Business from '../presentational/Business.jsx';
 import Loader from '../../General/Loader.jsx';
@@ -190,37 +190,16 @@ export default class BusinessListing extends React.Component {
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
-      // const options = {
-      //   lines: 13,
-      //   length: 20,
-      //   width: 10,
-      //   radius: 30,
-      //   scale: 1.00,
-      //   corners: 1,
-      //   color: '#000',
-      //   opacity: 0.25,
-      //   rotate: 0,
-      //   direction: 1,
-      //   speed: 1,
-      //   trail: 60,
-      //   fps: 20,
-      //   zIndex: 2e9,
-      //   top: '50%',
-      //   left: '50%',
-      //   shadow: false,
-      //   hwaccel: false,
-      //   position: 'absolute'
-      // };
       return <div className="">
       <div className="row">
-          <div id="searchbusiness" className="col s6">
-            <div className="row">
+          <div id="searchbusiness" className="col s12 container">
+            <div className="row center">
               <form onSubmit={this.handleSearchSubmit}>
-                <span className="col s12 l4 radio-btn">
+                <Row>
+                <span className="col s6 l6 radio-btn">
                 <input type="text" placeholder={`Search for Business By ${this.state.searchBy}`} name="advancedSearch" value={this.state.advancedSearch} onChange={this.onAdvancedSearchChange} required/>
                 </span>
-                <span className="col s12 m6 l4">
-                <Input name="searchBy" type="select" value={this.state.searchBy} onChange={this.onSearchByChange} >
+                <Input name="searchBy" s={3} l={4} type="select" value={this.state.searchBy} onChange={this.onSearchByChange} >
                   <option value="name">
                     Search By Name
                   </option>
@@ -231,14 +210,18 @@ export default class BusinessListing extends React.Component {
                     Search By Category
                   </option>
                 </Input>
-                </span>
-                <span className="col s12 m6 l4"><button type="submit" className="radio-btn waves-effect waves-light btn blue ligthen-1">SEARCH</button></span>
+                <button type="submit" className="col l2 radio-btn waves-effect waves-light btn blue-grey darken-2">SEARCH</button>
+                </Row>
               </form>
               </div>
             </div>
-            <div id="filterbusiness" className="col s6">
+            {/* <div id="filterbusiness" className="col s6">
           <div>
-          <input type="text" name="search" value={this.state.search} placeholder="Filter Businesses by Name" onChange={this.onSearchChange} />
+         <input
+         type="text"
+         name="search"
+         value={this.state.search}
+          placeholder="Filter Businesses by Name" onChange={this.onSearchChange} />
           </div>
           <div className="">
             <Input type="select" value={this.state.location} onChange={this.onLocationChange}>
@@ -266,20 +249,20 @@ export default class BusinessListing extends React.Component {
               Reset Filters
                 </a>
           </div>
-        </div>
+        </div> */}
           </div>
-          <hr/>
           {this.state.loader ? <Loader size={'100px'}/> : <div>
-            <div id="businessTable" className="row">
+            <div id="businessTable" className="container row col">
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
-                  <h1>NO BUSINESSES</h1>
+                  <h1 className="no-business col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h1>
                 </div>}
           </div>
+          <div className="container paginate">
           <Pagination
            className={this.state.businessPagination}
-           key={Date.now()} items={Math.ceil(businessesCount / 10) || 0 }
+           key={Date.now()} items={Math.ceil(businessesCount / 12) || 0 }
             activePage={this.state.currentPage} maxButtons={5}
             onSelect = {this.onChangePage}
              />
@@ -289,6 +272,7 @@ export default class BusinessListing extends React.Component {
             activePage={this.state.searchCurrentPage} maxButtons={5}
             onSelect = {this.onSearchChangePage}
              />
+             </div>
             </div> }
         </div>;
     }

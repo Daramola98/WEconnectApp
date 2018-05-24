@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Business = props => (
   // <div className="business">
   // <div className="col s12 m4">
-      <div className="card medium business">
+      <div className="card medium business hoverable">
         <div className="card-image">
           <img className="responsive" src={props.business.businessImage} alt="business" />
           <span className="card-title"></span>
@@ -16,7 +16,7 @@ const Business = props => (
           <p>Category: {props.business.category} </p>
         </div>
         <div className="card-action">
-          <Link className="blue-text" to={`/businessProfile/${props.business.id}`}>View</Link>
+          <Link className="blue-grey-text darken-2" to={`/businessProfile/${props.business.id}`}>View</Link>
           {props.children}
         </div>
       </div>

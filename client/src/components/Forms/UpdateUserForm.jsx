@@ -110,7 +110,7 @@ export default class UpdateUserForm extends React.Component {
 
             <br />
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue lighten-1" style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
                 UPDATE USER DETAILS
               </button>
             </div>
@@ -118,7 +118,7 @@ export default class UpdateUserForm extends React.Component {
             <div className="row">
               <div className="col s12 m12 l6 offset-l3 center">
                 <h6>
-                  <Link to="/userProfile">GO BACK TO PROFILE PAGE</Link>
+                  <Link className="blue-grey-text darken-2" to="/userProfile">GO BACK TO PROFILE PAGE</Link>
                 </h6>
               </div>
             </div>

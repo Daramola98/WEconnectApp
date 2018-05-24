@@ -25,7 +25,8 @@ router.put(
   businessIdCheck,
   isValidFile,
   modelValidator(businessUpdateValidation),
-  businessExists, Businesses.updateBusiness
+  // businessExists,
+  Businesses.updateBusiness
 );
 
 router.delete('/:businessId', isAuthorized, businessIdCheck, Businesses.removeBusiness);

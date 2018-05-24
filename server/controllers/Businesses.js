@@ -91,7 +91,7 @@ export default class Businesses {
       return findBusinessByName(req, res, offset);
     }
     return Business
-      .findAndCountAll({ offset, limit: 10 })
+      .findAndCountAll({ offset, limit: 12 })
       .then((result) => {
         const businesses = result.rows;
         const businessesCount = result.count;
@@ -363,7 +363,7 @@ export default class Businesses {
           return BusinessReview
             .findAndCountAll({
               offset,
-              limit: 10,
+              limit: 12,
               include: [{
                 model: reviewresponse,
                 as: 'responses',
@@ -380,7 +380,7 @@ export default class Businesses {
               }
               ],
               order: [
-                ['createdAt', 'ASC'],
+                ['createdAt', 'DESC'],
               ],
               where: {
                 businessId: req.params.businessId

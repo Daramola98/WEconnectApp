@@ -10,7 +10,8 @@ import LoginForm from '../Forms/LoginForm.jsx';
  */
 export default class Login extends React.Component {
     state = {
-      message: null
+      message: null,
+      disableBtn: false
     }
 
   /**
@@ -34,11 +35,12 @@ export default class Login extends React.Component {
     onSubmit = (credentials) => {
       this.props.login(credentials)
         .then(() => {
+          this.setState({ disableBtn: true });
           NotificationManager.success('Login Successful Welcome Back!!', 'Successful');
           setTimeout(() => this.props.history.push('/userProfile'), 2000);
         })
         .catch((err) => {
-          this.setState({ message: err.response.data.message });
+          this.setState({ message: err.response.data.message, disableBtn: false });
         });
     }
 
@@ -52,8 +54,8 @@ export default class Login extends React.Component {
       return (<div className="row loginForm container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
-              <div className="card-action blue lighten-1 white-text center">
-                <h3>Login to WEconnect</h3>
+              <div className="card-action blue-grey darken-3 white-text center">
+                <h3>Login</h3>
               </div>
               <div className="card-content">
                 {message ? <ul className="collection with-header">
@@ -62,7 +64,7 @@ export default class Login extends React.Component {
                     </li>
                     <li key="error" className="collection-item"><span className="red-text">{message}</span></li>
                   </ul> : null}
-              <LoginForm submit={this.onSubmit} />
+              <LoginForm submit={this.onSubmit} disableBtn={this.state.disableBtn} />
             </div>
             <NotificationContainer/>
             </div>
