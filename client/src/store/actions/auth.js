@@ -13,7 +13,7 @@ export const userLoggedOut = () => ({
 });
 
 export const login = credentials => dispatch =>
-  axios.post('api/v1/auth/login', credentials)
+  axios.post('/api/v1/auth/login', credentials)
     .then((response) => {
       const { token } = response.data;
       localStorage.setItem('weConnectToken', token);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Business from '../../../components/Businesses/presentational/Business';
+import Business from '../../../components/Businesses/presentational/Business.jsx';
 
 describe('<Business />', () => {
   it('should render the component', () => {

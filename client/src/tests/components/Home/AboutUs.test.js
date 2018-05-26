@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import AboutUs from '../../../components/Home/presentational/AboutUs';
+import AboutUs from '../../../components/Home/presentational/AboutUs.jsx';
 
 describe('<AboutUs />', () => {
   it('should render the component', () => {

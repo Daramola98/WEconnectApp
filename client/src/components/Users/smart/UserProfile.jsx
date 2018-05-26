@@ -163,7 +163,7 @@ export default class UserProfile extends React.Component {
                       <FilterBusiness
                        search={this.state.search} onSearchChange={this.onSearchChange}/>
                     </div>
-                    <div id="businesses" className="col offset-l2 m12 s12 ">
+                    <div id="businesses" className="col offset-l1 m12 s12 ">
                           {filterBusinesses.length > 0 ?
                            filterBusinesses.map((business, i) => (
                                 <Business business={business} key={i}>
@@ -186,7 +186,7 @@ export default class UserProfile extends React.Component {
                       <br/><br/>
                       <Pagination
                        key={Date.now()}
-                        items={Math.ceil(businessesCount / 10) || 0 }
+                        items={Math.ceil(businessesCount / 12) || 0 }
                         activePage={this.state.currentPage}
                         maxButtons={5}
                         onSelect={this.onPageChange} />

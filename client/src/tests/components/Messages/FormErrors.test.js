@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Errors from '../../../components/Messages/presentational/Errors';
-import FormErrors from '../../../components/Messages/presentational/FormErrors';
+import Errors from '../../../components/Messages/presentational/Errors.jsx';
+import FormErrors from '../../../components/Messages/presentational/FormErrors.jsx';
 
 describe('<FormErrors />', () => {
   it('should render the component', () => {

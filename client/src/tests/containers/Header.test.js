@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Header from '../../components/NavBar/smart/Header';
-import GuestNavBar from '../../components/NavBar/presentational/GuestNavBar';
-import UserNavBar from '../../components/NavBar/presentational/UserNavBar';
+import Header from '../../components/NavBar/smart/Header.jsx';
+import GuestNavBar from '../../components/NavBar/presentational/GuestNavBar.jsx';
+import UserNavBar from '../../components/NavBar/presentational/UserNavBar.jsx';
 
 describe('<Header />', () => {
   let wrapper;

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import querystring from 'querystring';
-import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED } from './actionTypes';
+import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED, DELETE_BUSINESS } from './actionTypes';
 
 
 export const registerBusiness = () => ({
@@ -27,7 +27,7 @@ export const searchesBusinessFailed = () => ({
 });
 
 export const deletesBusiness = () => ({
-  type: UPDATE_BUSINESS
+  type: DELETE_BUSINESS
 });
 
 export const setBusinessProfile = business => ({
@@ -40,7 +40,7 @@ export const fetchBusinessesFailed = () => ({
 });
 
 export const fetchBusinesses = (pageNumber = 0) => dispatch =>
-  axios.get(`api/v1/businesses?pageNumber=${pageNumber}`)
+  axios.get(`/api/v1/businesses?pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch({
         type: FETCH_BUSINESSES,
@@ -57,7 +57,7 @@ export const fetchCategories = () => dispatch =>
     });
 
 export const createBusiness = businessDetails => dispatch =>
-  axios.post('api/v1/businesses', businessDetails)
+  axios.post('/api/v1/businesses', businessDetails)
     .then((response) => {
       dispatch(registerBusiness());
     });
@@ -69,7 +69,7 @@ export const updateBusiness = (businessId, businessDetails) => dispatch =>
     });
 
 export const deleteBusiness = businessId => dispatch =>
-  axios.delete(`api/v1/businesses/${businessId}`)
+  axios.delete(`/api/v1/businesses/${businessId}`)
     .then((response) => {
       dispatch(deletesBusiness());
     });
@@ -82,7 +82,7 @@ export const fetchBusiness = businessId => dispatch =>
     .catch(error => Promise.reject(error.response.data.message));
 
 export const searchBusiness = (searchBy, value, pageNumber) => dispatch =>
-  axios.get(`api/v1/businesses?${searchBy}=${value}&pageNumber=${pageNumber}`)
+  axios.get(`/api/v1/businesses?${searchBy}=${value}&pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch(searchesBusiness(response.data.businesses, response.data.businessesCount));
     })

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import LoginForm from '../../../components/Forms/LoginForm';
+import LoginForm from '../../../components/Forms/LoginForm.jsx';
 
 describe('<LoginForm />', () => {
   let wrapper;
