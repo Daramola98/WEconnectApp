@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import ContactUs from '../../components/Home/smart/ContactUs';
-import ContactUsForm from '../../components/Forms/ContactUsForm';
-import FormErrors from '../../components/Messages/presentational/FormErrors';
+import ContactUs from '../../components/Home/smart/ContactUs.jsx';
+import ContactUsForm from '../../components/Forms/ContactUsForm.jsx';
+import FormErrors from '../../components/Messages/presentational/FormErrors.jsx';
 
 describe('<ContactUs />', () => {
   let wrapper;

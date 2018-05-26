@@ -252,7 +252,7 @@ export default class BusinessListing extends React.Component {
         </div> */}
           </div>
           {this.state.loader ? <Loader size={'100px'}/> : <div>
-            <div id="businessTable" className="container row col">
+            <div id="businessTable" className="container row">
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>

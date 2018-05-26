@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { Link } from 'react-router-dom';
-import GuestNavBar from '../../../components/NavBar/presentational/GuestNavBar';
+import GuestNavBar from '../../../components/NavBar/presentational/GuestNavBar.jsx';
 
 describe('<GuestNavBar />', () => {
   it('should render the component', () => {

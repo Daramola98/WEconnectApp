@@ -11,7 +11,7 @@ const Business = props => (
           <span className="card-title"></span>
         </div>
         <div className="card-content">
-          <p>Business Name: {props.business.name} </p>
+          <p className="truncate">Business Name: {props.business.name} </p>
           <p>Location: {props.business.location} </p>
           <p>Category: {props.business.category} </p>
         </div>

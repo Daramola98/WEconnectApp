@@ -355,7 +355,9 @@ export default class BusinessProfile extends React.Component {
                             <p><span className="timestamp align-right">{moment(response.createdAt).calendar()}</span></p>
                             <br/>
                           </li>
-                        )) : <li>NO REPLIES</li>}
+                        )) : <li className="collection-item center">
+                        <h3 className="blue-grey-text">NO REPLIES</h3>
+                        </li>}
                   </ul>
                 </Modal>
               </div>

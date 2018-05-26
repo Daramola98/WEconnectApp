@@ -29,13 +29,13 @@ export const fetchUserBusinessesFailed = () => ({
 });
 
 export const postContactUs = contactInfo => dispatch =>
-  axios.post('api/v1/admin/contactUs', contactInfo)
+  axios.post('/api/v1/admin/contactUs', contactInfo)
     .then((response) => {
       dispatch(postsContactUs());
     });
 
 export const signUp = userDetails => dispatch =>
-  axios.post('api/v1/auth/signUp', userDetails)
+  axios.post('/api/v1/auth/signUp', userDetails)
     .then((response) => {
       const { token } = response.data;
       localStorage.setItem('weConnectToken', token);
@@ -44,7 +44,7 @@ export const signUp = userDetails => dispatch =>
     });
 
 export const updateUser = userDetails => dispatch =>
-  axios.put('api/v1/auth/user', userDetails)
+  axios.put('/api/v1/auth/user', userDetails)
     .then((response) => {
       const { token } = response.data;
       localStorage.setItem('weConnectToken', token);
@@ -53,7 +53,7 @@ export const updateUser = userDetails => dispatch =>
     });
 
 export const getUserBusinesses = pageNumber => dispatch =>
-  axios.get(`api/v1/businesses/user?pageNumber=${pageNumber}`)
+  axios.get(`/api/v1/businesses/user?pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch(fetchUserBusinesses(response.data.businesses, response.data.businessesCount));
     });
