@@ -1,7 +1,8 @@
 import axios from 'axios';
-import querystring from 'querystring';
-import { FETCH_BUSINESSES, FETCH_CATEGORIES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED, DELETE_BUSINESS } from './actionTypes';
+import createHistory from 'history/createBrowserHistory';
+import { FETCH_BUSINESSES, FETCH_BUSINESS_FAILED, FETCH_CATEGORIES, FETCH_BUSINESS, SET_BUSINESS_PROFILE, REGISTER_BUSINESS, UPDATE_BUSINESS, SEARCH_BUSINESS, SEARCH_BUSINESS_FAILED, FETCH_BUSINESSES_FAILED, DELETE_BUSINESS } from './actionTypes';
 
+const history = createHistory();
 
 export const registerBusiness = () => ({
   type: REGISTER_BUSINESS
@@ -37,6 +38,10 @@ export const setBusinessProfile = business => ({
 
 export const fetchBusinessesFailed = () => ({
   type: FETCH_BUSINESSES_FAILED
+});
+
+export const fetchBusinessFailed = () => ({
+  type: FETCH_BUSINESS_FAILED
 });
 
 export const fetchBusinesses = (pageNumber = 0) => dispatch =>
@@ -79,7 +84,10 @@ export const fetchBusiness = businessId => dispatch =>
     .then((response) => {
       dispatch(setBusinessProfile(response.data.business));
     })
-    .catch(error => Promise.reject(error.response.data.message));
+    .catch((error) => {
+      dispatch(fetchBusinessFailed());
+      window.location.replace('/notFound');
+    });
 
 export const searchBusiness = (searchBy, value, pageNumber) => dispatch =>
   axios.get(`/api/v1/businesses?${searchBy}=${value}&pageNumber=${pageNumber}`)
