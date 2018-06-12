@@ -39,14 +39,6 @@ export const userValidation = {
     isString: {
       errorMessage: 'Confirm Password should be a valid string'
     },
-    // custom: {
-    //   options: (value, { req }) => {
-    //     const result = value === req.body.password;
-    //     if (result === false) {
-    //       throw new Error('Passwords dont match');
-    //     }
-    //   }
-    // },
     notEmpty: {
       errorMessage: 'Confirm Password is required'
     }
@@ -125,14 +117,6 @@ export const userUpdateValidation = {
     isString: {
       errorMessage: 'Confirm Password should be a valid string'
     },
-    // custom: {
-    //   options: (value, { req }) => {
-    //     const result = value === req.body.password;
-    //     if (result === false) {
-    //       throw new Error('Passwords dont match');
-    //     }
-    //   }
-    // },
     notEmpty: {
       errorMessage: 'Confirm Password is required'
     }

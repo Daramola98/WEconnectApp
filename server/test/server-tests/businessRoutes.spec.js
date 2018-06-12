@@ -54,7 +54,7 @@ describe(`${baseEndpoint}`, () => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Business has been registered successfully');
           expect(res.body.createdBusinessDetails.name).to.equal('House rentals');
-          // expect(res.body.business).to.have.property('id');
+          expect(res.body.createdBusinessDetails).to.have.property('id');
           expect(res.body.createdBusinessDetails.telephoneNumber).to.equal('07011041032');
           expect(res.body.createdBusinessDetails.email).to.equal('ajiboye_j@yahoo.com');
           done();
@@ -94,7 +94,6 @@ describe(`${baseEndpoint}`, () => {
           expect(res.status).to.equal(400);
           expect(res.body).to.be.a('object');
           expect(res.body.validationErrors[0]).to.equal('Business Address is required');
-          // expect(res.body[1]).to.equal('Business Address is required');
           done();
         });
     });

@@ -202,28 +202,6 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
-    // it('Authenticates the user that is already logged in and returns a message', (done) => {
-    //   const userDetails = {
-    //     email: 'damilolaajiboye@live.com',
-    //     password: 'dammyro1000'
-    //   };
-    //   chai.request(app)
-    //     .post(`${baseEndpoint}/login`)
-    //     .send(userDetails)
-    //     .end((err, res) => {
-    //       authToken1 = res.body.token;
-    //     });
-    //   chai.request(app)
-    //     .post(`${baseEndpoint}/login`)
-    //     .set('authorization', authToken1)
-    //     .send(userDetails)
-    //     .end((err, res) => {
-    //       expect(res.status).to.equal(401);
-    //       // expect(res.body.message).to.equal('You are already logged in');
-    //       done();
-    //     });
-    // });
-
     it('catches wrong password', (done) => {
       const userDetails10 = {
         email: 'damilolaajiboye@live.com',

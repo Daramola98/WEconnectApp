@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
-// import promise from 'redux-promise-middleware';
 import thunk from 'redux-thunk';
 import businessesReducer from './reducers/businesses';
 import businessProfile from './reducers/businessProfile';
