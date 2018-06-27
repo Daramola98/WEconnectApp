@@ -146,7 +146,7 @@ export default class Businesses {
     return Business
       .findAndCountAll({
         offset,
-        limit: 10,
+        limit: 12,
         where: {
           userId: req.userData.userId
         }

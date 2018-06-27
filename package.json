@@ -23,7 +23,8 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "codeclimate-report": "codeclimate-test-reporter < ./coverage/lcov.info",
     "check-coverage": "nyc check-coverage --lines 80 --per-file",
-    "lint": "eslint client"
+    "lint": "eslint client",
+    "selenium": "java -jar selenium-server-standalone-3.9.1.jar"
   },
   "repository": {
     "type": "git",
@@ -43,7 +44,10 @@
       "<rootDir>/client/src/tests/setup.js"
     ],
     "roots": [
-      "<rootDir>/client/src/"
+      "<rootDir>/client/src/tests/actions",
+      "<rootDir>/client/src/tests/components",
+      "<rootDir>/client/src/tests/containers",
+      "<rootDir>/client/src/tests/reducers"
     ]
   },
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",

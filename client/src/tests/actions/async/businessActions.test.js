@@ -37,10 +37,9 @@ describe('Async Business Actions', () => {
       }];
 
       const store = mockStore({ businesses: [] });
-
-      store.dispatch(businessActions.fetchBusinesses(1))
+      return store.dispatch(businessActions.fetchBusinesses(1))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
 
@@ -58,9 +57,9 @@ describe('Async Business Actions', () => {
         type: actionTypes.FETCH_BUSINESSES_FAILED,
       }];
 
-      const store = mockStore({ businesses: [] });
+      const store = mockStore({ businesses: {} });
 
-      store.dispatch(businessActions.fetchBusinesses(1))
+      return store.dispatch(businessActions.fetchBusinesses(1))
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });
@@ -77,15 +76,15 @@ describe('Async Business Actions', () => {
       });
 
       const expectedAction = [{
-        type: actionTypes.FETCH_CATEGORIES,
+        type: actionTypes.fetchCategories,
         categories: ['Technolgy', 'Cooking']
       }];
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.fetchCategories())
+      return store.dispatch(businessActions.fetchCategories())
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
   });
@@ -107,7 +106,7 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.createBusiness(businessDetails))
+      return store.dispatch(businessActions.createBusiness(businessDetails))
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });
@@ -131,7 +130,7 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.updateBusiness(businessId, businessDetails))
+      return store.dispatch(businessActions.updateBusiness(businessId, businessDetails))
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });
@@ -154,7 +153,7 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.deleteBusiness(businessId))
+      return store.dispatch(businessActions.deleteBusiness(businessId))
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });
@@ -178,9 +177,9 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.fetchBusiness(businessId))
+      return store.dispatch(businessActions.fetchBusiness(businessId))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
   });
@@ -203,9 +202,9 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.searchBusiness('location', 'lagos', 1))
+      return store.dispatch(businessActions.searchBusiness('location', 'lagos', 1))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
 
@@ -225,7 +224,7 @@ describe('Async Business Actions', () => {
 
       const store = mockStore({ businesses: [] });
 
-      store.dispatch(businessActions.searchBusiness('location', 'lagos', 1))
+      return store.dispatch(businessActions.searchBusiness('location', 'lagos', 1))
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });

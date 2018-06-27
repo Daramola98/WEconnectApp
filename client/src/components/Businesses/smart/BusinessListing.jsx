@@ -191,74 +191,42 @@ export default class BusinessListing extends React.Component {
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
       return <div className="">
-      <div className="row">
-          <div id="searchbusiness" className="col s12 container">
-            <div className="row center">
-              <form onSubmit={this.handleSearchSubmit}>
-                <Row>
-                <span className="col s6 l6 radio-btn">
-                <input type="text" placeholder={`Search for Business By ${this.state.searchBy}`} name="advancedSearch" value={this.state.advancedSearch} onChange={this.onAdvancedSearchChange} required/>
-                </span>
-                <Input name="searchBy" s={3} l={4} type="select" value={this.state.searchBy} onChange={this.onSearchByChange} >
-                  <option value="name">
-                    Search By Name
-                  </option>
-                  <option value="location">
-                    Search By Location
-                  </option>
-                  <option value="category">
-                    Search By Category
-                  </option>
-                </Input>
-                <button type="submit" className="col l2 radio-btn waves-effect waves-light btn blue-grey darken-2">SEARCH</button>
-                </Row>
+        <section id="search" className="section section-search white-text center">
+          <div className="container">
+            <div className="row">
+                <h3>Search Businesses</h3>
+                <form id="searchform" onSubmit={this.handleSearchSubmit}>
+                  <select name="searchBy" value={this.state.searchBy} onChange={this.onSearchByChange} className="search-select blue-grey darken-2 browser-default">
+                    <option className="option" value="" disabled>Choose your option</option>
+                    <option value="category">Category</option>
+                    <option value="location">Location</option>
+                    <option value="name">Name</option>
+                  </select>
+                  <input id="businessSearch"
+                    className="white grey-text autocomplete"
+                    type="text"
+                    placeholder={`Search for Business By ${this.state.searchBy}`}
+                    name="advancedSearch"
+                    value={this.state.advancedSearch}
+                    onChange={this.onAdvancedSearchChange}
+                    required/>
+                    <button id="searchSubmitBtn" type="submit" className="waves-effect waves-light blue-grey darken-2"><i className="fa fa-search"></i></button>
               </form>
               </div>
             </div>
-            {/* <div id="filterbusiness" className="col s6">
-          <div>
-         <input
-         type="text"
-         name="search"
-         value={this.state.search}
-          placeholder="Filter Businesses by Name" onChange={this.onSearchChange} />
-          </div>
-          <div className="">
-            <Input type="select" value={this.state.location} onChange={this.onLocationChange}>
-              <option value="null" disabled>
-                Filter By Location
-                      </option>
-              {locationOptions}
-            </Input>
-          </div>
-          <div className="">
-            <Input type="select" value={this.state.category} onChange={this.onCategoryChange}>
-              <option value="null" disabled>
-                Filter By Category
-              </option>
-              {businessCategories.length > 0 ? categoryOptions : <option value="loading" disabled>
-                Loading...
-              </option>}
-            </Input>
-          </div>
-          <div className="">
-            <a className="btn radio-btn blue lighten-1" onClick={(event) => {
-              event.preventDefault();
-              this.setState({ location: 'null', category: 'null' });
-            }}>
-              Reset Filters
-                </a>
-          </div>
-        </div> */}
-          </div>
+        </section>
           {this.state.loader ? <Loader size={'100px'}/> : <div>
-            <div id="businessTable" className="container row">
+            <section id="businessTable" className="section section-popular">
+            <div className="container">
+             <div className="row">
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
                   <h1 className="no-business col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h1>
                 </div>}
-          </div>
+             </div>
+            </div>
+          </section>
           <div className="container paginate">
           <Pagination
            className={this.state.businessPagination}

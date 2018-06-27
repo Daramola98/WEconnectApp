@@ -74,7 +74,7 @@ export default class SignUp extends React.Component {
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
               <div className="card-action blue-grey darken-2 white-text center">
-                <h3>Sign Up to WEconnect</h3>
+                <h3>Sign Up</h3>
               </div>
               <div className="card-content">
               <FormErrors errors={errors} />
