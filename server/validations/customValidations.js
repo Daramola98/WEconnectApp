@@ -7,7 +7,4 @@ export default {
     const result = typeof value === 'string';
     return result;
   },
-  // passwordConfirmation(value, { req }) {
-  //   return value === req.body.password;
-  // }
 };

@@ -15,6 +15,6 @@ router.post('/businessCategory', isAuthorized, addBusinessCategory);
 router.post('/businessLocation', isAuthorized, addBusinessLocation);
 router.get('/contactUs', isAuthorized, getContactUsMessages);
 router.post('/contactUs', modelValidator(contactUsValidation), addContactInfo);
-router.delete('/user/:userId', isAuthorized, userIdCheck, Users.delete);
+router.delete('/user/:userId', isAuthorized, userIdCheck, Users.deleteUser);
 
 export default router;

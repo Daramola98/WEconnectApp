@@ -22,7 +22,6 @@ export const businessValidation = {
   },
   location: {
     trim: true,
-    // toUpperCase: true,
     notEmpty: true,
     isString: {
       errorMessage: 'Business Location should be a valid string'
@@ -31,7 +30,6 @@ export const businessValidation = {
   },
   category: {
     trim: true,
-    // toUpperCase: true,
     notEmpty: true,
     isString: {
       errorMessage: 'Business Category should be a valid string'

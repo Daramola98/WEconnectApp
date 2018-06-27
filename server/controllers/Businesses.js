@@ -56,7 +56,7 @@ export default class Businesses {
           address: business.address,
           description: business.description
         };
-        res.status(201)
+        return res.status(201)
           .json({ message: businessRegisterMessage, createdBusinessDetails });
       })
       .catch((err) => {
@@ -128,7 +128,7 @@ export default class Businesses {
         if (business) {
           return res.status(200).json({ message: businessFoundMessage, business });
         }
-        res.status(404).json(businessNotFoundMessage);
+        return res.status(404).json(businessNotFoundMessage);
       })
       .catch(() => res.status(500).json(serverErrorMessage.message));
   }
@@ -212,7 +212,7 @@ export default class Businesses {
               businessAddedBy: updatedBusiness.businessOwner.username,
               description: updatedBusiness.description
             };
-            res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
+            return res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
           })
           .catch((err) => {
             if (err.errors) {
@@ -249,7 +249,7 @@ export default class Businesses {
             .then(() => res.status(200).json(businessDeletedMessage))
             .catch(err => res.status(500).json(serverErrorMessage.message));
         }
-        res.status(403).json({ message: 'You are not Allowed to delete this business' });
+        return res.status(403).json({ message: 'You are not Allowed to delete this business' });
       })
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
@@ -288,7 +288,7 @@ export default class Businesses {
               reviewerId: review.ReviewerId,
               businessId: review.BusinessId
             };
-            res.status(201)
+            return res.status(201)
               .json({ message: businessReviewMessage, reviewDetails });
           })
           .catch((err) => {
@@ -397,7 +397,7 @@ export default class Businesses {
             })
             .catch(err => res.status(500).json(err));
         }
-        res.status(404).json({ message: 'Business does not exist, Enter id for existing business' });
+        return res.status(404).json({ message: 'Business does not exist, Enter id for existing business' });
       });
   }
 }
