@@ -2,15 +2,19 @@ import React from 'react';
 import { Slider, Slide } from 'react-materialize';
 
 const HomeImageSlider = props => (
-<Slider>
+<Slider indicators={false}>
   <Slide
     src="https://thumbs.dreamstime.com/z/vector-people-earning-business-marketing-online-background-concept-45048557.jpg"
     >
   </Slide>
   <Slide
-    src="/images/tokyo-at-night.jpg"
-    placement="left">
-    <span className="black-text">Connect your business with our various users</span>
+    className="img-responsive"
+    src="/images/growing-business.jpg"
+    placement="right">
+  </Slide>
+  <Slide
+    src="/images/help-your-business-grow.jpg"
+    placement="right">
   </Slide>
 </Slider>
 );

@@ -4,11 +4,11 @@ import { SideNav, SideNavItem, Button, Navbar, Dropdown, NavItem } from 'react-m
 
 const UserNavBar = props => (
   <div>
-    <nav className="blue-grey darken-3">
+    <nav className="blue-grey darken-2">
       <div className="nav-wrapper">
         <div className="">
           <Link to="/" className="brand-logo">
-            WEconnect
+            <img className="logo" src="/images/logo.png"/>
           </Link>
           <ul className="right hide-on-med-and-down">
             <li>

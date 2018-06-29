@@ -51,10 +51,10 @@ export default class Login extends React.Component {
     */
     render() {
       const { message } = this.state;
-      return (<div className="row loginForm container">
+      return (<div className="row bg-image loginformcontainer container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
-              <div className="card-action blue-grey darken-3 white-text center">
+              <div className="card-action blue-grey darken-2 white-text center">
                 <h3>Login</h3>
               </div>
               <div className="card-content">

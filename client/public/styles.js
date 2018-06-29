@@ -12,6 +12,6 @@ $('document').ready(() => {
   $('#review').trigger('autoresize');
   $('#contact-message').val();
   $('#contact-message').trigger('autoresize');
-  $('li.active').addClass('blue');
-  $('li.indicator').addClass('blue');
+  $('li.active').addClass('blue darken-2');
+  $('li.indicator').addClass('blue darken-2');
 });
