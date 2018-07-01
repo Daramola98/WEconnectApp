@@ -1,12 +1,14 @@
 import React from 'react';
 import { Tabs, Tab, Modal, Pagination } from 'react-materialize';
 import moment from 'moment';
+import ReactStars from 'react-stars';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
 import Review from '../../Review/presentational/Review.jsx';
 import FormErrors from '../../Messages/presentational/FormErrors.jsx';
 import BusinessReviewForm from '../../Forms/BusinessReviewForm.jsx';
 import ReviewResponseForm from '../../Forms/ReviewResponseForm.jsx';
+import getAverageRating from '../../../utils/getAverageRating';
 
 /**
  * Class Representing React Component BusinessProfile
@@ -35,7 +37,7 @@ export default class BusinessProfile extends React.Component {
    *
    * @return {void} no return or void
    */
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchBusiness(this.props.match.params.id);
     this.props.fetchReviews(this.props.match.params.id, this.state.currentPage);
   }
@@ -147,7 +149,7 @@ export default class BusinessProfile extends React.Component {
     * @memberof BusinessProfile Component
     */
   render() {
-    const { business, reviewsCount } = this.props.businessProfile;
+    const { business, reviews, reviewsCount } = this.props.businessProfile;
     const { errors } = this.state;
     return <div className="row formcontainer container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
@@ -278,11 +280,23 @@ export default class BusinessProfile extends React.Component {
                         <div className="card">
                           <div className="card-content">
                             <div>
-                              <h5>
+                              <h5 style={{ display: 'inline-block' }}>
                                 <span className="blue-grey-text darken-2">
                                   Previous Reviews
                                 </span>
                               </h5>
+                              <span style={{ float: 'right', fontWeight: 'bold' }}>
+                                {reviews && getAverageRating(reviews)}
+                                <p><ReactStars
+                                className="review-stars"
+                                count={5}
+                                size={15}
+                                half={true}
+                                edit={false}
+                                color2={'#ffd700'}
+                                value={reviews && getAverageRating(reviews)}
+                              /></p>
+                              </span>
                             </div>
                             <div>
                               <ul className="collection">

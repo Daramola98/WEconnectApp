@@ -23,6 +23,17 @@ const businessReview = (sequelize, DataTypes) => {
         }
       }
     },
+    rating: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'Rating is required'
+        },
+        min: 0,
+        max: 5
+      }
+    }
   });
 
   BusinessReview.associate = (models) => {
