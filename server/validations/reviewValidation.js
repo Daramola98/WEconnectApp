@@ -9,6 +9,14 @@ const reviewValidation = {
     },
     errorMessage: 'Review is required'
   },
+  rating: {
+    trim: true,
+    notEmpty: true,
+    isFloat: {
+      errorMessage: 'Rating should be a number'
+    },
+    errorMessage: 'Rating is required'
+  },
 };
 
 export default reviewValidation;

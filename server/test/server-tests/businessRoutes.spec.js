@@ -539,7 +539,7 @@ describe(`${baseEndpoint}`, () => {
   });
 
   /*
-   * POST /api/v1/businesses/:businessId route to add a business review.
+   * POST /api/v1/businesses/:businessId/reviews route to add a business review.
    */
   describe(`${baseEndpoint}/:businessId/reviews POST business review`, () => {
     beforeEach((done) => {
@@ -563,7 +563,7 @@ describe(`${baseEndpoint}`, () => {
     });
 
     it('should add a review to a business in the businesses database with the specified id', (done) => {
-      const review = { review: 'Business is so great would like to invest' };
+      const review = { review: 'Business is so great would like to invest', rating: 3.5 };
       chai.request(app)
         .post(`${baseEndpoint}/${businessId}/reviews`)
         .send(review)
@@ -572,12 +572,13 @@ describe(`${baseEndpoint}`, () => {
           expect(res.status).to.equal(201);
           expect(res.body.message).to.equal('Business Review Added');
           expect(res.body.reviewDetails.review).to.equal('Business is so great would like to invest');
+          expect(res.body.reviewDetails.rating).to.equal(3.5);
           done();
         });
     });
 
     it('should return message if business with specified id is not found', (done) => {
-      const review = { review: 'Business is so great would like to invest like now' };
+      const review = { review: 'Business is so great would like to invest like now', rating: 4.5 };
       chai.request(app)
         .post(`${baseEndpoint}/faf79f92-fab6-4c45-9519-38f6564c3711/reviews`)
         .send(review)
@@ -590,7 +591,7 @@ describe(`${baseEndpoint}`, () => {
     });
 
     it('should catch validation errors', (done) => {
-      const review = { review: 'B' };
+      const review = { review: 'B', rating: 4.0 };
       chai.request(app)
         .post(`${baseEndpoint}/${businessId}/reviews`)
         .send(review)
@@ -603,21 +604,36 @@ describe(`${baseEndpoint}`, () => {
         });
     });
 
+    it('should catch validation errors', (done) => {
+      const review = { review: 'Best business', rating: 'Nice' };
+      chai.request(app)
+        .post(`${baseEndpoint}/${businessId}/reviews`)
+        .send(review)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body.validationErrors[0]).to.equal('Rating should be a number');
+          done();
+        });
+    });
+
     it('should catch required fields validation errors', (done) => {
       chai.request(app)
         .post(`${baseEndpoint}/${businessId}/reviews`)
-        .send({ review: '' })
+        .send({ review: '', rating: '' })
         .set('authorization', authToken)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.validationErrors[0]).to.equal('Review is required');
+          expect(res.body.validationErrors[2]).to.equal('Rating is required');
           done();
         });
     });
   });
 
   /*
-   * GET /api/v1/businesses/:businessId route to get reviews for a business.
+   * GET /api/v1/businesses/:businessId/reviews route to get reviews for a business.
    */
   describe(`${baseEndpoint}/:businessId/reviews GET business review`, () => {
     beforeEach((done) => {
@@ -635,7 +651,7 @@ describe(`${baseEndpoint}`, () => {
       })
         .then((business) => {
           businessId = business.id;
-          const review = { review: 'Business is so great would like to invest' };
+          const review = { review: 'Business is so great would like to invest', rating: 5.0 };
           chai.request(app)
             .post(`${baseEndpoint}/${businessId}/reviews`)
             .send(review)
@@ -655,6 +671,7 @@ describe(`${baseEndpoint}`, () => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Reviews have been found');
           expect(res.body.reviews[0].review).to.equal('Business is so great would like to invest');
+          expect(res.body.reviews[0].rating).to.equal(5.0);
           expect(res.body.reviews[0]).to.have.property('responses');
           done();
         });

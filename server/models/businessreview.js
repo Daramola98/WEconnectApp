@@ -25,7 +25,9 @@ const businessReview = (sequelize, DataTypes) => {
     },
     rating: {
       type: DataTypes.FLOAT,
-      allowNull: false,
+      allowNull: {
+        msg: 'Rating is required'
+      },
       validate: {
         notEmpty: {
           msg: 'Rating is required'
