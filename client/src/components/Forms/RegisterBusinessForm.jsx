@@ -4,7 +4,6 @@ import { Input, Row } from 'react-materialize';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
 
-
 /**
  * Class Representing React Component RegisterBusinessForm
  *@class RegisterBusiness
@@ -134,9 +133,9 @@ export default class RegisterBusinessForm extends React.Component {
     const { imagePreviewUrl } = this.state;
     let imagePreview = null;
     if (imagePreviewUrl) {
-      imagePreview = (<img className="responsive preview" src={imagePreviewUrl} />);
+      imagePreview = (<img className="preview" src={imagePreviewUrl} />);
     } else {
-      imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+      imagePreview = (<img className="preview" src="/images/imageholder.png"/>);
     }
     return <div className="row">
         <form onSubmit={this.handleRegisterBusinessSubmit}>

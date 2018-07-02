@@ -180,11 +180,9 @@ li.active {
   border-bottom: 5px solid white;
 }
 .preview {
-    height: 300px;
-    @media (max-width: 360px) { 
-      width: 250px;
-  }
-    width: 300px
+  height: 100%;
+  object-fit: cover !important;
+  width: 100%;
 }
 ul.pagination {
   margin-left: 30%;
@@ -337,4 +335,9 @@ ul.pagination {
 
 .review-stars {
   right: 20px;
+}
+.imgPreview {
+  border: 1px solid black;
+  margin: auto;
+  width: auto;
 }
