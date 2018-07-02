@@ -287,7 +287,7 @@ export default class BusinessProfile extends React.Component {
                               </h5>
                               <span style={{ float: 'right', fontWeight: 'bold' }}>
                                 {reviews && getAverageRating(reviews)}
-                                <p><ReactStars
+                                <ReactStars
                                 className="review-stars"
                                 count={5}
                                 size={15}
@@ -295,7 +295,7 @@ export default class BusinessProfile extends React.Component {
                                 edit={false}
                                 color2={'#ffd700'}
                                 value={reviews && getAverageRating(reviews)}
-                              /></p>
+                              />
                               </span>
                             </div>
                             <div>
