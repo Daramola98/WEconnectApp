@@ -1,6 +1,6 @@
 import express from 'express';
 import Businesses from '../controllers/Businesses';
-import { businessIdCheck, businessQueryCheck } from '../middlewares/validationHelper';
+import { businessIdCheck, reviewIdCheck, businessQueryCheck } from '../middlewares/validationHelper';
 import isAuthorized from '../middlewares/isAuthorized';
 import upload from '../middlewares/fileUpload';
 import isValidFile from '../middlewares/isValidFile';
@@ -32,10 +32,13 @@ router.put(
 router.delete('/:businessId', isAuthorized, businessIdCheck, Businesses.removeBusiness);
 
 router.post('/:businessId/reviews', isAuthorized, businessIdCheck, modelValidator(reviewValidation), Businesses.addReview);
+router.put('/:businessId/reviews/:reviewId', isAuthorized, businessIdCheck, reviewIdCheck, modelValidator(reviewValidation), Businesses.updateReview);
+router.delete('/:businessId/reviews/:reviewId', isAuthorized, businessIdCheck, reviewIdCheck, Businesses.deleteReview);
 
 router.post(
   '/:businessId/reviews/:reviewId',
   isAuthorized, businessIdCheck,
+  reviewIdCheck,
   modelValidator(reviewResponseValidation),
   Businesses.addReviewResponse
 );

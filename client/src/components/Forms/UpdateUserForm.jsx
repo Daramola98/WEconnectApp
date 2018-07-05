@@ -129,4 +129,5 @@ export default class UpdateUserForm extends React.Component {
 
 UpdateUserForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

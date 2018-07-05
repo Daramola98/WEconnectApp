@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// /**
-//     * Takes a pageNumber and updates the state of the Business listing Component
-//     * @param {number} searchValue number of the current page
-//     * @param {string} propertyToUpdate property to update in state
-//     *
-//     * @return {func} function to update the state of the Business listing Component
-//     */
-// function setSearchValue(searchValue) {
-//   return (previousState, currentProps) => ({ ...previousState, search: searchValue });
-// }
 /**
  * Class Representing React Component FilterBusiness
  *@class FilterBusiness
@@ -47,4 +37,5 @@ export default FilterBusiness;
 
 FilterBusiness.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
+  search: PropTypes.string.isRequired
 };

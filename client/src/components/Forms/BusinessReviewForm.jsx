@@ -51,6 +51,12 @@ export default class BusinessReviewForm extends React.Component {
   onSubmit = (event) => {
     event.preventDefault();
     this.props.submit(this.state.reviewDetails);
+    this.setState({
+      reviewDetails: {
+        review: '',
+        rating: 0
+      }
+    });
   }
 
   /**

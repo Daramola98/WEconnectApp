@@ -12,7 +12,9 @@ const getAverageRating = (reviews) => {
   reviews.forEach((review) => {
     ratings.push(review.rating);
   });
-  return ratings.reduce((aggregate, currentValue) => aggregate + currentValue) / reviews.length;
+  const averageRating = ratings
+    .reduce((aggregate, currentValue) => aggregate + currentValue) / reviews.length;
+  return averageRating.toFixed(1);
 };
 
 export default getAverageRating;

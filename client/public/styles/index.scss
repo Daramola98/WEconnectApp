@@ -117,6 +117,7 @@ li.active {
   margin-top: 15px;
   margin-left: 0px;
   margin-bottom: 15px;
+  overflow: auto;
 }
 #welcome-message {
   border: 5px transparent;
@@ -281,7 +282,7 @@ ul.pagination {
 .banner {
     width: 100%;
     min-height: 450px;
-    background: url('/images/connecter.jpg') center bottom no-repeat;
+    background: url('/images/jumbotron3.jpg') center bottom no-repeat;
     position: relative; }
   @media(min-width: 1360px){
       .banner{
@@ -336,8 +337,13 @@ ul.pagination {
 .review-stars {
   right: 20px;
 }
+
 .imgPreview {
   border: 1px solid black;
   margin: auto;
   width: auto;
+}
+.review-controls {
+  float: right;
+  cursor: pointer;
 }

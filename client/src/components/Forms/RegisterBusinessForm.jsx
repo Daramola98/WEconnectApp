@@ -237,5 +237,6 @@ export default class RegisterBusinessForm extends React.Component {
 RegisterBusinessForm.propTypes = {
   submit: PropTypes.func.isRequired,
   categories: PropTypes.array.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };
 

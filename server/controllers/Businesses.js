@@ -184,7 +184,7 @@ export default class Businesses {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
-  /** Update the deatils of  an existing business
+  /** Update the details of an existing business
    * @static
    * @param {object} req - The request object
    * @param {object} res - The response object
@@ -326,6 +326,98 @@ export default class Businesses {
       .catch(err => res.status(500).json(serverErrorMessage.message));
   }
 
+  /** Update the deatils of an existing business review
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business review updated or error message
+   * @memberof Business class
+   */
+  static updateReview(req, res) {
+    return Business
+      .findOne({
+        where: {
+          id: req.params.businessId
+        },
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json(businessNotFoundMessage);
+        }
+        return BusinessReview
+          .findOne({
+            where: {
+              id: req.params.reviewId
+            }
+          })
+          .then((review) => {
+            if (!review) {
+              return res.status(404).json('Review not found');
+            }
+            if (req.userData.userId !== review.reviewerId) {
+              return res.status(403).json({ message: 'You are not allowed to update this review' });
+            }
+            handleInputFormat(req);
+            const reviewDetails = {
+              review: req.body.review,
+              rating: req.body.rating
+            };
+            return review
+              .update(reviewDetails, { fields: Object.keys(reviewDetails) })
+              .then(updatedReview => res.status(200).json({ message: 'Review Updated Successfully', updatedReview }))
+              .catch((err) => {
+                if (err.errors) {
+                  handleValidationErrors(err.errors, res);
+                } else {
+                  return res.status(500).json(serverErrorMessage.message);
+                }
+              });
+          })
+          .catch(err => res.status(500).json(serverErrorMessage.message));
+      })
+      .catch(err => res.status(500).json(serverErrorMessage.message));
+  }
+
+  /** Delete the deatils of an existing business review
+   * @static
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @return {object} Success message with the business review deleted or error message
+   * @memberof Business class
+   */
+  static deleteReview(req, res) {
+    return Business
+      .findOne({
+        where: {
+          id: req.params.businessId
+        },
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json(businessNotFoundMessage);
+        }
+        return BusinessReview
+          .findOne({
+            where: {
+              id: req.params.reviewId
+            }
+          })
+          .then((review) => {
+            if (!review) {
+              return res.status(404).json('Review not found');
+            }
+            if (req.userData.userId !== review.reviewerId) {
+              return res.status(403).json({ message: 'You are not allowed to delete this review' });
+            }
+            return review
+              .destroy()
+              .then(() => res.status(200).json({ message: 'Review Deleted Successfully' }))
+              .catch(err => res.status(500).json(serverErrorMessage.message));
+          })
+          .catch(err => res.status(500).json(serverErrorMessage.message));
+      })
+      .catch(err => res.status(500).json(serverErrorMessage.message));
+  }
 
   /**
    * Add a business review response to a buinessreview in the database
