@@ -20,7 +20,7 @@ const Business = props => (
           half={true}
           edit={false}
           color2={'#ffd700'}
-          value={getAverageRating(props.business.reviews)} /> {props.business.reviews.length} <i className="person-count material-icons">person</i></span>
+          value={Number(getAverageRating(props.business.reviews))} /> {props.business.reviews.length} <i className="person-count material-icons">person</i></span>
         </div>
         </div>
         <div className="card-action">
@@ -38,7 +38,9 @@ Business.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
+    businessImage: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
+    review: PropTypes.array
   }).isRequired,
 };
 

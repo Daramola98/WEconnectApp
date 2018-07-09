@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import GuestNavBar from '../presentational/GuestNavBar.jsx';
 import UserNavBar from '../presentational/UserNavBar.jsx';
 
@@ -32,3 +33,7 @@ export default class Header extends React.Component {
     );
   }
 }
+
+Header.propTypes = {
+  usersReducer: PropTypes.object.isRequired
+};

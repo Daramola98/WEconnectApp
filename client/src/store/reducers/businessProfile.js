@@ -1,10 +1,12 @@
-import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_FAILED, FETCH_BUSINESS_REVIEWS, FETCH_BUSINESS_REVIEWS_FAILED, POST_REVIEW } from '../actions/actionTypes';
+import { SET_BUSINESS_PROFILE, FETCH_BUSINESS_FAILED, FETCH_BUSINESS_REVIEWS, FETCH_BUSINESS_REVIEWS_FAILED, POST_REVIEW, UPDATE_REVIEW, DELETE_REVIEW } from '../actions/actionTypes';
 
 const initialState = {
   business: {},
   reviews: [],
   reviewsCount: 0,
-  reviewSubmitted: false
+  reviewSubmitted: false,
+  reviewUpdated: false,
+  reviewDeleted: false
 };
 
 /**
@@ -30,6 +32,12 @@ function businessProfile(state = initialState, action) {
 
     case POST_REVIEW:
       return { ...state, reviewSubmitted: true };
+
+    case UPDATE_REVIEW:
+      return { ...state, reviewUpdated: true };
+
+    case DELETE_REVIEW:
+      return { ...state, reviewDeleted: true };
 
     default:
       return state;

@@ -73,4 +73,5 @@ export default class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

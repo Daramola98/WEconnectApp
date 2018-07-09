@@ -166,4 +166,5 @@ export default class SignUpForm extends React.Component {
 
 SignUpForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

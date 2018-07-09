@@ -16,7 +16,7 @@ let businessId2;
 
 describe(`${baseEndpoint}`, () => {
   beforeEach((done) => {
-    db.Business.sequelize.sync({ force: true }) // drops table and re-creates it
+    db.sequelize.sync({ force: true }) // drops table and re-creates it
       .then(() => {
         User.create({
           firstname: 'Damilola',
@@ -718,6 +718,122 @@ describe(`${baseEndpoint}`, () => {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.body.validationErrors[0]).to.equal('Response should be more than 1 and not greater than 500 characters');
+          done();
+        });
+    });
+  });
+
+  /*
+   * PUT /api/v1/businesses/:businessId/reviews/:reviewId route to update a review for a business.
+   */
+  describe(`${baseEndpoint}/:businessId/reviews/:reviewId PUT business review`, () => {
+    beforeEach((done) => {
+      Business.create({
+        name: 'Andela',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        businessOwner: 'dammy10',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
+        .then((business) => {
+          businessId = business.id;
+          const review = { review: 'Business is so great would like to invest', rating: 5.0 };
+          chai.request(app)
+            .post(`${baseEndpoint}/${businessId}/reviews`)
+            .send(review)
+            .set('authorization', authToken)
+            .end((err, res) => {
+              businessId2 = res.body.reviewDetails.id;
+              done();
+            });
+        })
+        .catch(err => done(err));
+    });
+
+    it('should update a review for a business in the businesses database with the specified id', (done) => {
+      const review = { review: 'Business is so great like to invest so much', rating: 4.5 };
+      chai.request(app)
+        .put(`${baseEndpoint}/${businessId}/reviews/${businessId2}`)
+        .send(review)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Review Updated Successfully');
+          expect(res.body.updatedReview.review).to.equal('Business is so great like to invest so much');
+          expect(res.body.updatedReview.rating).to.equal(4.5);
+          done();
+        });
+    });
+
+    it('should return a message if the review with the specified id is not found', (done) => {
+      const review = { review: 'Business is so great like to invest so much', rating: 4.5 };
+      chai.request(app)
+        .put(`${baseEndpoint}/${businessId}/reviews/f30bdf11-5cfb-4bbc-afa3-6b01f77932c2`)
+        .send(review)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Review not found');
+          done();
+        });
+    });
+  });
+
+  /*
+   * DELETE /api/v1/businesses/:businessId/reviews/:reviewId route to delete a review.
+   */
+  describe(`${baseEndpoint}/:businessId/reviews/:reviewId DELETE business review`, () => {
+    beforeEach((done) => {
+      Business.create({
+        name: 'Andela',
+        category: 'GAMING',
+        email: 'weather@yahoo.com',
+        businessOwner: 'dammy10',
+        telephoneNumber: '07011041032',
+        homeNumber: '08011031456',
+        location: 'LAGOS',
+        address: '7,Adeba Road Lakowe Lagos',
+        description: 'Rent houses here for affordable prices',
+        userId
+      })
+        .then((business) => {
+          businessId = business.id;
+          const review = { review: 'Business is so great would like to invest', rating: 5.0 };
+          chai.request(app)
+            .post(`${baseEndpoint}/${businessId}/reviews`)
+            .send(review)
+            .set('authorization', authToken)
+            .end((err, res) => {
+              businessId2 = res.body.reviewDetails.id;
+              done();
+            });
+        })
+        .catch(err => done(err));
+    });
+
+    it('should delete a review for a business in the review table with the specified id', (done) => {
+      chai.request(app)
+        .delete(`${baseEndpoint}/${businessId}/reviews/${businessId2}`)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Review Deleted Successfully');
+          done();
+        });
+    });
+
+    it('should return a message if review with the specified id was not found', (done) => {
+      chai.request(app)
+        .delete(`${baseEndpoint}/${businessId}/reviews/f30bdf11-5cfb-4bbc-afa3-6b01f77932c2`)
+        .set('authorization', authToken)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Review not found');
           done();
         });
     });

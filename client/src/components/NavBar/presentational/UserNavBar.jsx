@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SideNav, SideNavItem, Button, Navbar, Dropdown, NavItem } from 'react-materialize';
+import PropTypes from 'prop-types';
 
 const UserNavBar = props => (
   <div>
@@ -94,3 +95,9 @@ const UserNavBar = props => (
 );
 
 export default UserNavBar;
+
+UserNavBar.propTypes = {
+  firstname: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  logout: PropTypes.func.isRequired,
+};

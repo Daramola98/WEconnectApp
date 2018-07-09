@@ -37,6 +37,42 @@ export const businessIdCheck = (req, res, next) => {
 };
 
 /**
+   * Checks if review id is valid i.e a uuid
+   * @param {object} req - The request object
+   * @param {object} res - The response object
+   * @param {object} next - callback function to move to next middleware
+   * @return {object} res - The response to the client
+   * @memberof validationHelper
+   */
+export const reviewIdCheck = (req, res, next) => {
+  checkForWhiteSpace(req.params.reviewId);
+  req.checkParams({
+    reviewId: {
+      trim: true,
+      notEmpty: {
+        errorMessage: 'Review Id is required'
+      },
+      isUUID: {
+        errorMessage: 'Review id should be a uuid'
+      }
+    }
+  });
+  const errors = req.validationErrors();
+  if (errors) {
+    const validationErrors = [];
+    errors.forEach((error) => {
+      validationErrors.push(error.msg);
+    });
+    return res.status(400)
+      .json({
+        message: 'Cannot Complete Request, Errors Found ',
+        validationErrors
+      });
+  }
+  return next();
+};
+
+/**
    * Checks if user id is valid i.e a uuid
    * @param {object} req - The request object
    * @param {object} res - The response object

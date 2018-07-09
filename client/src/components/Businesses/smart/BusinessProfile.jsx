@@ -113,6 +113,52 @@ export default class BusinessProfile extends React.Component {
   }
 
   /**
+      * onSubmit Event handler callback for Edit review form
+      * @param {object} review The event object
+      *
+      * @return {null}  Review submitted or returns error message
+      * @memberof BusinessProfile Component
+      */
+  onEditReview = (review) => {
+    this.setState({ disableBtn: true });
+    if (!this.props.user.authenticated) {
+      alertify.set('notifier', 'position', 'top-right');
+      alertify.warning('You need to be logged in to post a review');
+      setTimeout(() => this.props.history.push('/login'), 2000);
+    }
+    this.props.updateReview(this.props.match.params.id, this.state.reviewId, review)
+      .then((response) => {
+        $('#editReview').modal('close');
+        alertify.set('notifier', 'position', 'top-right');
+        alertify.success('Review Submitted');
+        this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
+          .then(() => {
+            this.setState({
+              reviews: true, info: false, disableBtn: false
+            });
+          });
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          alertify.set('notifier', 'position', 'top-right');
+          alertify.warning('Session Expired Login again');
+          this.props.logout();
+          setTimeout(() => this.props.history.push('/login'), 1000);
+          return;
+        }
+        if (error) {
+          this.setState({
+            errors:
+             { ...this.state.errors, message: error.response.data.validationErrors },
+            info: false,
+            reviews: true,
+            disableBtn: false
+          });
+        }
+      });
+  }
+
+  /**
       * onSubmit Event handler callback for review response form
       * @param {object} response The event object
       *
@@ -151,6 +197,8 @@ export default class BusinessProfile extends React.Component {
   render() {
     const { business, reviews, reviewsCount } = this.props.businessProfile;
     const { errors } = this.state;
+    const { user } = this.props.user;
+    const setReviewId = reviewId => this.setState({ reviewId, info: false, reviews: true });
     return <div className="row formcontainer container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
@@ -287,22 +335,23 @@ export default class BusinessProfile extends React.Component {
                               </h5>
                               <span style={{ float: 'right', fontWeight: 'bold' }}>
                                 {reviews && getAverageRating(reviews)}
-                                <p><ReactStars
+                                <ReactStars
                                 className="review-stars"
                                 count={5}
                                 size={15}
                                 half={true}
                                 edit={false}
                                 color2={'#ffd700'}
-                                value={reviews && getAverageRating(reviews)}
-                              /></p>
+                                value={reviews && Number(getAverageRating(reviews))}
+                              />
                               </span>
                             </div>
                             <div>
                               <ul className="collection">
                                 {this.props.businessProfile.reviews.length > 0 ?
                                  this.props.businessProfile.reviews.map((review, i) => (
-                                        <Review key={review.id} review={review}>
+                                <Review key={review.id}
+                                 userId={user.userId} setReviewId={setReviewId} review={review}>
                                           <div className="align-right">
                                             <a
                                               className="blue-grey-text darken-2"
@@ -354,9 +403,53 @@ export default class BusinessProfile extends React.Component {
                     </div>
                   </Tab>
                 </Tabs>
+
+                {/* Review Reply Modal */}
                 <Modal id="replyReview" header={'REPLY TO REVIEW'}>
                   <ReviewResponseForm submit={this.onSubmitResponse} />
                 </Modal>
+
+                {/* Delete Review Modal */}
+                <Modal id="deleteReview" header={'DELETE REVIEW'}
+                actions={
+                      <div>
+                        <button className="confirmDelete"
+                        onClick={() => {
+                          this.props.deleteReview(this.props.match.params.id, this.state.reviewId)
+                            .then(() => {
+                              alertify.set('notifier', 'position', 'top-right');
+                              alertify.success('Review Deleted');
+                              $('#deleteReview').modal('close');
+                              this.props
+                              .fetchReviews(this.props.match.params.id, this.state.currentPage)
+                              .then(() => this.setState({ info: false, reviews: true }));
+                            })
+                            .catch((error) => {
+                              if (error.response.status === 401) {
+                                alertify.set('notifier', 'position', 'top-right');
+                                alertify.warning('Session Expired Login again');
+                                this.props.logout();
+                                setTimeout(() => this.props.history.push('/login'), 1000);
+                              }
+                            });
+                        }}
+                        >
+                        DELETE
+                        </button>
+                        <button onClick={() => $('#deleteReview').modal('close')}>CLOSE</button>
+                      </div>
+                    }
+                      >
+                        <strong>DO YOU WANT TO DELETE THIS REVIEW</strong>
+                </Modal>
+
+                {/* Edit Review Modal */}
+                <Modal id="editReview" header={'EDIT REVIEW'}>
+                <BusinessReviewForm
+                  submit={this.onEditReview} disableBtn={this.state.disableBtn} />
+                </Modal>
+
+                {/* Previous Replies Modal */}
                 <Modal id="prevReplies" header={<span className="blue-grey-text darken-2">PREVIOUS REPLIES</span>}>
                   <ul className="collection">
                     {this.state.reviewResponses.length > 0 ?

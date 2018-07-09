@@ -1,5 +1,6 @@
 import React from 'react';
 import alertify from 'alertifyjs';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -48,3 +49,9 @@ export default class ReviewResponseForm extends React.Component {
       </div>;
   }
 }
+
+ReviewResponseForm.propTypes = {
+  submit: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+  disableBtn: PropTypes.bool.isRequired
+};
