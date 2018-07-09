@@ -8,7 +8,7 @@ const Home = props => (
           <div className="inner-welcome">
           <h3>Welcome to WEconnect</h3>
           <p>
-            <Link className="btn-large waves-effect waves-dark blue-grey darken-2 white-text" to="/signUp">SIGN UP</Link>
+            <Link className="btn-large waves-effect waves-dark blue-grey signupbutton darken-2 white-text" to="/signUp">SIGN UP</Link>
             <Link className="btn-large waves-effect waves-dark blue-grey signinbutton darken-2 white-text" to="/login">SIGN IN</Link>
          </p>
          </div>

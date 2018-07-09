@@ -11,6 +11,6 @@ describe('<Business />', () => {
       category: 'Gaming'
     };
     const wrapper = shallow(<Business business={business} />);
-    expect(wrapper.exists(<td></td>)).toBe(true);
+    expect(wrapper.find('.card-image')).toHaveLength(1);
   });
 });

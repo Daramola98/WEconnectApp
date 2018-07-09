@@ -5,11 +5,3 @@ export const userTelephoneNumberErrorMessage = 'Telephone Number should be 11 ch
 export const userHomeNumberErrorMessage = 'Telephone Number should be 11 characters';
 export const userPassword = 'password should be more than 5 and not greater than 16 characters';
 
-// export default {
-//   userEmailErrorMessage,
-//   userHomeNumberErrorMessage,
-//   userLastNameErrorMessage,
-//   userPassword,
-//   userTelephoneNumberErrorMessage,
-//   userNameErrorMessage
-// };
