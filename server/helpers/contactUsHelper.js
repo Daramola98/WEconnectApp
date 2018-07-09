@@ -45,7 +45,7 @@ export const getContactUsMessages = (req, res) => {
       if (result.length < 1) {
         return res.status(404).json({ message: 'No messages' });
       }
-      res.status(200).json(result);
+      return res.status(200).json(result);
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };

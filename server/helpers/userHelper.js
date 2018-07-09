@@ -24,10 +24,9 @@ export default {
       })
       .then((user) => {
         if (user) {
-          res.status(409).json({ message: 'Email already exists' });
-        } else {
-          next();
+          return res.status(409).json({ message: 'Email already exists' });
         }
+        next();
       });
   },
   /**
@@ -53,10 +52,9 @@ export default {
       })
       .then((user) => {
         if (user) {
-          res.status(409).json({ message: 'User with first name and lastname already exists' });
-        } else {
-          next();
+          return res.status(409).json({ message: 'User with first name and lastname already exists' });
         }
+        next();
       });
   },
 

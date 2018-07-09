@@ -173,23 +173,25 @@ export default class UserProfile extends React.Component {
                                     >
                                       UPDATE
                                     </Link>
-                                    <a className="waves-effect blue-grey-text darken-2  waves-light btn-small" onClick={() => {
+                                    <a className="waves-effect red-text darken-2  waves-light btn-small" onClick={() => {
                                       businessId = business.id;
                                       $('#deleteBusiness').modal('open');
                                     }}>
-                                      DELETE
+                                      <i className="material-icons">delete</i>
                                     </a>
                                 </Business>
                               )) : <div>
                               <h1>No Businesses !!</h1>
-                            </div>}
-                      <br/><br/>
-                      <Pagination
-                       key={Date.now()}
-                        items={Math.ceil(businessesCount / 12) || 0 }
-                        activePage={this.state.currentPage}
-                        maxButtons={5}
-                        onSelect={this.onPageChange} />
+                        </div>}
+                        <div className="col s12">
+                          <Pagination
+                          key={Date.now()}
+                          items={Math.ceil(businessesCount / 12) || 0 }
+                          activePage={this.state.currentPage}
+                          maxButtons={5}
+                          onSelect={this.onPageChange} />
+                        </div>
+                       </div>
                       <Modal
                       id="deleteBusiness"
                       header="Confirm Business Deletion"
@@ -223,7 +225,6 @@ export default class UserProfile extends React.Component {
                       >
                         <strong>DO YOU WANT TO DELETE THIS BUSINESS</strong>
                       </Modal>
-                    </div>
                   </Tab>
                 </Tabs>
               </div>

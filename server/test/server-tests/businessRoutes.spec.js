@@ -329,7 +329,7 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}?location=`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Business location should be a string');
+          expect(res.body.validationErrors[0]).to.equal('Location is required');
           done();
         });
     });
@@ -378,7 +378,7 @@ describe(`${baseEndpoint}`, () => {
         .get(`${baseEndpoint}?category=`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.validationErrors[0]).to.equal('Business category should be a string');
+          expect(res.body.validationErrors[0]).to.equal('Category is required');
           done();
         });
     });

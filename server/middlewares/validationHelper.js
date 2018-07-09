@@ -27,14 +27,13 @@ export const businessIdCheck = (req, res, next) => {
     errors.forEach((error) => {
       validationErrors.push(error.msg);
     });
-    res.status(400)
+    return res.status(400)
       .json({
         message: 'Cannot Complete Request, Errors Found ',
         validationErrors
       });
-  } else {
-    return next();
   }
+  return next();
 };
 
 /**
@@ -64,14 +63,13 @@ export const userIdCheck = (req, res, next) => {
     errors.forEach((error) => {
       validationErrors.push(error.msg);
     });
-    res.status(400)
+    return res.status(400)
       .json({
         message: 'Cannot Complete Request, Errors Found ',
         validationErrors
       });
-  } else {
-    return next();
   }
+  return next();
 };
 
 /**

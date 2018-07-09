@@ -13,15 +13,15 @@ const GuestNavBar = props => (
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/aboutUs">About Us</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/contactUs">Contact Us</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/howitworks">How it Works</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/login">Sign In</Link>
           </li>
@@ -44,15 +44,15 @@ const GuestNavBar = props => (
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/aboutUs">About Us</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/contactUs">Contact Us</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/howitworks">How it Works</Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/signup">Sign Up</Link>
             </li>

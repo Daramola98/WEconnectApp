@@ -84,7 +84,7 @@ export const findBusinessByName = (req, res, offset) => {
         return res.status(200)
           .json({ message: businessFoundMessage, businesses, businessesCount });
       }
-      res.status(404).json({ message: 'No Business found with this name' });
+      return res.status(404).json({ message: 'No Business found with this name' });
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };
@@ -115,7 +115,7 @@ export const findBusinessByLocation = (req, res, offset) => {
         return res.status(200)
           .json({ message: businessFoundMessage, businesses, businessesCount });
       }
-      res.status(404).json(businessNotFoundInLocationMessage);
+      return res.status(404).json(businessNotFoundInLocationMessage);
     })
     .catch(err => res.status(500).json(serverErrorMessage.message));
 };
@@ -193,6 +193,6 @@ export const listBusinessCategories = (req, res) => sequelize
     if (!Array.isArray(categories)) {
       categories = categories.substring(1, categories.length - 1).split(',');
     }
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
   })
   .catch(err => res.status(500).json(serverErrorMessage.message));

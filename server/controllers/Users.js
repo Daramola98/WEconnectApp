@@ -26,49 +26,49 @@ export default class Users {
   static createUser(req, res) {
     bcrypt.hash(req.body.password, 10, (err, hash) => {
       if (err) {
-        res.status(500).json({ error: err });
-      } else {
-        handleInputFormat(req);
-        const userDetails = {
-          firstname: req.body.firstname,
-          lastname: req.body.lastname,
-          username: req.body.username,
-          email: req.body.email,
-          password: hash,
-          telephoneNumber: req.body.telephoneNumber,
-          homeNumber: req.body.homeNumber
-        };
-        return User
-          .create(userDetails)
-          .then((user) => {
-            const createdUser = {
-              userId: user.id,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              username: user.username,
-              email: user.email,
-              telephoneNumber: user.telephoneNumber,
-              homeNumber: user.homeNumber
-            };
-            const token = jwt.sign(
-              createdUser
-              , process.env.JWT_KEY,
-              {
-                expiresIn: '6hr'
-              }
-            );
-            res.status(201).json({ message: userCreatedMessage, createdUser, token });
-          })
-          .catch((err) => {
-            if (err.errors) {
-              handleValidationErrors(err.errors, res);
-            } else {
-              return res.status(500).json(serverErrorMessage.message);
-            }
-          });
+        return res.status(500).json({ error: err });
       }
+      handleInputFormat(req);
+      const userDetails = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        username: req.body.username,
+        email: req.body.email,
+        password: hash,
+        telephoneNumber: req.body.telephoneNumber,
+        homeNumber: req.body.homeNumber
+      };
+      return User
+        .create(userDetails)
+        .then((user) => {
+          const createdUser = {
+            userId: user.id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            username: user.username,
+            email: user.email,
+            telephoneNumber: user.telephoneNumber,
+            homeNumber: user.homeNumber
+          };
+          const token = jwt.sign(
+            createdUser
+            , process.env.JWT_KEY,
+            {
+              expiresIn: '6hr'
+            }
+          );
+          return res.status(201).json({ message: userCreatedMessage, createdUser, token });
+        })
+        .catch((err) => {
+          if (err.errors) {
+            handleValidationErrors(err.errors, res);
+          } else {
+            return res.status(500).json(serverErrorMessage.message);
+          }
+        });
     });
   }
+
   /**
      * Retrieves a user from the database
      * @param {object} req - The request object
@@ -135,7 +135,7 @@ export default class Users {
      * @return {object} Success message with the user found or error message
      * @memberof UserController
      */
-  static delete(req, res) {
+  static deleteUser(req, res) {
     if (req.userData.email !== process.env.ADMIN_CREDENTIAL) {
       return res.status(403).json({ message: 'You are not allowed to access this endpoint' });
     }
@@ -200,7 +200,7 @@ export default class Users {
               expiresIn: '6hr'
             }
           );
-          res.status(200).json({ message: 'User Updated successfully', updatedUserDetails, token });
+          return res.status(200).json({ message: 'User Updated successfully', updatedUserDetails, token });
         })
         .catch((err) => {
           if (err.errors) {
