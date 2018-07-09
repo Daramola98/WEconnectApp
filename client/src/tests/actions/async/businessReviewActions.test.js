@@ -8,6 +8,7 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const businessId = 'b480cd56-7089-4210-939d-e89af667a1fc';
+const reviewId = 'b480cd56-7086-4210-939d-e89af667a1fc';
 const review = 'Nice Business';
 
 describe('Async Business Review Actions', () => {
@@ -29,7 +30,45 @@ describe('Async Business Review Actions', () => {
       }];
 
       const store = mockStore({ user: {} });
-      store.dispatch(businessReviewActions.postReview(businessId, review));
+      return store.dispatch(businessReviewActions.postReview(businessId, review));
+    });
+  });
+
+  describe('UpdateReview Action', () => {
+    it('should update a business review', () => {
+      moxios.stubRequest(`/api/v1/businesses/${businessId}/reviews/${reviewId}`, {
+        status: 200,
+        response: {
+          data: {
+            msg: 'Review Updated'
+          }
+        }
+      });
+      const expectedAction = [{
+        type: actionTypes.UPDATE_REVIEW
+      }];
+
+      const store = mockStore({ user: {} });
+      return store.dispatch(businessReviewActions.updateReview(businessId, reviewId, review));
+    });
+  });
+
+  describe('DeleteReview Action', () => {
+    it('should delete a business review', () => {
+      moxios.stubRequest(`/api/v1/businesses/${businessId}/reviews/${reviewId}`, {
+        status: 200,
+        response: {
+          data: {
+            msg: 'Review Deleted'
+          }
+        }
+      });
+      const expectedAction = [{
+        type: actionTypes.DELETE_REVIEW
+      }];
+
+      const store = mockStore({ user: {} });
+      return store.dispatch(businessReviewActions.deleteReview(businessId, reviewId));
     });
   });
 
@@ -51,7 +90,7 @@ describe('Async Business Review Actions', () => {
       }];
 
       const store = mockStore({ user: {} });
-      store.dispatch(businessReviewActions.fetchReviews(businessId, 1));
+      return store.dispatch(businessReviewActions.fetchReviews(businessId, 1));
     });
 
     it('should dispatch fetch business review failed when the request as an error status', () => {
@@ -68,7 +107,7 @@ describe('Async Business Review Actions', () => {
       }];
 
       const store = mockStore({ user: {} });
-      store.dispatch(businessReviewActions.fetchReviews(businessId, 1));
+      return store.dispatch(businessReviewActions.fetchReviews(businessId, 1));
     });
   });
 
@@ -87,7 +126,7 @@ describe('Async Business Review Actions', () => {
       }];
 
       const store = mockStore({ user: {} });
-      store.dispatch(businessReviewActions.postReviewResponse(businessId, 1, review));
+      return store.dispatch(businessReviewActions.postReviewResponse(businessId, 1, review));
     });
   });
 });

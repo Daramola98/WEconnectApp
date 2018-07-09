@@ -45,10 +45,7 @@
       "<rootDir>/client/src/tests/setup.js"
     ],
     "roots": [
-      "<rootDir>/client/src/tests/actions",
-      "<rootDir>/client/src/tests/components",
-      "<rootDir>/client/src/tests/containers",
-      "<rootDir>/client/src/tests/reducers"
+      "<rootDir>/client/src/tests/actions"
     ]
   },
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",

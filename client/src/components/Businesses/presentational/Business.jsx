@@ -38,9 +38,9 @@ Business.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
-    businessImage: PropTypes.string.isRequired,
+    businessImage: PropTypes.string,
     location: PropTypes.string.isRequired,
-    review: PropTypes.array
+    reviews: PropTypes.array.isRequired
   }).isRequired,
 };
 

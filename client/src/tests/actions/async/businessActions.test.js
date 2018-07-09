@@ -76,7 +76,7 @@ describe('Async Business Actions', () => {
       });
 
       const expectedAction = [{
-        type: actionTypes.fetchCategories,
+        type: actionTypes.FETCH_CATEGORIES,
         categories: ['Technolgy', 'Cooking']
       }];
 
@@ -172,7 +172,7 @@ describe('Async Business Actions', () => {
       });
 
       const expectedAction = [{
-        type: actionTypes.FETCH_BUSINESS,
+        type: actionTypes.SET_BUSINESS_PROFILE,
       }];
 
       const store = mockStore({ businesses: [] });

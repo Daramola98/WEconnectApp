@@ -6,7 +6,8 @@ describe('<SignUpForm />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<SignUpForm submit={() => wrapper.setState({ submitted: true })} />);
+    wrapper = shallow(<SignUpForm submit={() => wrapper.setState({ submitted: true })}
+     disableBtn={false} />);
   });
 
   describe('Firstname input', () => {

@@ -8,7 +8,8 @@ describe('<Business />', () => {
       id: '2',
       name: 'Andela',
       location: 'Lagos',
-      category: 'Gaming'
+      category: 'Gaming',
+      reviews: [{ review: 'Nice Business', rating: 3.5 }]
     };
     const wrapper = shallow(<Business business={business} />);
     expect(wrapper.find('.card-image')).toHaveLength(1);

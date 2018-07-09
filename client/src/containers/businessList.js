@@ -9,7 +9,7 @@ import { fetchBusinesses, searchBusiness, fetchCategories } from '../store/actio
    * @memberof businessListContainer
    */
 const mapStateToProps = state => ({
-  businesses: state.businessesReducer
+  businessList: state.businessesReducer
 });
 
 /**

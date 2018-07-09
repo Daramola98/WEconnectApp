@@ -181,8 +181,8 @@ export default class UserProfile extends React.Component {
                                     </a>
                                 </Business>
                               )) : <div>
-                              <h1>No Businesses !!</h1>
-                        </div>}
+                              <h3 className="col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h3>
+                            </div>}
                         <div className="col s12">
                           <Pagination
                           key={Date.now()}

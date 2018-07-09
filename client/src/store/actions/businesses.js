@@ -105,7 +105,7 @@ export const fetchBusinesses = (pageNumber = 0) => dispatch =>
         businessesCount: response.data.businessesCount
       });
     })
-    .catch(error => dispatch(fetchBusinessesFailed));
+    .catch(error => dispatch(fetchBusinessesFailed()));
 
 /**
    * Action creator for fetchCategories action

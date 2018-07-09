@@ -18,7 +18,6 @@ export default class BusinessListing extends React.Component {
     */
   constructor(props) {
     super(props);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       search: '',
       searchBy: 'name',
@@ -31,8 +30,6 @@ export default class BusinessListing extends React.Component {
       searchPagination: 'hide center',
       businessPagination: 'center'
     };
-    this.searchBy = '';
-    this.advancedSearch = '';
   }
 
 
@@ -156,16 +153,16 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     render() {
-      const { businesses } = this.props;
-      const businessCategories = businesses.categories;
-      const { businessesCount } = this.props.businesses;
+      const { businessList } = this.props;
+      const businessCategories = businessList.categories;
+      const { businessesCount } = businessList;
       const categoryOptions = businessCategories !== undefined ?
         Array.from(businessCategories).map(category =>
         <option key={category} value={category}>{category}</option>) : null;
 
       const locationOptions = this.props.locations.map(location =>
         <option key={location} value={location}>{location}</option>);
-      let filteredBusinesses = businesses.businesses;
+      let filteredBusinesses = businessList.businesses;
       if (filteredBusinesses.length > 0) {
         filteredBusinesses = filteredBusinesses
           .filter(business =>
@@ -173,20 +170,20 @@ export default class BusinessListing extends React.Component {
       }
 
       if (this.state.location !== 'null' && this.state.category !== 'null') {
-        filteredBusinesses = businesses.businesses
+        filteredBusinesses = businessList.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1
              && business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
 
       if (this.state.location !== 'null' && this.state.category === 'null') {
-        filteredBusinesses = businesses.businesses
+        filteredBusinesses = businessList.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1);
       }
 
       if (this.state.location === 'null' && this.state.category !== 'null') {
-        filteredBusinesses = businesses.businesses
+        filteredBusinesses = businessList.businesses
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
@@ -247,7 +244,7 @@ export default class BusinessListing extends React.Component {
 }
 
 BusinessListing.propTypes = {
-  businesses: PropTypes.object.isRequired,
+  businessList: PropTypes.object.isRequired,
   locations: PropTypes.array.isRequired,
   searchBusiness: PropTypes.func.isRequired,
   fetchBusinesses: PropTypes.func.isRequired,
