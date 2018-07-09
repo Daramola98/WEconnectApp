@@ -104,7 +104,7 @@ export default class RegisterBusiness extends React.Component {
   render() {
     const { errors } = this.state;
     const { categories } = this.props.businesses;
-    return <div className="row container">
+    return <div className="row formcontainer container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue-grey darken-2  white-text center">

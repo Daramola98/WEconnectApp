@@ -98,7 +98,7 @@ export default class UserProfile extends React.Component {
         business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
 
       return (
-      <div className="row">
+      <div className="row formcontainer">
          <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue-grey darken-2 white-text center">
@@ -186,7 +186,7 @@ export default class UserProfile extends React.Component {
                         <div className="col s12">
                           <Pagination
                           key={Date.now()}
-                          items={Math.ceil(businessesCount / 12) || 0 }
+                          items={Math.ceil(businessesCount / 9) || 0 }
                           activePage={this.state.currentPage}
                           maxButtons={5}
                           onSelect={this.onPageChange} />

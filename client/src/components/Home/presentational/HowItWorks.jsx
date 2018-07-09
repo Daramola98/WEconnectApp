@@ -16,7 +16,7 @@ const HowItWorks = props => (
                 <br />
                 {/* <div className="how-it-works row hide-on-med-and-down">
                 <div className="col s12 m12 l12">
-                <div className="card home-card blue-grey darken-1">
+                <div className="card home-card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">GETTING STARTED</span>
                             <p>
@@ -32,7 +32,7 @@ const HowItWorks = props => (
                     </div>
                 </div>
                 <div className="col s12 m12 l12">
-                    <div className="card home-card blue-grey darken-1">
+                    <div className="card home-card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">ABOUT WECONNECT</span>
                             <p>
@@ -49,7 +49,7 @@ const HowItWorks = props => (
                     </div>
                 </div>
                 <div className="col s12 m12 l12">
-                    <div className="card home-card blue-grey darken-1">
+                    <div className="card home-card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">CONTACT US</span>
                             <p>
@@ -65,7 +65,7 @@ const HowItWorks = props => (
             </div> */}
             <div className="how-it-works row ">
                 <div className="col s12 m12">
-                    <div className="card blue-grey darken-1">
+                    <div className="card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">GETTING STARTED</span>
                             <p>
@@ -83,7 +83,7 @@ const HowItWorks = props => (
                     </div>
                 </div>
                 <div className="col s12 m12">
-                    <div className="card blue-grey darken-1">
+                    <div className="card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">ABOUT WECONNECT</span>
                             <p>
@@ -100,7 +100,7 @@ const HowItWorks = props => (
                     </div>
                 </div>
                 <div className="col s12 m12">
-                    <div className="card blue-grey darken-1">
+                    <div className="card blue darken-2">
                         <div className="card-content white-text">
                             <span className="card-title">CONTACT US</span>
                             <p>

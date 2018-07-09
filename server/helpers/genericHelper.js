@@ -55,6 +55,6 @@ export const listByPages = (pageNumber = 0, offset = 0) => {
     offset = 0;
     return offset;
   }
-  offset = (searchPageNumber - 1) * 12;
+  offset = (searchPageNumber - 1) * 9;
   return offset;
 };

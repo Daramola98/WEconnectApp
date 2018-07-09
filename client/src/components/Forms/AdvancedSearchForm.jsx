@@ -144,7 +144,7 @@ export default class BusinessListing extends React.Component {
                   </option>
                 </Input>
                 </span>
-                <span className="adSearch"><button type="submit" className="adSearch waves-effect waves-light btn blue ligthen-1">SEARCH</button></span>
+                <span className="adSearch"><button type="submit" className="adSearch waves-effect waves-light btn blue darken-2 ligthen-1">SEARCH</button></span>
               </form>
                 <div className="input-field">
                   <span className="col s8 l8">
@@ -174,7 +174,7 @@ export default class BusinessListing extends React.Component {
                   </div>
                 </div>
               <div className="center">
-                <a className="btn blue lighten-1" onClick={(e) => {
+                <a className="btn blue darken-2" onClick={(e) => {
                     e.preventDefault();
                     this.setState({ location: 'null', category: 'null' });
                   }}>

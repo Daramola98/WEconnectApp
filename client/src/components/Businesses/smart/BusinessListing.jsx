@@ -194,7 +194,7 @@ export default class BusinessListing extends React.Component {
         <section id="search" className="section section-search white-text center">
           <div className="container">
             <div className="row">
-                <h3>Search Businesses</h3>
+                <h3 className="white-text">Search Businesses</h3>
                 <form id="searchform" onSubmit={this.handleSearchSubmit}>
                   <select name="searchBy" value={this.state.searchBy} onChange={this.onSearchByChange} className="search-select blue-grey darken-2 browser-default">
                     <option className="option" value="" disabled>Choose your option</option>
@@ -222,7 +222,7 @@ export default class BusinessListing extends React.Component {
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
-                  <h1 className="no-business col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h1>
+                  <h1 className="no-business col l6 offset-l3 blue darken-2 white-text">NO BUSINESSES</h1>
                 </div>}
              </div>
             </div>
@@ -230,13 +230,13 @@ export default class BusinessListing extends React.Component {
           <div className="container paginate">
           <Pagination
            className={this.state.businessPagination}
-           key={Date.now()} items={Math.ceil(businessesCount / 12) || 0 }
+           key={Date.now()} items={Math.ceil(businessesCount / 9) || 0 }
             activePage={this.state.currentPage} maxButtons={5}
             onSelect = {this.onChangePage}
              />
           <Pagination
            className={this.state.searchPagination}
-           key={Date.now() + 1} items={Math.ceil(businessesCount / 10) || 0 }
+           key={Date.now() + 1} items={Math.ceil(businessesCount / 9) || 0 }
             activePage={this.state.searchCurrentPage} maxButtons={5}
             onSelect = {this.onSearchChangePage}
              />

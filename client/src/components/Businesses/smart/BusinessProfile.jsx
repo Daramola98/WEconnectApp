@@ -83,7 +83,6 @@ export default class BusinessProfile extends React.Component {
       .then((response) => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Review Submitted');
-        // setTimeout(() => window.location.reload(), 2000);
         this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
           .then(() => {
             this.setState({
@@ -133,7 +132,6 @@ export default class BusinessProfile extends React.Component {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Response Submitted');
         $('#replyReview').modal('close');
-        // setTimeout(() => window.location.reload(), 2000);
         this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
           .then(() => {
             this.setState({
@@ -151,7 +149,7 @@ export default class BusinessProfile extends React.Component {
   render() {
     const { business, reviewsCount } = this.props.businessProfile;
     const { errors } = this.state;
-    return <div className="row container">
+    return <div className="row formcontainer container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
           <div className="card">
             <div className="card-action blue-grey darken-2 white-text center">
@@ -164,7 +162,7 @@ export default class BusinessProfile extends React.Component {
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
-                  <Tab title="Information" active={this.state.info} className="blue-text lighten-1">
+                  <Tab title="Information" active={this.state.info} className=" blue-grey-text lighten-1">
                     <div id="businessInfo" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
@@ -269,7 +267,7 @@ export default class BusinessProfile extends React.Component {
                       </ul>
                     </div>
                   </Tab>
-                  <Tab title="Reviews" active={this.state.reviews} className="blue-text lighten-1">
+                  <Tab title="Reviews" active={this.state.reviews} className="blue-grey-text darken-1">
                     <div id="businessReviews" className="col s12 m12 l12">
                       <div className="card">
                         <div className="card-content">
@@ -332,7 +330,7 @@ export default class BusinessProfile extends React.Component {
                               </ul>
                               <br />
                               <Pagination
-                               key={Date.now()} items={Math.ceil(reviewsCount / 12) || 0}
+                               key={Date.now()} items={Math.ceil(reviewsCount / 9) || 0}
                                activePage={this.state.currentPage}
                                maxButtons={5} onSelect={this.onPageChange} />
                             </div>

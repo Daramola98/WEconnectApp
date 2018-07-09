@@ -37,7 +37,7 @@ export const findBusinessByCategory = (req, res, offset) => {
   return Business
     .findAndCountAll({
       offset,
-      limit: 10,
+      limit: 9,
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('category'), 'TEXT'),
         { $ilike: `%${searchCategory}%` }
@@ -70,7 +70,7 @@ export const findBusinessByName = (req, res, offset) => {
   return Business
     .findAndCountAll({
       offset,
-      limit: 10,
+      limit: 9,
       where: {
         name: {
           $ilike: `%${searchName}%`
@@ -102,7 +102,7 @@ export const findBusinessByLocation = (req, res, offset) => {
   return Business
     .findAndCountAll({
       offset,
-      limit: 10,
+      limit: 9,
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('location'), 'TEXT'),
         { $ilike: `%${searchLocation}%` }
