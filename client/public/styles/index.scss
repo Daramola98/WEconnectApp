@@ -190,7 +190,13 @@ ul.pagination {
   margin-left: 30%;
   font-style: italic
 }
-
+.business-body {
+  font-weight: bold;
+  line-height: 40px;
+}
+.business-rating {
+  float: right;
+}
 .page-footer {
   padding-bottom: 25px;
 }
@@ -258,7 +264,7 @@ ul.pagination {
 .search-select {
   width: 10%;
   display: inline-block !important;
-  height: 49px !important;
+  height: 46px !important;
   border: none !important;
   -webkit-appearance: none;
   appearance: none;
@@ -302,3 +308,33 @@ ul.pagination {
     width: 80%;
     margin: 0 3%;
     left: 50px;} }
+
+#rating {
+    margin-bottom: 10px;
+    margin-left: 40px;
+    position: relative;
+    bottom: 40px;
+}
+
+#ratingdisplay > div {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    top: 5px;
+}
+
+.review-count > div {
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    top: 5px;
+}
+
+.person-count {
+  top: 4px;
+  position: relative;
+}
+
+.review-stars {
+  right: 20px;
+}

@@ -19,6 +19,10 @@ module.exports = {
       allowNull: false,
       type: Sequelize.TEXT,
     },
+    rating: {
+      type: Sequelize.FLOAT,
+      allowNull: false,
+    },
     businessId: {
       type: Sequelize.UUID,
       onDelete: 'CASCADE',

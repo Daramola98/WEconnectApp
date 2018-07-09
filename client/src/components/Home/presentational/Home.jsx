@@ -86,7 +86,7 @@ const Home = () => (
             <div className="col s12 m12 hide-on-large-only">
                 <div className="card hoverable">
                     <div className="card-image">
-                        <img className="responsive" src="/images/achievement-agreement-arms-1068523.jpg" alt="business" />
+                        <img className="responsive" src="/images/gettingStarted2.jpg" alt="business" />
                         <span className="card-title"></span>
                     </div>
                     <div className="card-content">

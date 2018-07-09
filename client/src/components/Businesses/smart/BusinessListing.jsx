@@ -222,7 +222,7 @@ export default class BusinessListing extends React.Component {
           {filteredBusinesses.length > 0 ? filteredBusinesses.map((business, i) => (
                   <Business business={business} key={i} />
                 )) : <div>
-                  <h1 className="no-business col l6 offset-l3 blue darken-2 white-text">NO BUSINESSES</h1>
+                  <h1 className="no-business col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h1>
                 </div>}
              </div>
             </div>

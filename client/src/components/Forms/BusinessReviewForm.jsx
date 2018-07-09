@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactStars from 'react-stars';
 import alertify from 'alertifyjs';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,8 @@ import PropTypes from 'prop-types';
 export default class BusinessReviewForm extends React.Component {
   state = {
     reviewDetails: {
-      review: ''
+      review: '',
+      rating: 0
     },
   }
 
@@ -27,6 +29,17 @@ export default class BusinessReviewForm extends React.Component {
       ...this.state,
       reviewDetails: { ...this.state.reviewDetails, [event.target.name]: event.target.value }
     });
+
+    /**
+      * onRatingChange Event handler callback for star rating
+      * @param {object} newRating The selected rating
+      *
+      * @return {null}  Value of star ratings
+      * @memberof BusinessReviewForm Component
+      */
+  onRatingChange = (newRating) => {
+    this.setState({ reviewDetails: { ...this.state.reviewDetails, rating: newRating } });
+  }
 
   /**
       * onSubmit Event handler callback for review form
@@ -46,7 +59,7 @@ export default class BusinessReviewForm extends React.Component {
     * @memberof BusinessReviewForm Component
     */
   render() {
-    const { review } = this.state.reviewDetails;
+    const { review, rating } = this.state.reviewDetails;
     return (<div className="row">
           <form onSubmit={this.onSubmit}>
             <div className="row">
@@ -57,6 +70,17 @@ export default class BusinessReviewForm extends React.Component {
               </div>
             </div>
             <div className="form-field">
+            <div id="rating">
+            <span>Rate Business : </span>
+              <ReactStars
+                count={5}
+                size={25}
+                half={true}
+                onChange={this.onRatingChange}
+                color2={'#ffd700'}
+                value={rating}
+              />
+            </div>
               <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
                 POST REVIEW
               </button>

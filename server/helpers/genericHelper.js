@@ -21,7 +21,7 @@ export const handleInputFormat = (req) => {
   const reqBodyKeys = Object.keys(req.body);
   for (let i = 0; i < reqBodyKeys.length; i += 1) {
     const key = reqBodyKeys[i];
-    if (key !== 'userId') {
+    if (key !== 'userId' && key !== 'rating') {
       req.body[key] = req.body[key].replace(/ +/g, ' ').trim();
     }
     if (key === 'location' || key === 'category') {

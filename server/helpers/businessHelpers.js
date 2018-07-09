@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import dotenv from 'dotenv';
-import { Business } from '../models';
+import { Business, BusinessReview } from '../models';
 import {
   businessFoundMessage,
   businessesFoundMessage,
@@ -41,7 +41,14 @@ export const findBusinessByCategory = (req, res, offset) => {
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('category'), 'TEXT'),
         { $ilike: `%${searchCategory}%` }
-      )
+      ),
+      include: [
+        {
+          model: BusinessReview,
+          as: 'reviews',
+          attributes: ['rating']
+        }
+      ]
     })
     .then((result) => {
       const businesses = result.rows;
@@ -75,7 +82,14 @@ export const findBusinessByName = (req, res, offset) => {
         name: {
           $ilike: `%${searchName}%`
         }
-      }
+      },
+      include: [
+        {
+          model: BusinessReview,
+          as: 'reviews',
+          attributes: ['rating']
+        }
+      ]
     })
     .then((result) => {
       const businesses = result.rows;
@@ -106,7 +120,14 @@ export const findBusinessByLocation = (req, res, offset) => {
       where: Sequelize.where(
         Sequelize.cast(Sequelize.col('location'), 'TEXT'),
         { $ilike: `%${searchLocation}%` }
-      )
+      ),
+      include: [
+        {
+          model: BusinessReview,
+          as: 'reviews',
+          attributes: ['rating']
+        }
+      ]
     })
     .then((result) => {
       const businesses = result.rows;
@@ -196,3 +217,4 @@ export const listBusinessCategories = (req, res) => sequelize
     return res.status(200).json(categories);
   })
   .catch(err => res.status(500).json(serverErrorMessage.message));
+

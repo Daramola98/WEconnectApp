@@ -91,7 +91,17 @@ export default class Businesses {
       return findBusinessByName(req, res, offset);
     }
     return Business
-      .findAndCountAll({ offset, limit: 9 })
+      .findAndCountAll({
+        offset,
+        limit: 9,
+        include: [
+          {
+            model: BusinessReview,
+            as: 'reviews',
+            attributes: ['rating']
+          }
+        ]
+      })
       .then((result) => {
         const businesses = result.rows;
         const businessesCount = result.count;
@@ -121,6 +131,11 @@ export default class Businesses {
             model: User,
             as: 'businessOwner',
             attributes: ['username']
+          },
+          {
+            model: BusinessReview,
+            as: 'reviews',
+            attributes: ['rating']
           }
         ]
       })
@@ -149,7 +164,14 @@ export default class Businesses {
         limit: 9,
         where: {
           userId: req.userData.userId
-        }
+        },
+        include: [
+          {
+            model: BusinessReview,
+            as: 'reviews',
+            attributes: ['rating']
+          }
+        ]
       })
       .then((result) => {
         const businesses = result.rows;
@@ -267,7 +289,8 @@ export default class Businesses {
     const businessReviewDetails = {
       reviewerId: req.userData.userId,
       review: req.body.review,
-      businessId: req.params.businessId
+      businessId: req.params.businessId,
+      rating: req.body.rating
     };
     return Business
       .findOne({
@@ -286,7 +309,8 @@ export default class Businesses {
               id: review.id,
               review: review.review,
               reviewerId: review.ReviewerId,
-              businessId: review.BusinessId
+              businessId: review.BusinessId,
+              rating: review.rating
             };
             return res.status(201)
               .json({ message: businessReviewMessage, reviewDetails });
