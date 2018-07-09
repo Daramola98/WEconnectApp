@@ -50,7 +50,7 @@ export default class Login extends React.Component {
     * @memberof Login Component
     */
     render() {
-      const { message } = this.state;
+      const { message, disableBtn } = this.state;
       return (<div className="row bg-image loginformcontainer container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
             <div className="card">
@@ -64,7 +64,7 @@ export default class Login extends React.Component {
                     </li>
                     <li key="error" className="collection-item"><span className="red-text">{message}</span></li>
                   </ul> : null}
-              <LoginForm submit={this.onSubmit} disableBtn={this.state.disableBtn} />
+              <LoginForm submit={this.onSubmit} disableBtn={disableBtn} />
             </div>
             <NotificationContainer/>
             </div>

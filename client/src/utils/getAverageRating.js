@@ -2,7 +2,7 @@
    * Calculate Average rating for business
    * @param {object} reviews - The reviews for the business
    * @return {number} averageRating - The average rating for the business
-   * @memberof BusinessHelper
+   * @memberof UtilHelper
    */
 const getAverageRating = (reviews) => {
   if (reviews.length === 0) {

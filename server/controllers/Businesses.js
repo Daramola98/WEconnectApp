@@ -352,7 +352,7 @@ export default class Businesses {
           })
           .then((review) => {
             if (!review) {
-              return res.status(404).json('Review not found');
+              return res.status(404).json({ message: 'Review not found' });
             }
             if (req.userData.userId !== review.reviewerId) {
               return res.status(403).json({ message: 'You are not allowed to update this review' });
@@ -404,7 +404,7 @@ export default class Businesses {
           })
           .then((review) => {
             if (!review) {
-              return res.status(404).json('Review not found');
+              return res.status(404).json({ message: 'Review not found' });
             }
             if (req.userData.userId !== review.reviewerId) {
               return res.status(403).json({ message: 'You are not allowed to delete this review' });

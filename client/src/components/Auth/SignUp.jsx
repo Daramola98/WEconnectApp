@@ -69,7 +69,7 @@ export default class SignUp extends React.Component {
     * @memberof SignUp Component
     */
   render() {
-    const { errors } = this.state;
+    const { errors, disableBtn } = this.state;
     return (<div className="row formcontainer container">
           <div className="col s12 m8 offset-m2 l8 offset-l2">
             <div className="card">
@@ -78,7 +78,7 @@ export default class SignUp extends React.Component {
               </div>
               <div className="card-content">
               <FormErrors errors={errors} />
-              <SignUpForm submit={this.onSubmit} disableBtn={this.state.disableBtn} />
+              <SignUpForm submit={this.onSubmit} disableBtn={disableBtn} />
             </div>
             </div>
           </div>

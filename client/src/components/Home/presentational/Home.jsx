@@ -6,13 +6,14 @@ import Business from '../../Businesses/presentational/Business.jsx';
 
 const Home = () => (
     <main>
-        <div className="banner">
+        <div className="banner center">
             <div className="banner-body">
-                <h3 className="white-text">Search for Businesses</h3>
+                <h3 className="white-text">WELCOME TO WECONNECT</h3>
                 <form id="searchform">
                   <input id="businessSearch"
-                    className="white grey-text autocomplete"
+                    className="white black-text autocomplete"
                     type="text"
+                    placeholder="Search for Businesses"
                     name="advancedSearch"
                     required/>
                     <button id="searchSubmitBtn" type="submit" className="waves-effect waves-light blue-grey darken-2"><i className="fa fa-search"></i></button>
@@ -20,7 +21,7 @@ const Home = () => (
             </div>
         </div>
         <section className="row container section">
-            <h3 align="center">Explore WEconnect</h3>
+            <h3 align="center">EXPLORE WECONNECT</h3>
             <div className="col s12 m12 l4 hide-on-med-and-down">
                 <div className="card hoverable">
                     <div className="card-image">

@@ -4,11 +4,23 @@ import { fetchBusiness } from '../store/actions/businesses';
 import { logout } from '../store/actions/auth';
 import { fetchReviews, postReview, updateReview, deleteReview, postReviewResponse } from '../store/actions/businessReview';
 
+/**
+   * MapState to Props of Component
+   * @param {object} state - The redux state information
+   * @return {object} maps redux state to component props
+   * @memberof businessProfileContainer
+   */
 const mapStateToProps = state => ({
   businessProfile: state.businessProfile,
   user: state.usersReducers
 });
 
+/**
+   * MapDispatch to Props of Component
+   * @param {object} dispatch - The action dispatchers information
+   * @return {object} maps action dispatchers to component props
+   * @memberof businessProfileContainer
+   */
 const mapDispatchToProps = dispatch => ({
   fetchBusiness(businessId) {
     return dispatch(fetchBusiness(businessId));

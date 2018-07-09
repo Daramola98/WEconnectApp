@@ -28,8 +28,8 @@ export default class BusinessListing extends React.Component {
       category: 'null',
       currentPage: 1,
       searchCurrentPage: 1,
-      searchPagination: 'hide',
-      businessPagination: ''
+      searchPagination: 'hide center',
+      businessPagination: 'center'
     };
     this.searchBy = '';
     this.advancedSearch = '';
@@ -190,11 +190,11 @@ export default class BusinessListing extends React.Component {
           .filter(business =>
             business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
       }
-      return <div className="">
+      return (<div className="row">
         <section id="search" className="section section-search white-text center">
           <div className="container">
             <div className="row">
-                <h3 className="white-text">Search Businesses</h3>
+                <h3 className="black-text">Search Businesses</h3>
                 <form id="searchform" onSubmit={this.handleSearchSubmit}>
                   <select name="searchBy" value={this.state.searchBy} onChange={this.onSearchByChange} className="search-select blue-grey darken-2 browser-default">
                     <option className="option" value="" disabled>Choose your option</option>
@@ -227,7 +227,7 @@ export default class BusinessListing extends React.Component {
              </div>
             </div>
           </section>
-          <div className="container paginate">
+          <span className="container paginate">
           <Pagination
            className={this.state.businessPagination}
            key={Date.now()} items={Math.ceil(businessesCount / 9) || 0 }
@@ -240,9 +240,9 @@ export default class BusinessListing extends React.Component {
             activePage={this.state.searchCurrentPage} maxButtons={5}
             onSelect = {this.onSearchChangePage}
              />
-             </div>
+             </span>
             </div> }
-        </div>;
+              </div>);
     }
 }
 
