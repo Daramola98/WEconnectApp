@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Header from '../components/NavBar/smart/Header.jsx';
-import { logout } from '../store/actions/auth';
+import { logout } from '../actions/auth';
 
 /**
    * MapState to Props of Component

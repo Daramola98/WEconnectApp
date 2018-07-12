@@ -41,9 +41,11 @@ export default class ReviewResponseForm extends React.Component {
     * @memberof ReviewResponseForm Component
     */
   render() {
+    const { response } = this.state;
+    const { message } = response;
     return <div className="row">
         <form onSubmit={this.onSubmit}>
-          <input type="text" name="message" minLength="2" value={this.state.response.message} onChange={this.onChange} required />
+          <input type="text" name="message" minLength="2" value={message} onChange={this.onChange} required />
           <button type="submit">SUBMIT</button>
         </form>
       </div>;
@@ -52,6 +54,4 @@ export default class ReviewResponseForm extends React.Component {
 
 ReviewResponseForm.propTypes = {
   submit: PropTypes.func.isRequired,
-  categories: PropTypes.array.isRequired,
-  disableBtn: PropTypes.bool.isRequired
 };

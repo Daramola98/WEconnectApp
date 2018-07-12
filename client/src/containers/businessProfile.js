@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import BusinessProfile from '../components/Businesses/smart/BusinessProfile.jsx';
-import { fetchBusiness } from '../store/actions/businesses';
-import { logout } from '../store/actions/auth';
-import { fetchReviews, postReview, updateReview, deleteReview, postReviewResponse } from '../store/actions/businessReview';
+import { fetchBusiness } from '../actions/businesses';
+import { logout } from '../actions/auth';
+import { fetchReviews, postReview, updateReview, deleteReview, postReviewResponse } from '../actions/businessReview';
 
 /**
    * MapState to Props of Component

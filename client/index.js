@@ -8,7 +8,7 @@ import 'react-notifications/lib/notifications.css';
 import 'alertifyjs/build/css/alertify.min.css';
 import 'alertifyjs/build/css/themes/default.min.css';
 import WeConnectStore from './src/store/store';
-import { userLoggedIn } from './src/store/actions/auth';
+import { userLoggedIn } from './src/actions/auth';
 import setAuthorizationHeader from './src/utils/setAuthorizationHeader';
 
 import App from './src/components/App.jsx';

@@ -29,17 +29,21 @@ export default class Businesses {
    */
   static createBusiness(req, res) {
     handleInputFormat(req);
+    const {
+      name, category,
+      email, telephoneNumber, homeNumber, location, address, description
+    } = req.body;
     const businessDetails = {
-      name: req.body.name,
-      category: req.body.category,
+      name,
+      category,
       businessImage: req.file ? req.businessImage : null,
-      email: req.body.email,
-      telephoneNumber: req.body.telephoneNumber,
-      homeNumber: req.body.homeNumber,
-      location: req.body.location,
-      address: req.body.address,
+      email,
+      telephoneNumber,
+      homeNumber,
+      location,
+      address,
       userId: req.userData.userId,
-      description: req.body.description
+      description
     };
     return Business
       .create(businessDetails)
@@ -222,17 +226,21 @@ export default class Businesses {
             { fields: Object.keys(businessDetails) }
           )
           .then((updatedBusiness) => {
+            const {
+              name, category, businessImage, businessAddedBy,
+              email, telephoneNumber, homeNumber, location, address, description
+            } = updatedBusiness;
             const updatedBusinessDetails = {
-              name: updatedBusiness.name,
-              category: updatedBusiness.category,
-              businessImage: updatedBusiness.businessImage,
-              email: updatedBusiness.email,
-              telephoneNumber: updatedBusiness.telephoneNumber,
-              homeNumber: updatedBusiness.homeNumber,
-              location: updatedBusiness.location,
-              address: updatedBusiness.address,
-              businessAddedBy: updatedBusiness.businessOwner.username,
-              description: updatedBusiness.description
+              name,
+              category,
+              businessImage,
+              email,
+              telephoneNumber,
+              homeNumber,
+              location,
+              address,
+              businessAddedBy,
+              description
             };
             return res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
           })
@@ -286,6 +294,7 @@ export default class Businesses {
    */
   static addReview(req, res) {
     handleInputFormat(req);
+    const { review, rating } = req.body;
     const businessReviewDetails = {
       reviewerId: req.userData.userId,
       review: req.body.review,
@@ -304,13 +313,14 @@ export default class Businesses {
         }
         return BusinessReview
           .create(businessReviewDetails)
-          .then((review) => {
+          .then((businessReview) => {
+            const { id } = businessReview;
             const reviewDetails = {
-              id: review.id,
-              review: review.review,
-              reviewerId: review.ReviewerId,
-              businessId: review.BusinessId,
-              rating: review.rating
+              id,
+              review: businessReview.review,
+              reviewerId: businessReview.ReviewerId,
+              businessId: businessReview.BusinessId,
+              rating: businessReview.rating
             };
             return res.status(201)
               .json({ message: businessReviewMessage, reviewDetails });
@@ -350,19 +360,20 @@ export default class Businesses {
               id: req.params.reviewId
             }
           })
-          .then((review) => {
-            if (!review) {
+          .then((businessReview) => {
+            if (!businessReview) {
               return res.status(404).json({ message: 'Review not found' });
             }
-            if (req.userData.userId !== review.reviewerId) {
+            if (req.userData.userId !== businessReview.reviewerId) {
               return res.status(403).json({ message: 'You are not allowed to update this review' });
             }
             handleInputFormat(req);
+            const { review, rating } = req.body;
             const reviewDetails = {
-              review: req.body.review,
-              rating: req.body.rating
+              review,
+              rating
             };
-            return review
+            return businessReview
               .update(reviewDetails, { fields: Object.keys(reviewDetails) })
               .then(updatedReview => res.status(200).json({ message: 'Review Updated Successfully', updatedReview }))
               .catch((err) => {

@@ -47,6 +47,7 @@ export default class LoginForm extends React.Component {
     */
     render() {
       const { email, password } = this.state.credentials;
+      const { disableBtn } = this.props;
       return (
           <form onSubmit={this.onSubmit}>
             <div className="form-field">
@@ -63,7 +64,7 @@ export default class LoginForm extends React.Component {
             </div>
             <br />
             <div className="form-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={disableBtn} style={{ width: `${100}%` }}>
                 Login
               </button>
             </div>

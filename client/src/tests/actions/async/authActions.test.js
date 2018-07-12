@@ -3,8 +3,8 @@ import jwtDecode from 'jwt-decode';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as authActions from '../../../store/actions/auth';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as authActions from '../../../actions/auth';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

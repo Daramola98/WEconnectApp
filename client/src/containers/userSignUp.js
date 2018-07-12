@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import SignUp from '../components/Auth/SignUp.jsx';
-import { registerUser, signUp } from '../store/actions/users';
-import { isLoggedIn } from '../store/actions/auth';
+import { registerUser, signUp } from '../actions/users';
+import { isLoggedIn } from '../actions/auth';
 
 /**
    * MapState to Props of Component

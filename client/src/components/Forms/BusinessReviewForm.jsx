@@ -66,6 +66,7 @@ export default class BusinessReviewForm extends React.Component {
     */
   render() {
     const { review, rating } = this.state.reviewDetails;
+    const { disableBtn } = this.props;
     return (<div className="row">
           <form onSubmit={this.onSubmit}>
             <div className="row">

@@ -46,13 +46,13 @@ export default class SignUpForm extends React.Component {
     * @memberof SignUpForm Component
     */
     handleSignUpSubmit = (event) => {
-      event.preventDefault();
-      if (this.state.user.confirmPassword !== this.state.user.password) {
-        return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
-      }
       const {
         firstname, lastname, username, telephoneNumber, password, email, confirmPassword, homeNumber
       } = this.state.user;
+      event.preventDefault();
+      if (confirmPassword !== password) {
+        return this.setState({ errors: { ...this.state.errors, confirmPassError: 'Passwords don\'t match' } });
+      }
 
       const userDetails = {
         firstname,
@@ -81,6 +81,7 @@ export default class SignUpForm extends React.Component {
       const {
         firstname, lastname, username, email, telephoneNumber, homeNumber, password, confirmPassword
       } = this.state.user;
+      const { disableBtn } = this.props;
       return <div>
           <form onSubmit={this.handleSignUpSubmit}>
             <div className="row">
@@ -145,7 +146,7 @@ export default class SignUpForm extends React.Component {
 
             <br />
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={disableBtn} style={{ width: `${100}%` }}>
                 CREATE ACCOUNT
               </button>
             </div>

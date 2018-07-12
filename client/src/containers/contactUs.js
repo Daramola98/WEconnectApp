@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ContactUs from '../components/Home/smart/ContactUs.jsx';
-import { postContactUs } from '../store/actions/users';
+import { postContactUs } from '../actions/users';
 
 /**
    * MapDispatch to Props of Component

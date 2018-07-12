@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import RegisterBusiness from '../components/Businesses/smart/RegisterBusiness.jsx';
-import { createBusiness, fetchCategories } from '../store/actions/businesses';
-import { logout } from '../store/actions/auth';
+import { createBusiness, fetchCategories } from '../actions/businesses';
+import { logout } from '../actions/auth';
 
 /**
    * MapState to Props of Component

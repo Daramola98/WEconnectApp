@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as userActions from '../../../store/actions/users';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as userActions from '../../../actions/users';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const user = {
   firstname: 'daramola',

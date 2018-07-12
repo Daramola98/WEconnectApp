@@ -4,32 +4,37 @@ import PropTypes from 'prop-types';
 import ReactStars from 'react-stars';
 import getAverageRating from '../../../utils/getAverageRating';
 
-const Business = props => (
+const Business = (props) => {
+  const {
+    businessImage, name, location, category, reviews, id
+  } = props.business;
+  return (
   <div className="col s12 m6 l4">
       <div className="card hoverable">
         <div className="card-image">
-          <img className="responsive" src={props.business.businessImage} alt="business" />
+          <img className="responsive" src={businessImage} alt="business" />
           <span className="card-title"></span>
         </div>
         <div className="card-content business-body">
-          <p className="truncate">Business Name: {props.business.name} </p>
-          <p className="truncate">Location: {props.business.location} </p>
-          <p className="truncate">Category: {props.business.category} </p>
+          <p className="truncate">Business Name: {name} </p>
+          <p className="truncate">Location: {location} </p>
+          <p className="truncate">Category: {category} </p>
           <div className="review-count"><span><ReactStars className="business-rating" count={5}
           size={15}
           half={true}
           edit={false}
           color2={'#ffd700'}
-          value={Number(getAverageRating(props.business.reviews))} /> {props.business.reviews.length} <i className="person-count material-icons">person</i></span>
+          value={Number(getAverageRating(reviews))} /> {reviews.length} <i className="person-count material-icons">person</i></span>
         </div>
         </div>
         <div className="card-action">
-          <Link className="blue-grey-text darken-2" to={`/businessProfile/${props.business.id}`}>View</Link>
+          <Link className="blue-grey-text darken-2" to={`/businessProfile/${id}`}>View</Link>
           {props.children}
         </div>
       </div>
   </div>
-);
+  );
+};
 
 export default Business;
 

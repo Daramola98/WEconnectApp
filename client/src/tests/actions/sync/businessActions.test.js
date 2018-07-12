@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as businessActions from '../../../store/actions/businesses';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as businessActions from '../../../actions/businesses';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const business = {
   name: 'Andela',

@@ -1,5 +1,5 @@
-import usersReducer from '../../store/reducers/users';
-import * as actionTypes from '../../store/actions/actionTypes';
+import usersReducer from '../../reducers/users';
+import * as actionTypes from '../../actions/actionTypes';
 
 describe('users reducer', () => {
   let initialState;

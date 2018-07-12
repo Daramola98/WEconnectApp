@@ -2,8 +2,8 @@ import moxios from 'moxios';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as userActions from '../../../store/actions/users';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as userActions from '../../../actions/users';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

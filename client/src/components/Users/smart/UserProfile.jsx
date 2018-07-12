@@ -89,13 +89,16 @@ export default class UserProfile extends React.Component {
     */
     render() {
       const {
+        currentPage, info, businesses, search
+      } = this.state;
+      const {
         firstname, lastname, username, email, telephoneNumber, homeNumber
       } = this.props.usersReducer.user;
 
       let businessId;
       const { businessesCount } = this.props.usersReducer;
       const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
-        business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+        business.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
       return (
       <div className="row formcontainer">
@@ -107,7 +110,7 @@ export default class UserProfile extends React.Component {
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
-                  <Tab title="Information" active={this.state.info}>
+                  <Tab title="Information" active={info}>
                     <div id="personal_info" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
@@ -158,10 +161,10 @@ export default class UserProfile extends React.Component {
                       </ul>
                     </div>
                   </Tab>
-                  <Tab title="Businesses" active={this.state.businesses}>
+                  <Tab title="Businesses" active={businesses}>
                     <div className="col s8 l8">
                       <FilterBusiness
-                       search={this.state.search} onSearchChange={this.onSearchChange}/>
+                       search={search} onSearchChange={this.onSearchChange}/>
                     </div>
                     <div id="businesses" className="col offset-l1 m12 s12 ">
                           {filterBusinesses.length > 0 ?
@@ -181,13 +184,13 @@ export default class UserProfile extends React.Component {
                                     </a>
                                 </Business>
                               )) : <div>
-                              <h3 className="col l6 offset-l3 blue-grey darken-2 white-text">NO BUSINESSES</h3>
+                              <h3 className="col s12 m6 offset-m3 blue-grey darken-2 white-text">NO BUSINESSES</h3>
                             </div>}
                         <div className="col s12">
                           <Pagination
                           key={Date.now()}
                           items={Math.ceil(businessesCount / 9) || 0 }
-                          activePage={this.state.currentPage}
+                          activePage={currentPage}
                           maxButtons={5}
                           onSelect={this.onPageChange} />
                         </div>
@@ -204,7 +207,7 @@ export default class UserProfile extends React.Component {
                               alertify.set('notifier', 'position', 'top-right');
                               alertify.success('Business Deleted');
                               $('#deleteBusiness').modal('close');
-                              this.props.fetchUserBusinesses(this.state.currentPage)
+                              this.props.fetchUserBusinesses(currentPage)
                               .then(() => this.setState({ info: false, businesses: true }));
                             })
                             .catch((error) => {

@@ -87,24 +87,30 @@ export default class RegisterBusinessForm extends React.Component {
       */
   handleRegisterBusinessSubmit = (event) => {
     event.preventDefault();
-    if (this.state.business.category === 'null' || this.state.business.location === 'null') {
+    const {
+      name, businessImage,
+      description, address, email, telephoneNumber, homeNumber, category, location
+    } = this.state.business;
+
+    if (category === 'null' || location === 'null') {
       alertify.set('notifier', 'position', 'top-right');
       return alertify.error('Business Location and Category are required');
     }
+
     const registerBusinessData = new FormData();
     const businessDetails = {
-      name: this.state.business.name,
-      location: this.state.business.location,
-      category: this.state.business.category,
-      businessImage: this.state.business.businessImage,
-      description: this.state.business.description,
-      address: this.state.business.address,
-      email: this.state.business.email,
-      telephoneNumber: this.state.business.telephoneNumber
+      name,
+      location,
+      category,
+      businessImage,
+      description,
+      address,
+      email,
+      telephoneNumber
     };
 
-    if (this.state.business.homeNumber.length > 1) {
-      businessDetails.homeNumber = this.state.business.homeNumber;
+    if (homeNumber.length > 1) {
+      businessDetails.homeNumber = homeNumber;
     }
     const businessDetailsKeys = Object.keys(businessDetails);
     businessDetailsKeys.forEach((key) => {
@@ -119,18 +125,20 @@ export default class RegisterBusinessForm extends React.Component {
     * @memberof RegisterBusinessForm Component
     */
   render() {
-    const { categories } = this.props;
+    const { categories, locations, disableBtn } = this.props;
+    const { business, imagePreviewUrl } = this.state;
+    const {
+      name, email, businessImage,
+      location, category, address, telephoneNumber, homeNumber, description
+    } = business;
     const businessCategories = categories;
     const categoryOptions = businessCategories !== undefined ?
-      Array.from(businessCategories).map(category =>
-        <option key={category} value={category}>{category}</option>) : null;
+      Array.from(businessCategories).map(businesscategory =>
+        <option key={businesscategory} value={businesscategory}>{businesscategory}</option>) : null;
 
-    const locationOptions = this.props.locations.map(location =>
-  <option key={location} value={location}>{location}</option>);
+    const locationOptions = locations.map(businesslocation =>
+      <option key={businesslocation} value={businesslocation}>{businesslocation}</option>);
 
-    const { business } = this.state;
-
-    const { imagePreviewUrl } = this.state;
     let imagePreview = null;
     if (imagePreviewUrl) {
       imagePreview = (<img className="preview" src={imagePreviewUrl} />);
@@ -143,13 +151,13 @@ export default class RegisterBusinessForm extends React.Component {
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">business_center</i>
               <label htmlFor="name">Business Name</label>
-              <input type="text" id="name" name="name" pattern="^[a-zA-Z0-9\s.\-]+$" title="should contain only alphabets" minLength="3" maxLength="50" value={business.name} onChange={this.onChange} className="validate" required />
+              <input type="text" id="name" name="name" pattern="^[a-zA-Z0-9\s.\-]+$" title="should contain only alphabets" minLength="3" maxLength="50" value={name} onChange={this.onChange} className="validate" required />
             </div>
           </div>
           <div className="row">
             <Row>
             <div className="input-field col s12 m12 l12">
-              <Input s={12} type="select" id="location" name="location" icon="location_on" value={business.location} onChange={this.onChange} required>
+              <Input s={12} type="select" id="location" name="location" icon="location_on" value={location} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Location
                 </option>
@@ -158,7 +166,7 @@ export default class RegisterBusinessForm extends React.Component {
               {/* <label>Location</label> */}
             </div>
             <div className="input-field col s12 m12 l12">
-              <Input s={12} type="select" id="category" name="category" icon="business_center" value={business.category} onChange={this.onChange} required>
+              <Input s={12} type="select" id="category" name="category" icon="business_center" value={category} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Category
                 </option>
@@ -174,14 +182,14 @@ export default class RegisterBusinessForm extends React.Component {
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">email</i>
               <label htmlFor="email">Contact Email Address</label>
-              <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={business.email} onChange={this.onChange} className="validate" required />
+              <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={email} onChange={this.onChange} className="validate" required />
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">location_on</i>
               <label htmlFor="address">Business Address</label>
-              <input type="text" id="address" name="address" value={business.address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" required />
+              <input type="text" id="address" name="address" value={address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" required />
             </div>
           </div>
           <div style={{ marginLeft: '15px' }}><h5>Upload Business Image here</h5></div>
@@ -199,13 +207,13 @@ export default class RegisterBusinessForm extends React.Component {
             <div className="input-field col s12 m12 l6">
               <i className="material-icons prefix">phone</i>
               <label htmlFor="telephoneNumber">Telephone Number</label>
-              <input type="text" id="telephoneNumber" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.telephoneNumber} onChange={this.onChange} className="validate" required />
+              <input type="text" id="telephoneNumber" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={telephoneNumber} onChange={this.onChange} className="validate" required />
             </div>
             <div className="input-field col s12 m12 l6">
               <i className="material-icons prefix">phone</i>
               <label htmlFor="homeNumber">Home Number</label>
 
-              <input type="text" id="homeNumber" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={business.homeNumber} onChange={this.onChange} className="validate" />
+              <input type="text" id="homeNumber" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={homeNumber} onChange={this.onChange} className="validate" />
             </div>
           </div>
           <div className="row">
@@ -217,7 +225,7 @@ export default class RegisterBusinessForm extends React.Component {
           </div>
           <br />
           <div className="input-field">
-            <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
+            <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={disableBtn} style={{ width: `${100}%` }}>
               REGISTER BUSINESS
             </button>
           </div>

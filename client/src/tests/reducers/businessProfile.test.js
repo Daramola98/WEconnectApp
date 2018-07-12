@@ -1,5 +1,5 @@
-import businessProfileReducer from '../../store/reducers/businessProfile';
-import * as actionTypes from '../../store/actions/actionTypes';
+import businessProfileReducer from '../../reducers/businessProfile';
+import * as actionTypes from '../../actions/actionTypes';
 
 describe('businessProfile reducer', () => {
   let initialState;
@@ -8,7 +8,9 @@ describe('businessProfile reducer', () => {
       business: {},
       reviews: [],
       reviewsCount: 0,
-      reviewSubmitted: false
+      reviewSubmitted: false,
+      reviewDeleted: false,
+      reviewUpdated: false
     };
   });
 
@@ -35,7 +37,9 @@ describe('businessProfile reducer', () => {
       },
       reviews: [],
       reviewsCount: 0,
-      reviewSubmitted: false
+      reviewSubmitted: false,
+      reviewDeleted: false,
+      reviewUpdated: false
     };
     expect(businessProfileReducer(
       initialState,
@@ -74,7 +78,9 @@ describe('businessProfile reducer', () => {
         responses: []
       }],
       reviewsCount: 1,
-      reviewSubmitted: false
+      reviewSubmitted: false,
+      reviewDeleted: false,
+      reviewUpdated: false
     };
     expect(businessProfileReducer(
       initialState,
@@ -100,7 +106,9 @@ describe('businessProfile reducer', () => {
       business: {},
       reviews: [],
       reviewsCount: 0,
-      reviewSubmitted: false
+      reviewSubmitted: false,
+      reviewDeleted: false,
+      reviewUpdated: false
     };
     expect(businessProfileReducer(
       initialState,
@@ -115,12 +123,48 @@ describe('businessProfile reducer', () => {
       business: {},
       reviews: [],
       reviewsCount: 0,
-      reviewSubmitted: true
+      reviewSubmitted: true,
+      reviewDeleted: false,
+      reviewUpdated: false
     };
     expect(businessProfileReducer(
       initialState,
       {
         type: actionTypes.POST_REVIEW,
+      }
+    )).toEqual(expectedState);
+  });
+
+  it('should handle the UPDATE_REVIEW action ', () => {
+    const expectedState = {
+      business: {},
+      reviews: [],
+      reviewsCount: 0,
+      reviewSubmitted: false,
+      reviewDeleted: false,
+      reviewUpdated: true
+    };
+    expect(businessProfileReducer(
+      initialState,
+      {
+        type: actionTypes.UPDATE_REVIEW,
+      }
+    )).toEqual(expectedState);
+  });
+
+  it('should handle the DELETE_REVIEW action ', () => {
+    const expectedState = {
+      business: {},
+      reviews: [],
+      reviewsCount: 0,
+      reviewSubmitted: false,
+      reviewDeleted: true,
+      reviewUpdated: false
+    };
+    expect(businessProfileReducer(
+      initialState,
+      {
+        type: actionTypes.DELETE_REVIEW,
       }
     )).toEqual(expectedState);
   });
