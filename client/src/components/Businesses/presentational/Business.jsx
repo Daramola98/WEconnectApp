@@ -28,7 +28,7 @@ const Business = (props) => {
         </div>
         </div>
         <div className="card-action">
-          <Link className="blue-grey-text darken-2" to={`/businessProfile/${id}`}>View</Link>
+          <Link className="blue-grey-text darken-2 view" to={`/businessProfile/${id}`}>View</Link>
           {props.children}
         </div>
       </div>

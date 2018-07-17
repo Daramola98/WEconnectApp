@@ -1,14 +1,12 @@
 const userInfo = require('./mockData/userInfoMock');
-const path = require('path');
-
 
 module.exports = {
   'Users should be able to signup and logout': (browser) => {
     browser
       .url('http://localhost:8080')
       .waitForElementVisible('body', 1000)
-      .waitForElementVisible('.signupbutton', 5000)
-      .click('.signupbutton')
+      .waitForElementVisible('.signuplink', 5000)
+      .click('.signuplink')
       .assert.urlEquals('http://localhost:8080/signUp')
       .setValue('input[name=firstname]', userInfo.firstname)
       .setValue('input[name=lastname]', userInfo.lastname)
@@ -18,11 +16,10 @@ module.exports = {
       .setValue('input[name=confirmPassword]', userInfo.confirmPassword)
       .setValue('input[name=telephoneNumber]', userInfo.telephone)
       .click('button.btn-large')
-      .waitForElementVisible('.avatar', 4000)
+      .waitForElementVisible('.avatar', 10000)
       .assert.urlEquals('http://localhost:8080/userProfile')
-      .click('.dropdown-button')
-      .waitForElementVisible('#logout1', 5000)
-      .click('#logout1')
+      .waitForElementVisible('#logout2', 5000)
+      .click('#logout2')
       .assert.urlEquals('http://localhost:8080/')
       .pause(2000);
   },
@@ -45,8 +42,8 @@ module.exports = {
     browser
       .url('http://localhost:8080')
       .waitForElementVisible('body', 1000)
-      .waitForElementVisible('.signupbutton', 5000)
-      .click('.signupbutton')
+      .waitForElementVisible('.signuplink', 5000)
+      .click('.signuplink')
       .assert.urlEquals('http://localhost:8080/signUp')
       .setValue('input[name=firstname]', userInfo.firstname)
       .setValue('input[name=lastname]', userInfo.lastname)
@@ -65,8 +62,8 @@ module.exports = {
     browser
       .url('http://localhost:8080')
       .waitForElementVisible('body', 1000)
-      .waitForElementVisible('.signupbutton', 5000)
-      .click('.signupbutton')
+      .waitForElementVisible('.signuplink', 5000)
+      .click('.signuplink')
       .assert.urlEquals('http://localhost:8080/signUp')
       .setValue('input[name=firstname]', userInfo.firstname)
       .setValue('input[name=lastname]', userInfo.lastname)
@@ -102,18 +99,7 @@ module.exports = {
       .click('button.btn-large')
       .waitForElementVisible('.avatar', 4000)
       .assert.urlEquals('http://localhost:8080/userProfile')
-      .pause(2000);
-  },
-//   'Users should not be able to login with an invalid details':
-//   (browser) => {
-//     browser
-//       .url('http://localhost:8080/login')
-//       .waitForElementVisible('body', 5000)
-//       .setValue('input[name=email]', 'weconnect@admin.com')
-//       .setValue('input[name=password]', 'Admin')
-//       .click('button.btn-large')
-//       .waitForElementVisible('span.red-text', 5000)
-//       .assert.containsText('span.red-text', 'Authentication failed')
-//       .end();
-//   },
+      .pause(2000)
+      .end();
+  }
 };

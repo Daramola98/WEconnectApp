@@ -134,10 +134,12 @@ export default class RegisterBusinessForm extends React.Component {
     const businessCategories = categories;
     const categoryOptions = businessCategories !== undefined ?
       Array.from(businessCategories).map(businesscategory =>
-        <option key={businesscategory} value={businesscategory}>{businesscategory}</option>) : null;
+        <option key={businesscategory} value={businesscategory}
+         className={businesscategory}>{businesscategory}</option>) : null;
 
     const locationOptions = locations.map(businesslocation =>
-      <option key={businesslocation} value={businesslocation}>{businesslocation}</option>);
+      <option key={businesslocation} value={businesslocation}
+      className={businesslocation}>{businesslocation}</option>);
 
     let imagePreview = null;
     if (imagePreviewUrl) {
@@ -156,7 +158,7 @@ export default class RegisterBusinessForm extends React.Component {
           </div>
           <div className="row">
             <Row>
-            <div className="input-field col s12 m12 l12">
+            <div className="input-field location col s12 m12 l12">
               <Input s={12} type="select" id="location" name="location" icon="location_on" value={location} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Location
@@ -165,7 +167,7 @@ export default class RegisterBusinessForm extends React.Component {
               </Input>
               {/* <label>Location</label> */}
             </div>
-            <div className="input-field col s12 m12 l12">
+            <div className="input-field category col s12 m12 l12">
               <Input s={12} type="select" id="category" name="category" icon="business_center" value={category} onChange={this.onChange} required>
                 <option value="null" disabled>
                   Choose Your Category

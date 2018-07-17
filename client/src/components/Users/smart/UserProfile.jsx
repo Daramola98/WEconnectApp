@@ -22,7 +22,7 @@ export default class UserProfile extends React.Component {
     this.state = {
       search: '',
       info: true,
-      businesses: false,
+      userBusinesses: false,
       currentPage: 1
     };
   }
@@ -66,7 +66,7 @@ export default class UserProfile extends React.Component {
       */
      onSearchChange = (searchText) => {
        this.setState({
-         search: searchText, info: false, businesses: true
+         search: searchText, info: false, userBusinesses: true
        });
      };
 
@@ -79,7 +79,7 @@ export default class UserProfile extends React.Component {
     */
     onPageChange = (pageNumber) => {
       this.props.fetchUserBusinesses(pageNumber)
-        .then(() => this.setState({ currentPage: pageNumber, info: false, businesses: true }));
+        .then(() => this.setState({ currentPage: pageNumber, info: false, userBusinesses: true }));
     }
 
   /**
@@ -89,15 +89,15 @@ export default class UserProfile extends React.Component {
     */
     render() {
       const {
-        currentPage, info, businesses, search
+        currentPage, info, userBusinesses, search
       } = this.state;
       const {
         firstname, lastname, username, email, telephoneNumber, homeNumber
       } = this.props.usersReducer.user;
+      const { businesses, businessesCount } = this.props.usersReducer;
 
       let businessId;
-      const { businessesCount } = this.props.usersReducer;
-      const filterBusinesses = this.props.usersReducer.businesses.filter(business =>
+      const filterBusinesses = businesses.filter(business =>
         business.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
 
       return (
@@ -161,7 +161,7 @@ export default class UserProfile extends React.Component {
                       </ul>
                     </div>
                   </Tab>
-                  <Tab title="Businesses" active={businesses}>
+                  <Tab title="Businesses" active={userBusinesses}>
                     <div className="col s8 l8">
                       <FilterBusiness
                        search={search} onSearchChange={this.onSearchChange}/>
@@ -171,7 +171,7 @@ export default class UserProfile extends React.Component {
                            filterBusinesses.map((business, i) => (
                                 <Business business={business} key={i}>
                                     <Link
-                                     className="blue-grey-text"
+                                     className="blue-grey-text update"
                                       to={`/updateBusiness/${business.id}`}
                                     >
                                       UPDATE
@@ -180,7 +180,7 @@ export default class UserProfile extends React.Component {
                                       businessId = business.id;
                                       $('#deleteBusiness').modal('open');
                                     }}>
-                                      <i className="material-icons">delete</i>
+                                      <i className="material-icons delete">delete</i>
                                     </a>
                                 </Business>
                               )) : <div>
@@ -208,7 +208,7 @@ export default class UserProfile extends React.Component {
                               alertify.success('Business Deleted');
                               $('#deleteBusiness').modal('close');
                               this.props.fetchUserBusinesses(currentPage)
-                              .then(() => this.setState({ info: false, businesses: true }));
+                              .then(() => this.setState({ info: false, userBusinesses: true }));
                             })
                             .catch((error) => {
                               if (error.response.status === 401) {
