@@ -13,6 +13,7 @@ dist: trusty
 services:
   - postgresql
 before_script:
+  - npm install cloudinary
   - "psql -c 'create database weconnect_test;' -U postgres"
   - npm run test-migrate
 after_success: 
