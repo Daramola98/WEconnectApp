@@ -29,14 +29,17 @@ export default class Users {
         return res.status(500).json({ error: err });
       }
       handleInputFormat(req);
+      const {
+        firstname, lastname, username, email, telephoneNumber, homeNumber
+      } = req.body;
       const userDetails = {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        username: req.body.username,
-        email: req.body.email,
+        firstname,
+        lastname,
+        username,
+        email,
         password: hash,
-        telephoneNumber: req.body.telephoneNumber,
-        homeNumber: req.body.homeNumber
+        telephoneNumber,
+        homeNumber
       };
       return User
         .create(userDetails)
@@ -60,8 +63,9 @@ export default class Users {
           return res.status(201).json({ message: userCreatedMessage, createdUser, token });
         })
         .catch((err) => {
-          if (err.errors) {
-            handleValidationErrors(err.errors, res);
+          const { errors } = err;
+          if (errors) {
+            handleValidationErrors(errors, res);
           } else {
             return res.status(500).json(serverErrorMessage.message);
           }
@@ -84,19 +88,23 @@ export default class Users {
         }
       })
       .then((user) => {
+        const {
+          firstname, lastname, username, telephoneNumber, homeNumber, email
+        } = user;
         const userDetails = {
-          firstname: user.firstname,
-          lastname: user.lastname,
-          username: user.username,
-          telephoneNumber: user.telephoneNumber,
-          homeNumber: user.homeNumber,
-          email: user.email
+          firstname,
+          lastname,
+          username,
+          telephoneNumber,
+          homeNumber,
+          email
         };
         res.status(200).json(userDetails);
       })
       .catch((err) => {
-        if (err.errors) {
-          handleValidationErrors(err.errors, res);
+        const { errors } = err;
+        if (errors) {
+          handleValidationErrors(errors, res);
         } else {
           return res.status(500).json(serverErrorMessage.message);
         }
@@ -184,14 +192,17 @@ export default class Users {
       .then(user => user
         .update(req.body, { fields: Object.keys(req.body) })
         .then((updatedUser) => {
+          const {
+            firstname, lastname, username, email, telephoneNumber, homeNumber
+          } = updatedUser;
           const updatedUserDetails = {
             userId: updatedUser.id,
-            firstname: updatedUser.firstname,
-            lastname: updatedUser.lastname,
-            username: updatedUser.username,
-            email: updatedUser.email,
-            telephoneNumber: updatedUser.telephoneNumber,
-            homeNumber: updatedUser.homeNumber
+            firstname,
+            lastname,
+            username,
+            email,
+            telephoneNumber,
+            homeNumber
           };
           const token = jwt.sign(
             updatedUserDetails
@@ -225,6 +236,7 @@ export default class Users {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         req.userData = decoded;
+
         if (req.userData !== null) {
           return res.status(200).json({ message: 'Logout existing user to login' });
         }
@@ -243,20 +255,26 @@ export default class Users {
         if (!user) {
           return res.status(401).json({ message: 'Authentication failed' });
         }
+
+        const {
+          firstname, lastname, username, email, telephoneNumber, homeNumber
+        } = user;
+
         bcrypt.compare(req.body.password, user.password, (err, result) => {
           if (err) {
             return res.status(401).json({ message: 'Authentication failed' });
           }
+
           if (result) {
             const token = jwt.sign(
               {
-                email: user.email,
+                email,
                 userId: user.id,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                username: user.username,
-                telephoneNumber: user.telephoneNumber,
-                homeNumber: user.homeNumber
+                firstname,
+                lastname,
+                username,
+                telephoneNumber,
+                homeNumber
               }, process.env.JWT_KEY,
               {
                 expiresIn: '6hr'

@@ -52,6 +52,7 @@ export default class ContactUs extends React.Component {
       const {
         firstname, lastname, email, message
       } = this.state.contactInfo;
+      const { disableBtn } = this.props;
       return <div className="row">
           <form onSubmit={this.handleContactUsSubmit}>
             <div className="row">
@@ -85,7 +86,7 @@ export default class ContactUs extends React.Component {
               </div>
             </div>
             <div className="input-field">
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={disableBtn} style={{ width: `${100}%` }}>
                 SEND MESSAGE
               </button>
             </div>
@@ -96,4 +97,5 @@ export default class ContactUs extends React.Component {
 
 ContactUs.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

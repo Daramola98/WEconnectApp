@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as businessReviewActions from '../../../store/actions/businessReview';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as businessReviewActions from '../../../actions/businessReview';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const reviews = ['Nice Business'];
 const reviewsCount = 10;

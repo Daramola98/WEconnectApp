@@ -22,10 +22,6 @@ const business = (sequelize, DataTypes) => {
         notEmpty: {
           msg: 'Your Business name is required'
         },
-        // matches: {
-        //   args: /[^0-9a-bA-B\s]/gi,
-        //   msg: 'Business name should only contain alphabets or alphanumeric characters'
-        // }
       }
     },
     businessImage: {

@@ -6,12 +6,13 @@
    */
 function modelValidator(validationRules) {
   return (req, res, next) => {
+    const { password, confirmPassword } = req.body;
     req.checkBody(validationRules);
     const errors = req.validationErrors();
     const validationErrors = [];
 
-    if (req.body.confirmPassword && req.body.password && req.body.password
-      !== req.body.confirmPassword && !errors) {
+    if (confirmPassword && password && password
+      !== confirmPassword && !errors) {
       validationErrors.push('Passwords dont match');
       return res.status(400)
         .json({ validationErrors });
@@ -21,8 +22,8 @@ function modelValidator(validationRules) {
       errors.forEach((error) => {
         validationErrors.push(error.msg);
       });
-      if (req.body.password && req.body.confirmPassword && req.body.password
-        !== req.body.confirmPassword) {
+      if (password && confirmPassword && password
+        !== confirmPassword) {
         validationErrors.push('Passwords dont match');
       }
       return res.status(400)

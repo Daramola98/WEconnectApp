@@ -1,14 +1,35 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { shallow, mount } from 'enzyme';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import ContactUs from '../../components/Home/smart/ContactUs.jsx';
+import ContactUsContainer from '../../containers/contactUs';
 import ContactUsForm from '../../components/Forms/ContactUsForm.jsx';
 import FormErrors from '../../components/Messages/presentational/FormErrors.jsx';
 
+const mockStore = configureMockStore([thunk]);
+
 describe('<ContactUs />', () => {
   let wrapper;
-
+  let store;
   beforeEach(() => {
-    wrapper = mount(<ContactUs postContactUs={() => ({})} />);
+    store = mockStore({
+      user: {
+        firstname: 'Admin',
+      },
+    });
+    wrapper = mount(<ContactUs postContactUs={() => wrapper.setState({ submitted: true })} />);
+  });
+
+  it('should render the container component', () => {
+    wrapper = mount(<Provider store={store}>
+        <ContactUsContainer />
+      </Provider>);
+
+    expect(wrapper.find(ContactUsContainer)).toHaveLength(1);
+    const container = wrapper.find(ContactUsContainer);
+    expect(container.find(ContactUsForm)).toHaveLength(1);
   });
 
   it('should render the <ContactUs /> component', () => {

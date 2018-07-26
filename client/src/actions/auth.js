@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 import { USER_LOGGED_IN, USER_LOGGED_OUT } from './actionTypes';
 
 /**

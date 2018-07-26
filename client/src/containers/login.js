@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Login from '../components/Auth/Login.jsx';
-import { login } from '../store/actions/auth';
+import { login } from '../actions/auth';
 
 /**
    * MapState to Props of Component

@@ -155,15 +155,16 @@ export const businessUpdateValidation = {
    */
 export const businessExists = (req, res, next) => {
   handleInputFormat(req);
-  if (!req.body.name && !req.body.email) {
+  const { name, email } = req.body;
+  if (!name && !email) {
     return next();
   }
-  if (req.body.name) {
+  if (name) {
     Business
       .find({
         where: {
           name: {
-            ilike: req.body.name
+            ilike: name
           }
         }
       })
@@ -171,15 +172,15 @@ export const businessExists = (req, res, next) => {
         if (business) {
           return res.status(409).json({ message: 'Business Name already exists' });
         }
-        if (!business && !req.body.email) {
+        if (!business && !email) {
           return next();
         }
-        if (!business && req.body.email) {
+        if (!business && email) {
           return Business
             .find({
               where: {
                 email: {
-                  ilike: req.body.email
+                  ilike: email
                 }
               }
             })

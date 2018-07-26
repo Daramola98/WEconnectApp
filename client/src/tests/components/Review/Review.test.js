@@ -8,7 +8,7 @@ describe('<Review />', () => {
       reviewer: 'Admin',
       review: 'Nice'
     };
-    const wrapper = shallow(<Review review={review} />);
+    const wrapper = shallow(<Review review={review} setReviewId={() => {}} />);
     expect(wrapper.exists(<i className="material-icons prefix">account_circle</i>)).toBe(true);
   });
 });

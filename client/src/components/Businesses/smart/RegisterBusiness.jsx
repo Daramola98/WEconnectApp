@@ -102,7 +102,7 @@ export default class RegisterBusiness extends React.Component {
     * @memberof RegisterBusiness Component
     */
   render() {
-    const { errors } = this.state;
+    const { errors, disableBtn } = this.state;
     const { categories } = this.props.businesses;
     return <div className="row formcontainer container">
         <div className="col s12 m8 offset-m2 l8 offset-l2">
@@ -114,7 +114,7 @@ export default class RegisterBusiness extends React.Component {
               <FormErrors errors={errors} />
               <RegisterBusinessForm
                categories={categories} submit={this.onSubmit}
-               disableBtn={this.state.disableBtn} />
+               disableBtn={disableBtn} />
             </div>
           </div>
         </div>

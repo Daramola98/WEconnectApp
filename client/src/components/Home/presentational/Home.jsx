@@ -26,7 +26,6 @@ const Home = () => (
                 <div className="card hoverable">
                     <div className="card-image">
                         <img className="responsive" src="/images/gettingStarted2.jpg" alt="business" />
-                        <span className="card-title"></span>
                     </div>
                     <div className="home-card card-content">
                     <span className="card-title">GETTING STARTED</span>
@@ -38,8 +37,8 @@ const Home = () => (
                     </div>
                     <div className="card-action">
                         <div>
-                            <Link to="/signUp">Sign Up</Link>
-                            <Link to="/login">Login</Link>
+                            <Link className="signuplink" to="/signUp">Sign Up</Link>
+                            <Link className="loginlink" to="/login">Login</Link>
                         </div>
                     </div>
                 </div>

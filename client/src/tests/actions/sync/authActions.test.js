@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import * as authActions from '../../../store/actions/auth';
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../../../store/actions/actionTypes';
+import * as authActions from '../../../actions/auth';
+import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../../../actions/actionTypes';
 
 const user = {
   firstname: 'Daramola',

@@ -23,10 +23,11 @@ class FilterBusiness extends Component {
     * @memberof FilterBusiness Component
     */
   render() {
+    const { search } = this.props;
     return (
     <div>
       <form>
-        <input type="text" name='search' placeholder="Filter Businesses By Name" value={this.props.search} onChange={this.onChange} autoFocus />
+        <input type="text" name='search' placeholder="Filter Businesses By Name" value={search} onChange={this.onChange} autoFocus />
       </form>
     </div>
     );

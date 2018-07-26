@@ -88,11 +88,7 @@ const user = (sequelize, DataTypes) => {
         len: {
           options: [6, 16],
           msg: 'password should be more than 6 and not greater than 16 characters'
-        },
-        // matches: {
-        //   args: /[^0-9a-bA-B\s]/gi,
-        //   msg: 'password should only contain alphabets or alphanumeric characters'
-        // }
+        }
       }
     },
     telephoneNumber: {

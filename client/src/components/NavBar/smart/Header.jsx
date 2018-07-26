@@ -15,13 +15,13 @@ export default class Header extends React.Component {
     * @memberof Header Component
     */
   render() {
-    const { firstname, email } = this.props.usersReducer.user;
-
+    const { user, authenticated } = this.props.usersReducer;
+    const { firstname, email } = user;
     return (
         <div>
         <header>
         <div>
-          {this.props.usersReducer.authenticated ? <UserNavBar
+          {authenticated ? <UserNavBar
           firstname ={firstname}
           email={email}
           logout={this.props.logout}

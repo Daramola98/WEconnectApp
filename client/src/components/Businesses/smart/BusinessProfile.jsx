@@ -166,21 +166,23 @@ export default class BusinessProfile extends React.Component {
       * @memberof BusinessProfile Component
       */
   onSubmitResponse = (response) => {
-    if (!this.props.user.authenticated) {
+    const { user, history, match } = this.props;
+    const { reviewId, currentPage } = this.state;
+    if (!user.authenticated) {
       alertify.set('notifier', 'position', 'top-right');
       alertify.warning('You need to be logged in to post a review');
-      setTimeout(() => this.props.history.push('/login'), 2000);
+      setTimeout(() => history.push('/login'), 2000);
     }
     this.props
       .postReviewResponse(
-        this.props.match.params.id,
-        this.state.reviewId, response
+        match.params.id,
+        reviewId, response
       )
       .then(() => {
         alertify.set('notifier', 'position', 'top-right');
         alertify.success('Response Submitted');
         $('#replyReview').modal('close');
-        this.props.fetchReviews(this.props.match.params.id, this.state.currentPage)
+        this.props.fetchReviews(match.params.id, currentPage)
           .then(() => {
             this.setState({
               reviews: true, info: false
@@ -196,7 +198,14 @@ export default class BusinessProfile extends React.Component {
     */
   render() {
     const { business, reviews, reviewsCount } = this.props.businessProfile;
-    const { errors } = this.state;
+    const {
+      errors, info,
+      disableBtn, currentPage, reviewResponses
+    } = this.state;
+    const {
+      name, businessImage,
+      businessOwner, email, telephoneNumber, homeNumber, address, description, category, location
+    } = business;
     const { user } = this.props.user;
     const setReviewId = reviewId => this.setState({ reviewId, info: false, reviews: true });
     return <div className="row formcontainer container">
@@ -206,13 +215,13 @@ export default class BusinessProfile extends React.Component {
               <h3>Business Profile</h3>
             </div>
           <div className="card-image">
-            <img className="responsive" src={business.businessImage} alt="business" />
+            <img className="responsive" src={businessImage} alt="business" />
             <span className="card-title"></span>
           </div>
             <div className="card-content">
               <div className="row">
                 <Tabs key={`tabs${Date.now()}`} className="tab-demo z-depth-1">
-                  <Tab title="Information" active={this.state.info} className=" blue-grey-text lighten-1">
+                  <Tab title="Information" active={info} className=" blue-grey-text lighten-1">
                     <div id="businessInfo" className="col s12 m12 l12 ">
                       <ul className="collection">
                         <li className="collection-item avatar">
@@ -223,7 +232,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Name</h5>
                           </span>
                           <p>
-                            <strong>{business.name}</strong>
+                            <strong>{name}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -234,7 +243,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Contact Email</h5>
                           </span>
                           <p>
-                            <strong>{business.email}</strong>
+                            <strong>{email}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -245,7 +254,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Telephone Number</h5>
                           </span>
                           <p>
-                            <strong> {business.telephoneNumber}</strong>
+                            <strong> {telephoneNumber}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -256,7 +265,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Office Phone</h5>
                           </span>
                           <p>
-                            <strong>{business.homeNumber || 'Nil'}</strong>
+                            <strong>{homeNumber || 'Nil'}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -267,7 +276,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Category</h5>
                           </span>
                           <p>
-                            <strong>{business.category}</strong>
+                            <strong>{category}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -278,7 +287,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Location</h5>
                           </span>
                           <p>
-                            <strong>{business.location}</strong>
+                            <strong>{location}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -289,7 +298,7 @@ export default class BusinessProfile extends React.Component {
                             <h5>Business Address</h5>
                           </span>
                           <p>
-                            <strong>{business.address}</strong>
+                            <strong>{address}</strong>
                           </p>
                         </li>
                         <li className="collection-item avatar">
@@ -299,7 +308,7 @@ export default class BusinessProfile extends React.Component {
                           <span className="title">
                             <h5>Business Description</h5>
                           </span>
-                          <p>{business.description}</p>
+                          <p>{description}</p>
                         </li>
                         <li className="collection-item avatar">
                           <i className="material-icons circle blue-grey darken-2">
@@ -310,7 +319,7 @@ export default class BusinessProfile extends React.Component {
                           </span>
                           <p>
                             <a className="waves-effect waves-light btn blue-grey darken-2">
-                              {business.businessOwner ? business.businessOwner.username : null}
+                              {businessOwner ? businessOwner.username : null}
                             </a>
                           </p>
                         </li>
@@ -323,7 +332,7 @@ export default class BusinessProfile extends React.Component {
                         <div className="card-content">
                           <FormErrors errors={errors} />
                           <BusinessReviewForm
-                           submit={this.onSubmitReview} disableBtn={this.state.disableBtn} />
+                           submit={this.onSubmitReview} disableBtn={disableBtn} />
                         </div>
                         <div className="card">
                           <div className="card-content">
@@ -348,8 +357,8 @@ export default class BusinessProfile extends React.Component {
                             </div>
                             <div>
                               <ul className="collection">
-                                {this.props.businessProfile.reviews.length > 0 ?
-                                 this.props.businessProfile.reviews.map((review, i) => (
+                                {reviews.length > 0 ?
+                                 reviews.map((review, i) => (
                                 <Review key={review.id}
                                  userId={user.userId} setReviewId={setReviewId} review={review}>
                                           <div className="align-right">
@@ -394,7 +403,7 @@ export default class BusinessProfile extends React.Component {
                               <br />
                               <Pagination
                                key={Date.now()} items={Math.ceil(reviewsCount / 9) || 0}
-                               activePage={this.state.currentPage}
+                               activePage={currentPage}
                                maxButtons={5} onSelect={this.onPageChange} />
                             </div>
                           </div>
@@ -415,13 +424,15 @@ export default class BusinessProfile extends React.Component {
                       <div>
                         <button className="confirmDelete"
                         onClick={() => {
-                          this.props.deleteReview(this.props.match.params.id, this.state.reviewId)
+                          const { reviewId } = this.state;
+                          const { match, history } = this.props;
+                          this.props.deleteReview(match.params.id, reviewId)
                             .then(() => {
                               alertify.set('notifier', 'position', 'top-right');
                               alertify.success('Review Deleted');
                               $('#deleteReview').modal('close');
                               this.props
-                              .fetchReviews(this.props.match.params.id, this.state.currentPage)
+                              .fetchReviews(match.params.id, currentPage)
                               .then(() => this.setState({ info: false, reviews: true }));
                             })
                             .catch((error) => {
@@ -429,7 +440,7 @@ export default class BusinessProfile extends React.Component {
                                 alertify.set('notifier', 'position', 'top-right');
                                 alertify.warning('Session Expired Login again');
                                 this.props.logout();
-                                setTimeout(() => this.props.history.push('/login'), 1000);
+                                setTimeout(() => history.push('/login'), 1000);
                               }
                             });
                         }}
@@ -446,14 +457,14 @@ export default class BusinessProfile extends React.Component {
                 {/* Edit Review Modal */}
                 <Modal id="editReview" header={'EDIT REVIEW'}>
                 <BusinessReviewForm
-                  submit={this.onEditReview} disableBtn={this.state.disableBtn} />
+                  submit={this.onEditReview} disableBtn={disableBtn} />
                 </Modal>
 
                 {/* Previous Replies Modal */}
                 <Modal id="prevReplies" header={<span className="blue-grey-text darken-2">PREVIOUS REPLIES</span>}>
                   <ul className="collection">
-                    {this.state.reviewResponses.length > 0 ?
-                     this.state.reviewResponses.map((response, i) => (
+                    {reviewResponses.length > 0 ?
+                     reviewResponses.map((response, i) => (
                           <li key={response.id} className="collection-item">
                             <span className="blue-grey-text darken-2">{response.reviewer.username}</span>
                             <p>{response.message}</p>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { REGISTER_USER, REGISTER_USER_FAILED, POST_CONTACTUS, FETCH_USER_BUSINESSES, FETCH_USER_BUSINESSES_FAILED, UPDATE_USER } from './actionTypes';
-import setAuthorizationHeader from '../../utils/setAuthorizationHeader';
+import setAuthorizationHeader from '../utils/setAuthorizationHeader';
 import { userLoggedIn } from './auth';
 
 /**
@@ -108,5 +108,6 @@ export const getUserBusinesses = pageNumber => dispatch =>
   axios.get(`/api/v1/businesses/user?pageNumber=${pageNumber}`)
     .then((response) => {
       dispatch(fetchUserBusinesses(response.data.businesses, response.data.businessesCount));
-    });
+    })
+    .catch(() => dispatch(fetchUserBusinessesFailed()));
 

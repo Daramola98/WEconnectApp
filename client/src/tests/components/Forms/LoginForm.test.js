@@ -6,7 +6,8 @@ describe('<LoginForm />', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallow(<LoginForm submit={() => wrapper.setState({ submitted: true })} />);
+    wrapper = shallow(<LoginForm submit={() => wrapper.setState({ submitted: true })}
+    disableBtn={false} />);
   });
 
   describe('Email input', () => {

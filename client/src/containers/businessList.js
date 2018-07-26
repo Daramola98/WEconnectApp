@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import BusinessListing from '../components/Businesses/smart/BusinessListing.jsx';
-import { fetchBusinesses, searchBusiness, fetchCategories } from '../store/actions/businesses';
+import { fetchBusinesses, searchBusiness, fetchCategories } from '../actions/businesses';
 
 /**
    * MapState to Props of Component
@@ -9,7 +9,7 @@ import { fetchBusinesses, searchBusiness, fetchCategories } from '../store/actio
    * @memberof businessListContainer
    */
 const mapStateToProps = state => ({
-  businesses: state.businessesReducer
+  businessList: state.businessesReducer
 });
 
 /**

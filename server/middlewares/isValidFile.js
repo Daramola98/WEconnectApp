@@ -25,6 +25,10 @@ const isValidFile = (req, res, next) => {
     let businessImageUrl;
     if (req.file) {
       cloudinary.v2.uploader.upload(req.file.path, (error, result) => {
+        if (error) {
+          const validationErrors = ['An Error Occured uploading image'];
+          return res.status(400).json({ message: 'Cannot Complete Request Errors Occured', validationErrors });
+        }
         businessImageUrl = result.secure_url;
         req.businessImage = businessImageUrl;
         next(err);

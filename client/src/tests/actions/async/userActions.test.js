@@ -2,8 +2,8 @@ import moxios from 'moxios';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as userActions from '../../../store/actions/users';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as userActions from '../../../actions/users';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -44,9 +44,9 @@ describe('Async UserActions', () => {
       }];
       const store = mockStore({ user: {} });
 
-      store.dispatch(userActions.signUp(userDetails))
+      return store.dispatch(userActions.signUp(userDetails))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
   });
@@ -76,9 +76,9 @@ describe('Async UserActions', () => {
       }];
       const store = mockStore({ user: {} });
 
-      store.dispatch(userActions.updateUser(userDetails))
+      return store.dispatch(userActions.updateUser(userDetails))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
   });
@@ -102,9 +102,9 @@ describe('Async UserActions', () => {
 
       const store = mockStore({ user: {} });
 
-      store.dispatch(userActions.getUserBusinesses(1))
+      return store.dispatch(userActions.getUserBusinesses(1))
         .then(() => {
-          expect(store.getActions()).to.be.eql(expectedAction);
+          expect(store.getActions()[0].type).to.be.eql(expectedAction[0].type);
         });
     });
   });
@@ -124,7 +124,7 @@ describe('Async UserActions', () => {
       }];
       const store = mockStore({ user: {} });
 
-      store.dispatch(userActions.postContactUs())
+      return store.dispatch(userActions.postContactUs())
         .then(() => {
           expect(store.getActions()).to.be.eql(expectedAction);
         });

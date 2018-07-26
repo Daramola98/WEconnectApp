@@ -1,5 +1,5 @@
-import businessesReducer from '../../store/reducers/businesses';
-import * as actionTypes from '../../store/actions/actionTypes';
+import businessesReducer from '../../reducers/businesses';
+import * as actionTypes from '../../actions/actionTypes';
 
 describe('businesses reducer', () => {
   let initialState;

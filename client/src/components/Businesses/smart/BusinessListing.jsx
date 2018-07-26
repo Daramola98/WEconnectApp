@@ -18,7 +18,6 @@ export default class BusinessListing extends React.Component {
     */
   constructor(props) {
     super(props);
-    this.componentDidMount = this.componentDidMount.bind(this);
     this.state = {
       search: '',
       searchBy: 'name',
@@ -31,8 +30,6 @@ export default class BusinessListing extends React.Component {
       searchPagination: 'hide center',
       businessPagination: 'center'
     };
-    this.searchBy = '';
-    this.advancedSearch = '';
   }
 
 
@@ -115,9 +112,10 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     onSearchChangePage = (pageNumber) => {
+      const { searchBy, advancedSearch } = this.state;
       this.props.searchBusiness(
-        this.state.searchBy,
-        this.state.advancedSearch, pageNumber
+        searchBy,
+        advancedSearch, pageNumber
       )
         .then(() => this.setState({ searchCurrentPage: pageNumber }));
     }
@@ -130,11 +128,12 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     handleSearchSubmit = (event) => {
+      const { searchBy, advancedSearch, searchCurrentPage } = this.state;
       event.preventDefault();
       this.setState({ businessPagination: 'hide', searchPagination: '' });
       this.props.searchBusiness(
-        this.state.searchBy,
-        this.state.advancedSearch, this.state.searchCurrentPage
+        searchBy,
+        advancedSearch, searchCurrentPage
       );
     }
 
@@ -156,39 +155,44 @@ export default class BusinessListing extends React.Component {
     * @memberof BusinessListing Component
     */
     render() {
-      const { businesses } = this.props;
-      const businessCategories = businesses.categories;
-      const { businessesCount } = this.props.businesses;
-      const categoryOptions = businessCategories !== undefined ?
-        Array.from(businessCategories).map(category =>
-        <option key={category} value={category}>{category}</option>) : null;
+      const {
+        search, advancedSearch, searchBy, category, location,
+        businessPagination, searchPagination, searchCurrentPage, currentPage
+      } = this.state;
+      const { businessList, locations } = this.props;
+      const businessCategories = businessList.categories;
+      const { businessesCount } = businessList;
 
-      const locationOptions = this.props.locations.map(location =>
-        <option key={location} value={location}>{location}</option>);
-      let filteredBusinesses = businesses.businesses;
+      const categoryOptions = businessCategories !== undefined ?
+        Array.from(businessCategories).map(businesscategory =>
+        <option key={businesscategory} value={businesscategory}>{businesscategory}</option>) : null;
+
+      const locationOptions = locations.map(businesslocation =>
+        <option key={businesslocation} value={businesslocation}>{businesslocation}</option>);
+      let filteredBusinesses = businessList.businesses;
       if (filteredBusinesses.length > 0) {
         filteredBusinesses = filteredBusinesses
           .filter(business =>
-            business.name.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1);
+            business.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
       }
 
-      if (this.state.location !== 'null' && this.state.category !== 'null') {
-        filteredBusinesses = businesses.businesses
+      if (location !== 'null' && category !== 'null') {
+        filteredBusinesses = businessList.businesses
           .filter(business =>
             business.location.indexOf(this.state.location) !== -1
-             && business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
+             && business.category.toLowerCase().indexOf(category.toLowerCase()) !== -1);
       }
 
       if (this.state.location !== 'null' && this.state.category === 'null') {
-        filteredBusinesses = businesses.businesses
+        filteredBusinesses = businessList.businesses
           .filter(business =>
-            business.location.indexOf(this.state.location) !== -1);
+            business.location.indexOf(location) !== -1);
       }
 
-      if (this.state.location === 'null' && this.state.category !== 'null') {
-        filteredBusinesses = businesses.businesses
+      if (location === 'null' && category !== 'null') {
+        filteredBusinesses = businessList.businesses
           .filter(business =>
-            business.category.toLowerCase().indexOf(this.state.category.toLowerCase()) !== -1);
+            business.category.toLowerCase().indexOf(category.toLowerCase()) !== -1);
       }
       return (<div className="row">
         <section id="search" className="section section-search white-text center">
@@ -196,7 +200,7 @@ export default class BusinessListing extends React.Component {
             <div className="row">
                 <h3 className="black-text">Search Businesses</h3>
                 <form id="searchform" onSubmit={this.handleSearchSubmit}>
-                  <select name="searchBy" value={this.state.searchBy} onChange={this.onSearchByChange} className="search-select blue-grey darken-2 browser-default">
+                  <select name="searchBy" value={searchBy} onChange={this.onSearchByChange} className="search-select blue-grey darken-2 browser-default">
                     <option className="option" value="" disabled>Choose your option</option>
                     <option value="category">Category</option>
                     <option value="location">Location</option>
@@ -205,9 +209,9 @@ export default class BusinessListing extends React.Component {
                   <input id="businessSearch"
                     className="white grey-text autocomplete"
                     type="text"
-                    placeholder={`Search for Business By ${this.state.searchBy}`}
+                    placeholder={`Search for Business By ${searchBy}`}
                     name="advancedSearch"
-                    value={this.state.advancedSearch}
+                    value={advancedSearch}
                     onChange={this.onAdvancedSearchChange}
                     required/>
                     <button id="searchSubmitBtn" type="submit" className="waves-effect waves-light blue-grey darken-2"><i className="fa fa-search"></i></button>
@@ -229,15 +233,15 @@ export default class BusinessListing extends React.Component {
           </section>
           <span className="container paginate">
           <Pagination
-           className={this.state.businessPagination}
+           className={businessPagination}
            key={Date.now()} items={Math.ceil(businessesCount / 9) || 0 }
-            activePage={this.state.currentPage} maxButtons={5}
+            activePage={currentPage} maxButtons={5}
             onSelect = {this.onChangePage}
              />
           <Pagination
-           className={this.state.searchPagination}
+           className={searchPagination}
            key={Date.now() + 1} items={Math.ceil(businessesCount / 9) || 0 }
-            activePage={this.state.searchCurrentPage} maxButtons={5}
+            activePage={searchCurrentPage} maxButtons={5}
             onSelect = {this.onSearchChangePage}
              />
              </span>
@@ -247,7 +251,7 @@ export default class BusinessListing extends React.Component {
 }
 
 BusinessListing.propTypes = {
-  businesses: PropTypes.object.isRequired,
+  businessList: PropTypes.object.isRequired,
   locations: PropTypes.array.isRequired,
   searchBusiness: PropTypes.func.isRequired,
   fetchBusinesses: PropTypes.func.isRequired,

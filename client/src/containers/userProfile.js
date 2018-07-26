@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import UserProfile from '../components/Users/smart/UserProfile.jsx';
-import { isLoggedIn, logout } from '../store/actions/auth';
-import { getUserBusinesses, fetchUserBusinessesFailed } from '../store/actions/users';
-import { deleteBusiness } from '../store/actions/businesses';
+import { isLoggedIn, logout } from '../actions/auth';
+import { getUserBusinesses, fetchUserBusinessesFailed } from '../actions/users';
+import { deleteBusiness } from '../actions/businesses';
 
 /**
    * MapState to Props of Component

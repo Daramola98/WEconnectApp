@@ -8,7 +8,8 @@ describe('<RegisterBusinessForm />', () => {
   beforeEach(() => {
     wrapper = shallow(<RegisterBusinessForm
          submit={() => wrapper.setState({ submitted: true })}
-         categories={['Technology', 'Gaming']} />);
+         categories={['Technology', 'Gaming']}
+         disableBtn={false} />);
   });
 
   describe('Business Name input', () => {

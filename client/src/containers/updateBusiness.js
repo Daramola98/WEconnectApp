@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import UpdateBusiness from '../components/Businesses/smart/UpdateBusiness.jsx';
-import { updateBusiness, fetchCategories, fetchBusiness } from '../store/actions/businesses';
-import { logout } from '../store/actions/auth';
+import { updateBusiness, fetchCategories, fetchBusiness } from '../actions/businesses';
+import { logout } from '../actions/auth';
 
 /**
    * MapState to Props of Component

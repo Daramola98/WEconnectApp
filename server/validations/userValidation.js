@@ -164,11 +164,12 @@ export const userUpdateValidation = {
    */
 export const userEmailValidation = (req, res, next) => {
   handleInputFormat(req);
+  const { email } = req.body;
   return User
     .find({
       where: {
         email: {
-          ilike: req.body.email
+          ilike: email
         }
       }
     })

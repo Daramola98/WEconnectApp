@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import UpdateUser from '../components/Users/smart/UpdateUser.jsx';
-import { updateUser } from '../store/actions/users';
-import { logout } from '../store/actions/auth';
+import { updateUser } from '../actions/users';
+import { logout } from '../actions/auth';
 
 /**
    * MapState to Props of Component

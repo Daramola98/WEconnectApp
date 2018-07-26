@@ -29,17 +29,22 @@ export default class Businesses {
    */
   static createBusiness(req, res) {
     handleInputFormat(req);
+    const { file, businessImage, userData } = req;
+    const {
+      name, category,
+      email, telephoneNumber, homeNumber, location, address, description
+    } = req.body;
     const businessDetails = {
-      name: req.body.name,
-      category: req.body.category,
-      businessImage: req.file ? req.businessImage : null,
-      email: req.body.email,
-      telephoneNumber: req.body.telephoneNumber,
-      homeNumber: req.body.homeNumber,
-      location: req.body.location,
-      address: req.body.address,
-      userId: req.userData.userId,
-      description: req.body.description
+      name,
+      category,
+      businessImage: file ? businessImage : null,
+      email,
+      telephoneNumber,
+      homeNumber,
+      location,
+      address,
+      userId: userData.userId,
+      description
     };
     return Business
       .create(businessDetails)
@@ -60,8 +65,9 @@ export default class Businesses {
           .json({ message: businessRegisterMessage, createdBusinessDetails });
       })
       .catch((err) => {
-        if (err.errors) {
-          handleValidationErrors(err.errors, res);
+        const { errors } = err;
+        if (errors) {
+          handleValidationErrors(errors, res);
         } else {
           return res.status(500).json(err);
         }
@@ -76,18 +82,21 @@ export default class Businesses {
    * @memberof Business Controller
    */
   static listBusinesses(req, res) {
+    const {
+      pageNumber, category, location, name
+    } = req.query;
     let offset = 0;
-    offset = listByPages(req.query.pageNumber, offset);
-    if (req.query.location && req.query.category) {
+    offset = listByPages(pageNumber, offset);
+    if (location && category) {
       return findBusinessByLocationAndCategory(req, res, offset);
     }
-    if (req.query.location && !req.query.category) {
+    if (location && !category) {
       return findBusinessByLocation(req, res, offset);
     }
-    if (req.query.category && !req.query.location) {
+    if (category && !location) {
       return findBusinessByCategory(req, res, offset);
     }
-    if (req.query.name && !req.query.location && !req.query.category) {
+    if (name && !location && !category) {
       return findBusinessByName(req, res, offset);
     }
     return Business
@@ -222,23 +231,28 @@ export default class Businesses {
             { fields: Object.keys(businessDetails) }
           )
           .then((updatedBusiness) => {
+            const {
+              name, category, businessImage, businessAddedBy,
+              email, telephoneNumber, homeNumber, location, address, description
+            } = updatedBusiness;
             const updatedBusinessDetails = {
-              name: updatedBusiness.name,
-              category: updatedBusiness.category,
-              businessImage: updatedBusiness.businessImage,
-              email: updatedBusiness.email,
-              telephoneNumber: updatedBusiness.telephoneNumber,
-              homeNumber: updatedBusiness.homeNumber,
-              location: updatedBusiness.location,
-              address: updatedBusiness.address,
-              businessAddedBy: updatedBusiness.businessOwner.username,
-              description: updatedBusiness.description
+              name,
+              category,
+              businessImage,
+              email,
+              telephoneNumber,
+              homeNumber,
+              location,
+              address,
+              businessAddedBy,
+              description
             };
             return res.status(200).json({ message: 'Business Updated successfully', updatedBusinessDetails });
           })
           .catch((err) => {
-            if (err.errors) {
-              handleValidationErrors(err.errors, res);
+            const { errors } = err;
+            if (errors) {
+              handleValidationErrors(errors, res);
             } else {
               return res.status(500).json(serverErrorMessage.message);
             }
@@ -286,16 +300,18 @@ export default class Businesses {
    */
   static addReview(req, res) {
     handleInputFormat(req);
+    const { review, rating } = req.body;
+    const { businessId } = req.params;
     const businessReviewDetails = {
       reviewerId: req.userData.userId,
-      review: req.body.review,
-      businessId: req.params.businessId,
-      rating: req.body.rating
+      review,
+      businessId,
+      rating
     };
     return Business
       .findOne({
         where: {
-          id: req.params.businessId
+          id: businessId
         }
       })
       .then((business) => {
@@ -304,20 +320,22 @@ export default class Businesses {
         }
         return BusinessReview
           .create(businessReviewDetails)
-          .then((review) => {
+          .then((businessReview) => {
+            const { id } = businessReview;
             const reviewDetails = {
-              id: review.id,
-              review: review.review,
-              reviewerId: review.ReviewerId,
-              businessId: review.BusinessId,
-              rating: review.rating
+              id,
+              review: businessReview.review,
+              reviewerId: businessReview.ReviewerId,
+              businessId: businessReview.BusinessId,
+              rating: businessReview.rating
             };
             return res.status(201)
               .json({ message: businessReviewMessage, reviewDetails });
           })
           .catch((err) => {
-            if (err.errors) {
-              handleValidationErrors(err.errors, res);
+            const { errors } = err;
+            if (errors) {
+              handleValidationErrors(errors, res);
             } else {
               return res.status(500).json(serverErrorMessage.message);
             }
@@ -350,24 +368,26 @@ export default class Businesses {
               id: req.params.reviewId
             }
           })
-          .then((review) => {
-            if (!review) {
+          .then((businessReview) => {
+            if (!businessReview) {
               return res.status(404).json({ message: 'Review not found' });
             }
-            if (req.userData.userId !== review.reviewerId) {
+            if (req.userData.userId !== businessReview.reviewerId) {
               return res.status(403).json({ message: 'You are not allowed to update this review' });
             }
             handleInputFormat(req);
+            const { review, rating } = req.body;
             const reviewDetails = {
-              review: req.body.review,
-              rating: req.body.rating
+              review,
+              rating
             };
-            return review
+            return businessReview
               .update(reviewDetails, { fields: Object.keys(reviewDetails) })
               .then(updatedReview => res.status(200).json({ message: 'Review Updated Successfully', updatedReview }))
               .catch((err) => {
-                if (err.errors) {
-                  handleValidationErrors(err.errors, res);
+                const { errors } = err;
+                if (errors) {
+                  handleValidationErrors(errors, res);
                 } else {
                   return res.status(500).json(serverErrorMessage.message);
                 }
@@ -386,10 +406,12 @@ export default class Businesses {
    * @memberof Business class
    */
   static deleteReview(req, res) {
+    const { userData } = req;
+    const { businessId, reviewId } = req.params;
     return Business
       .findOne({
         where: {
-          id: req.params.businessId
+          id: businessId
         },
       })
       .then((business) => {
@@ -399,14 +421,14 @@ export default class Businesses {
         return BusinessReview
           .findOne({
             where: {
-              id: req.params.reviewId
+              id: reviewId
             }
           })
           .then((review) => {
             if (!review) {
               return res.status(404).json({ message: 'Review not found' });
             }
-            if (req.userData.userId !== review.reviewerId) {
+            if (userData.userId !== review.reviewerId) {
               return res.status(403).json({ message: 'You are not allowed to delete this review' });
             }
             return review
@@ -448,8 +470,9 @@ export default class Businesses {
           .then(response => res.status(201)
             .json({ message: 'Response submitted', response }))
           .catch((err) => {
-            if (err.errors) {
-              handleValidationErrors(err.errors, res);
+            const { errors } = err;
+            if (errors) {
+              handleValidationErrors(errors, res);
             } else {
               return res.status(500).json(serverErrorMessage.message);
             }
@@ -466,12 +489,13 @@ export default class Businesses {
    * @memberof Business
    */
   static getReview(req, res) {
+    const { businessId } = req.params;
     let offset = 0;
     offset = listByPages(req.query.pageNumber, offset);
     return Business
       .findOne({
         where: {
-          id: req.params.businessId
+          id: businessId
         }
       })
       .then((business) => {
@@ -499,7 +523,7 @@ export default class Businesses {
                 ['createdAt', 'DESC'],
               ],
               where: {
-                businessId: req.params.businessId
+                businessId
               }
             })
             .then((result) => {

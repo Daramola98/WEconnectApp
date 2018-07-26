@@ -2,8 +2,8 @@ import moxios from 'moxios';
 import { expect } from 'chai';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import * as businessActions from '../../../store/actions/businesses';
-import * as actionTypes from '../../../store/actions/actionTypes';
+import * as businessActions from '../../../actions/businesses';
+import * as actionTypes from '../../../actions/actionTypes';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -76,7 +76,7 @@ describe('Async Business Actions', () => {
       });
 
       const expectedAction = [{
-        type: actionTypes.fetchCategories,
+        type: actionTypes.FETCH_CATEGORIES,
         categories: ['Technolgy', 'Cooking']
       }];
 
@@ -172,7 +172,7 @@ describe('Async Business Actions', () => {
       });
 
       const expectedAction = [{
-        type: actionTypes.FETCH_BUSINESS,
+        type: actionTypes.SET_BUSINESS_PROFILE,
       }];
 
       const store = mockStore({ businesses: [] });
