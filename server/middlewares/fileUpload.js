@@ -9,6 +9,14 @@ const storage = multer.diskStorage({
   }
 });
 
+/**
+   * Checks the size of the file before proceeding
+   * @param {object} req - The request object
+   * @param {object} file - The response object
+   * @param {function} cb - The callback to move to the next middleware
+   * @return {null} execute callback
+   * @memberof Authentication
+   */
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
     cb(null, true);

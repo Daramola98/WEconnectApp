@@ -19,7 +19,7 @@ describe('<ContactUs />', () => {
         firstname: 'Admin',
       },
     });
-    wrapper = mount(<ContactUs postContactUs={() => ({})} />);
+    wrapper = mount(<ContactUs postContactUs={() => wrapper.setState({ submitted: true })} />);
   });
 
   it('should render the container component', () => {

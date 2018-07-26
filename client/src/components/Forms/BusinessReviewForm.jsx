@@ -88,7 +88,7 @@ export default class BusinessReviewForm extends React.Component {
                 value={rating}
               />
             </div>
-              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={this.props.disableBtn} style={{ width: `${100}%` }}>
+              <button type="submit" className="btn-large waves-effect waves-dark blue-grey darken-2" disabled={disableBtn} style={{ width: `${100}%` }}>
                 POST REVIEW
               </button>
             </div>
@@ -99,4 +99,5 @@ export default class BusinessReviewForm extends React.Component {
 
 BusinessReviewForm.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

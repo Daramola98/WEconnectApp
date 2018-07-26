@@ -258,4 +258,5 @@ BusinessUpdateForm.propTypes = {
   categories: PropTypes.array.isRequired,
   locations: PropTypes.array.isRequired,
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

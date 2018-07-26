@@ -278,8 +278,8 @@ ul.pagination {
 
 .banner {
     width: 100%;
-    min-height: 450px;
-    background: url('/images/searchImg2.jpg') center bottom no-repeat;
+    min-height: 500px;
+    background-image: url('/images/searchImg2.jpg');
     background-size: cover;
     position: relative;
     box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.6);
@@ -293,7 +293,8 @@ ul.pagination {
 .banner-body {
   position: absolute;
   top: 80px;
-  left: 240px;
+  left: 400px;
+  margin: auto;
   width: 60%;
 }
 @media (min-width: 760px) and (max-width: 860px) {

@@ -13,17 +13,21 @@ dotenv.config();
    */
 export const addContactInfo = (req, res) => {
   handleInputFormat(req);
+  const {
+    firstname, lastname, email, message
+  } = req.body;
   const contactInfo = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    message: req.body.message
+    firstname,
+    lastname,
+    email,
+    message
   };
   return ContactUs.create(contactInfo)
     .then(result => res.status(201).json({ message: 'Submitted', result }))
     .catch((err) => {
-      if (err.errors) {
-        handleValidationErrors(err.errors, res);
+      const { errors } = err;
+      if (errors) {
+        handleValidationErrors(errors, res);
       } else {
         return res.status(500).json(serverErrorMessage.message);
       }

@@ -97,4 +97,5 @@ export default class ContactUs extends React.Component {
 
 ContactUs.propTypes = {
   submit: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };

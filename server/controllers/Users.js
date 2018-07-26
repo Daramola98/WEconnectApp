@@ -63,8 +63,9 @@ export default class Users {
           return res.status(201).json({ message: userCreatedMessage, createdUser, token });
         })
         .catch((err) => {
-          if (err.errors) {
-            handleValidationErrors(err.errors, res);
+          const { errors } = err;
+          if (errors) {
+            handleValidationErrors(errors, res);
           } else {
             return res.status(500).json(serverErrorMessage.message);
           }
@@ -101,8 +102,9 @@ export default class Users {
         res.status(200).json(userDetails);
       })
       .catch((err) => {
-        if (err.errors) {
-          handleValidationErrors(err.errors, res);
+        const { errors } = err;
+        if (errors) {
+          handleValidationErrors(errors, res);
         } else {
           return res.status(500).json(serverErrorMessage.message);
         }
@@ -234,6 +236,7 @@ export default class Users {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token, process.env.JWT_KEY);
         req.userData = decoded;
+
         if (req.userData !== null) {
           return res.status(200).json({ message: 'Logout existing user to login' });
         }
@@ -252,13 +255,16 @@ export default class Users {
         if (!user) {
           return res.status(401).json({ message: 'Authentication failed' });
         }
+
         const {
           firstname, lastname, username, email, telephoneNumber, homeNumber
         } = user;
+
         bcrypt.compare(req.body.password, user.password, (err, result) => {
           if (err) {
             return res.status(401).json({ message: 'Authentication failed' });
           }
+
           if (result) {
             const token = jwt.sign(
               {
