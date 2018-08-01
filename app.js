@@ -14,6 +14,7 @@ import businessRoutes from './server/routes/businesses';
 import adminRoutes from './server/routes/admin';
 import swaggerDocument from './swagger.json';
 import config from './webpack.config';
+import prodConfig from './webpack.config.prod';
 import customValidations from './server/validations/customValidations';
 
 dotenv.config();
@@ -23,8 +24,13 @@ const compiler = webpack(config);
 // EXPRESS MIDDLEWARES
 app.use('/images', express.static(path.join(__dirname, './client/public/images')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(webpackDevMiddleware(compiler));
-app.use(webpackHotMiddleware(compiler));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(webpackDevMiddleware(compiler));
+  app.use(webpackHotMiddleware(compiler));
+} else {
+  app.use(webpackDevMiddleware(webpack(prodConfig)));
+}
+
 
 app.use(cors({ credentials: true, origin: true }));
 app.use(bodyParser.urlencoded({ extended: false }));

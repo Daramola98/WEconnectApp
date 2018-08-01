@@ -293,18 +293,17 @@ ul.pagination {
 .banner-body {
   position: absolute;
   top: 80px;
-  left: 400px;
-  margin: auto;
+  left: 290px;
   width: 60%;
 }
-@media (min-width: 760px) and (max-width: 860px) {
+@media (min-width: 460px) and (max-width: 860px) {
   .banner-body {
     width: 88%;
     left: 50px;} }
 @media (max-width: 25em) {
   .banner-body {
     width: 80%;
-    left: 50px;} }
+    left: 290px;} }
 
 #rating {
     margin-bottom: 10px;

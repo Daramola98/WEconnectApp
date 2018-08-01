@@ -4,11 +4,13 @@
   "description": "**About WEconnect**\r WeConnect provides a platform that brings businesses and individuals together. This platform\r creates awareness for businesses and gives the users the ability to write reviews about the\r businesses they have interacted with.",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production && babel-node app.js",
+    "start": "NODE_ENV=production babel-node app.js",
     "start:dev": "cross-env NODE_ENV=development nodemon app.js --exec babel-node",
     "start:e2e-test": "cross-env NODE_ENV=test nodemon app.js --exec babel-node",
     "start:client": "webpack-dev-server --mode development --open --history-api-fallback",
     "start:webpack": "babel-node app.js",
+    "build": "webpack --progress --config ./webpack.config.prod.js",
+    "heroku-postbuild": "NODE_ENV=production && npm run build",
     "build:client": "webpack --mode development",
     "build:clientProd": "webpack --mode production",
     "db-migrate": "sequelize db:migrate",
@@ -48,7 +50,8 @@
       "<rootDir>/client/src/tests/actions",
       "<rootDir>/client/src/tests/components",
       "<rootDir>/client/src/tests/containers",
-      "<rootDir>/client/src/tests/reducers"
+      "<rootDir>/client/src/tests/reducers",
+      "<rootDir>/client/src/tests/utils"
     ]
   },
   "homepage": "https://github.com/Daramola98/WEconnectApp#readme",

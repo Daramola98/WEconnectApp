@@ -24,7 +24,7 @@ describe('<Login />', () => {
     wrapper = mount(<Login
       usersReducer={{ authenticated: false }}
       history={{ push: jest.fn() }}
-      login={() => wrapper.setState({ submitted: true })} />);
+      login={jest.fn(() => Promise.resolve())} />);
   });
 
   it('should render the container component', () => {
@@ -60,6 +60,19 @@ describe('<Login />', () => {
 
   it('should render the <LoginForm /> component', () => {
     expect(wrapper.find(LoginForm)).toHaveLength(1);
+  });
+  describe('LoginForm Form Submit', () => {
+    it('should respond to submit event and change the state of the LoginForm Component', () => {
+      const fakeEvent = { preventDefault: () => ({}) };
+      wrapper.setState({
+        credentials: {
+          email: '',
+          password: ''
+        },
+        submitted: false
+      });
+      wrapper.find('form').simulate('submit', fakeEvent);
+    });
   });
 });
 

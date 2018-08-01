@@ -5,15 +5,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const CLIENT_DIR = path.resolve(__dirname, 'client');
+const GLOBALS = {
+  'process.env.NODE_ENV': JSON.stringify('production')
+};
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: [
     './client/index.js'
   ],
   output: {
-    path: '/',
+    path: path.resolve(__dirname, 'client/dist'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['*', '.js', '.jsx']
@@ -104,6 +108,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin(GLOBALS),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
