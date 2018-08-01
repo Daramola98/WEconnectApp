@@ -19,7 +19,7 @@ describe('<ContactUs />', () => {
         firstname: 'Admin',
       },
     });
-    wrapper = mount(<ContactUs postContactUs={() => wrapper.setState({ submitted: true })} />);
+    wrapper = mount(<ContactUs postContactUs={jest.fn(() => Promise.resolve())} />);
   });
 
   it('should render the container component', () => {
@@ -43,6 +43,31 @@ describe('<ContactUs />', () => {
   it('should render the <FormErrors /> component if there are errors', () => {
     wrapper.setState({ errors: { message: ['Firstname is required'] } });
     expect(wrapper.find(FormErrors)).toHaveLength(1);
+  });
+
+  describe('Contact Form Submit', () => {
+    it('should respond to submit event and change the state of the ContactUs Component', () => {
+      const fakeEvent = { preventDefault: () => ({}) };
+      wrapper.setState({
+        contactInfo: {
+          firstname: '', lastname: '', email: '', message: ''
+        },
+        submitted: false
+      });
+      wrapper.find('form').simulate('submit', fakeEvent);
+    });
+
+    it('should respond to submit event and change the state of the ContactUs Component', () => {
+      wrapper = mount(<ContactUs postContactUs={jest.fn(() => Promise.reject())} />);
+      const fakeEvent = { preventDefault: () => ({}) };
+      wrapper.setState({
+        contactInfo: {
+          firstname: '', lastname: '', email: '', message: ''
+        },
+        submitted: false
+      });
+      wrapper.find('form').simulate('submit', fakeEvent);
+    });
   });
 });
 

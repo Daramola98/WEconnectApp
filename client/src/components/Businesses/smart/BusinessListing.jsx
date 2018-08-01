@@ -169,31 +169,7 @@ export default class BusinessListing extends React.Component {
 
       const locationOptions = locations.map(businesslocation =>
         <option key={businesslocation} value={businesslocation}>{businesslocation}</option>);
-      let filteredBusinesses = businessList.businesses;
-      if (filteredBusinesses.length > 0) {
-        filteredBusinesses = filteredBusinesses
-          .filter(business =>
-            business.name.toLowerCase().indexOf(search.toLowerCase()) !== -1);
-      }
-
-      if (location !== 'null' && category !== 'null') {
-        filteredBusinesses = businessList.businesses
-          .filter(business =>
-            business.location.indexOf(this.state.location) !== -1
-             && business.category.toLowerCase().indexOf(category.toLowerCase()) !== -1);
-      }
-
-      if (this.state.location !== 'null' && this.state.category === 'null') {
-        filteredBusinesses = businessList.businesses
-          .filter(business =>
-            business.location.indexOf(location) !== -1);
-      }
-
-      if (location === 'null' && category !== 'null') {
-        filteredBusinesses = businessList.businesses
-          .filter(business =>
-            business.category.toLowerCase().indexOf(category.toLowerCase()) !== -1);
-      }
+      const filteredBusinesses = businessList.businesses;
       return (<div className="row">
         <section id="search" className="section section-search white-text center">
           <div className="container">

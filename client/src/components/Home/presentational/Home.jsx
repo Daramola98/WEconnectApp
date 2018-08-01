@@ -1,23 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import HomeImageSlider from './HomeImageSlider.jsx';
-import Business from '../../Businesses/presentational/Business.jsx';
-
 
 const Home = () => (
     <main>
         <div className="banner center">
             <div className="banner-body">
                 <h3 className="white-text">WELCOME TO WECONNECT</h3>
-                <form id="searchform">
-                  <input id="businessSearch"
-                    className="white black-text autocomplete"
-                    type="text"
-                    placeholder="Search for Businesses"
-                    name="advancedSearch"
-                    required/>
-                    <button id="searchSubmitBtn" type="submit" className="waves-effect waves-light blue-grey darken-2"><i className="fa fa-search"></i></button>
-              </form>
+                <Link to="/businessListing"><a className="waves-effect waves-light btn grey"><h6 className="black-text">Click Here to View Businesses</h6></a></Link>
             </div>
         </div>
         <section className="row container section">

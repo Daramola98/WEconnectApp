@@ -148,7 +148,7 @@ export default class RegisterBusinessForm extends React.Component {
       imagePreview = (<img className="preview" src="/images/imageholder.png"/>);
     }
     return <div className="row">
-        <form onSubmit={this.handleRegisterBusinessSubmit}>
+        <form id="register" onSubmit={this.handleRegisterBusinessSubmit}>
           <div className="row">
             <div className="input-field col s12 m12 l12">
               <i className="material-icons prefix">business_center</i>

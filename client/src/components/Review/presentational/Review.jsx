@@ -12,10 +12,10 @@ const Review = (props) => {
   return (
   <li className="collection-item">
     {userId === reviewerId && <span className="review-controls">
-      <i onClick={() => {
+      <i id="edit" onClick={() => {
         props.setReviewId(id);
         $('#editReview').modal('open');
-         }} className="material-icons blue-text">edit</i> <i onClick={() => {
+         }} className="material-icons blue-text">edit</i> <i id="delete" onClick={() => {
            props.setReviewId(id);
            $('#deleteReview').modal('open');
             }} className="material-icons red-text">delete</i>
