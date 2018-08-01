@@ -402,6 +402,7 @@ export default class BusinessProfile extends React.Component {
                               </ul>
                               <br />
                               <Pagination
+                               className="center"
                                key={Date.now()} items={Math.ceil(reviewsCount / 9) || 0}
                                activePage={currentPage}
                                maxButtons={5} onSelect={this.onPageChange} />

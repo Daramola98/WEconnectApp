@@ -24,7 +24,8 @@ export default class UpdateBusiness extends React.Component {
    * @return {void} no return or void
    */
     componentWillMount() {
-      if (this.props.usersReducer.authenticated !== true) {
+      const { authenticated } = this.props.usersReducer;
+      if (authenticated !== true) {
         this.props.history.push('/login');
       }
     }

@@ -26,7 +26,8 @@ export default class SignUp extends React.Component {
    * @return {void} no return or void
    */
   componentWillMount() {
-    if (this.props.usersReducer.authenticated) {
+    const { authenticated } = this.props.usersReducer;
+    if (authenticated) {
       this.props.history.push('/userProfile');
     }
   }

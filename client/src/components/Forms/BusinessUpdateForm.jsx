@@ -156,7 +156,7 @@ export default class BusinessUpdateForm extends React.Component {
                       <i className="material-icons prefix">
                         business_center
                       </i>
-                      <label htmlFor="name">Business Name</label>
+                      <label className="active" htmlFor="name">Business Name</label>
                       <input type="text" id="name" name="name" pattern="^[a-zA-Z0-9\s.\-]+$" title="should contain only alphabets" minLength="3" maxLength="50" value={name} onChange={this.onChange} className="validate"/>
                     </div>
                   </div>
@@ -169,7 +169,7 @@ export default class BusinessUpdateForm extends React.Component {
                         </option>
                         {locationOptions}
                       </Input>
-                      {/* <label>Location</label> */}
+                      {/* <label className="active">Location</label> */}
                     </div>
                     <div className="input-field col s12">
                       <Input s={12} type="select" id="category" name="category" icon="business_center" value={category} onChange={this.onChange} >
@@ -180,14 +180,14 @@ export default class BusinessUpdateForm extends React.Component {
                         Loading...
                       </option> }
                       </Input>
-                      {/* <label>Category</label> */}
+                      {/* <label className="active">Category</label> */}
                     </div>
                     </Row>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">email</i>
-                      <label htmlFor="email">Contact Email Address</label>
+                      <label className="active" htmlFor="email">Contact Email Address</label>
                       <input type="email" id="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" value={email} onChange={this.onChange} className="validate" />
                     </div>
                   </div>
@@ -205,21 +205,21 @@ export default class BusinessUpdateForm extends React.Component {
                   <div className="row">
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">location_on</i>
-                      <label htmlFor="address">Business Address</label>
+                      <label className="active" htmlFor="address">Business Address</label>
                       <input type="text" id="address" name="address" value={address} minLength="4" maxLength="50" onChange={this.onChange} className="validate" />
                     </div>
                   </div>
                   <div className="row">
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">phone</i>
-                      <label htmlFor="telephoneNumber">
+                      <label className="active" htmlFor="telephoneNumber">
                         Telephone Number
                       </label>
                       <input type="text" id="telephoneNumber" name="telephoneNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={telephoneNumber} onChange={this.onChange} className="validate" />
                     </div>
                     <div className="input-field col s12 m12 l6">
                       <i className="material-icons prefix">phone</i>
-                      <label htmlFor="homeNumber">Home Number</label>
+                      <label className="active" htmlFor="homeNumber">Home Number</label>
 
                       <input type="text" id="homeNumber" name="homeNumber" pattern="^[0-9]+$" minLength="7" maxLength="11" value={homeNumber} onChange={this.onChange} className="validate" />
                     </div>
@@ -228,7 +228,7 @@ export default class BusinessUpdateForm extends React.Component {
                     <div className="input-field col s12 m12 l12">
                       <i className="material-icons prefix">mode_edit</i>
                       <textarea className="materialize-textarea" id="description" name="description" value={description} minLength="20" maxLength="500" onChange={this.onChange} />
-                      <label htmlFor="description">
+                      <label className="active" htmlFor="description">
                         Business Description
                       </label>
                     </div>

@@ -33,7 +33,8 @@ export default class UserProfile extends React.Component {
    * @return {void} no return or void
    */
   componentWillMount() {
-    if (!this.props.usersReducer.authenticated) {
+    const { authenticated } = this.props.usersReducer;
+    if (!authenticated) {
       this.props.history.push('/login');
     }
   }
@@ -188,6 +189,7 @@ export default class UserProfile extends React.Component {
                             </div>}
                         <div className="col s12">
                           <Pagination
+                          className="center"
                           key={Date.now()}
                           items={Math.ceil(businessesCount / 9) || 0 }
                           activePage={currentPage}
