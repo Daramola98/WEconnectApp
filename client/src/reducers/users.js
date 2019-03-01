@@ -15,7 +15,6 @@ const initialState = {
       * @return {object} the state of the application
       */
 function usersReducer(state = initialState, action) {
-  let user;
   switch (action.type) {
     case USER_LOGGED_IN:
       return { ...state, user: action.user, authenticated: true };
